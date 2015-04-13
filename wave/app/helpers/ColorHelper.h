@@ -13,6 +13,7 @@
 +(UIColor *)purpleColor;
 +(UIColor*)greenColor;
 +(UIColor*)redColor;
-
++(UIColor*)whiteColor;
++(UIColor*)blue;
 
 @end

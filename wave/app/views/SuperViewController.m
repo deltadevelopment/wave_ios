@@ -21,7 +21,7 @@
     [super viewDidLoad];
     [self initSuperButton];
     _camera = [[CameraViewController alloc]init];
-    [self prepareCamera];
+   
     __weak typeof(self) weakSelf = self;
     _camera.onCameraReady = ^{
         [weakSelf showCamera];
@@ -103,7 +103,6 @@
     
 }
 
-
 -(void)initSuperButton{
     _superButton = [[SuperButton alloc]init:self];
     __weak typeof(self) weakSelf = self;
@@ -154,6 +153,7 @@
         [self.view insertSubview:yView.view atIndex:0];
         [self addConstraints:yView.view];
     }
+     [self prepareCamera];
   
 }
 

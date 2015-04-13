@@ -13,10 +13,14 @@
 static UIColor *purpleColor;
 static UIColor *greenColor;
 static UIColor *redColor;
+static UIColor *whiteColor;
+static UIColor *blueColor;
 +(void)initialize{
     purpleColor = [UIColor colorWithRed:0.557 green:0.267 blue:0.678 alpha:1];
     greenColor = [UIColor colorWithRed:0.153 green:0.682 blue:0.376 alpha:1];
     redColor = [UIColor colorWithRed:0.906 green:0.298 blue:0.235 alpha:1];
+    whiteColor = [UIColor colorWithRed:1 green:1 blue:1 alpha:1];
+    blueColor = [UIColor colorWithRed:0.204 green:0.596 blue:0.859 alpha:1];
 }
 
 +(UIColor*)purpleColor{
@@ -27,5 +31,11 @@ static UIColor *redColor;
 }
 +(UIColor*)redColor{
     return redColor;
+}
++(UIColor*)whiteColor{
+    return whiteColor;
+}
++(UIColor*)blue{
+    return blueColor;
 }
 @end

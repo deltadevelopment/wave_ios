@@ -14,6 +14,7 @@
 
 @property (weak, nonatomic) IBOutlet UIView *camView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bottomConstraint;
+@property (weak, nonatomic) IBOutlet UIButton *testButton2;
 
 @end
 

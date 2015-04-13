@@ -1,0 +1,13 @@
+/* 
+  Localizable.strings
+  wave
+
+  Created by Simen Lie on 13/04/15.
+  Copyright (c) 2015 ddev. All rights reserved.
+*/
+"login_btn_cap" = "LOG IN";
+"signup_btn_cap" = "SIGN UP";
+"username_pla" = "Username";
+"password_pla" = "Password";
+"email_pla" = "Email";
+"register_txt" = "Register";

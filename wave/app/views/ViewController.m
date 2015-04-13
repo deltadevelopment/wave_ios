@@ -17,8 +17,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    
     AvailabilityViewController *vc = (AvailabilityViewController *)[self createViewControllerWithStoryboardId:@"availability"];
     [self attachViews:vc withY:nil];
+    
+    
+    //[self.testButton2 setTitle:NSLocalizedString(@"it_worked", nil) forState:UIControlStateNormal];
+    
     [self.view insertSubview:self.camView atIndex:0];
    
 }
@@ -33,8 +39,6 @@
 }
 
 -(void)onCameraOpen{
-    
-    
     [UIView animateWithDuration:2.3f
                      animations:^{
                          self.bottomConstraint.constant = 0;
@@ -65,7 +69,7 @@
                          [super onCameraClose];
                      }];
 }
-
+/*
 -(void)onImageTaken:(UIImage *)image{
     NSLog(@"tatt");
     [self.camView setBackgroundColor:[UIColor grayColor]];
@@ -74,6 +78,6 @@
     [self.camView setNeedsDisplay];
 }
 
-
+*/
 
 @end

@@ -7,25 +7,33 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C55FE9061AD81A59007663FB /* SuperViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C55FE9041AD81A59007663FB /* SuperViewController.m */; };
+		C5576B371ADBC195009C1D5E /* CameraHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C5576B201ADBC195009C1D5E /* CameraHelper.m */; };
+		C5576B381ADBC195009C1D5E /* ColorHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C5576B221ADBC195009C1D5E /* ColorHelper.m */; };
+		C5576B391ADBC195009C1D5E /* UIHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C5576B241ADBC195009C1D5E /* UIHelper.m */; };
+		C5576B3A1ADBC195009C1D5E /* AvailabilityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5576B2A1ADBC195009C1D5E /* AvailabilityViewController.m */; };
+		C5576B3B1ADBC195009C1D5E /* CameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5576B2C1ADBC195009C1D5E /* CameraViewController.m */; };
+		C5576B3C1ADBC195009C1D5E /* DefaultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5576B2E1ADBC195009C1D5E /* DefaultViewController.m */; };
+		C5576B3D1ADBC195009C1D5E /* OverlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5576B301ADBC195009C1D5E /* OverlayViewController.m */; };
+		C5576B3E1ADBC195009C1D5E /* SuperViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5576B321ADBC195009C1D5E /* SuperViewController.m */; };
+		C5576B3F1ADBC195009C1D5E /* TestViewCoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5576B341ADBC195009C1D5E /* TestViewCoViewController.m */; };
+		C5576B401ADBC195009C1D5E /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5576B361ADBC195009C1D5E /* ViewController.m */; };
+		C5576B421ADBC1FC009C1D5E /* camera-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = C5576B411ADBC1FC009C1D5E /* camera-icon.png */; };
+		C5576B451ADBD79A009C1D5E /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C5576B471ADBD79A009C1D5E /* Localizable.strings */; };
+		C5576B4B1ADBDA22009C1D5E /* StartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5576B4A1ADBDA22009C1D5E /* StartViewController.m */; };
+		C5576B4E1ADBDB14009C1D5E /* NavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5576B4D1ADBDB14009C1D5E /* NavigationController.m */; };
+		C5576B501ADBE0DB009C1D5E /* wz-monkey-bg.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C5576B4F1ADBE0DB009C1D5E /* wz-monkey-bg.jpg */; };
+		C5576B541ADBE2C1009C1D5E /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5576B531ADBE2C1009C1D5E /* RegisterViewController.m */; };
+		C5576B571ADBE31A009C1D5E /* SuperLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5576B561ADBE31A009C1D5E /* SuperLoginViewController.m */; };
+		C5576B5A1ADBE77E009C1D5E /* Navigationbar.m in Sources */ = {isa = PBXBuildFile; fileRef = C5576B591ADBE77E009C1D5E /* Navigationbar.m */; };
 		C55FE90A1AD81F45007663FB /* SuperButton.m in Sources */ = {isa = PBXBuildFile; fileRef = C55FE9091AD81F45007663FB /* SuperButton.m */; };
 		C57AD0A71AD7EDB800B6042A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C57AD0A61AD7EDB800B6042A /* main.m */; };
 		C57AD0AA1AD7EDB800B6042A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C57AD0A91AD7EDB800B6042A /* AppDelegate.m */; };
-		C57AD0AD1AD7EDB800B6042A /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C57AD0AC1AD7EDB800B6042A /* ViewController.m */; };
 		C57AD0B01AD7EDB800B6042A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C57AD0AE1AD7EDB800B6042A /* Main.storyboard */; };
 		C57AD0B21AD7EDB800B6042A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C57AD0B11AD7EDB800B6042A /* Images.xcassets */; };
 		C57AD0B51AD7EDB800B6042A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = C57AD0B31AD7EDB800B6042A /* LaunchScreen.xib */; };
 		C57AD0C11AD7EDB800B6042A /* waveTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C57AD0C01AD7EDB800B6042A /* waveTests.m */; };
-		F190CD301ADAB5C200B906A7 /* app in Resources */ = {isa = PBXBuildFile; fileRef = F190CD2F1ADAB5C200B906A7 /* app */; };
-		F190CD351ADADF2100B906A7 /* AvailabilityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F190CD341ADADF2100B906A7 /* AvailabilityViewController.m */; };
-		F190CD381ADAFA3300B906A7 /* OverlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F190CD371ADAFA3300B906A7 /* OverlayViewController.m */; };
-		F190CD3B1ADB002F00B906A7 /* UIHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = F190CD3A1ADB002F00B906A7 /* UIHelper.m */; };
-		F190CD3E1ADB022900B906A7 /* ColorHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = F190CD3D1ADB022900B906A7 /* ColorHelper.m */; };
-		F190CD411ADB109100B906A7 /* DefaultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F190CD401ADB109100B906A7 /* DefaultViewController.m */; };
-		F190CD441ADB10EC00B906A7 /* CameraViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F190CD431ADB10EC00B906A7 /* CameraViewController.m */; };
-		F190CD4A1ADB12BD00B906A7 /* CameraHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = F190CD491ADB12BD00B906A7 /* CameraHelper.m */; };
-		F190CD4C1ADB12F800B906A7 /* camera-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = F190CD4B1ADB12F800B906A7 /* camera-icon.png */; };
-		F190CD4F1ADB4D0200B906A7 /* TestViewCoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F190CD4E1ADB4D0200B906A7 /* TestViewCoViewController.m */; };
+		C5A27B511ADC014E00968033 /* cross-white.png in Resources */ = {isa = PBXBuildFile; fileRef = C5A27B501ADC014E00968033 /* cross-white.png */; };
+		C5A27B541ADC060000968033 /* TextFieldWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A27B531ADC060000968033 /* TextFieldWrapper.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,8 +47,40 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		C55FE9031AD81A59007663FB /* SuperViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuperViewController.h; sourceTree = "<group>"; };
-		C55FE9041AD81A59007663FB /* SuperViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SuperViewController.m; sourceTree = "<group>"; };
+		C5576B1F1ADBC195009C1D5E /* CameraHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraHelper.h; sourceTree = "<group>"; };
+		C5576B201ADBC195009C1D5E /* CameraHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraHelper.m; sourceTree = "<group>"; };
+		C5576B211ADBC195009C1D5E /* ColorHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorHelper.h; sourceTree = "<group>"; };
+		C5576B221ADBC195009C1D5E /* ColorHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColorHelper.m; sourceTree = "<group>"; };
+		C5576B231ADBC195009C1D5E /* UIHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIHelper.h; sourceTree = "<group>"; };
+		C5576B241ADBC195009C1D5E /* UIHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIHelper.m; sourceTree = "<group>"; };
+		C5576B291ADBC195009C1D5E /* AvailabilityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AvailabilityViewController.h; sourceTree = "<group>"; };
+		C5576B2A1ADBC195009C1D5E /* AvailabilityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AvailabilityViewController.m; sourceTree = "<group>"; };
+		C5576B2B1ADBC195009C1D5E /* CameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraViewController.h; sourceTree = "<group>"; };
+		C5576B2C1ADBC195009C1D5E /* CameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraViewController.m; sourceTree = "<group>"; };
+		C5576B2D1ADBC195009C1D5E /* DefaultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DefaultViewController.h; sourceTree = "<group>"; };
+		C5576B2E1ADBC195009C1D5E /* DefaultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DefaultViewController.m; sourceTree = "<group>"; };
+		C5576B2F1ADBC195009C1D5E /* OverlayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OverlayViewController.h; sourceTree = "<group>"; };
+		C5576B301ADBC195009C1D5E /* OverlayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OverlayViewController.m; sourceTree = "<group>"; };
+		C5576B311ADBC195009C1D5E /* SuperViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuperViewController.h; sourceTree = "<group>"; };
+		C5576B321ADBC195009C1D5E /* SuperViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SuperViewController.m; sourceTree = "<group>"; };
+		C5576B331ADBC195009C1D5E /* TestViewCoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestViewCoViewController.h; sourceTree = "<group>"; };
+		C5576B341ADBC195009C1D5E /* TestViewCoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestViewCoViewController.m; sourceTree = "<group>"; };
+		C5576B351ADBC195009C1D5E /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		C5576B361ADBC195009C1D5E /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		C5576B411ADBC1FC009C1D5E /* camera-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camera-icon.png"; sourceTree = "<group>"; };
+		C5576B461ADBD79A009C1D5E /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C5576B481ADBD7D3009C1D5E /* nb */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nb; path = nb.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C5576B491ADBDA22009C1D5E /* StartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StartViewController.h; sourceTree = "<group>"; };
+		C5576B4A1ADBDA22009C1D5E /* StartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StartViewController.m; sourceTree = "<group>"; };
+		C5576B4C1ADBDB14009C1D5E /* NavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavigationController.h; sourceTree = "<group>"; };
+		C5576B4D1ADBDB14009C1D5E /* NavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NavigationController.m; sourceTree = "<group>"; };
+		C5576B4F1ADBE0DB009C1D5E /* wz-monkey-bg.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "wz-monkey-bg.jpg"; sourceTree = "<group>"; };
+		C5576B521ADBE2C1009C1D5E /* RegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterViewController.h; sourceTree = "<group>"; };
+		C5576B531ADBE2C1009C1D5E /* RegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterViewController.m; sourceTree = "<group>"; };
+		C5576B551ADBE31A009C1D5E /* SuperLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuperLoginViewController.h; sourceTree = "<group>"; };
+		C5576B561ADBE31A009C1D5E /* SuperLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SuperLoginViewController.m; sourceTree = "<group>"; };
+		C5576B581ADBE77E009C1D5E /* Navigationbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Navigationbar.h; sourceTree = "<group>"; };
+		C5576B591ADBE77E009C1D5E /* Navigationbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Navigationbar.m; sourceTree = "<group>"; };
 		C55FE9081AD81F45007663FB /* SuperButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuperButton.h; sourceTree = "<group>"; };
 		C55FE9091AD81F45007663FB /* SuperButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SuperButton.m; sourceTree = "<group>"; };
 		C57AD0A11AD7EDB800B6042A /* wave.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = wave.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -48,32 +88,15 @@
 		C57AD0A61AD7EDB800B6042A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		C57AD0A81AD7EDB800B6042A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		C57AD0A91AD7EDB800B6042A /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		C57AD0AB1AD7EDB800B6042A /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		C57AD0AC1AD7EDB800B6042A /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		C57AD0AF1AD7EDB800B6042A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		C57AD0B11AD7EDB800B6042A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		C57AD0B41AD7EDB800B6042A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		C57AD0BA1AD7EDB800B6042A /* waveTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = waveTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C57AD0BF1AD7EDB800B6042A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C57AD0C01AD7EDB800B6042A /* waveTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = waveTests.m; sourceTree = "<group>"; };
-		F190CD2F1ADAB5C200B906A7 /* app */ = {isa = PBXFileReference; lastKnownFileType = folder; path = app; sourceTree = "<group>"; };
-		F190CD331ADADF2100B906A7 /* AvailabilityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AvailabilityViewController.h; sourceTree = "<group>"; };
-		F190CD341ADADF2100B906A7 /* AvailabilityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AvailabilityViewController.m; sourceTree = "<group>"; };
-		F190CD361ADAFA3300B906A7 /* OverlayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OverlayViewController.h; sourceTree = "<group>"; };
-		F190CD371ADAFA3300B906A7 /* OverlayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OverlayViewController.m; sourceTree = "<group>"; };
-		F190CD391ADB002F00B906A7 /* UIHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIHelper.h; sourceTree = "<group>"; };
-		F190CD3A1ADB002F00B906A7 /* UIHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIHelper.m; sourceTree = "<group>"; };
-		F190CD3C1ADB022900B906A7 /* ColorHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorHelper.h; sourceTree = "<group>"; };
-		F190CD3D1ADB022900B906A7 /* ColorHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColorHelper.m; sourceTree = "<group>"; };
-		F190CD3F1ADB109100B906A7 /* DefaultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DefaultViewController.h; sourceTree = "<group>"; };
-		F190CD401ADB109100B906A7 /* DefaultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DefaultViewController.m; sourceTree = "<group>"; };
-		F190CD421ADB10EC00B906A7 /* CameraViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraViewController.h; sourceTree = "<group>"; };
-		F190CD431ADB10EC00B906A7 /* CameraViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraViewController.m; sourceTree = "<group>"; };
-		F190CD481ADB12BD00B906A7 /* CameraHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraHelper.h; sourceTree = "<group>"; };
-		F190CD491ADB12BD00B906A7 /* CameraHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraHelper.m; sourceTree = "<group>"; };
-		F190CD4B1ADB12F800B906A7 /* camera-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "camera-icon.png"; path = "wave/app/res/camera-icon.png"; sourceTree = "<group>"; };
-		F190CD4D1ADB4D0200B906A7 /* TestViewCoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestViewCoViewController.h; sourceTree = "<group>"; };
-		F190CD4E1ADB4D0200B906A7 /* TestViewCoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestViewCoViewController.m; sourceTree = "<group>"; };
+		C5A27B501ADC014E00968033 /* cross-white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cross-white.png"; sourceTree = "<group>"; };
+		C5A27B521ADC060000968033 /* TextFieldWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextFieldWrapper.h; sourceTree = "<group>"; };
+		C5A27B531ADC060000968033 /* TextFieldWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextFieldWrapper.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,26 +117,108 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C5576B1C1ADBC195009C1D5E /* app */ = {
+			isa = PBXGroup;
+			children = (
+				C5576B1D1ADBC195009C1D5E /* controllers */,
+				C5576B1E1ADBC195009C1D5E /* helpers */,
+				C5576B251ADBC195009C1D5E /* lib */,
+				C5576B261ADBC195009C1D5E /* models */,
+				C5576B271ADBC195009C1D5E /* res */,
+				C5576B281ADBC195009C1D5E /* views */,
+				C5576B471ADBD79A009C1D5E /* Localizable.strings */,
+			);
+			path = app;
+			sourceTree = "<group>";
+		};
+		C5576B1D1ADBC195009C1D5E /* controllers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = controllers;
+			sourceTree = "<group>";
+		};
+		C5576B1E1ADBC195009C1D5E /* helpers */ = {
+			isa = PBXGroup;
+			children = (
+				C5576B1F1ADBC195009C1D5E /* CameraHelper.h */,
+				C5576B201ADBC195009C1D5E /* CameraHelper.m */,
+				C5576B211ADBC195009C1D5E /* ColorHelper.h */,
+				C5576B221ADBC195009C1D5E /* ColorHelper.m */,
+				C5576B231ADBC195009C1D5E /* UIHelper.h */,
+				C5576B241ADBC195009C1D5E /* UIHelper.m */,
+			);
+			path = helpers;
+			sourceTree = "<group>";
+		};
+		C5576B251ADBC195009C1D5E /* lib */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = lib;
+			sourceTree = "<group>";
+		};
+		C5576B261ADBC195009C1D5E /* models */ = {
+			isa = PBXGroup;
+			children = (
+				C5A27B521ADC060000968033 /* TextFieldWrapper.h */,
+				C5A27B531ADC060000968033 /* TextFieldWrapper.m */,
+			);
+			path = models;
+			sourceTree = "<group>";
+		};
+		C5576B271ADBC195009C1D5E /* res */ = {
+			isa = PBXGroup;
+			children = (
+				C5576B4F1ADBE0DB009C1D5E /* wz-monkey-bg.jpg */,
+				C5A27B501ADC014E00968033 /* cross-white.png */,
+				C5576B411ADBC1FC009C1D5E /* camera-icon.png */,
+			);
+			path = res;
+			sourceTree = "<group>";
+		};
+		C5576B281ADBC195009C1D5E /* views */ = {
+			isa = PBXGroup;
+			children = (
+				C5576B511ADBE2A1009C1D5E /* login */,
+				C5576B291ADBC195009C1D5E /* AvailabilityViewController.h */,
+				C5576B2A1ADBC195009C1D5E /* AvailabilityViewController.m */,
+				C5576B2B1ADBC195009C1D5E /* CameraViewController.h */,
+				C5576B2C1ADBC195009C1D5E /* CameraViewController.m */,
+				C5576B2D1ADBC195009C1D5E /* DefaultViewController.h */,
+				C5576B2E1ADBC195009C1D5E /* DefaultViewController.m */,
+				C5576B2F1ADBC195009C1D5E /* OverlayViewController.h */,
+				C5576B301ADBC195009C1D5E /* OverlayViewController.m */,
+				C5576B311ADBC195009C1D5E /* SuperViewController.h */,
+				C5576B321ADBC195009C1D5E /* SuperViewController.m */,
+				C5576B331ADBC195009C1D5E /* TestViewCoViewController.h */,
+				C5576B341ADBC195009C1D5E /* TestViewCoViewController.m */,
+				C5576B351ADBC195009C1D5E /* ViewController.h */,
+				C5576B361ADBC195009C1D5E /* ViewController.m */,
+				C5576B4C1ADBDB14009C1D5E /* NavigationController.h */,
+				C5576B4D1ADBDB14009C1D5E /* NavigationController.m */,
+				C5576B581ADBE77E009C1D5E /* Navigationbar.h */,
+				C5576B591ADBE77E009C1D5E /* Navigationbar.m */,
+			);
+			path = views;
+			sourceTree = "<group>";
+		};
+		C5576B511ADBE2A1009C1D5E /* login */ = {
+			isa = PBXGroup;
+			children = (
+				C5576B491ADBDA22009C1D5E /* StartViewController.h */,
+				C5576B4A1ADBDA22009C1D5E /* StartViewController.m */,
+				C5576B521ADBE2C1009C1D5E /* RegisterViewController.h */,
+				C5576B531ADBE2C1009C1D5E /* RegisterViewController.m */,
+				C5576B551ADBE31A009C1D5E /* SuperLoginViewController.h */,
+				C5576B561ADBE31A009C1D5E /* SuperLoginViewController.m */,
+			);
+			name = login;
+			sourceTree = "<group>";
+		};
 		C57AD0981AD7EDB800B6042A = {
 			isa = PBXGroup;
 			children = (
-				F190CD4D1ADB4D0200B906A7 /* TestViewCoViewController.h */,
-				F190CD4E1ADB4D0200B906A7 /* TestViewCoViewController.m */,
-				F190CD4B1ADB12F800B906A7 /* camera-icon.png */,
-				F190CD481ADB12BD00B906A7 /* CameraHelper.h */,
-				F190CD491ADB12BD00B906A7 /* CameraHelper.m */,
-				F190CD421ADB10EC00B906A7 /* CameraViewController.h */,
-				F190CD431ADB10EC00B906A7 /* CameraViewController.m */,
-				F190CD3F1ADB109100B906A7 /* DefaultViewController.h */,
-				F190CD401ADB109100B906A7 /* DefaultViewController.m */,
-				F190CD3C1ADB022900B906A7 /* ColorHelper.h */,
-				F190CD3D1ADB022900B906A7 /* ColorHelper.m */,
-				F190CD391ADB002F00B906A7 /* UIHelper.h */,
-				F190CD3A1ADB002F00B906A7 /* UIHelper.m */,
-				F190CD361ADAFA3300B906A7 /* OverlayViewController.h */,
-				F190CD371ADAFA3300B906A7 /* OverlayViewController.m */,
-				F190CD331ADADF2100B906A7 /* AvailabilityViewController.h */,
-				F190CD341ADADF2100B906A7 /* AvailabilityViewController.m */,
 				C55FE9081AD81F45007663FB /* SuperButton.h */,
 				C55FE9091AD81F45007663FB /* SuperButton.m */,
 				C57AD0A31AD7EDB800B6042A /* wave */,
@@ -134,17 +239,13 @@
 		C57AD0A31AD7EDB800B6042A /* wave */ = {
 			isa = PBXGroup;
 			children = (
-				F190CD2F1ADAB5C200B906A7 /* app */,
+				C5576B1C1ADBC195009C1D5E /* app */,
 				C57AD0A81AD7EDB800B6042A /* AppDelegate.h */,
 				C57AD0A91AD7EDB800B6042A /* AppDelegate.m */,
-				C57AD0AB1AD7EDB800B6042A /* ViewController.h */,
-				C57AD0AC1AD7EDB800B6042A /* ViewController.m */,
 				C57AD0AE1AD7EDB800B6042A /* Main.storyboard */,
 				C57AD0B11AD7EDB800B6042A /* Images.xcassets */,
 				C57AD0B31AD7EDB800B6042A /* LaunchScreen.xib */,
 				C57AD0A41AD7EDB800B6042A /* Supporting Files */,
-				C55FE9031AD81A59007663FB /* SuperViewController.h */,
-				C55FE9041AD81A59007663FB /* SuperViewController.m */,
 			);
 			path = wave;
 			sourceTree = "<group>";
@@ -238,6 +339,7 @@
 			knownRegions = (
 				en,
 				Base,
+				nb,
 			);
 			mainGroup = C57AD0981AD7EDB800B6042A;
 			productRefGroup = C57AD0A21AD7EDB800B6042A /* Products */;
@@ -255,11 +357,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F190CD4C1ADB12F800B906A7 /* camera-icon.png in Resources */,
+				C5576B451ADBD79A009C1D5E /* Localizable.strings in Resources */,
+				C5576B421ADBC1FC009C1D5E /* camera-icon.png in Resources */,
+				C5576B501ADBE0DB009C1D5E /* wz-monkey-bg.jpg in Resources */,
 				C57AD0B01AD7EDB800B6042A /* Main.storyboard in Resources */,
-				F190CD301ADAB5C200B906A7 /* app in Resources */,
 				C57AD0B51AD7EDB800B6042A /* LaunchScreen.xib in Resources */,
 				C57AD0B21AD7EDB800B6042A /* Images.xcassets in Resources */,
+				C5A27B511ADC014E00968033 /* cross-white.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -277,18 +381,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C57AD0AD1AD7EDB800B6042A /* ViewController.m in Sources */,
-				F190CD3E1ADB022900B906A7 /* ColorHelper.m in Sources */,
-				F190CD351ADADF2100B906A7 /* AvailabilityViewController.m in Sources */,
-				F190CD381ADAFA3300B906A7 /* OverlayViewController.m in Sources */,
-				F190CD4F1ADB4D0200B906A7 /* TestViewCoViewController.m in Sources */,
-				F190CD3B1ADB002F00B906A7 /* UIHelper.m in Sources */,
+				C5576B391ADBC195009C1D5E /* UIHelper.m in Sources */,
+				C5576B5A1ADBE77E009C1D5E /* Navigationbar.m in Sources */,
+				C5576B3C1ADBC195009C1D5E /* DefaultViewController.m in Sources */,
+				C5576B3A1ADBC195009C1D5E /* AvailabilityViewController.m in Sources */,
+				C5576B4B1ADBDA22009C1D5E /* StartViewController.m in Sources */,
 				C57AD0AA1AD7EDB800B6042A /* AppDelegate.m in Sources */,
-				F190CD441ADB10EC00B906A7 /* CameraViewController.m in Sources */,
-				F190CD411ADB109100B906A7 /* DefaultViewController.m in Sources */,
-				C55FE9061AD81A59007663FB /* SuperViewController.m in Sources */,
+				C5576B371ADBC195009C1D5E /* CameraHelper.m in Sources */,
+				C5576B381ADBC195009C1D5E /* ColorHelper.m in Sources */,
+				C5576B541ADBE2C1009C1D5E /* RegisterViewController.m in Sources */,
+				C5576B3E1ADBC195009C1D5E /* SuperViewController.m in Sources */,
+				C5576B3D1ADBC195009C1D5E /* OverlayViewController.m in Sources */,
 				C57AD0A71AD7EDB800B6042A /* main.m in Sources */,
-				F190CD4A1ADB12BD00B906A7 /* CameraHelper.m in Sources */,
+				C5576B3B1ADBC195009C1D5E /* CameraViewController.m in Sources */,
+				C5576B3F1ADBC195009C1D5E /* TestViewCoViewController.m in Sources */,
+				C5576B4E1ADBDB14009C1D5E /* NavigationController.m in Sources */,
+				C5576B571ADBE31A009C1D5E /* SuperLoginViewController.m in Sources */,
+				C5A27B541ADC060000968033 /* TextFieldWrapper.m in Sources */,
+				C5576B401ADBC195009C1D5E /* ViewController.m in Sources */,
 				C55FE90A1AD81F45007663FB /* SuperButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -312,6 +422,15 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		C5576B471ADBD79A009C1D5E /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C5576B461ADBD79A009C1D5E /* Base */,
+				C5576B481ADBD7D3009C1D5E /* nb */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 		C57AD0AE1AD7EDB800B6042A /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (

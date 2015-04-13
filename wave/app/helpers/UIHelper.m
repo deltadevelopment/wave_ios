@@ -7,6 +7,7 @@
 //
 
 #import "UIHelper.h"
+#import "ColorHelper.h"
 static CGRect screenBound;
 static CGSize screenSize;
 static CGFloat screenWidth;
@@ -28,6 +29,11 @@ static CGFloat screenHeight;
 +(CGFloat)getScreenHeight
 {
     return screenHeight;
+}
+
++(void)applyLayoutOnButton:(UIButton *) button{
+    [[button titleLabel] setFont:[UIFont fontWithName:@"HelveticaNeue" size:20]];
+    [[button titleLabel] setTextColor:[ColorHelper whiteColor]];
 }
 
 @end

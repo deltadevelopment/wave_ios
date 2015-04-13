@@ -12,4 +12,5 @@
 +(void)initialize;
 +(CGFloat)getScreenWidth;
 +(CGFloat)getScreenHeight;
++(void)applyLayoutOnButton:(UIButton *) button;
 @end

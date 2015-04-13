@@ -16,8 +16,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    AvailabilityViewController *vc = (AvailabilityViewController *)[self createViewControllerWithStoryboardId:@"availability"];
-    [self attachViews:vc withY:nil];
+    AvailabilityViewController *viewControllerX = (AvailabilityViewController *)[self createViewControllerWithStoryboardId:@"availability"];
+    [self attachViews:viewControllerX withY:nil];
     // Do any additional setup after loading the view.
 }
 
