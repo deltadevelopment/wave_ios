@@ -34,6 +34,7 @@ static CGFloat screenHeight;
 +(void)applyLayoutOnButton:(UIButton *) button{
     [[button titleLabel] setFont:[UIFont fontWithName:@"HelveticaNeue" size:20]];
     [[button titleLabel] setTextColor:[ColorHelper whiteColor]];
+    [button setTintColor:[ColorHelper whiteColor]];
 }
 
 @end

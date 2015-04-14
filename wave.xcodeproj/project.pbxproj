@@ -45,6 +45,7 @@
 		C5A27B721ADD0BF500968033 /* RegisterController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A27B711ADD0BF500968033 /* RegisterController.m */; };
 		C5A27B751ADD0F4500968033 /* ResponseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A27B741ADD0F4500968033 /* ResponseModel.m */; };
 		C5A27B781ADD128100968033 /* UserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A27B771ADD128100968033 /* UserModel.m */; };
+		C5A27B7B1ADD1DEB00968033 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A27B7A1ADD1DEB00968033 /* LoginViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -130,6 +131,8 @@
 		C5A27B741ADD0F4500968033 /* ResponseModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResponseModel.m; sourceTree = "<group>"; };
 		C5A27B761ADD128100968033 /* UserModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserModel.h; sourceTree = "<group>"; };
 		C5A27B771ADD128100968033 /* UserModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserModel.m; sourceTree = "<group>"; };
+		C5A27B791ADD1DEB00968033 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		C5A27B7A1ADD1DEB00968033 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -267,6 +270,8 @@
 				C5576B531ADBE2C1009C1D5E /* RegisterViewController.m */,
 				C5576B551ADBE31A009C1D5E /* SuperLoginViewController.h */,
 				C5576B561ADBE31A009C1D5E /* SuperLoginViewController.m */,
+				C5A27B791ADD1DEB00968033 /* LoginViewController.h */,
+				C5A27B7A1ADD1DEB00968033 /* LoginViewController.m */,
 			);
 			name = login;
 			sourceTree = "<group>";
@@ -466,6 +471,7 @@
 				C5576B401ADBC195009C1D5E /* ViewController.m in Sources */,
 				C55FE90A1AD81F45007663FB /* SuperButton.m in Sources */,
 				C5A27B631ADD01AE00968033 /* AuthHelper.m in Sources */,
+				C5A27B7B1ADD1DEB00968033 /* LoginViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

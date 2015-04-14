@@ -164,6 +164,7 @@
                             [self stopIndicatorSpinning];
                             if(response.success){
                                 //login
+                                NSLog(@"logging in...");
                             }else{
                                 NSString *usernameError = [[response.error objectForKey:@"username"] objectAtIndex:0];
                                 NSString *emailError = [[response.error objectForKey:@"email"] objectAtIndex:0];
