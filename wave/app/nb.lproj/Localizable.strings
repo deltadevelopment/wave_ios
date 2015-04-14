@@ -5,8 +5,8 @@
   Created by Simen Lie on 13/04/15.
   Copyright (c) 2015 ddev. All rights reserved.
 */
-"login_btn_cap" = "LOG IN";
-"signup_btn_cap" = "SIGN UP";
+"login_btn_cap" = "LOGG INN";
+"signup_btn_cap" = "REGISTRER DEG";
 "username_pla" = "Brukernavn";
 "password_pla" = "Passord";
 "email_pla" = "Email";

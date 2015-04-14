@@ -34,6 +34,17 @@
 		C57AD0C11AD7EDB800B6042A /* waveTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C57AD0C01AD7EDB800B6042A /* waveTests.m */; };
 		C5A27B511ADC014E00968033 /* cross-white.png in Resources */ = {isa = PBXBuildFile; fileRef = C5A27B501ADC014E00968033 /* cross-white.png */; };
 		C5A27B541ADC060000968033 /* TextFieldWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A27B531ADC060000968033 /* TextFieldWrapper.m */; };
+		C5A27B5A1ADD002A00968033 /* ApplicationController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A27B591ADD002A00968033 /* ApplicationController.m */; };
+		C5A27B5F1ADD019900968033 /* SSKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A27B5C1ADD019900968033 /* SSKeychain.m */; };
+		C5A27B601ADD019900968033 /* SSKeychainQuery.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A27B5E1ADD019900968033 /* SSKeychainQuery.m */; };
+		C5A27B631ADD01AE00968033 /* AuthHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A27B621ADD01AE00968033 /* AuthHelper.m */; };
+		C5A27B661ADD01C100968033 /* ParserHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A27B651ADD01C100968033 /* ParserHelper.m */; };
+		C5A27B691ADD01D000968033 /* NotificationHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A27B681ADD01D000968033 /* NotificationHelper.m */; };
+		C5A27B6C1ADD01F200968033 /* ApplicationHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A27B6B1ADD01F200968033 /* ApplicationHelper.m */; };
+		C5A27B6F1ADD083300968033 /* ConfigHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A27B6E1ADD083300968033 /* ConfigHelper.m */; };
+		C5A27B721ADD0BF500968033 /* RegisterController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A27B711ADD0BF500968033 /* RegisterController.m */; };
+		C5A27B751ADD0F4500968033 /* ResponseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A27B741ADD0F4500968033 /* ResponseModel.m */; };
+		C5A27B781ADD128100968033 /* UserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A27B771ADD128100968033 /* UserModel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -97,6 +108,28 @@
 		C5A27B501ADC014E00968033 /* cross-white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cross-white.png"; sourceTree = "<group>"; };
 		C5A27B521ADC060000968033 /* TextFieldWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextFieldWrapper.h; sourceTree = "<group>"; };
 		C5A27B531ADC060000968033 /* TextFieldWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextFieldWrapper.m; sourceTree = "<group>"; };
+		C5A27B581ADD002A00968033 /* ApplicationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApplicationController.h; sourceTree = "<group>"; };
+		C5A27B591ADD002A00968033 /* ApplicationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApplicationController.m; sourceTree = "<group>"; };
+		C5A27B5B1ADD019900968033 /* SSKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKeychain.h; sourceTree = "<group>"; };
+		C5A27B5C1ADD019900968033 /* SSKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKeychain.m; sourceTree = "<group>"; };
+		C5A27B5D1ADD019900968033 /* SSKeychainQuery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKeychainQuery.h; sourceTree = "<group>"; };
+		C5A27B5E1ADD019900968033 /* SSKeychainQuery.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKeychainQuery.m; sourceTree = "<group>"; };
+		C5A27B611ADD01AE00968033 /* AuthHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AuthHelper.h; sourceTree = "<group>"; };
+		C5A27B621ADD01AE00968033 /* AuthHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AuthHelper.m; sourceTree = "<group>"; };
+		C5A27B641ADD01C100968033 /* ParserHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ParserHelper.h; sourceTree = "<group>"; };
+		C5A27B651ADD01C100968033 /* ParserHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ParserHelper.m; sourceTree = "<group>"; };
+		C5A27B671ADD01D000968033 /* NotificationHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationHelper.h; sourceTree = "<group>"; };
+		C5A27B681ADD01D000968033 /* NotificationHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotificationHelper.m; sourceTree = "<group>"; };
+		C5A27B6A1ADD01F200968033 /* ApplicationHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApplicationHelper.h; sourceTree = "<group>"; };
+		C5A27B6B1ADD01F200968033 /* ApplicationHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApplicationHelper.m; sourceTree = "<group>"; };
+		C5A27B6D1ADD083300968033 /* ConfigHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfigHelper.h; sourceTree = "<group>"; };
+		C5A27B6E1ADD083300968033 /* ConfigHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfigHelper.m; sourceTree = "<group>"; };
+		C5A27B701ADD0BF500968033 /* RegisterController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegisterController.h; sourceTree = "<group>"; };
+		C5A27B711ADD0BF500968033 /* RegisterController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegisterController.m; sourceTree = "<group>"; };
+		C5A27B731ADD0F4500968033 /* ResponseModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResponseModel.h; sourceTree = "<group>"; };
+		C5A27B741ADD0F4500968033 /* ResponseModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResponseModel.m; sourceTree = "<group>"; };
+		C5A27B761ADD128100968033 /* UserModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserModel.h; sourceTree = "<group>"; };
+		C5A27B771ADD128100968033 /* UserModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserModel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,6 +167,10 @@
 		C5576B1D1ADBC195009C1D5E /* controllers */ = {
 			isa = PBXGroup;
 			children = (
+				C5A27B581ADD002A00968033 /* ApplicationController.h */,
+				C5A27B591ADD002A00968033 /* ApplicationController.m */,
+				C5A27B701ADD0BF500968033 /* RegisterController.h */,
+				C5A27B711ADD0BF500968033 /* RegisterController.m */,
 			);
 			path = controllers;
 			sourceTree = "<group>";
@@ -147,6 +184,16 @@
 				C5576B221ADBC195009C1D5E /* ColorHelper.m */,
 				C5576B231ADBC195009C1D5E /* UIHelper.h */,
 				C5576B241ADBC195009C1D5E /* UIHelper.m */,
+				C5A27B611ADD01AE00968033 /* AuthHelper.h */,
+				C5A27B621ADD01AE00968033 /* AuthHelper.m */,
+				C5A27B641ADD01C100968033 /* ParserHelper.h */,
+				C5A27B651ADD01C100968033 /* ParserHelper.m */,
+				C5A27B671ADD01D000968033 /* NotificationHelper.h */,
+				C5A27B681ADD01D000968033 /* NotificationHelper.m */,
+				C5A27B6A1ADD01F200968033 /* ApplicationHelper.h */,
+				C5A27B6B1ADD01F200968033 /* ApplicationHelper.m */,
+				C5A27B6D1ADD083300968033 /* ConfigHelper.h */,
+				C5A27B6E1ADD083300968033 /* ConfigHelper.m */,
 			);
 			path = helpers;
 			sourceTree = "<group>";
@@ -154,6 +201,10 @@
 		C5576B251ADBC195009C1D5E /* lib */ = {
 			isa = PBXGroup;
 			children = (
+				C5A27B5B1ADD019900968033 /* SSKeychain.h */,
+				C5A27B5C1ADD019900968033 /* SSKeychain.m */,
+				C5A27B5D1ADD019900968033 /* SSKeychainQuery.h */,
+				C5A27B5E1ADD019900968033 /* SSKeychainQuery.m */,
 			);
 			path = lib;
 			sourceTree = "<group>";
@@ -163,6 +214,10 @@
 			children = (
 				C5A27B521ADC060000968033 /* TextFieldWrapper.h */,
 				C5A27B531ADC060000968033 /* TextFieldWrapper.m */,
+				C5A27B731ADD0F4500968033 /* ResponseModel.h */,
+				C5A27B741ADD0F4500968033 /* ResponseModel.m */,
+				C5A27B761ADD128100968033 /* UserModel.h */,
+				C5A27B771ADD128100968033 /* UserModel.m */,
 			);
 			path = models;
 			sourceTree = "<group>";
@@ -383,23 +438,34 @@
 			files = (
 				C5576B391ADBC195009C1D5E /* UIHelper.m in Sources */,
 				C5576B5A1ADBE77E009C1D5E /* Navigationbar.m in Sources */,
+				C5A27B5F1ADD019900968033 /* SSKeychain.m in Sources */,
 				C5576B3C1ADBC195009C1D5E /* DefaultViewController.m in Sources */,
+				C5A27B721ADD0BF500968033 /* RegisterController.m in Sources */,
 				C5576B3A1ADBC195009C1D5E /* AvailabilityViewController.m in Sources */,
 				C5576B4B1ADBDA22009C1D5E /* StartViewController.m in Sources */,
+				C5A27B6C1ADD01F200968033 /* ApplicationHelper.m in Sources */,
+				C5A27B661ADD01C100968033 /* ParserHelper.m in Sources */,
+				C5A27B751ADD0F4500968033 /* ResponseModel.m in Sources */,
 				C57AD0AA1AD7EDB800B6042A /* AppDelegate.m in Sources */,
 				C5576B371ADBC195009C1D5E /* CameraHelper.m in Sources */,
 				C5576B381ADBC195009C1D5E /* ColorHelper.m in Sources */,
+				C5A27B6F1ADD083300968033 /* ConfigHelper.m in Sources */,
 				C5576B541ADBE2C1009C1D5E /* RegisterViewController.m in Sources */,
 				C5576B3E1ADBC195009C1D5E /* SuperViewController.m in Sources */,
 				C5576B3D1ADBC195009C1D5E /* OverlayViewController.m in Sources */,
+				C5A27B601ADD019900968033 /* SSKeychainQuery.m in Sources */,
 				C57AD0A71AD7EDB800B6042A /* main.m in Sources */,
+				C5A27B691ADD01D000968033 /* NotificationHelper.m in Sources */,
 				C5576B3B1ADBC195009C1D5E /* CameraViewController.m in Sources */,
 				C5576B3F1ADBC195009C1D5E /* TestViewCoViewController.m in Sources */,
+				C5A27B5A1ADD002A00968033 /* ApplicationController.m in Sources */,
 				C5576B4E1ADBDB14009C1D5E /* NavigationController.m in Sources */,
 				C5576B571ADBE31A009C1D5E /* SuperLoginViewController.m in Sources */,
 				C5A27B541ADC060000968033 /* TextFieldWrapper.m in Sources */,
+				C5A27B781ADD128100968033 /* UserModel.m in Sources */,
 				C5576B401ADBC195009C1D5E /* ViewController.m in Sources */,
 				C55FE90A1AD81F45007663FB /* SuperButton.m in Sources */,
+				C5A27B631ADD01AE00968033 /* AuthHelper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

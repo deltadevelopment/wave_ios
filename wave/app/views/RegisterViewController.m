@@ -9,6 +9,8 @@
 #import "RegisterViewController.h"
 #import "ColorHelper.h"
 #import "UIHelper.h"
+#import "ApplicationController.h"
+#import "RegisterController.h"
 
 @interface RegisterViewController ()
 
@@ -19,10 +21,12 @@
     TextFieldWrapper *emailWrapper;
     TextFieldWrapper *passwordWrapper;
     UIActivityIndicatorView *activityIndicator;
+    RegisterController *registerController;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    registerController =[[RegisterController alloc] init];
     verticalSpaceConstraintButton = self.verticalSpaceButtonConstraint;
     usernameWrapper = [[TextFieldWrapper alloc] init:self.usernameTextField withView:self.usernameTextFieldView];
     emailWrapper = [[TextFieldWrapper alloc] init:self.emailTextField withView:self.emailTextFieldView];
@@ -127,19 +131,6 @@
     
 }
 
--(void)registerWasNotSuccessful:(NSError *) error{
-    /*
-    [registerController parseData:[error userInfo]];
-    
-    //[self errorAnimation];
-    [self.regIndicator stopAnimating];
-    [self showError:self.usernameError errorMsg:[registerController getUsernameError]];
-    [self showError:self.emailError errorMsg:[registerController getEmailError]];
-    [self showError:self.passwordError errorMsg:[registerController getPasswordError]];
-     */
-    
-}
-
 -(void)loginWasSuccessful:(NSData *) data{
     /*
     [self.regIndicator stopAnimating];
@@ -153,13 +144,36 @@
 -(void)loginWasNotSuccessful:(NSError *) error{
     [self.regIndicator stopAnimating];
     [self errorAnimation];
-    
-    
+    ApplicationController *appCntrl = [[ApplicationController alloc]init];
+    [appCntrl getHttpRequest:@"string" onCompletion:^(NSURLResponse *resp,NSData *data,NSError *error){
+        
+    }];
 }
 
 
 - (IBAction)registerAction:(id)sender {
-
+    [self startIndicatorSpinning];
+    usernameWrapper.constraint = self.usernameTextFieldViewHeight;
+    emailWrapper.constraint = self.emailTextFieldViewHeight;
+    passwordWrapper.constraint = self.passwordTestFieldViewHeight;
+    
+    [registerController registerUser:self.usernameTextField.text
+                                pass:self.passwordTextField.text
+                               email:self.emailTextField.text
+                        onCompletion:^(UserModel *user, ResponseModel *response){
+                            [self stopIndicatorSpinning];
+                            if(response.success){
+                                //login
+                            }else{
+                                NSString *usernameError = [[response.error objectForKey:@"username"] objectAtIndex:0];
+                                NSString *emailError = [[response.error objectForKey:@"email"] objectAtIndex:0];
+                                NSString *passwordError = [[response.error objectForKey:@"password"] objectAtIndex:0];
+                                usernameError != nil ? [usernameWrapper showError:usernameError] : nil;
+                                emailError != nil ? [emailWrapper showError:emailError] : nil;
+                                passwordError != nil ? [passwordWrapper showError:passwordError] : nil;
+                            }
+                            
+                        }];
     /*
      [registerController registerUser:self.usernameTextField.text
      pass:self.passwordTextField.text
@@ -168,13 +182,12 @@
      withSuccess:@selector(registerWasSuccessful:)
      withError:@selector(registerWasNotSuccessful:)];
      */
-    usernameWrapper.constraint = self.usernameTextFieldViewHeight;
-    emailWrapper.constraint = self.emailTextFieldViewHeight;
-    passwordWrapper.constraint = self.passwordTestFieldViewHeight;
+/*
     [usernameWrapper showError:@"Brukernavnet er for kort"];
     [passwordWrapper showError:@"passordet er altfor dårlig altså"];
     [emailWrapper showError:@"emailen er i bruk"];
-    [self startIndicatorSpinning];
+ */
+    //[self startIndicatorSpinning];
     //[self stopIndicatorSpinning];
 }
 
