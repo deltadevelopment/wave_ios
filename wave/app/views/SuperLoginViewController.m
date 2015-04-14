@@ -18,6 +18,8 @@
     [super viewDidLoad];
    [self.navigationController setNavigationBarHidden:NO];
     // Do any additional setup after loading the view.
+    self.navigationController.navigationBar.barStyle = UIBarStyleBlack;
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
 }
 
 - (void)didReceiveMemoryWarning {

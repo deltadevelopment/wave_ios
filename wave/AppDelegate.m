@@ -10,6 +10,7 @@
 #import "AuthHelper.h"
 #import "ViewController.h"
 #import "StartViewController.h"
+#import "SlideMenuViewController.h"
 @interface AppDelegate ()
 
 @end
@@ -22,7 +23,10 @@ AuthHelper *authHelper;
     if([authHelper getAuthToken] == nil){
         [self setView:[[StartViewController alloc] init] second:@"startNav"];
     }else{
-        [self setView:[[ViewController alloc] init] second:@"mainView"];
+        //[self setView:[[ViewController alloc] init] second:@"mainView"];
+        [self setView:[[SlideMenuViewController alloc] init] second:@"slideMenuView"];
+      
+        
     }
     return YES;
 }

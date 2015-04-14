@@ -1,22 +1,22 @@
 //
-//  NavigationController.m
+//  MainViewController.m
 //  wave
 //
-//  Created by Simen Lie on 13/04/15.
+//  Created by Simen Lie on 14/04/15.
 //  Copyright (c) 2015 ddev. All rights reserved.
 //
 
-#import "NavigationController.h"
-#import "Navigationbar.h"
-@interface NavigationController ()
+#import "MainViewController.h"
+
+@interface MainViewController ()
 
 @end
 
-@implementation NavigationController
+@implementation MainViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+
     // Do any additional setup after loading the view.
 }
 
@@ -24,16 +24,9 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
--(UIStatusBarStyle)preferredStatusBarStyle{
-    return UIStatusBarStyleLightContent;
-}
-/*
--(UIViewController *)popViewControllerAnimated:(BOOL)animated{
-    UIViewController *poppedCtrl = [super popViewControllerAnimated:NO];
-    //[((self *) self.topViewController) doCustomAnimation];
-    return poppedCtrl;
-}
-*/
+
+
+
 /*
 #pragma mark - Navigation
 

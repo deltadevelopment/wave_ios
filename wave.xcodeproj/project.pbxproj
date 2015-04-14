@@ -47,6 +47,11 @@
 		C5A27B781ADD128100968033 /* UserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A27B771ADD128100968033 /* UserModel.m */; };
 		C5A27B7B1ADD1DEB00968033 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A27B7A1ADD1DEB00968033 /* LoginViewController.m */; };
 		C5A27B7E1ADD265400968033 /* LoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A27B7D1ADD265400968033 /* LoginController.m */; };
+		C5A27B821ADD594600968033 /* SlideMenuViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A27B811ADD594600968033 /* SlideMenuViewController.m */; };
+		C5A27B851ADD5AC700968033 /* MenuTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A27B841ADD5AC700968033 /* MenuTableViewController.m */; };
+		C5A27B881ADD5ADF00968033 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A27B871ADD5ADF00968033 /* MainViewController.m */; };
+		C5A27B8B1ADD6DD500968033 /* TestSuperViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A27B8A1ADD6DD500968033 /* TestSuperViewController.m */; };
+		C5A27B911ADD8B2000968033 /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A27B901ADD8B2000968033 /* SecondViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -136,6 +141,16 @@
 		C5A27B7A1ADD1DEB00968033 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 		C5A27B7C1ADD265400968033 /* LoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginController.h; sourceTree = "<group>"; };
 		C5A27B7D1ADD265400968033 /* LoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginController.m; sourceTree = "<group>"; };
+		C5A27B801ADD594600968033 /* SlideMenuViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlideMenuViewController.h; sourceTree = "<group>"; };
+		C5A27B811ADD594600968033 /* SlideMenuViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SlideMenuViewController.m; sourceTree = "<group>"; };
+		C5A27B831ADD5AC700968033 /* MenuTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuTableViewController.h; sourceTree = "<group>"; };
+		C5A27B841ADD5AC700968033 /* MenuTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuTableViewController.m; sourceTree = "<group>"; };
+		C5A27B861ADD5ADF00968033 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
+		C5A27B871ADD5ADF00968033 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
+		C5A27B891ADD6DD500968033 /* TestSuperViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TestSuperViewController.h; sourceTree = "<group>"; };
+		C5A27B8A1ADD6DD500968033 /* TestSuperViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestSuperViewController.m; sourceTree = "<group>"; };
+		C5A27B8F1ADD8B2000968033 /* SecondViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecondViewController.h; sourceTree = "<group>"; };
+		C5A27B901ADD8B2000968033 /* SecondViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecondViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -159,6 +174,7 @@
 		C5576B1C1ADBC195009C1D5E /* app */ = {
 			isa = PBXGroup;
 			children = (
+				C5A27B7F1ADD592E00968033 /* SlideMenu */,
 				C5576B1D1ADBC195009C1D5E /* controllers */,
 				C5576B1E1ADBC195009C1D5E /* helpers */,
 				C5576B251ADBC195009C1D5E /* lib */,
@@ -341,6 +357,23 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		C5A27B7F1ADD592E00968033 /* SlideMenu */ = {
+			isa = PBXGroup;
+			children = (
+				C5A27B801ADD594600968033 /* SlideMenuViewController.h */,
+				C5A27B811ADD594600968033 /* SlideMenuViewController.m */,
+				C5A27B831ADD5AC700968033 /* MenuTableViewController.h */,
+				C5A27B841ADD5AC700968033 /* MenuTableViewController.m */,
+				C5A27B861ADD5ADF00968033 /* MainViewController.h */,
+				C5A27B871ADD5ADF00968033 /* MainViewController.m */,
+				C5A27B891ADD6DD500968033 /* TestSuperViewController.h */,
+				C5A27B8A1ADD6DD500968033 /* TestSuperViewController.m */,
+				C5A27B8F1ADD8B2000968033 /* SecondViewController.h */,
+				C5A27B901ADD8B2000968033 /* SecondViewController.m */,
+			);
+			name = SlideMenu;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -450,6 +483,7 @@
 				C5576B5A1ADBE77E009C1D5E /* Navigationbar.m in Sources */,
 				C5A27B5F1ADD019900968033 /* SSKeychain.m in Sources */,
 				C5576B3C1ADBC195009C1D5E /* DefaultViewController.m in Sources */,
+				C5A27B911ADD8B2000968033 /* SecondViewController.m in Sources */,
 				C5A27B721ADD0BF500968033 /* RegisterController.m in Sources */,
 				C5576B3A1ADBC195009C1D5E /* AvailabilityViewController.m in Sources */,
 				C5576B4B1ADBDA22009C1D5E /* StartViewController.m in Sources */,
@@ -462,13 +496,17 @@
 				C5576B381ADBC195009C1D5E /* ColorHelper.m in Sources */,
 				C5A27B6F1ADD083300968033 /* ConfigHelper.m in Sources */,
 				C5576B541ADBE2C1009C1D5E /* RegisterViewController.m in Sources */,
+				C5A27B851ADD5AC700968033 /* MenuTableViewController.m in Sources */,
 				C5576B3E1ADBC195009C1D5E /* SuperViewController.m in Sources */,
+				C5A27B881ADD5ADF00968033 /* MainViewController.m in Sources */,
 				C5576B3D1ADBC195009C1D5E /* OverlayViewController.m in Sources */,
 				C5A27B601ADD019900968033 /* SSKeychainQuery.m in Sources */,
 				C57AD0A71AD7EDB800B6042A /* main.m in Sources */,
 				C5A27B691ADD01D000968033 /* NotificationHelper.m in Sources */,
+				C5A27B821ADD594600968033 /* SlideMenuViewController.m in Sources */,
 				C5576B3B1ADBC195009C1D5E /* CameraViewController.m in Sources */,
 				C5576B3F1ADBC195009C1D5E /* TestViewCoViewController.m in Sources */,
+				C5A27B8B1ADD6DD500968033 /* TestSuperViewController.m in Sources */,
 				C5A27B5A1ADD002A00968033 /* ApplicationController.m in Sources */,
 				C5576B4E1ADBDB14009C1D5E /* NavigationController.m in Sources */,
 				C5576B571ADBE31A009C1D5E /* SuperLoginViewController.m in Sources */,
