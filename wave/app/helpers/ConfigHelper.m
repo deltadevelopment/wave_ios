@@ -19,7 +19,7 @@
             _baseUrl = storedBaseUrl;
             
         }else{
-            _baseUrl = @"http://wzap.herokuapp.com";
+            _baseUrl = @"http://w4ve.herokuapp.com";
         }
         NSLog(@"baseURL: %@", _baseUrl);
     }

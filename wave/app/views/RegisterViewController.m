@@ -11,7 +11,7 @@
 #import "UIHelper.h"
 #import "ApplicationController.h"
 #import "RegisterController.h"
-
+#import "LoginController.h"
 @interface RegisterViewController ()
 
 @end
@@ -22,11 +22,13 @@
     TextFieldWrapper *passwordWrapper;
     UIActivityIndicatorView *activityIndicator;
     RegisterController *registerController;
+    LoginController *loginController;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     registerController =[[RegisterController alloc] init];
+    loginController = [[LoginController alloc]init];
     verticalSpaceConstraintButton = self.verticalSpaceButtonConstraint;
     usernameWrapper = [[TextFieldWrapper alloc] init:self.usernameTextField withView:self.usernameTextFieldView];
     emailWrapper = [[TextFieldWrapper alloc] init:self.emailTextField withView:self.emailTextFieldView];
@@ -61,11 +63,7 @@
     [self setPlaceholderFont:self.passwordTextField];
     [self setPlaceholderFont:self.emailTextField];
     self.navigationController.navigationBar.topItem.title = NSLocalizedString(@"register_txt", nil);
-    // Do any additional setup after loading the view.
-   
 }
-
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -98,7 +96,6 @@
 }
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
-    
     if(textField == self.usernameTextField){
         [self.usernameTextField resignFirstResponder];
         [self.emailTextField becomeFirstResponder];
@@ -117,40 +114,6 @@
     return YES;
 }
 
--(void)registerWasSuccessful:(NSData *) data{
-    NSString *strdata=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
-    NSLog(strdata);
-    [self.regIndicator stopAnimating];
-    /*
-    [loginController login:self.usernameTextField.text
-                      pass:self.passwordTextField.text
-                withObject:self
-               withSuccess:@selector(loginWasSuccessful:)
-                 withError:@selector(loginWasNotSuccessful:)];
-     */
-    
-}
-
--(void)loginWasSuccessful:(NSData *) data{
-    /*
-    [self.regIndicator stopAnimating];
-    [loginController storeCredentials:data];
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    FeedViewController *viewController = (FeedViewController *)[storyboard instantiateViewControllerWithIdentifier:@"feed2"];
-    [self presentViewController:viewController animated:YES completion:nil];
-     */
-}
-
--(void)loginWasNotSuccessful:(NSError *) error{
-    [self.regIndicator stopAnimating];
-    [self errorAnimation];
-    ApplicationController *appCntrl = [[ApplicationController alloc]init];
-    [appCntrl getHttpRequest:@"string" onCompletion:^(NSURLResponse *resp,NSData *data,NSError *error){
-        
-    }];
-}
-
-
 - (IBAction)registerAction:(id)sender {
     [self startIndicatorSpinning];
     usernameWrapper.constraint = self.usernameTextFieldViewHeight;
@@ -164,33 +127,47 @@
                             [self stopIndicatorSpinning];
                             if(response.success){
                                 //login
-                                NSLog(@"logging in...");
+                                [loginController login:self.usernameTextField.text
+                                                  pass:self.passwordTextField.text
+                                          onCompletion:^(UserModel *user, ResponseModel *response){
+                                             //REDIRECT TO MAINVIEW
+                                              response.success ? [self showMainView] : nil;
+                                              
+                                          }];
                             }else{
-                                NSString *usernameError = [[response.error objectForKey:@"username"] objectAtIndex:0];
-                                NSString *emailError = [[response.error objectForKey:@"email"] objectAtIndex:0];
-                                NSString *passwordError = [[response.error objectForKey:@"password"] objectAtIndex:0];
-                                usernameError != nil ? [usernameWrapper showError:usernameError] : nil;
-                                emailError != nil ? [emailWrapper showError:emailError] : nil;
-                                passwordError != nil ? [passwordWrapper showError:passwordError] : nil;
+                                self.registerButton.hidden = YES;
+                                self.registerButton.alpha = 0.0;
+                                [self showError:response];
                             }
                             
                         }];
-    /*
-     [registerController registerUser:self.usernameTextField.text
-     pass:self.passwordTextField.text
-     email:self.emailTextField.text
-     withObject:self
-     withSuccess:@selector(registerWasSuccessful:)
-     withError:@selector(registerWasNotSuccessful:)];
-     */
-/*
-    [usernameWrapper showError:@"Brukernavnet er for kort"];
-    [passwordWrapper showError:@"passordet er altfor dårlig altså"];
-    [emailWrapper showError:@"emailen er i bruk"];
- */
-    //[self startIndicatorSpinning];
-    //[self stopIndicatorSpinning];
 }
+
+
+
+-(void)showError:(ResponseModel *) response{
+    NSString *usernameError = [[response.error objectForKey:@"username"] objectAtIndex:0];
+    NSString *emailError = [[response.error objectForKey:@"email"] objectAtIndex:0];
+    NSString *passwordError = [[response.error objectForKey:@"password"] objectAtIndex:0];
+    if(usernameError != nil){
+        [usernameWrapper showError:NSLocalizedString(usernameError, nil)];
+        [self.usernameTextField becomeFirstResponder];
+    }
+    else{
+        if(emailError != nil){
+            [emailWrapper showError:NSLocalizedString(emailError, nil) ];
+            [self.emailTextField becomeFirstResponder];
+        }
+        else{
+            
+            if(passwordError != nil){
+                [passwordWrapper showError:NSLocalizedString(passwordError, nil)];
+                [self.passwordTextField becomeFirstResponder];
+            }
+        }
+    }
+}
+
 
 -(void)startIndicatorSpinning{
     activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];

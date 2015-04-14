@@ -11,6 +11,7 @@
 #import "ParserHelper.h"
 #import "NotificationHelper.h"
 #import "ApplicationHelper.h"
+#import "ResponseModel.h"
 @interface ApplicationController : NSObject{
     AuthHelper *authHelper;
     ParserHelper *parserHelper;

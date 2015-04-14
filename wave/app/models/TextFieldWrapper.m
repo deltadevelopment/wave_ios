@@ -11,6 +11,9 @@
 #import "UIHelper.h"
 
 @implementation TextFieldWrapper
+{
+    UILabel *error;
+}
 -(id)init:(UITextField *) textField withLayer:(CALayer *) layer withConstraint:(NSLayoutConstraint *) constraint
 {
     _constraint = constraint;
@@ -36,7 +39,7 @@
         _constraint.constant += 40;
         _layer.hidden = YES;
         _textField.textColor = [ColorHelper whiteColor];
-        UILabel *error = [[UILabel alloc] initWithFrame:CGRectMake(16, 60, [UIHelper getScreenWidth] -40, 20)];
+        error = [[UILabel alloc] initWithFrame:CGRectMake(16, 60, [UIHelper getScreenWidth] -40, 20)];
         error.text = errorMessage;
         error.textColor = [ColorHelper whiteColor];
         
@@ -60,6 +63,7 @@
     if(_layer.hidden == YES){
         _constraint.constant -= 40;
         [_button removeFromSuperview];
+        [error removeFromSuperview];
         _view.backgroundColor = [ColorHelper whiteColor];
         _textField.textColor = [UIColor blackColor];
         _layer.hidden = NO;

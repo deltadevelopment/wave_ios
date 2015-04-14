@@ -46,6 +46,7 @@
 		C5A27B751ADD0F4500968033 /* ResponseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A27B741ADD0F4500968033 /* ResponseModel.m */; };
 		C5A27B781ADD128100968033 /* UserModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A27B771ADD128100968033 /* UserModel.m */; };
 		C5A27B7B1ADD1DEB00968033 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A27B7A1ADD1DEB00968033 /* LoginViewController.m */; };
+		C5A27B7E1ADD265400968033 /* LoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A27B7D1ADD265400968033 /* LoginController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -133,6 +134,8 @@
 		C5A27B771ADD128100968033 /* UserModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserModel.m; sourceTree = "<group>"; };
 		C5A27B791ADD1DEB00968033 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
 		C5A27B7A1ADD1DEB00968033 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		C5A27B7C1ADD265400968033 /* LoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginController.h; sourceTree = "<group>"; };
+		C5A27B7D1ADD265400968033 /* LoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -174,6 +177,8 @@
 				C5A27B591ADD002A00968033 /* ApplicationController.m */,
 				C5A27B701ADD0BF500968033 /* RegisterController.h */,
 				C5A27B711ADD0BF500968033 /* RegisterController.m */,
+				C5A27B7C1ADD265400968033 /* LoginController.h */,
+				C5A27B7D1ADD265400968033 /* LoginController.m */,
 			);
 			path = controllers;
 			sourceTree = "<group>";
@@ -450,6 +455,7 @@
 				C5576B4B1ADBDA22009C1D5E /* StartViewController.m in Sources */,
 				C5A27B6C1ADD01F200968033 /* ApplicationHelper.m in Sources */,
 				C5A27B661ADD01C100968033 /* ParserHelper.m in Sources */,
+				C5A27B7E1ADD265400968033 /* LoginController.m in Sources */,
 				C5A27B751ADD0F4500968033 /* ResponseModel.m in Sources */,
 				C57AD0AA1AD7EDB800B6042A /* AppDelegate.m in Sources */,
 				C5576B371ADBC195009C1D5E /* CameraHelper.m in Sources */,

@@ -12,3 +12,15 @@
 "email_pla" = "Email";
 "register_txt" = "Registrer deg";
 "login_txt" = "Logg inn";
+"validation_error" = "Du har gjort noen feil, rett dem å prøv igjen";
+"bad_credentials" = "Brukernavnet og/eller passordet er feil";
+"validation_email_format" = "Dette er ikke en gyldig epostadresse";
+"validation_email_exists" = "Eposten eksisterer allerede";
+"validation_username_exists" = "Brukernavnet eksisterer allerede";
+"validation_username_alphanumeric" = "Brukernavn kan bare inneholde bokstaver og nummer";
+"validation_username_length" = "Brukernavn må være mellom 1 og 20 tegn";
+"validation_password_length" = "Passord må være mellom 6 og 20 tegn";
+"validation_display_name_length"= "NA";
+"validation_display_name_format"= "NA";
+"validation_phone_number_numerical"= "NA";
+"validation_phone_number_exists"= "NA";

@@ -36,6 +36,12 @@
     verticalSpaceConstraintButton.constant += keyboardSize.height;
 }
 
+-(void)showMainView{
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    ViewController *viewController = (ViewController *)[storyboard instantiateViewControllerWithIdentifier:@"mainView"];
+    [self presentViewController:viewController animated:YES completion:nil];
+}
+
 -(void)keyboardWillHide {
     verticalSpaceConstraintButton.constant -= keyboardSize.height;
 }

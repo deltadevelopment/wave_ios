@@ -13,5 +13,6 @@
 @property (nonatomic,strong) NSString *message;
 @property (nonatomic,strong) NSString *message_id;
 @property (nonatomic,strong) NSDictionary *error;
+@property (nonatomic,strong) NSDictionary *data;
 -(id)init:(NSMutableDictionary *)dic;
 @end

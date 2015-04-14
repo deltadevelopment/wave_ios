@@ -12,3 +12,15 @@
 "email_pla" = "Email";
 "register_txt" = "Register";
 "login_txt" = "Log In";
+"validation_error" = "You have made some errors, please correct them and try again";
+"bad_credentials" = "The username and/or password is incorrect";
+"validation_email_format" = "is not a valid email";
+"validation_email_exists" = "already exists";
+"validation_username_exists" = "The username already exists";
+"validation_username_length" = "must be between 1 and 20 characters";
+"validation_username_alphanumeric" = "can only contain letters and numbers";
+"validation_password_length" = "The password length must be between 6 and 20 characters";
+"validation_display_name_length"= "NA";
+"validation_display_name_format"= "NA";
+"validation_phone_number_numerical"= "NA";
+"validation_phone_number_exists"= "NA";

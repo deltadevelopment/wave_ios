@@ -8,6 +8,8 @@
 
 #import "ViewController.h"
 #import "AvailabilityViewController.h"
+#import "AuthHelper.h"
+#import "StartViewController.h"
 @interface ViewController ()
 
 
@@ -68,6 +70,41 @@
                      completion:^(BOOL finished){
                          [super onCameraClose];
                      }];
+}
+
+- (void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent *)event
+{
+    if ( event.subtype == UIEventSubtypeMotionShake )
+    {
+        // logout
+        AuthHelper *authHelper = [[AuthHelper alloc]init];
+        [authHelper resetCredentials];
+        [self showStartView];
+        
+    }
+    
+    if ( [super respondsToSelector:@selector(motionEnded:withEvent:)] )
+        [super motionEnded:motion withEvent:event];
+}
+
+-(void)showStartView{
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    StartViewController *viewController = (StartViewController *)[storyboard instantiateViewControllerWithIdentifier:@"startNav"];
+    [self presentViewController:viewController animated:YES completion:nil];
+}
+
+-(BOOL)canBecomeFirstResponder {
+    return YES;
+}
+
+-(void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self becomeFirstResponder];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [self resignFirstResponder];
+    [super viewWillDisappear:animated];
 }
 /*
 -(void)onImageTaken:(UIImage *)image{

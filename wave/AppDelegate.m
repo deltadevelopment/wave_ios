@@ -7,16 +7,23 @@
 //
 
 #import "AppDelegate.h"
-
+#import "AuthHelper.h"
+#import "ViewController.h"
+#import "StartViewController.h"
 @interface AppDelegate ()
 
 @end
 
 @implementation AppDelegate
-
+AuthHelper *authHelper;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    // Override point for customization after application launch.
+     authHelper = [[AuthHelper alloc] init];
+    if([authHelper getAuthToken] == nil){
+        [self setView:[[StartViewController alloc] init] second:@"startNav"];
+    }else{
+        [self setView:[[ViewController alloc] init] second:@"mainView"];
+    }
     return YES;
 }
 
@@ -40,6 +47,15 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+
+
+-(void)setView:(UIViewController *)controller second:(NSString *) controllerString{
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
+    controller = (UIViewController *)[mainStoryboard instantiateViewControllerWithIdentifier:controllerString];
+    [self.window makeKeyAndVisible];
+    [self.window.rootViewController presentViewController:controller animated:NO completion:NULL];
 }
 
 @end

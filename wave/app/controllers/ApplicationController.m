@@ -7,7 +7,7 @@
 //
 
 #import "ApplicationController.h"
-
+#import "NotificationHelper.h"
 @implementation ApplicationController
 
 - (id)init
@@ -42,7 +42,7 @@
     [request addValue:[authHelper getAuthToken] forHTTPHeaderField:@"X-AUTH-TOKEN"];
     [request setHTTPMethod:@"POST"];
     [request setHTTPBody:[data dataUsingEncoding:NSUTF8StringEncoding]];
-    
+    NSLog(@"%@",[request URL]);
     [self sendRequestAsync:request onCompletion:callback];
 };
 
@@ -69,6 +69,8 @@
     [request setHTTPBody:[data dataUsingEncoding:NSUTF8StringEncoding]];
     [self sendRequestAsync:request onCompletion:callback];
     
+    
+    
 };
 
 -(void)sendRequestAsync:(NSMutableURLRequest *)request onCompletion:(void (^)(NSURLResponse*, NSData *, NSError*))callback{
@@ -77,10 +79,11 @@
                                        queue:[NSOperationQueue currentQueue]
                            completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
                                
+                               callback(response,data,error);
                                if (data != nil && error == nil)
                                {
                                    //Ferdig lastet ned
-                                   callback(response,data,error);
+                                   
                                    NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) response;
                                    NSLog(@"response status code: %ld", (long)[httpResponse statusCode]);
                                    NSInteger statuscode = [httpResponse statusCode];
@@ -88,6 +91,7 @@
                                        //[view performSelector:success withObject:data];
                                        
                                    }else{
+                                       
                                        /*
                                         NSString *strdata=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
                                         [applicationHelper alertUser:[NSString stringWithFormat:@"%ld on %@",(long)statuscode, strdata]];
@@ -111,4 +115,12 @@
                                }
                            }];
 }
+
+-(void)showNotification:(NSObject *) view withData: (NSData *) data{
+    notificationHelper =[[NotificationHelper alloc] initNotification];
+    UIViewController *viewController = (UIViewController *) view;
+    [notificationHelper setNotificationMessage:data];
+    [notificationHelper addNotificationToView:viewController.navigationController.view];
+}
+
 @end

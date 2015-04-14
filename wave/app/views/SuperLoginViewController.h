@@ -8,14 +8,18 @@
 
 #import <UIKit/UIKit.h>
 #import "TextFieldWrapper.h"
+#import "NotificationHelper.h"
+#import "ViewController.h"
 @interface SuperLoginViewController : UIViewController{
     CGSize keyboardSize;
-    NSLayoutConstraint* verticalSpaceConstraintButton;    
+    NSLayoutConstraint* verticalSpaceConstraintButton;
+    NotificationHelper *notificationHelper;
 }
 -(CALayer *)addLine:(UITextField *) textField;
 -(CALayer *)addLineWithNoPadding:(UITextField *)textField;
 -(void)setTextFieldStyle:(UITextField *) textField;
 -(void)errorAnimation;
 -(void)setPlaceholderFont:(UITextField *) textField;
+-(void)showMainView;
 
 @end

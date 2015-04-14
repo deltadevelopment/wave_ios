@@ -17,7 +17,7 @@
 
 {
     //Logout
-    [authHelper resetCredentials];
+    //[authHelper resetCredentials];
     //Create dictionary with username and password
     NSDictionary *credentials = @{
                                   @"user":@{

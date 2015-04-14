@@ -14,11 +14,13 @@
     _message = [dic objectForKey:@"message"];
     _message_id = [dic objectForKey:@"message_id"];
     _error = [[dic objectForKey:@"data"] objectForKey:@"error"];
+    _data =[dic objectForKey:@"data"];
+    [self translate];
     return self;
 };
 
 -(void)translate{
-
+    _message = NSLocalizedString(_message_id, nil);
 }
 
 @end

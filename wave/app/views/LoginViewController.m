@@ -8,6 +8,9 @@
 
 #import "LoginViewController.h"
 #import "UIHelper.h"
+#import "LoginController.h"
+#import "UserModel.h"
+
 @interface LoginViewController ()
 
 @end
@@ -16,17 +19,22 @@
     TextFieldWrapper *usernameWrapper;
     TextFieldWrapper *passwordWrapper;
     UIActivityIndicatorView *activityIndicator;
+    LoginController *loginController;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    loginController = [[LoginController alloc]init];
      self.navigationController.navigationBar.topItem.title = NSLocalizedString(@"login_txt", nil);
     NSLog([[UIDevice currentDevice] name]);
     NSString *name = [[UIDevice currentDevice] name];
     if(![name isEqualToString:@"Simen sin iPhone"]){
         self.usernameTextField.text = @"christiandalsvaag";
         self.passwordTextField.text = @"christiandalsvaag";
+    }else{
+        self.usernameTextField.text = @"simenlie";
+        self.passwordTextField.text = @"simenlie";
     }
     
     [UIHelper applyLayoutOnButton:self.loginButton];
@@ -56,7 +64,7 @@
                     forControlEvents:UIControlEventEditingChanged];
     [self setPlaceholderFont:self.usernameTextField];
     [self setPlaceholderFont:self.passwordTextField];
-    //[self showLogin];
+    [self showLogin];
 
 }
 -(void)viewDidAppear:(BOOL)animated{
@@ -113,10 +121,30 @@
 */
 
 - (IBAction)loginAction:(id)sender {
+    [self startIndicatorSpinning];
     usernameWrapper.constraint = self.usernameTextFieldViewHeight;
     passwordWrapper.constraint = self.passwordTextFieldViewHeight;
-    [usernameWrapper showError:@"test"];
-    [passwordWrapper showError:@"test2"];
+    [loginController login:self.usernameTextField.text pass:self.passwordTextField.text onCompletion:^(UserModel *user, ResponseModel *response){
+        [self stopIndicatorSpinning];
+        if(response.success){
+            //login
+            NSLog(@"logging in...");
+            response.success ? [self showMainView] : nil;
+        }else{
+            /*
+            NSString *usernameError = [[response.error objectForKey:@"username"] objectAtIndex:0];
+            NSString *passwordError = [[response.error objectForKey:@"password"] objectAtIndex:0];
+            usernameError != nil ? [usernameWrapper showError:usernameError] : nil;
+            passwordError != nil ? [passwordWrapper showError:passwordError] : nil;
+            */
+            //[self errorAnimation];
+            notificationHelper =[[NotificationHelper alloc] initNotification];
+            [notificationHelper setNotificationMessage:response.message];
+            [notificationHelper addNotificationToView:self.navigationController.view];
+        }
+        
+    }];
+    
 }
 
 -(void)startIndicatorSpinning{
