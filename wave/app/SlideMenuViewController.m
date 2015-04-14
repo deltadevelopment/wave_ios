@@ -40,7 +40,7 @@
     mainViewController.view.layer.masksToBounds = NO;
     mainViewController.view.layer.shadowOffset = CGSizeMake(-5, 0);
     mainViewController.view.layer.shadowRadius = 5;
-    mainViewController.view.layer.shadowOpacity = 0.5;
+    mainViewController.view.layer.shadowOpacity = 0.4;
     __weak typeof(self) weakSelf = self;
     menuViewController.onCellSelection =^(NSString *(storyboardId)){
         [weakSelf onCellSelection:storyboardId];

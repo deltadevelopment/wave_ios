@@ -20,6 +20,7 @@
                                                                               target:self
                                                                               action:@selector(menuItemSelected)];
     [self.navigationItem setLeftBarButtonItem:self.menuItem];
+    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
 }
 -(void)addViewController:(SlideMenuViewController *) viewController{
     self.superController = viewController;
