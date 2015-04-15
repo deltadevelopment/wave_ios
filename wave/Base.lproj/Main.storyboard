@@ -544,7 +544,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="n8B-Fc-Avf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2325" y="819"/>
+            <point key="canvasLocation" x="3243" y="819"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="AiY-sf-Qxr">
@@ -820,6 +820,9 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="z0v-4w-gXc" firstAttribute="top" secondItem="jyV-Pf-zRb" secondAttribute="bottom" constant="-20" id="9jJ-r3-yEC"/>
+                            <constraint firstItem="ZZk-DK-DLB" firstAttribute="top" secondItem="z0v-4w-gXc" secondAttribute="bottom" constant="128" id="KCX-9s-caH">
+                                <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
+                            </constraint>
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="z0v-4w-gXc" secondAttribute="bottom" constant="355" id="XP3-NW-n8A"/>
                             <constraint firstItem="ZZk-DK-DLB" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="161" id="d5M-i6-cuI"/>
                             <constraint firstItem="z0v-4w-gXc" firstAttribute="width" secondItem="kh9-bI-dsS" secondAttribute="width" id="iKd-SF-WQS"/>
@@ -831,11 +834,12 @@
                                 <exclude reference="ZZk-DK-DLB"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="XP3-NW-n8A"/>
-                                <exclude reference="d5M-i6-cuI"/>
-                                <exclude reference="jnF-D5-4qI"/>
                                 <exclude reference="9jJ-r3-yEC"/>
                                 <exclude reference="iKd-SF-WQS"/>
+                                <exclude reference="KCX-9s-caH"/>
+                                <exclude reference="d5M-i6-cuI"/>
+                                <exclude reference="jnF-D5-4qI"/>
+                                <exclude reference="XP3-NW-n8A"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -844,11 +848,12 @@
                                 <include reference="ZZk-DK-DLB"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="XP3-NW-n8A"/>
-                                <include reference="d5M-i6-cuI"/>
-                                <include reference="jnF-D5-4qI"/>
                                 <include reference="9jJ-r3-yEC"/>
                                 <include reference="iKd-SF-WQS"/>
+                                <include reference="KCX-9s-caH"/>
+                                <include reference="d5M-i6-cuI"/>
+                                <exclude reference="jnF-D5-4qI"/>
+                                <include reference="XP3-NW-n8A"/>
                             </mask>
                         </variation>
                     </view>
@@ -920,7 +925,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RDG-fw-deK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4018.5" y="974.25"/>
+            <point key="canvasLocation" x="4936.5" y="974.25"/>
         </scene>
         <!--Test View Co View Controller-->
         <scene sceneID="ktm-sO-puB">
@@ -982,17 +987,34 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8sr-lj-lrg">
+                                <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="0.59607843140000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstAttribute="centerX" secondItem="8sr-lj-lrg" secondAttribute="centerX" constant="18" id="EHB-TT-Aky">
+                                <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
+                            </constraint>
+                            <constraint firstItem="8sr-lj-lrg" firstAttribute="leading" secondItem="MfO-Zs-NGb" secondAttribute="leadingMargin" constant="145" id="h7T-OC-UEu"/>
                             <constraint firstItem="H6x-sl-5DI" firstAttribute="leading" secondItem="MfO-Zs-NGb" secondAttribute="leadingMargin" constant="157" id="hTN-tY-4ev"/>
+                            <constraint firstItem="8sr-lj-lrg" firstAttribute="top" secondItem="flz-S4-cHE" secondAttribute="bottom" constant="15" id="wZz-ac-IcA">
+                                <variation key="heightClass=regular-widthClass=compact" constant="10"/>
+                            </constraint>
                             <constraint firstItem="H6x-sl-5DI" firstAttribute="top" secondItem="flz-S4-cHE" secondAttribute="bottom" constant="209" id="x1J-gz-Epj"/>
                         </constraints>
                         <variation key="default">
                             <mask key="subviews">
                                 <exclude reference="H6x-sl-5DI"/>
+                                <exclude reference="8sr-lj-lrg"/>
                             </mask>
                             <mask key="constraints">
+                                <exclude reference="EHB-TT-Aky"/>
+                                <exclude reference="h7T-OC-UEu"/>
+                                <exclude reference="wZz-ac-IcA"/>
                                 <exclude reference="hTN-tY-4ev"/>
                                 <exclude reference="x1J-gz-Epj"/>
                             </mask>
@@ -1000,8 +1022,12 @@
                         <variation key="heightClass=regular-widthClass=compact">
                             <mask key="subviews">
                                 <include reference="H6x-sl-5DI"/>
+                                <include reference="8sr-lj-lrg"/>
                             </mask>
                             <mask key="constraints">
+                                <include reference="EHB-TT-Aky"/>
+                                <exclude reference="h7T-OC-UEu"/>
+                                <include reference="wZz-ac-IcA"/>
                                 <include reference="hTN-tY-4ev"/>
                                 <include reference="x1J-gz-Epj"/>
                             </mask>
@@ -1031,17 +1057,31 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ai1-0C-m3I">
+                                <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                                <color key="tintColor" red="0.75294117647058822" green="0.45490196078431372" blue="0.80784313725490198" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="Ai1-0C-m3I" firstAttribute="top" secondItem="QYb-D1-Ims" secondAttribute="bottom" constant="36" id="3LT-3s-cyw">
+                                <variation key="heightClass=regular-widthClass=compact" constant="10"/>
+                            </constraint>
                             <constraint firstItem="Ord-9C-l01" firstAttribute="leading" secondItem="j0H-FO-VnO" secondAttribute="leadingMargin" constant="30" id="GWe-YD-7L9"/>
+                            <constraint firstItem="Ai1-0C-m3I" firstAttribute="leading" secondItem="j0H-FO-VnO" secondAttribute="leadingMargin" constant="149" id="KdS-Ew-X8b"/>
                             <constraint firstItem="Ord-9C-l01" firstAttribute="top" secondItem="QYb-D1-Ims" secondAttribute="bottom" constant="286" id="kdT-FF-xQi"/>
                         </constraints>
                         <variation key="default">
                             <mask key="subviews">
                                 <exclude reference="Ord-9C-l01"/>
+                                <exclude reference="Ai1-0C-m3I"/>
                             </mask>
                             <mask key="constraints">
+                                <exclude reference="3LT-3s-cyw"/>
+                                <exclude reference="KdS-Ew-X8b"/>
                                 <exclude reference="GWe-YD-7L9"/>
                                 <exclude reference="kdT-FF-xQi"/>
                             </mask>
@@ -1049,8 +1089,11 @@
                         <variation key="heightClass=regular-widthClass=compact">
                             <mask key="subviews">
                                 <include reference="Ord-9C-l01"/>
+                                <include reference="Ai1-0C-m3I"/>
                             </mask>
                             <mask key="constraints">
+                                <include reference="3LT-3s-cyw"/>
+                                <include reference="KdS-Ew-X8b"/>
                                 <include reference="GWe-YD-7L9"/>
                                 <include reference="kdT-FF-xQi"/>
                             </mask>
@@ -1060,6 +1103,42 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Utb-DB-K4b" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-12" y="1121.25"/>
+        </scene>
+        <!--Scrolling View Controller-->
+        <scene sceneID="JZg-nb-oWg">
+            <objects>
+                <viewController storyboardIdentifier="scrollingTest" id="pxP-mC-rtp" customClass="ScrollingViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="AhE-2L-WiS"/>
+                        <viewControllerLayoutGuide type="bottom" id="Yem-3c-LVB"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="9Hx-WP-gnq">
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="zWV-iG-S3Y"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="blF-8L-Ega" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1473" y="1029.75"/>
+        </scene>
+        <!--Navigation Scroll View Controller-->
+        <scene sceneID="193-hd-8kL">
+            <objects>
+                <viewController storyboardIdentifier="carousel" id="njo-QM-Cr1" customClass="NavigationScrollViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="NjZ-EH-RnA"/>
+                        <viewControllerLayoutGuide type="bottom" id="bqh-Bk-zW7"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="CM4-4H-PKp">
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="dyj-yC-yLI"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vXp-V6-tOa" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="792" y="1694.25"/>
         </scene>
         <!--Slide Menu View Controller-->
         <scene sceneID="UKq-po-EX5">
@@ -1235,10 +1314,10 @@
             </objects>
             <point key="canvasLocation" x="-2811" y="1121.25"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Slide Menu Navigation View Controller-->
         <scene sceneID="5rU-6z-RiV">
             <objects>
-                <navigationController storyboardIdentifier="mainViewMenuNav" automaticallyAdjustsScrollViewInsets="NO" id="THY-bf-29G" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="mainViewMenuNav" automaticallyAdjustsScrollViewInsets="NO" id="THY-bf-29G" customClass="SlideMenuNavigationViewController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="5a1-rE-BLR">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -1253,6 +1332,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aoD-CV-dqq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-1398" y="1121.25"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Vbt-km-9KG">
+            <objects>
+                <navigationController storyboardIdentifier="scrollNav" automaticallyAdjustsScrollViewInsets="NO" id="ZYa-H9-5XA" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="dmO-3K-tlw">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="pxP-mC-rtp" kind="relationship" relationship="rootViewController" id="VgI-vA-cxk"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zCQ-YN-mNf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="792" y="1029.75"/>
         </scene>
     </scenes>
     <resources>

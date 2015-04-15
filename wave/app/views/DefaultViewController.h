@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface DefaultViewController : UIViewController
+#import "TestSuperViewController.h"
+@interface DefaultViewController : TestSuperViewController
 
 @end

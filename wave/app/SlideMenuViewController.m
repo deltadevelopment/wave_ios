@@ -14,10 +14,11 @@
 @interface SlideMenuViewController ()
 
 @end
-
+static int const DRAWER_SIZE = 300;
 @implementation SlideMenuViewController{
     MenuTableViewController *menuViewController;
     UINavigationController *mainViewController;
+    TestSuperViewController *root;
     UIStoryboard *storyboard ;
     bool drawerIsVisible;
     
@@ -29,18 +30,26 @@
     storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     menuViewController = (MenuTableViewController *)[storyboard instantiateViewControllerWithIdentifier:@"menuTableView"];
     mainViewController = (UINavigationController *)[storyboard instantiateViewControllerWithIdentifier:@"mainViewMenuNav"];
-    TestSuperViewController *root = [[mainViewController viewControllers]objectAtIndex:0];
+   root = [[mainViewController viewControllers]objectAtIndex:0];
+
+    
+    
     [root addViewController:self];
 
     //[mainViewController.menuItem setAction:@selector(test)];
     //[mainViewController.menuItem setTarget:self];
+    CGRect frame = mainViewController.view.frame;
+    frame.size.width = frame.size.width - 55;
+    mainViewController.view.frame = frame;
     [self.mainView addSubview:mainViewController.view];
     [self.menuView addSubview:menuViewController.view];
     
     mainViewController.view.layer.masksToBounds = NO;
-    mainViewController.view.layer.shadowOffset = CGSizeMake(-5, 0);
-    mainViewController.view.layer.shadowRadius = 5;
+    mainViewController.view.layer.shadowOffset = CGSizeMake(-1, 0);
+    mainViewController.view.layer.shadowRadius = 1;
     mainViewController.view.layer.shadowOpacity = 0.4;
+
+  
     __weak typeof(self) weakSelf = self;
     menuViewController.onCellSelection =^(NSString *(storyboardId)){
         [weakSelf onCellSelection:storyboardId];
@@ -50,6 +59,10 @@
     UIPanGestureRecognizer *gesture = [[UIPanGestureRecognizer alloc]
                                        initWithTarget:self
                                        action:@selector(buttonDragged:)];
+    UITapGestureRecognizer *tapGr;
+    tapGr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
+    tapGr.numberOfTapsRequired = 1;
+    [self.mainView addGestureRecognizer:tapGr];
     [self.mainView addGestureRecognizer:gesture];
 
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
@@ -57,59 +70,94 @@
     // Do any additional setup after loading the view.
 }
 
+-(void)handleTap:(UITapGestureRecognizer *) sender{
+    if(drawerIsVisible){
+        [root.view setUserInteractionEnabled:YES];
+        [self fadeMainViewOut];
+    }
+}
+
 -(void)onCellSelection:(NSString *) storyboardId
 {
     //Naviger her
     
-    TestSuperViewController *test = (TestSuperViewController *)[storyboard instantiateViewControllerWithIdentifier:storyboardId];
-    [test addViewController:self];
-    [mainViewController setViewControllers:@[test] animated:NO];
-    [self.view layoutIfNeeded];
+    root = (TestSuperViewController *)[storyboard instantiateViewControllerWithIdentifier:storyboardId];
+    [root addViewController:self];
+    [mainViewController setViewControllers:@[root] animated:NO];
+    [self.mainView layoutIfNeeded];
+    CGRect frame2 = root.view.frame;
+    frame2.origin.y = 64;
+    root.view.frame = frame2;
+    [self.mainView layoutIfNeeded];
     [self fadeMainViewOut];
-
 }
 
 -(void)fadeMainViewIn{
-    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
+    NSLog(@"fading in");
+   
+    CGRect appFrame = [[UIScreen mainScreen] applicationFrame];
     
+    [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
+  
+    
+    NSLog(@"test : %f", root.view.frame.origin.y);
     [UIView animateWithDuration:0.2f
                           delay:0.0f
                         options: UIViewAnimationOptionCurveLinear
                      animations:^{
-                         self.horizontalSpace.constant += 200;
-                         [self.view layoutIfNeeded];
+                         self.horizontalSpace.constant += DRAWER_SIZE;
+                         CGRect frame = mainViewController.view.frame;
+                         frame.size.width = frame.size.width +285;
+                         mainViewController.view.frame = frame;
+                              [self.mainView layoutIfNeeded];
+                         CGRect frame2 = root.view.frame;
+                         frame2.origin.y = 64;
+                         root.view.frame = frame2;
+                         [root setNeedsStatusBarAppearanceUpdate];
+                        [self.mainView layoutIfNeeded];
+                       
                      }
                      completion:^(BOOL finished){
+                     
                          
                          
                      }];
+    
     drawerIsVisible = YES;
 }
 
 -(void)fadeMainViewOut{
-    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
+     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
     [UIView animateWithDuration:0.2f
                           delay:0.0f
                         options: UIViewAnimationOptionCurveLinear
                      animations:^{
-                         self.horizontalSpace.constant -= 200;
-                         [self.view layoutIfNeeded];
+                         self.horizontalSpace.constant -= DRAWER_SIZE;
+                         CGRect frame = mainViewController.view.frame;
+                         frame.size.width = frame.size.width -285;
+                         mainViewController.view.frame = frame;
+                         [self.mainView layoutIfNeeded];
+                         CGRect frame2 = root.view.frame;
+                         frame2.origin.y = 64;
+                         root.view.frame = frame2;
+                         [root setNeedsStatusBarAppearanceUpdate];
+                         [self.mainView layoutIfNeeded];
                      }
                      completion:^(BOOL finished){
-                         
-                         
+                        
                      }];
-     drawerIsVisible = NO;
+    drawerIsVisible = NO;
 }
 
 -(void)showDrawer
 {
     if(!drawerIsVisible){
         [self fadeMainViewIn];
+       
+        [root.view setUserInteractionEnabled:NO];
         
     }else{
         [self fadeMainViewOut];
-       
     }
   
 }
@@ -125,6 +173,8 @@
        
         CGPoint translation = [gesture translationInView:label];
         if(translation.x < 0){
+         
+            [root.view setUserInteractionEnabled:YES];
             [self fadeMainViewOut];
         }
      

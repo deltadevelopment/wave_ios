@@ -26,8 +26,20 @@
     
     
     //[self.testButton2 setTitle:NSLocalizedString(@"it_worked", nil) forState:UIControlStateNormal];
-    
-    [self.view insertSubview:self.camView atIndex:0];
+    [self.camView removeFromSuperview];
+    [self.view layoutIfNeeded];
+    dispatch_queue_t main_queue = dispatch_get_main_queue();
+    dispatch_async(main_queue, ^{
+        
+        dispatch_async(main_queue, ^{
+            
+            [self.view insertSubview:self.camView atIndex:0];
+            
+        });
+    });
+   // [self.camView performSelectorOnMainThread:@selector(removeFromSuperview) withObject:nil waitUntilDone:NO];
+    NSLog(@"hey");
+   // [self.view insertSubview:self.camView atIndex:0];
    
 }
 

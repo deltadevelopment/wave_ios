@@ -52,6 +52,17 @@
 		C5A27B881ADD5ADF00968033 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A27B871ADD5ADF00968033 /* MainViewController.m */; };
 		C5A27B8B1ADD6DD500968033 /* TestSuperViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A27B8A1ADD6DD500968033 /* TestSuperViewController.m */; };
 		C5A27B911ADD8B2000968033 /* SecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A27B901ADD8B2000968033 /* SecondViewController.m */; };
+		C5A27B951ADE4F5500968033 /* ScrollingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A27B941ADE4F5500968033 /* ScrollingViewController.m */; };
+		C5A27B991ADE52CC00968033 /* test1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C5A27B961ADE52CC00968033 /* test1.jpg */; };
+		C5A27B9A1ADE52CC00968033 /* test2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C5A27B971ADE52CC00968033 /* test2.jpg */; };
+		C5A27B9B1ADE52CC00968033 /* miranda-kerr.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C5A27B981ADE52CC00968033 /* miranda-kerr.jpg */; };
+		C5A27BA11ADE626800968033 /* NavigationScrollViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A27BA01ADE626800968033 /* NavigationScrollViewController.m */; };
+		C5A27BA51ADE779500968033 /* events-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = C5A27BA21ADE779500968033 /* events-icon.png */; };
+		C5A27BA61ADE779500968033 /* profile-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = C5A27BA31ADE779500968033 /* profile-icon.png */; };
+		C5A27BA71ADE779500968033 /* feed-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = C5A27BA41ADE779500968033 /* feed-icon.png */; };
+		C5A27BAA1ADE78BF00968033 /* SlideMenuNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A27BA91ADE78BF00968033 /* SlideMenuNavigationViewController.m */; };
+		C5A27BAC1ADEB5F100968033 /* menu.png in Resources */ = {isa = PBXBuildFile; fileRef = C5A27BAB1ADEB5F100968033 /* menu.png */; };
+		C5A27BAF1ADEC3FF00968033 /* InnerShadowView.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A27BAE1ADEC3FF00968033 /* InnerShadowView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -151,6 +162,21 @@
 		C5A27B8A1ADD6DD500968033 /* TestSuperViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TestSuperViewController.m; sourceTree = "<group>"; };
 		C5A27B8F1ADD8B2000968033 /* SecondViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SecondViewController.h; sourceTree = "<group>"; };
 		C5A27B901ADD8B2000968033 /* SecondViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SecondViewController.m; sourceTree = "<group>"; };
+		C5A27B931ADE4F5500968033 /* ScrollingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScrollingViewController.h; sourceTree = "<group>"; };
+		C5A27B941ADE4F5500968033 /* ScrollingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScrollingViewController.m; sourceTree = "<group>"; };
+		C5A27B961ADE52CC00968033 /* test1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = test1.jpg; sourceTree = "<group>"; };
+		C5A27B971ADE52CC00968033 /* test2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = test2.jpg; sourceTree = "<group>"; };
+		C5A27B981ADE52CC00968033 /* miranda-kerr.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "miranda-kerr.jpg"; sourceTree = "<group>"; };
+		C5A27B9F1ADE626800968033 /* NavigationScrollViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavigationScrollViewController.h; sourceTree = "<group>"; };
+		C5A27BA01ADE626800968033 /* NavigationScrollViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NavigationScrollViewController.m; sourceTree = "<group>"; };
+		C5A27BA21ADE779500968033 /* events-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "events-icon.png"; sourceTree = "<group>"; };
+		C5A27BA31ADE779500968033 /* profile-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "profile-icon.png"; sourceTree = "<group>"; };
+		C5A27BA41ADE779500968033 /* feed-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "feed-icon.png"; sourceTree = "<group>"; };
+		C5A27BA81ADE78BF00968033 /* SlideMenuNavigationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlideMenuNavigationViewController.h; sourceTree = "<group>"; };
+		C5A27BA91ADE78BF00968033 /* SlideMenuNavigationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SlideMenuNavigationViewController.m; sourceTree = "<group>"; };
+		C5A27BAB1ADEB5F100968033 /* menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu.png; sourceTree = "<group>"; };
+		C5A27BAD1ADEC3FE00968033 /* InnerShadowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InnerShadowView.h; sourceTree = "<group>"; };
+		C5A27BAE1ADEC3FF00968033 /* InnerShadowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InnerShadowView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -174,6 +200,7 @@
 		C5576B1C1ADBC195009C1D5E /* app */ = {
 			isa = PBXGroup;
 			children = (
+				C5A27B921ADE4F3600968033 /* UITesting(temporary) */,
 				C5A27B7F1ADD592E00968033 /* SlideMenu */,
 				C5576B1D1ADBC195009C1D5E /* controllers */,
 				C5576B1E1ADBC195009C1D5E /* helpers */,
@@ -249,6 +276,13 @@
 		C5576B271ADBC195009C1D5E /* res */ = {
 			isa = PBXGroup;
 			children = (
+				C5A27B961ADE52CC00968033 /* test1.jpg */,
+				C5A27B971ADE52CC00968033 /* test2.jpg */,
+				C5A27BA21ADE779500968033 /* events-icon.png */,
+				C5A27BAB1ADEB5F100968033 /* menu.png */,
+				C5A27BA31ADE779500968033 /* profile-icon.png */,
+				C5A27BA41ADE779500968033 /* feed-icon.png */,
+				C5A27B981ADE52CC00968033 /* miranda-kerr.jpg */,
 				C5576B4F1ADBE0DB009C1D5E /* wz-monkey-bg.jpg */,
 				C5A27B501ADC014E00968033 /* cross-white.png */,
 				C5576B411ADBC1FC009C1D5E /* camera-icon.png */,
@@ -370,8 +404,23 @@
 				C5A27B8A1ADD6DD500968033 /* TestSuperViewController.m */,
 				C5A27B8F1ADD8B2000968033 /* SecondViewController.h */,
 				C5A27B901ADD8B2000968033 /* SecondViewController.m */,
+				C5A27BA81ADE78BF00968033 /* SlideMenuNavigationViewController.h */,
+				C5A27BA91ADE78BF00968033 /* SlideMenuNavigationViewController.m */,
 			);
 			name = SlideMenu;
+			sourceTree = "<group>";
+		};
+		C5A27B921ADE4F3600968033 /* UITesting(temporary) */ = {
+			isa = PBXGroup;
+			children = (
+				C5A27B931ADE4F5500968033 /* ScrollingViewController.h */,
+				C5A27B941ADE4F5500968033 /* ScrollingViewController.m */,
+				C5A27B9F1ADE626800968033 /* NavigationScrollViewController.h */,
+				C5A27BA01ADE626800968033 /* NavigationScrollViewController.m */,
+				C5A27BAD1ADEC3FE00968033 /* InnerShadowView.h */,
+				C5A27BAE1ADEC3FF00968033 /* InnerShadowView.m */,
+			);
+			name = "UITesting(temporary)";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -455,13 +504,20 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5A27BA71ADE779500968033 /* feed-icon.png in Resources */,
+				C5A27B9B1ADE52CC00968033 /* miranda-kerr.jpg in Resources */,
 				C5576B451ADBD79A009C1D5E /* Localizable.strings in Resources */,
+				C5A27B991ADE52CC00968033 /* test1.jpg in Resources */,
+				C5A27BAC1ADEB5F100968033 /* menu.png in Resources */,
+				C5A27BA51ADE779500968033 /* events-icon.png in Resources */,
 				C5576B421ADBC1FC009C1D5E /* camera-icon.png in Resources */,
 				C5576B501ADBE0DB009C1D5E /* wz-monkey-bg.jpg in Resources */,
 				C57AD0B01AD7EDB800B6042A /* Main.storyboard in Resources */,
 				C57AD0B51AD7EDB800B6042A /* LaunchScreen.xib in Resources */,
 				C57AD0B21AD7EDB800B6042A /* Images.xcassets in Resources */,
 				C5A27B511ADC014E00968033 /* cross-white.png in Resources */,
+				C5A27BA61ADE779500968033 /* profile-icon.png in Resources */,
+				C5A27B9A1ADE52CC00968033 /* test2.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -484,6 +540,7 @@
 				C5A27B5F1ADD019900968033 /* SSKeychain.m in Sources */,
 				C5576B3C1ADBC195009C1D5E /* DefaultViewController.m in Sources */,
 				C5A27B911ADD8B2000968033 /* SecondViewController.m in Sources */,
+				C5A27BAF1ADEC3FF00968033 /* InnerShadowView.m in Sources */,
 				C5A27B721ADD0BF500968033 /* RegisterController.m in Sources */,
 				C5576B3A1ADBC195009C1D5E /* AvailabilityViewController.m in Sources */,
 				C5576B4B1ADBDA22009C1D5E /* StartViewController.m in Sources */,
@@ -493,6 +550,7 @@
 				C5A27B751ADD0F4500968033 /* ResponseModel.m in Sources */,
 				C57AD0AA1AD7EDB800B6042A /* AppDelegate.m in Sources */,
 				C5576B371ADBC195009C1D5E /* CameraHelper.m in Sources */,
+				C5A27B951ADE4F5500968033 /* ScrollingViewController.m in Sources */,
 				C5576B381ADBC195009C1D5E /* ColorHelper.m in Sources */,
 				C5A27B6F1ADD083300968033 /* ConfigHelper.m in Sources */,
 				C5576B541ADBE2C1009C1D5E /* RegisterViewController.m in Sources */,
@@ -505,12 +563,14 @@
 				C5A27B691ADD01D000968033 /* NotificationHelper.m in Sources */,
 				C5A27B821ADD594600968033 /* SlideMenuViewController.m in Sources */,
 				C5576B3B1ADBC195009C1D5E /* CameraViewController.m in Sources */,
+				C5A27BAA1ADE78BF00968033 /* SlideMenuNavigationViewController.m in Sources */,
 				C5576B3F1ADBC195009C1D5E /* TestViewCoViewController.m in Sources */,
 				C5A27B8B1ADD6DD500968033 /* TestSuperViewController.m in Sources */,
 				C5A27B5A1ADD002A00968033 /* ApplicationController.m in Sources */,
 				C5576B4E1ADBDB14009C1D5E /* NavigationController.m in Sources */,
 				C5576B571ADBE31A009C1D5E /* SuperLoginViewController.m in Sources */,
 				C5A27B541ADC060000968033 /* TextFieldWrapper.m in Sources */,
+				C5A27BA11ADE626800968033 /* NavigationScrollViewController.m in Sources */,
 				C5A27B781ADD128100968033 /* UserModel.m in Sources */,
 				C5576B401ADBC195009C1D5E /* ViewController.m in Sources */,
 				C55FE90A1AD81F45007663FB /* SuperButton.m in Sources */,

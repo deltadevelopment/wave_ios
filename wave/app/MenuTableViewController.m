@@ -35,7 +35,7 @@
     NSLog(@"selecting");
     //second
     if(indexPath.row == 0){
-        self.onCellSelection(@"mainViewMenu");
+        self.onCellSelection(@"carousel");
     }
     if(indexPath.row == 1){
         self.onCellSelection(@"second");

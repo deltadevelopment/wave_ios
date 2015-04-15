@@ -37,4 +37,9 @@ static CGFloat screenHeight;
     [button setTintColor:[ColorHelper whiteColor]];
 }
 
++(void)applyLayoutOnLabel:(UILabel *) label{
+    [label setFont:[UIFont fontWithName:@"HelveticaNeue" size:17]];
+    [label setTextColor:[ColorHelper whiteColor]];
+    [label setTintColor:[ColorHelper whiteColor]];
+}
 @end

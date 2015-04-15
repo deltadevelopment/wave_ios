@@ -11,6 +11,8 @@
 #import "ViewController.h"
 #import "StartViewController.h"
 #import "SlideMenuViewController.h"
+#import "ScrollingViewController.h"
+#import "NavigationScrollViewController.h"
 @interface AppDelegate ()
 
 @end
@@ -25,6 +27,8 @@ AuthHelper *authHelper;
     }else{
         //[self setView:[[ViewController alloc] init] second:@"mainView"];
         [self setView:[[SlideMenuViewController alloc] init] second:@"slideMenuView"];
+        //[self setView:[[NavigationScrollViewController alloc] init] second:@"navigationScrollNav"];
+        
       
         
     }
