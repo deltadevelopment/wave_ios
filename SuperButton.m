@@ -17,7 +17,7 @@ static int const MAX_POS = 549;
     CGFloat buttonXConstraintDefault;
     NSLayoutConstraint *buttonYConstraint;
     CGFloat buttonYConstraintDefault;
-    UIViewController* superViewController;
+    UIView* superView;
     bool dragY;
     CGRect screenBound;
     CGSize screenSize;
@@ -27,14 +27,18 @@ static int const MAX_POS = 549;
     bool dragYEnabled;
 }
 
-- (id)init:(UIViewController *)viewController
+-(UIButton *)getButton{
+    return button;
+}
+
+- (id)init:(UIView *)view
 {
     self = [super init];
     if (self) {
-        superViewController = viewController;
+        superView = view;
         button = [UIButton buttonWithType:UIButtonTypeCustom];
-        [self initUI:superViewController.view];
-        [self addConstraints:superViewController.view];
+        [self initUI:superView];
+        [self addConstraints:superView];
         screenBound = [[UIScreen mainScreen] bounds];
         screenSize = screenBound.size;
         screenWidth = screenSize.width;
@@ -83,7 +87,7 @@ static int const MAX_POS = 549;
                                                     multiplier:1.0
                                                       constant:30.0];
     
-    buttonXConstraintMiddle = [NSLayoutConstraint constraintWithItem:superViewController.view
+    buttonXConstraintMiddle = [NSLayoutConstraint constraintWithItem:superView
                                                             attribute:NSLayoutAttributeCenterX
                                                             relatedBy:NSLayoutRelationEqual
                                                                toItem:button
@@ -118,16 +122,16 @@ static int const MAX_POS = 549;
                      animations:^{
                          if([self superViewHasConstraint])
                          {
-                             [superViewController.view removeConstraint:buttonXConstraintMiddle];
-                             [superViewController.view addConstraint:buttonXConstraint];
+                             [superView removeConstraint:buttonXConstraintMiddle];
+                             [superView addConstraint:buttonXConstraint];
                          
                          }else{
-                             [superViewController.view removeConstraint:buttonXConstraint];
-                             [superViewController.view addConstraint:buttonXConstraintMiddle];
+                             [superView  removeConstraint:buttonXConstraint];
+                             [superView  addConstraint:buttonXConstraintMiddle];
                          }
                        
                          
-                         [superViewController.view layoutIfNeeded];
+                         [superView  layoutIfNeeded];
                      }
                      completion:^(BOOL finished){
                          
@@ -136,7 +140,7 @@ static int const MAX_POS = 549;
 }
 
 -(bool)superViewHasConstraint{
-    for(NSLayoutConstraint *constraint in [superViewController.view constraints])
+    for(NSLayoutConstraint *constraint in [superView constraints])
     {
         if(constraint == buttonXConstraintMiddle)
         {

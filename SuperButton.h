@@ -20,5 +20,6 @@
 @property (nonatomic, copy) void (^onDragEndedY)(void);
 -(void)enableDragX;
 -(void)enableDragY;
-- (id)init:(UIViewController *)superViewController;
+-(id)init:(UIView *)view;
+-(UIButton *)getButton;
 @end

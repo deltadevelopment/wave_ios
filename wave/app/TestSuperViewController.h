@@ -12,6 +12,7 @@
 @property (strong, nonatomic) UIBarButtonItem *menuItem;
 @property (strong, nonatomic) UIView *topView;
 @property (strong, nonatomic) SlideMenuViewController *superController;
+@property (strong, nonatomic) NSLayoutConstraint *bottomContstraintInMenu;
 @property (nonatomic, copy) void (^onDrawerTap)(void);
 -(void)addViewController:(SlideMenuViewController *) viewController;
 @end

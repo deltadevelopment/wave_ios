@@ -32,6 +32,8 @@
 		C57AD0B21AD7EDB800B6042A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C57AD0B11AD7EDB800B6042A /* Images.xcassets */; };
 		C57AD0B51AD7EDB800B6042A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = C57AD0B31AD7EDB800B6042A /* LaunchScreen.xib */; };
 		C57AD0C11AD7EDB800B6042A /* waveTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C57AD0C01AD7EDB800B6042A /* waveTests.m */; };
+		C5896A771AE15F3700EFCE2D /* AbstractFeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5896A761AE15F3700EFCE2D /* AbstractFeedViewController.m */; };
+		C5896A7A1AE15F4200EFCE2D /* ActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5896A791AE15F4200EFCE2D /* ActivityViewController.m */; };
 		C5A27B511ADC014E00968033 /* cross-white.png in Resources */ = {isa = PBXBuildFile; fileRef = C5A27B501ADC014E00968033 /* cross-white.png */; };
 		C5A27B541ADC060000968033 /* TextFieldWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A27B531ADC060000968033 /* TextFieldWrapper.m */; };
 		C5A27B5A1ADD002A00968033 /* ApplicationController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A27B591ADD002A00968033 /* ApplicationController.m */; };
@@ -123,6 +125,11 @@
 		C57AD0BA1AD7EDB800B6042A /* waveTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = waveTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C57AD0BF1AD7EDB800B6042A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C57AD0C01AD7EDB800B6042A /* waveTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = waveTests.m; sourceTree = "<group>"; };
+		C5896A6B1AE1342E00EFCE2D /* FeedInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedInterface.h; sourceTree = "<group>"; };
+		C5896A751AE15F3700EFCE2D /* AbstractFeedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AbstractFeedViewController.h; sourceTree = "<group>"; };
+		C5896A761AE15F3700EFCE2D /* AbstractFeedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AbstractFeedViewController.m; sourceTree = "<group>"; };
+		C5896A781AE15F4200EFCE2D /* ActivityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityViewController.h; sourceTree = "<group>"; };
+		C5896A791AE15F4200EFCE2D /* ActivityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityViewController.m; sourceTree = "<group>"; };
 		C5A27B501ADC014E00968033 /* cross-white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cross-white.png"; sourceTree = "<group>"; };
 		C5A27B521ADC060000968033 /* TextFieldWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextFieldWrapper.h; sourceTree = "<group>"; };
 		C5A27B531ADC060000968033 /* TextFieldWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextFieldWrapper.m; sourceTree = "<group>"; };
@@ -200,6 +207,7 @@
 		C5576B1C1ADBC195009C1D5E /* app */ = {
 			isa = PBXGroup;
 			children = (
+				C5896A6A1AE133FC00EFCE2D /* Feed */,
 				C5A27B921ADE4F3600968033 /* UITesting(temporary) */,
 				C5A27B7F1ADD592E00968033 /* SlideMenu */,
 				C5576B1D1ADBC195009C1D5E /* controllers */,
@@ -391,6 +399,18 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		C5896A6A1AE133FC00EFCE2D /* Feed */ = {
+			isa = PBXGroup;
+			children = (
+				C5896A6B1AE1342E00EFCE2D /* FeedInterface.h */,
+				C5896A751AE15F3700EFCE2D /* AbstractFeedViewController.h */,
+				C5896A761AE15F3700EFCE2D /* AbstractFeedViewController.m */,
+				C5896A781AE15F4200EFCE2D /* ActivityViewController.h */,
+				C5896A791AE15F4200EFCE2D /* ActivityViewController.m */,
+			);
+			name = Feed;
+			sourceTree = "<group>";
+		};
 		C5A27B7F1ADD592E00968033 /* SlideMenu */ = {
 			isa = PBXGroup;
 			children = (
@@ -472,6 +492,7 @@
 				TargetAttributes = {
 					C57AD0A01AD7EDB800B6042A = {
 						CreatedOnToolsVersion = 6.2;
+						DevelopmentTeam = W6H6PNGSAD;
 					};
 					C57AD0B91AD7EDB800B6042A = {
 						CreatedOnToolsVersion = 6.2;
@@ -537,6 +558,7 @@
 			files = (
 				C5576B391ADBC195009C1D5E /* UIHelper.m in Sources */,
 				C5576B5A1ADBE77E009C1D5E /* Navigationbar.m in Sources */,
+				C5896A7A1AE15F4200EFCE2D /* ActivityViewController.m in Sources */,
 				C5A27B5F1ADD019900968033 /* SSKeychain.m in Sources */,
 				C5576B3C1ADBC195009C1D5E /* DefaultViewController.m in Sources */,
 				C5A27B911ADD8B2000968033 /* SecondViewController.m in Sources */,
@@ -555,6 +577,7 @@
 				C5A27B6F1ADD083300968033 /* ConfigHelper.m in Sources */,
 				C5576B541ADBE2C1009C1D5E /* RegisterViewController.m in Sources */,
 				C5A27B851ADD5AC700968033 /* MenuTableViewController.m in Sources */,
+				C5896A771AE15F3700EFCE2D /* AbstractFeedViewController.m in Sources */,
 				C5576B3E1ADBC195009C1D5E /* SuperViewController.m in Sources */,
 				C5A27B881ADD5ADF00968033 /* MainViewController.m in Sources */,
 				C5576B3D1ADBC195009C1D5E /* OverlayViewController.m in Sources */,
@@ -706,10 +729,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Christian Dalsvaag (3PFEC6MAQW)";
 				INFOPLIST_FILE = wave/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -717,10 +742,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Christian Dalsvaag (3PFEC6MAQW)";
 				INFOPLIST_FILE = wave/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

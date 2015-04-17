@@ -10,7 +10,7 @@
 #import "UIHelper.h"
 #import "InnerShadowView.h"
 #import "AvailabilityViewController.h"
-
+#import "AbstractFeedViewController.h"
 @interface NavigationScrollViewController ()
 
 @end
@@ -24,16 +24,15 @@
     NSMutableArray *controllers;
     NSMutableArray *carousel;
     UILabel *navbarTitle;
-     UILabel *navbarTitle2;
+    UILabel *navbarTitle2;
     UIView *view;
     float navBarDefaultY;
-     float navBarDefaultY2;
+    float navBarDefaultY2;
+    AbstractFeedViewController *currentController;
 }
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
-    AvailabilityViewController *viewControllerX = (AvailabilityViewController *)[self createViewControllerWithStoryboardId:@"availability"];
-    [self attachViews:viewControllerX withY:nil];
+
 
     storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     controllers = [[NSMutableArray alloc] init];
@@ -47,20 +46,18 @@
     Scroller.delegate = self;
     
     ViewSize = Scroller.bounds;
-    [self addView:@"second"];
-    [self addView:@"second"];
+    [self addView:@"activity"];
+    [self addView:@"activity"];
+    currentController = [controllers objectAtIndex:0];
+    
     //[self addView:@"storyId"];
     [self.view addSubview:Scroller];
+    
+    [super viewDidLoad];
+    AvailabilityViewController *viewControllerX = (AvailabilityViewController *)[self createViewControllerWithStoryboardId:@"availability"];
+    [self attachViews:viewControllerX withY:nil];
     [self addCarouselCircles];
-    /*
-    self.menuItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemOrganize
-                                                                  target:self
-                                                                  action:@selector(menuItemSelected)];
-    [self.navigationItem setLeftBarButtonItem:self.menuItem];
-    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
- 
-*/
-    // Do any additional setup after loading the view.
+    
     currentPage = 0;
     for(int index = 0;index < PageCount; index++){
         UILabel *label =[carousel objectAtIndex:index];
@@ -72,7 +69,18 @@
         }
         
     }
+    
 }
+
+-(void)prepareCamera{
+    [[currentController view] addSubview:self.camera.view];
+    
+}
+
+-(void)onCameraClose{
+    [currentController scrollUp];
+}
+
 -(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
 
 }
@@ -196,18 +204,55 @@
     PageCount +=1;
     Scroller.contentSize = CGSizeMake(PageCount * Scroller.bounds.size.width, Scroller.bounds.size.height);
     
-    UIViewController *mainViewController = (UIViewController *)[storyboard instantiateViewControllerWithIdentifier:name];
+    AbstractFeedViewController *mainViewController = (AbstractFeedViewController *)[storyboard instantiateViewControllerWithIdentifier:name];
     UIView *View = [[UIView alloc] initWithFrame:ViewSize];
     CGRect frame = mainViewController.view.frame;
+    //frame.size.height = frame.size.height -44;
     frame.size.height = frame.size.height -44;
+
     mainViewController.view.frame = frame;
     
     [View addSubview:mainViewController.view];
     [Scroller addSubview:View];
     [controllers addObject:mainViewController];
     [Scroller layoutIfNeeded];
+    [self addCos:View withView:mainViewController.view];
+   // [self addCos:Scroller withView:View];
     
     ViewSize = CGRectOffset(ViewSize, Scroller.bounds.size.width, 0);
+}
+
+-(void)addCos:(UIView *) mainView withView:(UIView *) subView{
+        [mainView addConstraint:[NSLayoutConstraint constraintWithItem:mainView
+                                                              attribute:NSLayoutAttributeTrailing
+                                                              relatedBy:NSLayoutRelationEqual
+                                                                 toItem:subView
+                                                              attribute:NSLayoutAttributeTrailing
+                                                             multiplier:1.0
+                                                               constant:0.0]];
+        [mainView addConstraint:[NSLayoutConstraint constraintWithItem:mainView
+                                                              attribute:NSLayoutAttributeTop
+                                                              relatedBy:NSLayoutRelationEqual
+                                                                 toItem:subView
+                                                              attribute:NSLayoutAttributeTop
+                                                             multiplier:1.0
+                                                               constant:0.0]];
+        [mainView addConstraint:[NSLayoutConstraint constraintWithItem:mainView
+                                                              attribute:NSLayoutAttributeBottom
+                                                              relatedBy:NSLayoutRelationEqual
+                                                                 toItem:subView
+                                                              attribute:NSLayoutAttributeBottom
+                                                             multiplier:1.0
+                                                               constant:0.0]];
+        [mainView addConstraint:[NSLayoutConstraint constraintWithItem:mainView
+                                                              attribute:NSLayoutAttributeLeading
+                                                              relatedBy:NSLayoutRelationEqual
+                                                                 toItem:subView
+                                                              attribute:NSLayoutAttributeLeading
+                                                             multiplier:1.0
+                                                               constant:0.0]];
+        
+ 
 }
 
 

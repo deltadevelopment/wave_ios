@@ -16,6 +16,7 @@
 @property (strong, nonatomic) CameraViewController *camera;
 -(void)attachViews:(OverlayViewController *) x withY:(OverlayViewController *) y;
 -(OverlayViewController *)createViewControllerWithStoryboardId:(NSString *) identifier;
+-(void)attachSuperButtonToView;
 -(void)onTap;
 -(void)prepareCamera;
 -(void)onCameraOpen;

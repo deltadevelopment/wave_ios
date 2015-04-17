@@ -11,6 +11,7 @@
 #import "MainViewController.h"
 #import "ViewController.h"
 #import "AppDelegate.h"
+#import "UIHelper.h"
 @interface SlideMenuViewController ()
 
 @end
@@ -21,6 +22,11 @@ static int const DRAWER_SIZE = 300;
     TestSuperViewController *root;
     UIStoryboard *storyboard ;
     bool drawerIsVisible;
+    NSLayoutConstraint *rootViewHorisontalConstraint;
+    NSLayoutConstraint *rootViewHorConstrant;
+    NSLayoutConstraint *width;
+    NSLayoutConstraint *height;
+    NSLayoutConstraint *topConstraint;
     
 }
 
@@ -30,11 +36,12 @@ static int const DRAWER_SIZE = 300;
     storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     menuViewController = (MenuTableViewController *)[storyboard instantiateViewControllerWithIdentifier:@"menuTableView"];
     mainViewController = (UINavigationController *)[storyboard instantiateViewControllerWithIdentifier:@"mainViewMenuNav"];
-   root = [[mainViewController viewControllers]objectAtIndex:0];
+    [self addRootViewController:@"carousel"];
+   //root = [[mainViewController viewControllers]objectAtIndex:0];
 
     
     
-    [root addViewController:self];
+    //[root addViewController:self];
 
     //[mainViewController.menuItem setAction:@selector(test)];
     //[mainViewController.menuItem setTarget:self];
@@ -42,6 +49,8 @@ static int const DRAWER_SIZE = 300;
     frame.size.width = frame.size.width - 55;
     mainViewController.view.frame = frame;
     [self.mainView addSubview:mainViewController.view];
+     //[view addSubview:button];
+    [self addViewWithConstraints:mainViewController.view];
     [self.menuView addSubview:menuViewController.view];
     
     mainViewController.view.layer.masksToBounds = NO;
@@ -67,7 +76,75 @@ static int const DRAWER_SIZE = 300;
 
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:UIStatusBarAnimationSlide];
    
-    // Do any additional setup after loading the view.
+    // Do any additional setup after loading the view.    
+}
+
+-(void)addViewWithConstraints:(UIView *) view{
+    view.translatesAutoresizingMaskIntoConstraints = NO;
+    /*
+  rootViewHorConstrant = [NSLayoutConstraint constraintWithItem:self.mainView
+                                                                            attribute:NSLayoutAttributeTrailing
+                                                                            relatedBy:NSLayoutRelationEqual
+                                                                               toItem:view
+                                                                            attribute:NSLayoutAttributeTrailing
+                                                                           multiplier:1.0
+                                                                             constant:0.0];
+    [self.mainView addConstraint:rootViewHorConstrant];
+
+    
+    
+    [self.mainView addConstraint:[NSLayoutConstraint constraintWithItem:self.mainView
+                                                              attribute:NSLayoutAttributeBottom
+                                                              relatedBy:NSLayoutRelationEqual
+                                                                 toItem:view
+                                                              attribute:NSLayoutAttributeBottom
+                                                             multiplier:1.0
+                                                               constant:0.0]];
+     */
+    
+    topConstraint = [NSLayoutConstraint constraintWithItem:self.mainView
+                                                          attribute:NSLayoutAttributeTop
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:view
+                                                          attribute:NSLayoutAttributeTop
+                                                         multiplier:1.0
+                                                           constant:0.0];
+    [self.mainView addConstraint:topConstraint];
+    
+    
+    rootViewHorisontalConstraint = [NSLayoutConstraint constraintWithItem:self.mainView
+                                                                                    attribute:NSLayoutAttributeLeading
+                                                                                    relatedBy:NSLayoutRelationEqual
+                                                                                       toItem:view
+                                                                                    attribute:NSLayoutAttributeLeading
+                                                                                   multiplier:1.0
+                                                                                     constant:0.0];
+    
+    
+    [self.mainView addConstraint:rootViewHorisontalConstraint];
+    
+    width =[NSLayoutConstraint
+                                constraintWithItem:view
+                                attribute:NSLayoutAttributeWidth
+                                relatedBy:0
+                                toItem:self.mainView
+                                attribute:NSLayoutAttributeWidth
+                                multiplier:1.0
+                                constant:0];
+    
+    height =[NSLayoutConstraint
+                                 constraintWithItem:view
+                                 attribute:NSLayoutAttributeHeight
+                                 relatedBy:0
+                                 toItem:self.mainView
+                                 attribute:NSLayoutAttributeHeight
+                                 multiplier:1.0
+                                 constant:0];
+    [self.mainView addConstraint:height];
+    [self.mainView addConstraint:width];
+
+    
+    
 }
 
 -(void)handleTap:(UITapGestureRecognizer *) sender{
@@ -77,44 +154,52 @@ static int const DRAWER_SIZE = 300;
     }
 }
 
--(void)onCellSelection:(NSString *) storyboardId
-{
-    //Naviger her
-    
+-(void)addRootViewController:(NSString *) storyboardId{
     root = (TestSuperViewController *)[storyboard instantiateViewControllerWithIdentifier:storyboardId];
     [root addViewController:self];
     [mainViewController setViewControllers:@[root] animated:NO];
     [self.mainView layoutIfNeeded];
     CGRect frame2 = root.view.frame;
     frame2.origin.y = 64;
+    frame2.size.height -=20;
     root.view.frame = frame2;
+    
     [self.mainView layoutIfNeeded];
+}
+
+-(void)onCellSelection:(NSString *) storyboardId
+{
+    //Naviger her
+    [self addRootViewController:storyboardId];
+   
     [self fadeMainViewOut];
 }
 
 -(void)fadeMainViewIn{
-    NSLog(@"fading in");
-   
-    CGRect appFrame = [[UIScreen mainScreen] applicationFrame];
-    
     [[UIApplication sharedApplication] setStatusBarHidden:YES withAnimation:UIStatusBarAnimationSlide];
-  
-    
-    NSLog(@"test : %f", root.view.frame.origin.y);
     [UIView animateWithDuration:0.2f
                           delay:0.0f
                         options: UIViewAnimationOptionCurveLinear
                      animations:^{
                          self.horizontalSpace.constant += DRAWER_SIZE;
+                         
                          CGRect frame = mainViewController.view.frame;
                          frame.size.width = frame.size.width +285;
+                         width.constant += DRAWER_SIZE;
+                         //height.constant -= 64;
+                         //topConstraint.constant = 64;
+                         //rootViewHorConstrant.constant -=DRAWER_SIZE;
+                         //rootViewHorisontalConstraint.constant += DRAWER_SIZE;
                          mainViewController.view.frame = frame;
-                              [self.mainView layoutIfNeeded];
+                         [self.mainView layoutIfNeeded];
+                         [root.view layoutIfNeeded];
                          CGRect frame2 = root.view.frame;
                          frame2.origin.y = 64;
+                         frame2.size.height -= 20;
                          root.view.frame = frame2;
                          [root setNeedsStatusBarAppearanceUpdate];
                         [self.mainView layoutIfNeeded];
+                         
                        
                      }
                      completion:^(BOOL finished){
@@ -140,6 +225,8 @@ static int const DRAWER_SIZE = 300;
                          CGRect frame2 = root.view.frame;
                          frame2.origin.y = 64;
                          root.view.frame = frame2;
+                          width.constant -= DRAWER_SIZE;
+                         
                          [root setNeedsStatusBarAppearanceUpdate];
                          [self.mainView layoutIfNeeded];
                      }
@@ -158,6 +245,7 @@ static int const DRAWER_SIZE = 300;
         
     }else{
         [self fadeMainViewOut];
+        [root.view setUserInteractionEnabled:YES];
     }
   
 }

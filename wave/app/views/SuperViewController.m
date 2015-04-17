@@ -103,8 +103,12 @@
     
 }
 
+-(void)attachSuperButtonToView{
+    _superButton = [[SuperButton alloc]init:self.view];
+}
+
 -(void)initSuperButton{
-    _superButton = [[SuperButton alloc]init:self];
+    [self attachSuperButtonToView];
     __weak typeof(self) weakSelf = self;
     self.superButton.onDragX =^(NSNumber*(xValue)){
         [weakSelf onDragX:xValue];
@@ -144,7 +148,7 @@
     if(xView != nil)
     {
         [_superButton enableDragX];
-        [self.view insertSubview:xView.view atIndex:0];
+        [self.view insertSubview:xView.view belowSubview:[self.superButton getButton]];
         [self addConstraints:xView.view];
     }
     if(yView != nil)
