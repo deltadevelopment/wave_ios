@@ -7,17 +7,39 @@
 //
 
 #import "MenuTableViewController.h"
-
+#import "ColorHelper.h"
+#import "UIHelper.h"
+#import "MenuTableViewCell.h"
 @interface MenuTableViewController ()
 
 @end
 
-@implementation MenuTableViewController
+@implementation MenuTableViewController{
+    NSMutableArray *list;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    list =[[NSMutableArray alloc]init];
+    [list addObject:@"Settings"];
+    [list addObject:@"Test"];
+    CGRect frame = self.topView.frame;
+    frame.size.height = 200;
+    self.topView.frame = frame;
+    self.bucketImage.image = [UIImage imageNamed:@"test2.jpg"];
+    self.bucketImage.contentMode = UIViewContentModeScaleAspectFill;
+    self.bucketImage.clipsToBounds = YES;
+    self.profileImage.image = [UIImage imageNamed:@"miranda-kerr.jpg"];
+    self.profileImage.contentMode = UIViewContentModeScaleAspectFill;
+    self.profileImage.layer.cornerRadius = 30;
+    self.profileImage.clipsToBounds = YES;
+    self.availabilityLabel.layer.cornerRadius = 5;
+    self.availabilityLabel.clipsToBounds = YES;
+    self.availabilityLabel.backgroundColor = [ColorHelper greenColor];
+    [UIHelper applyThinLayoutOnLabel:self.usernameLabel];
+    self.usernameLabel.text = @"Simen Lie";
 
-
+    //self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -31,6 +53,21 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    if ([tableView respondsToSelector:@selector(setSeparatorInset:)]) {
+        [tableView setSeparatorInset:UIEdgeInsetsZero];
+    }
+    
+    if ([tableView respondsToSelector:@selector(setLayoutMargins:)]) {
+        [tableView setLayoutMargins:UIEdgeInsetsZero];
+    }
+    
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
+}
+
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     NSLog(@"selecting");
     //second
@@ -40,20 +77,23 @@
     if(indexPath.row == 1){
         self.onCellSelection(@"second");
     }
+   //  self.availabilityLabel.backgroundColor = [ColorHelper greenColor];
     
 }
 
-
-
-/*
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
-    
-    // Configure the cell...
-    
+    MenuTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"menuCell" forIndexPath:indexPath];
+    cell.title.text = [list objectAtIndex:indexPath.row];
+    cell.icon.image = [UIImage imageNamed:@"search-icon.png"];
+    [UIHelper applyThinLayoutOnLabel:cell.title];
+    cell.title.textColor = [ColorHelper purpleColor];
     return cell;
 }
-*/
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return [list count];
+}
+
 
 /*
 // Override to support conditional editing of the table view.

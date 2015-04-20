@@ -14,5 +14,6 @@
 +(CGFloat)getScreenHeight;
 +(void)applyLayoutOnButton:(UIButton *) button;
 +(void)applyLayoutOnLabel:(UILabel *) label;
++(void)applyThinLayoutOnLabel:(UILabel *) label;
 +(UIImage*)imageByScalingAndCroppingForSize:(CGSize)targetSize img:(UIImage *) sourceImage;
 @end

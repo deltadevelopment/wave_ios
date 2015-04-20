@@ -43,6 +43,12 @@ static CGFloat screenHeight;
     [label setTintColor:[ColorHelper whiteColor]];
 }
 
++(void)applyThinLayoutOnLabel:(UILabel *) label{
+    [label setFont:[UIFont fontWithName:@"HelveticaNeue-Thin" size:17]];
+    [label setTextColor:[ColorHelper whiteColor]];
+    [label setTintColor:[ColorHelper whiteColor]];
+}
+
 +(UIImage*)imageByScalingAndCroppingForSize:(CGSize)targetSize img:(UIImage *) sourceImage
 {
     NSLog(@"----SCALING IMAGE");

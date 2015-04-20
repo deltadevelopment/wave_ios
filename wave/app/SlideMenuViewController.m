@@ -174,8 +174,10 @@ static int const DRAWER_SIZE = 300;
 {
     //Naviger her
     [self addRootViewController:storyboardId];
+    if(drawerIsVisible){
+        [self fadeMainViewOut];
+    }
    
-    [self fadeMainViewOut];
 }
 
 -(void)fadeMainViewIn{

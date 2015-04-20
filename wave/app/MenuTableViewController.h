@@ -11,5 +11,10 @@
 @interface MenuTableViewController : UITableViewController
 @property (weak, nonatomic) IBOutlet UITableViewCell *buttonOne;
 @property (nonatomic, copy) void (^onCellSelection)(NSString*(storyboardId));
+@property (weak, nonatomic) IBOutlet UIImageView *bucketImage;
+@property (weak, nonatomic) IBOutlet UIImageView *profileImage;
+@property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *availabilityLabel;
+@property (weak, nonatomic) IBOutlet UIView *topView;
 
 @end

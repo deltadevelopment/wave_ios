@@ -64,6 +64,8 @@
 		C5A27BA71ADE779500968033 /* feed-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = C5A27BA41ADE779500968033 /* feed-icon.png */; };
 		C5A27BAA1ADE78BF00968033 /* SlideMenuNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A27BA91ADE78BF00968033 /* SlideMenuNavigationViewController.m */; };
 		C5A27BAC1ADEB5F100968033 /* menu.png in Resources */ = {isa = PBXBuildFile; fileRef = C5A27BAB1ADEB5F100968033 /* menu.png */; };
+		C5D473621AE50CA30097E44F /* MenuTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D473611AE50CA30097E44F /* MenuTableViewCell.m */; };
+		C5D473641AE511730097E44F /* search-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = C5D473631AE511730097E44F /* search-icon.png */; };
 		F1BD621C1AE460D400BDE1CA /* Carousel.m in Sources */ = {isa = PBXBuildFile; fileRef = F1BD621B1AE460D400BDE1CA /* Carousel.m */; };
 		F1BD621F1AE46EFC00BDE1CA /* ActivityTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F1BD621E1AE46EFC00BDE1CA /* ActivityTableViewCell.m */; };
 /* End PBXBuildFile section */
@@ -183,6 +185,9 @@
 		C5A27BA81ADE78BF00968033 /* SlideMenuNavigationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlideMenuNavigationViewController.h; sourceTree = "<group>"; };
 		C5A27BA91ADE78BF00968033 /* SlideMenuNavigationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SlideMenuNavigationViewController.m; sourceTree = "<group>"; };
 		C5A27BAB1ADEB5F100968033 /* menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu.png; sourceTree = "<group>"; };
+		C5D473601AE50CA30097E44F /* MenuTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuTableViewCell.h; sourceTree = "<group>"; };
+		C5D473611AE50CA30097E44F /* MenuTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuTableViewCell.m; sourceTree = "<group>"; };
+		C5D473631AE511730097E44F /* search-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "search-icon.png"; sourceTree = "<group>"; };
 		F1BD621A1AE460D400BDE1CA /* Carousel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Carousel.h; sourceTree = "<group>"; };
 		F1BD621B1AE460D400BDE1CA /* Carousel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Carousel.m; sourceTree = "<group>"; };
 		F1BD621D1AE46EFC00BDE1CA /* ActivityTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityTableViewCell.h; sourceTree = "<group>"; };
@@ -287,6 +292,7 @@
 		C5576B271ADBC195009C1D5E /* res */ = {
 			isa = PBXGroup;
 			children = (
+				C5D473631AE511730097E44F /* search-icon.png */,
 				C5A27B961ADE52CC00968033 /* test1.jpg */,
 				C5A27B971ADE52CC00968033 /* test2.jpg */,
 				C5A27BA21ADE779500968033 /* events-icon.png */,
@@ -431,6 +437,8 @@
 				C5A27B901ADD8B2000968033 /* SecondViewController.m */,
 				C5A27BA81ADE78BF00968033 /* SlideMenuNavigationViewController.h */,
 				C5A27BA91ADE78BF00968033 /* SlideMenuNavigationViewController.m */,
+				C5D473601AE50CA30097E44F /* MenuTableViewCell.h */,
+				C5D473611AE50CA30097E44F /* MenuTableViewCell.m */,
 			);
 			name = SlideMenu;
 			sourceTree = "<group>";
@@ -535,6 +543,7 @@
 				C5576B451ADBD79A009C1D5E /* Localizable.strings in Resources */,
 				C5A27B991ADE52CC00968033 /* test1.jpg in Resources */,
 				C5A27BAC1ADEB5F100968033 /* menu.png in Resources */,
+				C5D473641AE511730097E44F /* search-icon.png in Resources */,
 				C5A27BA51ADE779500968033 /* events-icon.png in Resources */,
 				C5576B421ADBC1FC009C1D5E /* camera-icon.png in Resources */,
 				C5576B501ADBE0DB009C1D5E /* wz-monkey-bg.jpg in Resources */,
@@ -568,6 +577,7 @@
 				C5576B3C1ADBC195009C1D5E /* DefaultViewController.m in Sources */,
 				C5A27B911ADD8B2000968033 /* SecondViewController.m in Sources */,
 				C5A27B721ADD0BF500968033 /* RegisterController.m in Sources */,
+				C5D473621AE50CA30097E44F /* MenuTableViewCell.m in Sources */,
 				C5576B3A1ADBC195009C1D5E /* AvailabilityViewController.m in Sources */,
 				C5576B4B1ADBDA22009C1D5E /* StartViewController.m in Sources */,
 				C5A27B6C1ADD01F200968033 /* ApplicationHelper.m in Sources */,
