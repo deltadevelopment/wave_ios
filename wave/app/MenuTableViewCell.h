@@ -11,5 +11,6 @@
 @interface MenuTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *title;
 @property (weak, nonatomic) IBOutlet UIImageView *icon;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *labelSpace;
 
 @end

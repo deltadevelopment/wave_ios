@@ -15,5 +15,7 @@
 +(void)applyLayoutOnButton:(UIButton *) button;
 +(void)applyLayoutOnLabel:(UILabel *) label;
 +(void)applyThinLayoutOnLabel:(UILabel *) label;
++(void)applyThinLayoutOnLabelH2:(UILabel *) label;
++(void)applyThinLayoutOnLabelH4:(UILabel *) label;
 +(UIImage*)imageByScalingAndCroppingForSize:(CGSize)targetSize img:(UIImage *) sourceImage;
 @end

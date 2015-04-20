@@ -16,15 +16,17 @@
 
 @implementation MenuTableViewController{
     NSMutableArray *list;
+    NSMutableArray *recentList;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     list =[[NSMutableArray alloc]init];
-    [list addObject:@"Settings"];
-    [list addObject:@"Test"];
+      recentList =[[NSMutableArray alloc]init];
+    [list addObject:@"Search"];
+    [recentList addObject:@"Whats up today?"];
     CGRect frame = self.topView.frame;
-    frame.size.height = 200;
+    frame.size.height =150;
     self.topView.frame = frame;
     self.bucketImage.image = [UIImage imageNamed:@"test2.jpg"];
     self.bucketImage.contentMode = UIViewContentModeScaleAspectFill;
@@ -36,16 +38,109 @@
     self.availabilityLabel.layer.cornerRadius = 5;
     self.availabilityLabel.clipsToBounds = YES;
     self.availabilityLabel.backgroundColor = [ColorHelper greenColor];
-    [UIHelper applyThinLayoutOnLabel:self.usernameLabel];
-    self.usernameLabel.text = @"Simen Lie";
+    [UIHelper applyThinLayoutOnLabelH4:self.usernameLabel];
+    [UIHelper applyThinLayoutOnLabelH2:self.displayNameLabel];
+    self.usernameLabel.text = @"@simenlie";
+    self.displayNameLabel.text = @"Simen Lie";
+  
 
-    //self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    
+    
+    
+    UITapGestureRecognizer *profileGr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(goToProfileAction)];
+    profileGr.numberOfTapsRequired = 1;
+    profileGr.cancelsTouchesInView = NO;
+    [self.profileView addGestureRecognizer:profileGr];
+    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    [self addBlur];
+}
 
+-(void)goToProfileAction{
+    self.onCellSelection(@"second");
+}
+
+-(void)addBlur{
+    
+    UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+
+    UIVisualEffectView  *blurEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+    blurEffectView.frame = CGRectMake(0, 0, [UIHelper getScreenWidth], 150);
+   // blurEffectView.alpha = 0.9;
+    [self.bucketImage addSubview:blurEffectView];
+    //add auto layout constraints so that the blur fills the screen upon rotating device
+    [blurEffectView setTranslatesAutoresizingMaskIntoConstraints:NO];
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    if(section == 1){
+        UIView *viewHeader = [UIView.alloc initWithFrame:CGRectMake(0, 0, [UIHelper getScreenWidth], 28)];
+        
+        UILabel *lblTitle = [UILabel.alloc initWithFrame:CGRectMake(10, 3, [UIHelper getScreenWidth], 21)];
+        lblTitle.text = @"RECENT";
+        [lblTitle setFont:[UIFont fontWithName:@"HelveticaNeue" size:13]];
+        [lblTitle setTextColor:[ColorHelper purpleColor]];
+        [lblTitle setTextAlignment:NSTextAlignmentLeft];
+        [lblTitle setBackgroundColor:[UIColor clearColor]];
+        [viewHeader addSubview:lblTitle];
+        
+        return viewHeader;
+    }
+    return nil;
+    
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section{
+    if(section == 1){
+       // NSString* sectionFooter = [self tableView:tableView titleForFooterInSection:section];
+        
+        UIView *wrapperView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [UIHelper getScreenWidth], [UIHelper getScreenHeight] - 278)];
+        UIView *view = [[UILabel alloc] initWithFrame:CGRectMake(0, [UIHelper getScreenHeight] - 328, [UIHelper getScreenWidth], 50)];
+        UIImageView *icon = [[UIImageView alloc]initWithFrame:CGRectMake(12, 15, 20,20)];
+        icon.image = [UIImage imageNamed:@"settings-icon.png"];
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(42, 15, [UIHelper getScreenWidth] - 36, 20)];
+        
+        [UIHelper applyThinLayoutOnLabel:label];
+        label.textColor = [ColorHelper purpleColor];
+        label.text = @"Settings";
+        [view addSubview:label];
+        [view addSubview:icon];
+        
+        
+        [wrapperView addSubview:view];
+        return wrapperView;
+    }
+    return nil;
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
+    if(section == 0){
+        return 0;
+    }
+    return 28;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    if(section == 0){
+        return 0;
+    }
+    return 28;
+}
+
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+    if(section == 0){
+        //return @"Section 1";
+    }
+    
+    if(section == 1){
+        return  @"Recent";
+    }
+    return nil;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -83,15 +178,34 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     MenuTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"menuCell" forIndexPath:indexPath];
-    cell.title.text = [list objectAtIndex:indexPath.row];
-    cell.icon.image = [UIImage imageNamed:@"search-icon.png"];
+    if(indexPath.section == 0){
+       cell.title.text = [list objectAtIndex:indexPath.row];
+        cell.icon.image = [UIImage imageNamed:@"search-icon.png"];
+    }else{
+       cell.title.text = [recentList objectAtIndex:indexPath.row];
+         cell.labelSpace.constant = -20;
+    }
+ 
+    
     [UIHelper applyThinLayoutOnLabel:cell.title];
     cell.title.textColor = [ColorHelper purpleColor];
     return cell;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return [list count];
+    if(section == 0){
+        // Return the number of rows in the section.
+           return [list count];
+    }
+    else{
+       
+        return [recentList count];
+    }
+ 
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return 2;
 }
 
 

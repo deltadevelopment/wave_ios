@@ -16,5 +16,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
 @property (weak, nonatomic) IBOutlet UILabel *availabilityLabel;
 @property (weak, nonatomic) IBOutlet UIView *topView;
+@property (weak, nonatomic) IBOutlet UILabel *displayNameLabel;
+@property (weak, nonatomic) IBOutlet UIView *profileView;
+
 
 @end
