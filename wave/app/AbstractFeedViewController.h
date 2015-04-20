@@ -10,4 +10,6 @@
 #import "FeedInterface.h"
 @interface AbstractFeedViewController : UIViewController<FeedInterface>
 -(void)scrollUp;
+-(void)prepareCamera:(UIView *)view;
+-(void)onCameraOpen;
 @end

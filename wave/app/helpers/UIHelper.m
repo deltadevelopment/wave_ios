@@ -42,4 +42,70 @@ static CGFloat screenHeight;
     [label setTextColor:[ColorHelper whiteColor]];
     [label setTintColor:[ColorHelper whiteColor]];
 }
+
++(UIImage*)imageByScalingAndCroppingForSize:(CGSize)targetSize img:(UIImage *) sourceImage
+{
+    NSLog(@"----SCALING IMAGE");
+    // NSLog(@"THE size is width: %f height: %f", targetSize.width, targetSize.height);
+    UIImage *newImage = nil;
+    CGSize imageSize = sourceImage.size;
+    CGFloat width = imageSize.width;
+    CGFloat height = imageSize.height;
+    CGFloat targetWidth = targetSize.width;
+    CGFloat targetHeight = targetSize.height;
+    CGFloat scaleFactor = 0.0;
+    CGFloat scaledWidth = targetWidth;
+    CGFloat scaledHeight = targetHeight;
+    CGPoint thumbnailPoint = CGPointMake(0.0,0.0);
+    
+    if (CGSizeEqualToSize(imageSize, targetSize) == NO)
+    {
+        CGFloat widthFactor = targetWidth / width;
+        CGFloat heightFactor = targetHeight / height;
+        
+        
+        //NSLog(@"fit height %f", targetSize.width);
+        scaleFactor = widthFactor; // scale to fit height
+        
+        
+        
+        
+        scaledWidth  = width * scaleFactor;
+        scaledHeight = height * scaleFactor;
+        
+        // center the image
+        if (widthFactor > heightFactor)
+        {
+            thumbnailPoint.y = 0;
+        }
+        else
+        {
+            if (widthFactor < heightFactor)
+            {
+                thumbnailPoint.x = 0;
+            }
+        }
+    }
+    
+    UIGraphicsBeginImageContext(targetSize); // this will crop
+    
+    CGRect thumbnailRect = CGRectZero;
+    thumbnailRect.origin = thumbnailPoint;
+    thumbnailRect.size.width  = scaledWidth;
+    thumbnailRect.size.height = scaledHeight;
+    
+    [sourceImage drawInRect:thumbnailRect];
+    
+    newImage = UIGraphicsGetImageFromCurrentImageContext();
+    
+    if(newImage == nil)
+    {
+        NSLog(@"could not scale image");
+    }
+    
+    //pop the context to get back to the default
+    UIGraphicsEndImageContext();
+    
+    return newImage;
+}
 @end

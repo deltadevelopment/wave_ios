@@ -16,7 +16,7 @@
 -(void)onTap;
 -(UIView *)getCameraView;
 -(AVCaptureVideoPreviewLayer *)getLayer;
-
+- (UIImage*)imageByScalingAndCroppingForSize:(CGSize)targetSize img:(UIImage *) sourceImage;
 -(void)prepareCamera;
 -(void)takePicture;
 @end

@@ -7,7 +7,7 @@
 //
 
 #import "TestSuperViewController.h"
-
+#import "ColorHelper.h"
 @interface TestSuperViewController ()
 
 @end
@@ -23,7 +23,7 @@
     [self.navigationItem setLeftBarButtonItem:self.menuItem];
     [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
-    
+    [self.navigationController.navigationBar setBarTintColor:[ColorHelper purpleColor]];
     UIBarButtonItem *btnShare = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(share)];
     [self.navigationItem setRightBarButtonItem:btnShare];
     [self.navigationItem setTitle:@"Feed"];

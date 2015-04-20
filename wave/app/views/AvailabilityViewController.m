@@ -16,8 +16,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.view.hidden = YES;
     self.availabilityText.text = @"BUSY BEE";
-        self.view.backgroundColor =[ColorHelper greenColor];
+    self.view.backgroundColor =[ColorHelper greenColor];
     self.view.alpha = 0.0;
     
     //[UIHelper initialize];
@@ -41,6 +42,7 @@
 
 }
 -(void)onDragStarted{
+      self.view.hidden = NO;
     [UIView animateWithDuration:0.3f
                           delay:0.0f
                         options: UIViewAnimationOptionCurveLinear
@@ -66,7 +68,9 @@
                                           animations:^{
                                               self.view.alpha = 0.0;
                                           }
-                                          completion:nil];
+                                          completion:^(BOOL finished){
+                                              self.view.hidden = YES;
+                                          }];
                      }];
 }
 

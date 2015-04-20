@@ -10,4 +10,6 @@
 
 @protocol FeedInterface <NSObject>
 -(void)scrollUp;
+-(void)prepareCamera:(UIView *) view;
+-(void)onCameraOpen;
 @end

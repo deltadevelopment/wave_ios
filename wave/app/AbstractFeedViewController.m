@@ -19,6 +19,14 @@
     // Do any additional setup after loading the view.
 }
 
+-(void)onCameraOpen{
+
+}
+
+-(void)prepareCamera:(UIView *)view{
+
+}
+
 -(void)scrollUp{
     NSLog(@"scrolling up");
 }

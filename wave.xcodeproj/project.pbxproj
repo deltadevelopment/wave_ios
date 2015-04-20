@@ -64,7 +64,8 @@
 		C5A27BA71ADE779500968033 /* feed-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = C5A27BA41ADE779500968033 /* feed-icon.png */; };
 		C5A27BAA1ADE78BF00968033 /* SlideMenuNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A27BA91ADE78BF00968033 /* SlideMenuNavigationViewController.m */; };
 		C5A27BAC1ADEB5F100968033 /* menu.png in Resources */ = {isa = PBXBuildFile; fileRef = C5A27BAB1ADEB5F100968033 /* menu.png */; };
-		C5A27BAF1ADEC3FF00968033 /* InnerShadowView.m in Sources */ = {isa = PBXBuildFile; fileRef = C5A27BAE1ADEC3FF00968033 /* InnerShadowView.m */; };
+		F1BD621C1AE460D400BDE1CA /* Carousel.m in Sources */ = {isa = PBXBuildFile; fileRef = F1BD621B1AE460D400BDE1CA /* Carousel.m */; };
+		F1BD621F1AE46EFC00BDE1CA /* ActivityTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F1BD621E1AE46EFC00BDE1CA /* ActivityTableViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -182,8 +183,10 @@
 		C5A27BA81ADE78BF00968033 /* SlideMenuNavigationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SlideMenuNavigationViewController.h; sourceTree = "<group>"; };
 		C5A27BA91ADE78BF00968033 /* SlideMenuNavigationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SlideMenuNavigationViewController.m; sourceTree = "<group>"; };
 		C5A27BAB1ADEB5F100968033 /* menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu.png; sourceTree = "<group>"; };
-		C5A27BAD1ADEC3FE00968033 /* InnerShadowView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InnerShadowView.h; sourceTree = "<group>"; };
-		C5A27BAE1ADEC3FF00968033 /* InnerShadowView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InnerShadowView.m; sourceTree = "<group>"; };
+		F1BD621A1AE460D400BDE1CA /* Carousel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Carousel.h; sourceTree = "<group>"; };
+		F1BD621B1AE460D400BDE1CA /* Carousel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Carousel.m; sourceTree = "<group>"; };
+		F1BD621D1AE46EFC00BDE1CA /* ActivityTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityTableViewCell.h; sourceTree = "<group>"; };
+		F1BD621E1AE46EFC00BDE1CA /* ActivityTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityTableViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -407,6 +410,8 @@
 				C5896A761AE15F3700EFCE2D /* AbstractFeedViewController.m */,
 				C5896A781AE15F4200EFCE2D /* ActivityViewController.h */,
 				C5896A791AE15F4200EFCE2D /* ActivityViewController.m */,
+				F1BD621D1AE46EFC00BDE1CA /* ActivityTableViewCell.h */,
+				F1BD621E1AE46EFC00BDE1CA /* ActivityTableViewCell.m */,
 			);
 			name = Feed;
 			sourceTree = "<group>";
@@ -437,8 +442,8 @@
 				C5A27B941ADE4F5500968033 /* ScrollingViewController.m */,
 				C5A27B9F1ADE626800968033 /* NavigationScrollViewController.h */,
 				C5A27BA01ADE626800968033 /* NavigationScrollViewController.m */,
-				C5A27BAD1ADEC3FE00968033 /* InnerShadowView.h */,
-				C5A27BAE1ADEC3FF00968033 /* InnerShadowView.m */,
+				F1BD621A1AE460D400BDE1CA /* Carousel.h */,
+				F1BD621B1AE460D400BDE1CA /* Carousel.m */,
 			);
 			name = "UITesting(temporary)";
 			sourceTree = "<group>";
@@ -492,7 +497,7 @@
 				TargetAttributes = {
 					C57AD0A01AD7EDB800B6042A = {
 						CreatedOnToolsVersion = 6.2;
-						DevelopmentTeam = W6H6PNGSAD;
+						DevelopmentTeam = G3J75RMARR;
 					};
 					C57AD0B91AD7EDB800B6042A = {
 						CreatedOnToolsVersion = 6.2;
@@ -562,7 +567,6 @@
 				C5A27B5F1ADD019900968033 /* SSKeychain.m in Sources */,
 				C5576B3C1ADBC195009C1D5E /* DefaultViewController.m in Sources */,
 				C5A27B911ADD8B2000968033 /* SecondViewController.m in Sources */,
-				C5A27BAF1ADEC3FF00968033 /* InnerShadowView.m in Sources */,
 				C5A27B721ADD0BF500968033 /* RegisterController.m in Sources */,
 				C5576B3A1ADBC195009C1D5E /* AvailabilityViewController.m in Sources */,
 				C5576B4B1ADBDA22009C1D5E /* StartViewController.m in Sources */,
@@ -573,11 +577,13 @@
 				C57AD0AA1AD7EDB800B6042A /* AppDelegate.m in Sources */,
 				C5576B371ADBC195009C1D5E /* CameraHelper.m in Sources */,
 				C5A27B951ADE4F5500968033 /* ScrollingViewController.m in Sources */,
+				F1BD621C1AE460D400BDE1CA /* Carousel.m in Sources */,
 				C5576B381ADBC195009C1D5E /* ColorHelper.m in Sources */,
 				C5A27B6F1ADD083300968033 /* ConfigHelper.m in Sources */,
 				C5576B541ADBE2C1009C1D5E /* RegisterViewController.m in Sources */,
 				C5A27B851ADD5AC700968033 /* MenuTableViewController.m in Sources */,
 				C5896A771AE15F3700EFCE2D /* AbstractFeedViewController.m in Sources */,
+				F1BD621F1AE46EFC00BDE1CA /* ActivityTableViewCell.m in Sources */,
 				C5576B3E1ADBC195009C1D5E /* SuperViewController.m in Sources */,
 				C5A27B881ADD5ADF00968033 /* MainViewController.m in Sources */,
 				C5576B3D1ADBC195009C1D5E /* OverlayViewController.m in Sources */,
@@ -729,11 +735,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Christian Dalsvaag (3PFEC6MAQW)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = wave/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -742,11 +750,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Christian Dalsvaag (3PFEC6MAQW)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = wave/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;

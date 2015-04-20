@@ -7,6 +7,7 @@
 //
 
 #import "SuperViewController.h"
+#import "UIHelper.h"
 #import "CameraViewController.h"
 @interface SuperViewController ()
 
@@ -44,7 +45,8 @@
 }
 
 -(void)onImageTaken:(UIImage *)image{
-
+    CGSize size = CGSizeMake([UIHelper getScreenWidth], [UIHelper getScreenHeight]);
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[_camera imageByScalingAndCroppingForSize:size img:image]]];
 }
 
 -(void)showCamera{

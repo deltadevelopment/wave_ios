@@ -37,6 +37,7 @@ static int const DRAWER_SIZE = 300;
     menuViewController = (MenuTableViewController *)[storyboard instantiateViewControllerWithIdentifier:@"menuTableView"];
     mainViewController = (UINavigationController *)[storyboard instantiateViewControllerWithIdentifier:@"mainViewMenuNav"];
     [self addRootViewController:@"carousel"];
+    
    //root = [[mainViewController viewControllers]objectAtIndex:0];
 
     
@@ -68,9 +69,11 @@ static int const DRAWER_SIZE = 300;
     UIPanGestureRecognizer *gesture = [[UIPanGestureRecognizer alloc]
                                        initWithTarget:self
                                        action:@selector(buttonDragged:)];
+    gesture.cancelsTouchesInView = NO;
     UITapGestureRecognizer *tapGr;
     tapGr = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
     tapGr.numberOfTapsRequired = 1;
+    tapGr.cancelsTouchesInView = NO;
     [self.mainView addGestureRecognizer:tapGr];
     [self.mainView addGestureRecognizer:gesture];
 

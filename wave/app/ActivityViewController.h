@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "AbstractFeedViewController.h"
-@interface ActivityViewController : AbstractFeedViewController
-@property (weak, nonatomic) IBOutlet UILabel *labelTest;
+@interface ActivityViewController : AbstractFeedViewController<UITableViewDataSource, UITableViewDelegate>
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @end

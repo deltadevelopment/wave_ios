@@ -33,6 +33,10 @@
     
 }
 
+- (UIImage*)imageByScalingAndCroppingForSize:(CGSize)targetSize img:(UIImage *) sourceImage{
+    return [camera imageByScalingAndCroppingForSize:targetSize img:sourceImage];
+}
+
 
 
 - (void)didReceiveMemoryWarning {
@@ -59,11 +63,6 @@
 -(void)imageWasTaken:(UIImage *)image{
     NSLog(@"tatt bilde");
     self.onImageTaken(image);
-    
-    CGSize size = CGSizeMake([UIHelper getScreenWidth], [UIHelper getScreenHeight]);
-    
-    
-    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[camera imageByScalingAndCroppingForSize:size img:image]]];
 }
 
 -(UIView *)getCameraView{
