@@ -18,4 +18,7 @@
 +(void)applyThinLayoutOnLabelH2:(UILabel *) label;
 +(void)applyThinLayoutOnLabelH4:(UILabel *) label;
 +(UIImage*)imageByScalingAndCroppingForSize:(CGSize)targetSize img:(UIImage *) sourceImage;
++(UIImage *)iconImage:(UIImage *) image;
++(UIImage *)iconImage:(UIImage *) image withSize:(float) size;
++(void)colorIcon:(UIImageView *) imageView withColor:(UIColor *) color;
 @end

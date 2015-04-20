@@ -1370,9 +1370,6 @@
                             <subviews>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="xci-kK-Hug">
                                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
-                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                        <rect key="frame" x="0.0" y="0.0" width="400" height="568"/>
-                                    </variation>
                                 </imageView>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PpB-pX-Wd9">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -1437,8 +1434,7 @@
                                                     <exclude reference="sLt-2z-Hbn"/>
                                                 </mask>
                                             </variation>
-                                            <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                <rect key="frame" x="136" y="86" width="30" height="25"/>
+                                            <variation key="heightClass=regular-widthClass=compact">
                                                 <mask key="constraints">
                                                     <include reference="7Gx-eW-RSQ"/>
                                                     <include reference="sLt-2z-Hbn"/>
@@ -1482,19 +1478,18 @@
                                         <mask key="constraints">
                                             <exclude reference="8Sc-aY-XMD"/>
                                             <exclude reference="jh5-uf-L5v"/>
+                                            <exclude reference="Nax-yF-3tR"/>
+                                            <exclude reference="NjM-ZO-gio"/>
+                                            <exclude reference="343-O8-zvu"/>
+                                            <exclude reference="zAU-qW-8Jg"/>
+                                            <exclude reference="Xo4-eZ-60V"/>
+                                            <exclude reference="ukN-Sd-5tZ"/>
                                             <exclude reference="0fy-IV-vQs"/>
                                             <exclude reference="4UA-5k-Ndf"/>
                                             <exclude reference="gfp-PZ-02Q"/>
-                                            <exclude reference="Xo4-eZ-60V"/>
-                                            <exclude reference="ukN-Sd-5tZ"/>
-                                            <exclude reference="343-O8-zvu"/>
-                                            <exclude reference="zAU-qW-8Jg"/>
-                                            <exclude reference="Nax-yF-3tR"/>
-                                            <exclude reference="NjM-ZO-gio"/>
                                         </mask>
                                     </variation>
-                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                        <rect key="frame" x="55" y="37" width="247" height="164"/>
+                                    <variation key="heightClass=regular-widthClass=compact">
                                         <mask key="subviews">
                                             <include reference="ERK-I7-WTy"/>
                                             <include reference="unS-tF-cFB"/>
@@ -1504,15 +1499,15 @@
                                         <mask key="constraints">
                                             <include reference="8Sc-aY-XMD"/>
                                             <include reference="jh5-uf-L5v"/>
+                                            <include reference="Nax-yF-3tR"/>
+                                            <include reference="NjM-ZO-gio"/>
+                                            <include reference="343-O8-zvu"/>
+                                            <include reference="zAU-qW-8Jg"/>
+                                            <include reference="Xo4-eZ-60V"/>
+                                            <include reference="ukN-Sd-5tZ"/>
                                             <exclude reference="0fy-IV-vQs"/>
                                             <include reference="4UA-5k-Ndf"/>
                                             <include reference="gfp-PZ-02Q"/>
-                                            <include reference="Xo4-eZ-60V"/>
-                                            <include reference="ukN-Sd-5tZ"/>
-                                            <include reference="343-O8-zvu"/>
-                                            <include reference="zAU-qW-8Jg"/>
-                                            <include reference="Nax-yF-3tR"/>
-                                            <include reference="NjM-ZO-gio"/>
                                         </mask>
                                     </variation>
                                 </view>

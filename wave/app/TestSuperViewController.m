@@ -8,6 +8,7 @@
 
 #import "TestSuperViewController.h"
 #import "ColorHelper.h"
+#import "UIHelper.h"
 @interface TestSuperViewController ()
 
 @end
@@ -17,10 +18,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    
-    UIImage *image = [self resizeImage:[UIImage imageNamed:@"menu.png"] newSize:CGSizeMake(10,10)];
+    /*
+    UIImage *image = [self resizeImage:[UIHelper iconImage:[UIImage imageNamed:@"menu.png"] withSize:20 ] newSize:CGSizeMake(10,10)];
     self.menuItem = [[UIBarButtonItem alloc] initWithImage:image style:UIBarButtonItemStylePlain target:self action:@selector(menuItemSelected)];
     [self.navigationItem setLeftBarButtonItem:self.menuItem];
+    */
+    [self addLeftButton];
+    
     [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
     [self.navigationController.navigationBar setBarTintColor:[ColorHelper purpleColor]];
@@ -33,9 +37,21 @@
     }
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain
                                                                             target:nil action:nil];
+}
+
+-(void)addLeftButton{
+    UIImage* image = [UIHelper iconImage:[UIImage imageNamed:@"menu.png"]];
+    CGRect frame = CGRectMake(0, 0, 22, 22);
+    UIButton* someButton = [[UIButton alloc] initWithFrame:frame];
+    [someButton setBackgroundImage:image forState:UIControlStateNormal];
+    [someButton addTarget:self action:@selector(menuItemSelected) forControlEvents:UIControlEventTouchUpInside];
+    [someButton setShowsTouchWhenHighlighted:YES];
+    self.menuItem = [[UIBarButtonItem alloc] initWithCustomView:someButton];
+ 
+    [self.navigationItem setLeftBarButtonItem:self.menuItem];
     
 
-  
+
 }
 
 

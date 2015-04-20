@@ -60,6 +60,29 @@ static CGFloat screenHeight;
     [label setTintColor:[ColorHelper whiteColor]];
 }
 
++(void)colorIcon:(UIImageView *) imageView withColor:(UIColor *) color{
+    imageView.image = [imageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+    [imageView setTintColor:color];
+}
+
++(UIImage*)imageWithImage:(UIImage*)image
+             scaledToSize:(CGSize)newSize;
+{
+    UIGraphicsBeginImageContext( newSize );
+    [image drawInRect:CGRectMake(0,0,newSize.width,newSize.height)];
+    UIImage* newImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    return newImage;
+}
+
++(UIImage *)iconImage:(UIImage *) image{
+    return [self imageWithImage:image scaledToSize:CGSizeMake(60, 60)];
+}
+
++(UIImage *)iconImage:(UIImage *) image withSize:(float) size{
+    return [self imageWithImage:image scaledToSize:CGSizeMake(size, size)];
+}
 +(UIImage*)imageByScalingAndCroppingForSize:(CGSize)targetSize img:(UIImage *) sourceImage
 {
     NSLog(@"----SCALING IMAGE");

@@ -38,6 +38,7 @@
     self.availabilityLabel.layer.cornerRadius = 5;
     self.availabilityLabel.clipsToBounds = YES;
     self.availabilityLabel.backgroundColor = [ColorHelper greenColor];
+    self.availabilityLabel.hidden = YES;
     [UIHelper applyThinLayoutOnLabelH4:self.usernameLabel];
     [UIHelper applyThinLayoutOnLabelH2:self.displayNameLabel];
     self.usernameLabel.text = @"@simenlie";
@@ -102,7 +103,10 @@
         UIView *wrapperView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [UIHelper getScreenWidth], [UIHelper getScreenHeight] - 278)];
         UIView *view = [[UILabel alloc] initWithFrame:CGRectMake(0, [UIHelper getScreenHeight] - 328, [UIHelper getScreenWidth], 50)];
         UIImageView *icon = [[UIImageView alloc]initWithFrame:CGRectMake(12, 15, 20,20)];
-        icon.image = [UIImage imageNamed:@"settings-icon.png"];
+        
+ 
+        icon.image = [UIHelper iconImage:[UIImage imageNamed:@"settings-icon.png"]];
+        [UIHelper colorIcon:icon withColor:[ColorHelper purpleColor]];
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(42, 15, [UIHelper getScreenWidth] - 36, 20)];
         
         [UIHelper applyThinLayoutOnLabel:label];
@@ -180,7 +184,9 @@
     MenuTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"menuCell" forIndexPath:indexPath];
     if(indexPath.section == 0){
        cell.title.text = [list objectAtIndex:indexPath.row];
-        cell.icon.image = [UIImage imageNamed:@"search-icon.png"];
+        
+        cell.icon.image = [UIHelper iconImage:[UIImage imageNamed:@"search-icon.png"]];
+          [UIHelper colorIcon:cell.icon withColor:[ColorHelper purpleColor]];
     }else{
        cell.title.text = [recentList objectAtIndex:indexPath.row];
          cell.labelSpace.constant = -20;
@@ -188,6 +194,7 @@
  
     
     [UIHelper applyThinLayoutOnLabel:cell.title];
+    [cell.title setFont:[UIFont fontWithName:@"HelveticaNeue-Thin" size:18]];
     cell.title.textColor = [ColorHelper purpleColor];
     return cell;
 }
@@ -207,6 +214,8 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 2;
 }
+
+
 
 
 /*
