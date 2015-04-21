@@ -62,7 +62,7 @@ static int const MAX_POS = 549;
     UIPanGestureRecognizer *gesture = [[UIPanGestureRecognizer alloc]
                                        initWithTarget:self
                                        action:@selector(buttonDragged:)];
-    gesture.cancelsTouchesInView = NO;
+   // gesture.cancelsTouchesInView = NO;
     [button addGestureRecognizer:gesture];
     [button addTarget:self action:@selector(tap) forControlEvents:UIControlEventTouchUpInside];
     [view addSubview:button];

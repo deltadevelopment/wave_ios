@@ -92,6 +92,7 @@
 
 -(void)onTap{
     //[self showCamera];
+    NSLog(@"______TAPPING NOW");
     [_camera onTap];
     
 }

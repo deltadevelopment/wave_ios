@@ -45,6 +45,7 @@
 }
 
 -(void)onTap{
+    NSLog(@"ON CAMARE tap");
     if(!cameraMode){
         cameraMode = YES;
         self.onCameraOpen();
