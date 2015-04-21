@@ -67,6 +67,14 @@
 		C5D473621AE50CA30097E44F /* MenuTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D473611AE50CA30097E44F /* MenuTableViewCell.m */; };
 		C5D473641AE511730097E44F /* search-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = C5D473631AE511730097E44F /* search-icon.png */; };
 		C5D473661AE56B540097E44F /* settings-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = C5D473651AE56B540097E44F /* settings-icon.png */; };
+		C5D473691AE635F80097E44F /* YTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D473681AE635F80097E44F /* YTestViewController.m */; };
+		C5D4736C1AE63F610097E44F /* FilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D4736B1AE63F610097E44F /* FilterViewController.m */; };
+		C5D4736E1AE640260097E44F /* bucket.png in Resources */ = {isa = PBXBuildFile; fileRef = C5D4736D1AE640260097E44F /* bucket.png */; };
+		C5D473711AE66D820097E44F /* PartialTransparentView.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D473701AE66D820097E44F /* PartialTransparentView.m */; };
+		C5D473761AE699DE0097E44F /* the-bar.png in Resources */ = {isa = PBXBuildFile; fileRef = C5D473751AE699DE0097E44F /* the-bar.png */; };
+		C5D473781AE69D500097E44F /* the-bar-x-v2.png in Resources */ = {isa = PBXBuildFile; fileRef = C5D473771AE69D500097E44F /* the-bar-x-v2.png */; };
+		C5D4737A1AE6C29F0097E44F /* cross-simple.png in Resources */ = {isa = PBXBuildFile; fileRef = C5D473791AE6C29F0097E44F /* cross-simple.png */; };
+		C5D4737E1AE6C6890097E44F /* slider-cross.png in Resources */ = {isa = PBXBuildFile; fileRef = C5D4737D1AE6C6890097E44F /* slider-cross.png */; };
 		F1BD621C1AE460D400BDE1CA /* Carousel.m in Sources */ = {isa = PBXBuildFile; fileRef = F1BD621B1AE460D400BDE1CA /* Carousel.m */; };
 		F1BD621F1AE46EFC00BDE1CA /* ActivityTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F1BD621E1AE46EFC00BDE1CA /* ActivityTableViewCell.m */; };
 /* End PBXBuildFile section */
@@ -190,6 +198,17 @@
 		C5D473611AE50CA30097E44F /* MenuTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MenuTableViewCell.m; sourceTree = "<group>"; };
 		C5D473631AE511730097E44F /* search-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "search-icon.png"; sourceTree = "<group>"; };
 		C5D473651AE56B540097E44F /* settings-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "settings-icon.png"; sourceTree = "<group>"; };
+		C5D473671AE635F80097E44F /* YTestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YTestViewController.h; sourceTree = "<group>"; };
+		C5D473681AE635F80097E44F /* YTestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YTestViewController.m; sourceTree = "<group>"; };
+		C5D4736A1AE63F610097E44F /* FilterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterViewController.h; sourceTree = "<group>"; };
+		C5D4736B1AE63F610097E44F /* FilterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FilterViewController.m; sourceTree = "<group>"; };
+		C5D4736D1AE640260097E44F /* bucket.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bucket.png; sourceTree = "<group>"; };
+		C5D4736F1AE66D820097E44F /* PartialTransparentView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PartialTransparentView.h; sourceTree = "<group>"; };
+		C5D473701AE66D820097E44F /* PartialTransparentView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PartialTransparentView.m; sourceTree = "<group>"; };
+		C5D473751AE699DE0097E44F /* the-bar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "the-bar.png"; sourceTree = "<group>"; };
+		C5D473771AE69D500097E44F /* the-bar-x-v2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "the-bar-x-v2.png"; sourceTree = "<group>"; };
+		C5D473791AE6C29F0097E44F /* cross-simple.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cross-simple.png"; sourceTree = "<group>"; };
+		C5D4737D1AE6C6890097E44F /* slider-cross.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "slider-cross.png"; sourceTree = "<group>"; };
 		F1BD621A1AE460D400BDE1CA /* Carousel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Carousel.h; sourceTree = "<group>"; };
 		F1BD621B1AE460D400BDE1CA /* Carousel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Carousel.m; sourceTree = "<group>"; };
 		F1BD621D1AE46EFC00BDE1CA /* ActivityTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityTableViewCell.h; sourceTree = "<group>"; };
@@ -294,6 +313,7 @@
 		C5576B271ADBC195009C1D5E /* res */ = {
 			isa = PBXGroup;
 			children = (
+				C5D4736D1AE640260097E44F /* bucket.png */,
 				C5D473631AE511730097E44F /* search-icon.png */,
 				C5A27B961ADE52CC00968033 /* test1.jpg */,
 				C5A27B971ADE52CC00968033 /* test2.jpg */,
@@ -302,6 +322,10 @@
 				C5A27BAB1ADEB5F100968033 /* menu.png */,
 				C5A27BA31ADE779500968033 /* profile-icon.png */,
 				C5A27BA41ADE779500968033 /* feed-icon.png */,
+				C5D473791AE6C29F0097E44F /* cross-simple.png */,
+				C5D473771AE69D500097E44F /* the-bar-x-v2.png */,
+				C5D473751AE699DE0097E44F /* the-bar.png */,
+				C5D4737D1AE6C6890097E44F /* slider-cross.png */,
 				C5A27B981ADE52CC00968033 /* miranda-kerr.jpg */,
 				C5576B4F1ADBE0DB009C1D5E /* wz-monkey-bg.jpg */,
 				C5A27B501ADC014E00968033 /* cross-white.png */,
@@ -332,6 +356,12 @@
 				C5576B4D1ADBDB14009C1D5E /* NavigationController.m */,
 				C5576B581ADBE77E009C1D5E /* Navigationbar.h */,
 				C5576B591ADBE77E009C1D5E /* Navigationbar.m */,
+				C5D473671AE635F80097E44F /* YTestViewController.h */,
+				C5D473681AE635F80097E44F /* YTestViewController.m */,
+				C5D4736A1AE63F610097E44F /* FilterViewController.h */,
+				C5D4736B1AE63F610097E44F /* FilterViewController.m */,
+				C5D4736F1AE66D820097E44F /* PartialTransparentView.h */,
+				C5D473701AE66D820097E44F /* PartialTransparentView.m */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -541,6 +571,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5D473781AE69D500097E44F /* the-bar-x-v2.png in Resources */,
 				C5A27BA71ADE779500968033 /* feed-icon.png in Resources */,
 				C5A27B9B1ADE52CC00968033 /* miranda-kerr.jpg in Resources */,
 				C5576B451ADBD79A009C1D5E /* Localizable.strings in Resources */,
@@ -552,9 +583,13 @@
 				C5576B501ADBE0DB009C1D5E /* wz-monkey-bg.jpg in Resources */,
 				C57AD0B01AD7EDB800B6042A /* Main.storyboard in Resources */,
 				C57AD0B51AD7EDB800B6042A /* LaunchScreen.xib in Resources */,
+				C5D4737E1AE6C6890097E44F /* slider-cross.png in Resources */,
 				C5D473661AE56B540097E44F /* settings-icon.png in Resources */,
 				C57AD0B21AD7EDB800B6042A /* Images.xcassets in Resources */,
+				C5D4736E1AE640260097E44F /* bucket.png in Resources */,
 				C5A27B511ADC014E00968033 /* cross-white.png in Resources */,
+				C5D4737A1AE6C29F0097E44F /* cross-simple.png in Resources */,
+				C5D473761AE699DE0097E44F /* the-bar.png in Resources */,
 				C5A27BA61ADE779500968033 /* profile-icon.png in Resources */,
 				C5A27B9A1ADE52CC00968033 /* test2.jpg in Resources */,
 			);
@@ -594,6 +629,8 @@
 				F1BD621C1AE460D400BDE1CA /* Carousel.m in Sources */,
 				C5576B381ADBC195009C1D5E /* ColorHelper.m in Sources */,
 				C5A27B6F1ADD083300968033 /* ConfigHelper.m in Sources */,
+				C5D4736C1AE63F610097E44F /* FilterViewController.m in Sources */,
+				C5D473691AE635F80097E44F /* YTestViewController.m in Sources */,
 				C5576B541ADBE2C1009C1D5E /* RegisterViewController.m in Sources */,
 				C5A27B851ADD5AC700968033 /* MenuTableViewController.m in Sources */,
 				C5896A771AE15F3700EFCE2D /* AbstractFeedViewController.m in Sources */,
@@ -617,6 +654,7 @@
 				C5A27B781ADD128100968033 /* UserModel.m in Sources */,
 				C5576B401ADBC195009C1D5E /* ViewController.m in Sources */,
 				C55FE90A1AD81F45007663FB /* SuperButton.m in Sources */,
+				C5D473711AE66D820097E44F /* PartialTransparentView.m in Sources */,
 				C5A27B631ADD01AE00968033 /* AuthHelper.m in Sources */,
 				C5A27B7B1ADD1DEB00968033 /* LoginViewController.m in Sources */,
 			);

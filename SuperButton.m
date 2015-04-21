@@ -9,6 +9,7 @@
 #import "SuperButton.h"
 static int const MIN_POS = 30;
 static int const MAX_POS = 549;
+static int const FUDGE_FACTOR = 2;
 @implementation SuperButton
 {
     UIButton *button;
@@ -19,12 +20,20 @@ static int const MAX_POS = 549;
     CGFloat buttonYConstraintDefault;
     UIView* superView;
     bool dragY;
+    bool dragX;
     CGRect screenBound;
     CGSize screenSize;
     CGFloat screenWidth;// = screenSize.width;
     CGFloat screenHeight;// = screenSize.height;
     bool dragXEnabled;
     bool dragYEnabled;
+    bool toggleDragDirection;
+    bool dragDirection;
+    bool xViewIsShowing;
+    bool startPosition;
+    bool startX;
+    bool startY;
+    bool startedDrag;
 }
 
 -(UIButton *)getButton{
@@ -77,7 +86,7 @@ static int const MAX_POS = 549;
                                                         toItem:button
                                                      attribute:NSLayoutAttributeTrailing
                                                     multiplier:1.0
-                                                      constant:20.0];
+                                                      constant:30.0];
 
     
     buttonYConstraint = [NSLayoutConstraint constraintWithItem:view
@@ -160,46 +169,93 @@ static int const MAX_POS = 549;
     float newX = buttonXConstraint.constant;
     float newY = buttonYConstraint.constant;
     
-    
-    if(gesture.state == UIGestureRecognizerStateBegan){
-        dragY = translation.y != 0 ? YES : NO;
-        if(dragY){
-           self.onDragStartedY();
-        }else{
-           self.onDragStartedX();
+    if(newX == 30.0 && newY == 30.0){
+        //SWITCH HERE
+        if(toggleDragDirection){
+            
+            startPosition = YES;
+            if(xViewIsShowing){
+                self.onDragEndedX();
+            }else{
+                self.onDragEndedY();
+            }
+            
+            
+            startY = NO;
+            startX = NO;
+            
         }
-     
+        toggleDragDirection = NO;
+        
+        
+    }
+    else{
+        startPosition = NO;
+    }
+    
+    if(newX == 30.0){
+        //KAN dra Y
+        dragY = YES;
+        
+    }
+    else{
+        //Kan ikke dra Y
+        //NSLog(@"X SKAL STARTE");
+        if(!startX){
+            self.onDragStartedX();
+            xViewIsShowing = YES;
+            startX = YES;
+        }
+        dragY = NO;
+    }
+    if(newY == 30.0){
+        //KAN dra X
+        dragX = YES;
+    }
+    else{
+        //Kan ikke dra x
+        // NSLog(@"Y SKAL STARTE");
+        if(!startY){
+            self.onDragStartedY();
+            xViewIsShowing = NO;
+            startY = YES;
+        }
+        dragX = NO;
+    }
+    
+    if(newX != 30.0 || newY != 30.0){
+        toggleDragDirection = YES;
+    }
+    if(gesture.state == UIGestureRecognizerStateBegan){
+        dragDirection = translation.y != 0 ? YES : NO;
+        NSLog(@"XPOS: %f, YPOS: %f", translation.x, translation.y);
+        NSLog(@"newX: %f, newY: %f", newX, newY);
+        startedDrag = YES;
+       // button.alpha = 0.0;
     }
     else if(gesture.state == UIGestureRecognizerStateEnded || gesture.state == UIGestureRecognizerStateFailed || gesture.state == UIGestureRecognizerStateCancelled)
     {
         if(dragY && dragYEnabled){
             self.onDragEndedY();
             [self fadeOutStatusButton];
-        }else{
-            if(!dragY && dragXEnabled){
-                self.onDragEndedX();
-                [self fadeOutStatusButton];
-            }
         }
         
+        else if(dragX && dragXEnabled){
+            self.onDragEndedX();
+            [self fadeOutStatusButton];
+        }
     }
     else{
         if(dragY && dragYEnabled){
             translation.y < 0 ? [self moveUp:newY withTranslation:translation] :[self moveDown:newY withTranslation:translation];
-            self.onDragY([NSNumber numberWithFloat:newX]);
-            
-        }else
-        {
-            if(dragXEnabled){
-                translation.x < 0 ? [self moveLeft:newX withTranslation:translation] :[self moveRight:newX withTranslation:translation];
-                self.onDragX([NSNumber numberWithFloat:newX]);
-            }
-
+            self.onDragY([NSNumber numberWithFloat:newY]);
         }
-        
+        if(dragXEnabled && dragX){
+            translation.x < 0 ? [self moveLeft:newX withTranslation:translation] :[self moveRight:newX withTranslation:translation];
+            self.onDragX([NSNumber numberWithFloat:newX]);
+        }
         [gesture setTranslation:CGPointZero inView:label];
     }
-    
 }
 
 -(void)fadeOutStatusButton{
@@ -220,9 +276,7 @@ static int const MAX_POS = 549;
                                               button.alpha = 1.0f;
                                           }
                                           completion:nil];
-                         
                      }];
-    
 }
 
 -(void)moveLeft:(float)xPos withTranslation:(CGPoint)translation{
@@ -230,7 +284,6 @@ static int const MAX_POS = 549;
     {
         xPos = (screenWidth - 100);
         buttonXConstraint.constant = xPos;
-        
     }else
     {
         buttonXConstraint.constant -= translation.x;
@@ -242,7 +295,6 @@ static int const MAX_POS = 549;
     {
         xPos = MIN_POS;
         buttonXConstraint.constant = xPos;
-        
     }else
     {
         buttonXConstraint.constant -= translation.x;
@@ -255,22 +307,18 @@ static int const MAX_POS = 549;
     {
         yPos = (screenHeight - 100);
         buttonYConstraint.constant = yPos;
-        
     }else
     {
         buttonYConstraint.constant -= translation.y;
     }
-    
 }
 
 -(void)moveDown:(float)yPos withTranslation:(CGPoint)translation
 {
-
     if(yPos <= MIN_POS)
     {
         yPos = MIN_POS;
         buttonYConstraint.constant = yPos;
-        
     }else
     {
         buttonYConstraint.constant -= translation.y;

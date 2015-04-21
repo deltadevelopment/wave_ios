@@ -157,7 +157,7 @@
     if(yView != nil)
     {
         [_superButton enableDragY];
-        [self.view insertSubview:yView.view atIndex:0];
+        [self.view insertSubview:yView.view belowSubview:[self.superButton getButton]];
         [self addConstraints:yView.view];
     }
      [self prepareCamera];

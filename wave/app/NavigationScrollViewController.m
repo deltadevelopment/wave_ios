@@ -11,6 +11,7 @@
 #import "AvailabilityViewController.h"
 #import "AbstractFeedViewController.h"
 #import "Carousel.h"
+#import "FilterViewController.h"
 @interface NavigationScrollViewController ()
 
 @end
@@ -48,7 +49,9 @@
     [self.view addSubview:Scroller];
     [super viewDidLoad];
     AvailabilityViewController *viewControllerX = (AvailabilityViewController *)[self createViewControllerWithStoryboardId:@"availability"];
-    [self attachViews:viewControllerX withY:nil];
+    FilterViewController *viewControllerY = (FilterViewController *)[self createViewControllerWithStoryboardId:@"filterView"];
+
+    [self attachViews:viewControllerY withY:viewControllerX];
 
     currentPage = 0;
     [carousel updateCarousel:PageCount withCurrentPage:currentPage];

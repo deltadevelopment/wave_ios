@@ -38,6 +38,15 @@
         self.view.backgroundColor =[ColorHelper greenColor];
     }
 }
+
+-(void)onDragY:(NSNumber *)yPos{
+    float middle = ([UIHelper getScreenHeight]/2) - 25;
+    if([yPos floatValue] > middle){
+        self.view.backgroundColor =[ColorHelper redColor];
+    }else{
+        self.view.backgroundColor =[ColorHelper greenColor];
+    }
+}
 -(void)dragX:(NSNumber *) xPos{
 
 }
