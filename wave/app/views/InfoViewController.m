@@ -1,18 +1,18 @@
 //
-//  OverlayViewController.m
+//  InfoViewController.m
 //  wave
 //
-//  Created by Simen Lie on 12.04.15.
+//  Created by Simen Lie on 22/04/15.
 //  Copyright (c) 2015 ddev. All rights reserved.
 //
 
-#import "OverlayViewController.h"
+#import "InfoViewController.h"
 
-@interface OverlayViewController ()
+@interface InfoViewController ()
 
 @end
 
-@implementation OverlayViewController
+@implementation InfoViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -24,13 +24,6 @@
     // Dispose of any resources that can be recreated.
 }
 
--(void)onDragStarted{}
--(void)onDragEnded{}
--(void)onDragX:(NSNumber *) xPos{}
--(void)onDragY:(NSNumber *) yPos{}
--(void)onDragSwitched{
-    self.view.alpha = 0;
-}
 /*
 #pragma mark - Navigation
 

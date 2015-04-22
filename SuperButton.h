@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import "ColorHelper.h"
+#import "UIHelper.h"
 @interface SuperButton : NSObject
 
 @property (nonatomic, copy) void (^onTap)(void);
@@ -18,6 +19,9 @@
 @property (nonatomic, copy) void (^onDragStartedY)(void);
 @property (nonatomic, copy) void (^onDragEndedX)(void);
 @property (nonatomic, copy) void (^onDragEndedY)(void);
+@property (nonatomic, copy) void (^onDragSwitchedFromX)(void);
+@property (nonatomic, copy) void (^onDragSwitchedFromY)(void);
+-(void)changeIcon:(UIImage *)img;
 -(void)enableDragX;
 -(void)enableDragY;
 -(id)init:(UIView *)view;

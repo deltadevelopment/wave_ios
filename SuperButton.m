@@ -7,9 +7,15 @@
 //
 
 #import "SuperButton.h"
-static int const MIN_POS = 30;
+#import <AudioToolbox/AudioToolbox.h>
+static int const MIN_POS = 20;
+static float const MIN_POS_X = 4.0;
+static float const MIN_POS_Y = 20.0;
 static int const MAX_POS = 549;
-static int const FUDGE_FACTOR = 2;
+static float MAX_POS_Y = 135;
+static float MAX_POS_X = 80;
+static int const FUDGE_FACTOR = 10;
+
 @implementation SuperButton
 {
     UIButton *button;
@@ -55,7 +61,9 @@ static int const FUDGE_FACTOR = 2;
     }
     return self;
 }
-
+-(void)changeIcon:(UIImage *)img{
+    [button setImage:[UIHelper iconImage:img withSize:100] forState:UIControlStateNormal];
+}
 -(void)enableDragX{
     dragXEnabled = YES;
 }
@@ -65,7 +73,7 @@ static int const FUDGE_FACTOR = 2;
 
 -(void)initUI:(UIView *)view{
     button.layer.cornerRadius = 25;
-    [button setImage:[UIImage imageNamed:@"camera-icon.png"] forState:UIControlStateNormal];
+    [button setImage:[UIHelper iconImage:[UIImage imageNamed:@"camera-icon.png"] withSize:150] forState:UIControlStateNormal];
     button.backgroundColor = [ColorHelper purpleColor];
     [button setImageEdgeInsets:UIEdgeInsetsMake(10, 10, 10, 10)];
     UIPanGestureRecognizer *gesture = [[UIPanGestureRecognizer alloc]
@@ -86,7 +94,7 @@ static int const FUDGE_FACTOR = 2;
                                                         toItem:button
                                                      attribute:NSLayoutAttributeTrailing
                                                     multiplier:1.0
-                                                      constant:30.0];
+                                                      constant:MIN_POS_X];
 
     
     buttonYConstraint = [NSLayoutConstraint constraintWithItem:view
@@ -95,7 +103,7 @@ static int const FUDGE_FACTOR = 2;
                                                         toItem:button
                                                      attribute:NSLayoutAttributeBottom
                                                     multiplier:1.0
-                                                      constant:30.0];
+                                                      constant:MIN_POS_Y];
     
     buttonXConstraintMiddle = [NSLayoutConstraint constraintWithItem:superView
                                                             attribute:NSLayoutAttributeCenterX
@@ -168,35 +176,39 @@ static int const FUDGE_FACTOR = 2;
     CGPoint translation = [gesture translationInView:label];
     float newX = buttonXConstraint.constant;
     float newY = buttonYConstraint.constant;
+    if(newX != MIN_POS_X && newY != MIN_POS_Y){
+    //SJEKK for å fjerne bugs
+        newX = MIN_POS_X;
+        newY = MIN_POS_Y;
+    }
     
-    if(newX == 30.0 && newY == 30.0){
+    if(newX == MIN_POS_X && newY == MIN_POS_Y){
         //SWITCH HERE
+         [button setImage:[UIHelper iconImage:[UIImage imageNamed:@"camera-icon.png"] withSize:150] forState:UIControlStateNormal];
+        [button layoutIfNeeded];
+       // button.backgroundColor = [ColorHelper purpleColor];
         if(toggleDragDirection){
-            
+            //AudioServicesPlayAlertSound(kSystemSoundID_Vibrate);
             startPosition = YES;
             if(xViewIsShowing){
-                self.onDragEndedX();
+                //self.onDragEndedX();
+                self.onDragSwitchedFromX();
             }else{
-                self.onDragEndedY();
+                //self.onDragEndedY();
+                self.onDragSwitchedFromY();
             }
-            
-            
             startY = NO;
             startX = NO;
-            
         }
         toggleDragDirection = NO;
-        
-        
     }
     else{
         startPosition = NO;
     }
     
-    if(newX == 30.0){
+    if(newX == MIN_POS_X){
         //KAN dra Y
         dragY = YES;
-        
     }
     else{
         //Kan ikke dra Y
@@ -208,7 +220,7 @@ static int const FUDGE_FACTOR = 2;
         }
         dragY = NO;
     }
-    if(newY == 30.0){
+    if(newY == MIN_POS_Y){
         //KAN dra X
         dragX = YES;
     }
@@ -223,7 +235,7 @@ static int const FUDGE_FACTOR = 2;
         dragX = NO;
     }
     
-    if(newX != 30.0 || newY != 30.0){
+    if(newX != MIN_POS_X || newY != MIN_POS_Y){
         toggleDragDirection = YES;
     }
     if(gesture.state == UIGestureRecognizerStateBegan){
@@ -235,14 +247,25 @@ static int const FUDGE_FACTOR = 2;
     }
     else if(gesture.state == UIGestureRecognizerStateEnded || gesture.state == UIGestureRecognizerStateFailed || gesture.state == UIGestureRecognizerStateCancelled)
     {
+        
         if(dragY && dragYEnabled){
-            self.onDragEndedY();
-            [self fadeOutStatusButton];
+            if(newY != MIN_POS_Y){
+                self.onDragEndedY();
+                [self fadeOutStatusButton];
+            }else{
+                self.onDragSwitchedFromY();
+            }
+            
         }
         
         else if(dragX && dragXEnabled){
-            self.onDragEndedX();
-            [self fadeOutStatusButton];
+            if(newX != MIN_POS_X){
+                self.onDragEndedX();
+                [self fadeOutStatusButton];
+            }else{
+                self.onDragSwitchedFromX();
+            }
+           
         }
     }
     else{
@@ -266,6 +289,7 @@ static int const FUDGE_FACTOR = 2;
                         button.alpha = 0.0;
                      }
                      completion:^(BOOL finished){
+                         [button setImage:[UIHelper iconImage:[UIImage imageNamed:@"camera-icon.png"] withSize:150] forState:UIControlStateNormal];
                          buttonXConstraint.constant = buttonXConstraintDefault;
                          buttonYConstraint.constant = buttonYConstraintDefault;
                          
@@ -280,9 +304,9 @@ static int const FUDGE_FACTOR = 2;
 }
 
 -(void)moveLeft:(float)xPos withTranslation:(CGPoint)translation{
-    if(xPos >= (screenWidth - 100))
+    if(xPos >= (screenWidth - MAX_POS_X))
     {
-        xPos = (screenWidth - 100);
+        xPos = (screenWidth - MAX_POS_X);
         buttonXConstraint.constant = xPos;
     }else
     {
@@ -291,9 +315,9 @@ static int const FUDGE_FACTOR = 2;
 }
 -(void)moveRight:(float)xPos withTranslation:(CGPoint)translation
 {
-    if(xPos <= (MIN_POS))
+    if(xPos <= (MIN_POS_X))
     {
-        xPos = MIN_POS;
+        xPos = MIN_POS_X;
         buttonXConstraint.constant = xPos;
     }else
     {
@@ -303,9 +327,9 @@ static int const FUDGE_FACTOR = 2;
 
 -(void)moveUp:(float)yPos withTranslation:(CGPoint)translation
 {
-    if(yPos >= (screenHeight - 100))
+    if(yPos >= (screenHeight - MAX_POS_Y))
     {
-        yPos = (screenHeight - 100);
+        yPos = (screenHeight - MAX_POS_Y);
         buttonYConstraint.constant = yPos;
     }else
     {
@@ -315,9 +339,9 @@ static int const FUDGE_FACTOR = 2;
 
 -(void)moveDown:(float)yPos withTranslation:(CGPoint)translation
 {
-    if(yPos <= MIN_POS)
+    if(yPos <= MIN_POS_Y)
     {
-        yPos = MIN_POS;
+        yPos = MIN_POS_Y;
         buttonYConstraint.constant = yPos;
     }else
     {

@@ -1005,7 +1005,7 @@
                                 <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
                             </constraint>
                             <constraint firstItem="Ca7-VE-lg7" firstAttribute="top" secondItem="OY9-m1-bX8" secondAttribute="bottom" constant="25" id="KmL-FD-17m">
-                                <variation key="heightClass=regular-widthClass=compact" constant="40"/>
+                                <variation key="heightClass=regular-widthClass=compact" constant="30"/>
                             </constraint>
                             <constraint firstAttribute="centerX" secondItem="QRq-Tr-CyD" secondAttribute="centerX" constant="13" id="P8U-uZ-r0k">
                                 <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
@@ -1014,7 +1014,7 @@
                                 <variation key="heightClass=regular-widthClass=compact" constant="10"/>
                             </constraint>
                             <constraint firstItem="OY9-m1-bX8" firstAttribute="leading" secondItem="OPp-Ns-TuE" secondAttribute="leadingMargin" constant="86" id="YW7-cV-Jpo">
-                                <variation key="heightClass=regular-widthClass=compact" constant="30"/>
+                                <variation key="heightClass=regular-widthClass=compact" constant="10"/>
                             </constraint>
                             <constraint firstItem="JlZ-Dd-3Dh" firstAttribute="top" secondItem="QRq-Tr-CyD" secondAttribute="bottom" constant="38" id="fvt-OJ-0us">
                                 <variation key="heightClass=regular-widthClass=compact" constant="20"/>
@@ -1023,7 +1023,7 @@
                                 <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
                             </constraint>
                             <constraint firstAttribute="trailingMargin" secondItem="OY9-m1-bX8" secondAttribute="trailing" constant="81" id="n1M-GG-mVT">
-                                <variation key="heightClass=regular-widthClass=compact" constant="30"/>
+                                <variation key="heightClass=regular-widthClass=compact" constant="10"/>
                             </constraint>
                             <constraint firstAttribute="centerX" secondItem="JlZ-Dd-3Dh" secondAttribute="centerX" constant="5.5" id="rvZ-Oq-Hzf">
                                 <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
@@ -1286,36 +1286,6 @@
                     <view key="view" contentMode="scaleToFill" id="CM4-4H-PKp">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7L0-lf-YFE">
-                                <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                        <constraints>
-                            <constraint firstItem="7L0-lf-YFE" firstAttribute="leading" secondItem="CM4-4H-PKp" secondAttribute="leadingMargin" constant="9" id="2Sa-v6-j5w"/>
-                            <constraint firstItem="bqh-Bk-zW7" firstAttribute="top" secondItem="7L0-lf-YFE" secondAttribute="bottom" constant="20" id="vJV-g4-deV"/>
-                        </constraints>
-                        <variation key="default">
-                            <mask key="subviews">
-                                <exclude reference="7L0-lf-YFE"/>
-                            </mask>
-                            <mask key="constraints">
-                                <exclude reference="2Sa-v6-j5w"/>
-                                <exclude reference="vJV-g4-deV"/>
-                            </mask>
-                        </variation>
-                        <variation key="heightClass=regular-widthClass=compact">
-                            <mask key="subviews">
-                                <include reference="7L0-lf-YFE"/>
-                            </mask>
-                            <mask key="constraints">
-                                <include reference="2Sa-v6-j5w"/>
-                                <include reference="vJV-g4-deV"/>
-                            </mask>
-                        </variation>
                     </view>
                     <navigationItem key="navigationItem" id="dyj-yC-yLI"/>
                 </viewController>

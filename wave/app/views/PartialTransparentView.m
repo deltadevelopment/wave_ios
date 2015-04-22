@@ -91,7 +91,7 @@ CGFloat DegreesToRadians(CGFloat degrees)
     UIColor *theFillColor = [UIColor redColor];
     CGContextSetFillColorWithColor(context, theFillColor.CGColor);
     
-    CGRect rectangle = CGRectMake(37,40,300,30);
+    CGRect rectangle = CGRectMake(17,30,340,30);
     CGContextBeginPath(context);
     
     CGContextAddEllipseInRect(context, rectangle);

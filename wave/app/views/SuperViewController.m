@@ -90,6 +90,20 @@
     
 }
 
+-(void)onDragSwitchedFromX{
+    if(xView != nil){
+        [xView onDragSwitched];
+    }
+    
+}
+
+-(void)onDragSwitchedFromY{
+    if(yView != nil){
+        [yView onDragSwitched];
+    }
+    
+}
+
 -(void)onTap{
     //[self showCamera];
     NSLog(@"______TAPPING NOW");
@@ -100,6 +114,8 @@
 -(void)onCameraOpen{
     [_camera prepareCamera];
 }
+
+
 
 -(void)onCameraClose
 {
@@ -134,6 +150,13 @@
     self.superButton.onTap = ^{
         [weakSelf onTap];
     };
+    self.superButton.onDragSwitchedFromX = ^{
+        [weakSelf onDragSwitchedFromX];
+    };
+    self.superButton.onDragSwitchedFromY = ^{
+        [weakSelf onDragSwitchedFromY];
+    };
+    
 }
 
 -(OverlayViewController *)createViewControllerWithStoryboardId:(NSString *) identifier
@@ -148,9 +171,13 @@
 {
     xView = x;
     yView = y;
+    __weak typeof(self) weakSelf = self;
     if(xView != nil)
     {
         [_superButton enableDragX];
+        xView.changeIcon =^(UIImage*(img)){
+            [weakSelf changeIcon:img];
+        };
         [self.view insertSubview:xView.view belowSubview:[self.superButton getButton]];
         [self addConstraints:xView.view];
     }
@@ -162,6 +189,11 @@
     }
      [self prepareCamera];
   
+}
+
+-(void)changeIcon:(UIImage *) img{
+    [_superButton changeIcon:img];
+
 }
 
 -(void)addConstraints:(UIView *) view

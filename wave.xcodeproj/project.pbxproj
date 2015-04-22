@@ -75,6 +75,11 @@
 		C5D473781AE69D500097E44F /* the-bar-x-v2.png in Resources */ = {isa = PBXBuildFile; fileRef = C5D473771AE69D500097E44F /* the-bar-x-v2.png */; };
 		C5D4737A1AE6C29F0097E44F /* cross-simple.png in Resources */ = {isa = PBXBuildFile; fileRef = C5D473791AE6C29F0097E44F /* cross-simple.png */; };
 		C5D4737E1AE6C6890097E44F /* slider-cross.png in Resources */ = {isa = PBXBuildFile; fileRef = C5D4737D1AE6C6890097E44F /* slider-cross.png */; };
+		C5D473801AE795890097E44F /* bucket-white.png in Resources */ = {isa = PBXBuildFile; fileRef = C5D4737F1AE795890097E44F /* bucket-white.png */; };
+		C5D473821AE7992E0097E44F /* people-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = C5D473811AE7992E0097E44F /* people-icon.png */; };
+		C5D473841AE799610097E44F /* people-icon-white.png in Resources */ = {isa = PBXBuildFile; fileRef = C5D473831AE799610097E44F /* people-icon-white.png */; };
+		C5D473861AE79BC80097E44F /* the-bar-y-v2.png in Resources */ = {isa = PBXBuildFile; fileRef = C5D473851AE79BC80097E44F /* the-bar-y-v2.png */; };
+		C5D473891AE79C590097E44F /* InfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D473881AE79C590097E44F /* InfoViewController.m */; };
 		F1BD621C1AE460D400BDE1CA /* Carousel.m in Sources */ = {isa = PBXBuildFile; fileRef = F1BD621B1AE460D400BDE1CA /* Carousel.m */; };
 		F1BD621F1AE46EFC00BDE1CA /* ActivityTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F1BD621E1AE46EFC00BDE1CA /* ActivityTableViewCell.m */; };
 /* End PBXBuildFile section */
@@ -209,6 +214,12 @@
 		C5D473771AE69D500097E44F /* the-bar-x-v2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "the-bar-x-v2.png"; sourceTree = "<group>"; };
 		C5D473791AE6C29F0097E44F /* cross-simple.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cross-simple.png"; sourceTree = "<group>"; };
 		C5D4737D1AE6C6890097E44F /* slider-cross.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "slider-cross.png"; sourceTree = "<group>"; };
+		C5D4737F1AE795890097E44F /* bucket-white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bucket-white.png"; sourceTree = "<group>"; };
+		C5D473811AE7992E0097E44F /* people-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "people-icon.png"; sourceTree = "<group>"; };
+		C5D473831AE799610097E44F /* people-icon-white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "people-icon-white.png"; sourceTree = "<group>"; };
+		C5D473851AE79BC80097E44F /* the-bar-y-v2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "the-bar-y-v2.png"; sourceTree = "<group>"; };
+		C5D473871AE79C590097E44F /* InfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfoViewController.h; sourceTree = "<group>"; };
+		C5D473881AE79C590097E44F /* InfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfoViewController.m; sourceTree = "<group>"; };
 		F1BD621A1AE460D400BDE1CA /* Carousel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Carousel.h; sourceTree = "<group>"; };
 		F1BD621B1AE460D400BDE1CA /* Carousel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Carousel.m; sourceTree = "<group>"; };
 		F1BD621D1AE46EFC00BDE1CA /* ActivityTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityTableViewCell.h; sourceTree = "<group>"; };
@@ -317,14 +328,18 @@
 				C5D473631AE511730097E44F /* search-icon.png */,
 				C5A27B961ADE52CC00968033 /* test1.jpg */,
 				C5A27B971ADE52CC00968033 /* test2.jpg */,
+				C5D473851AE79BC80097E44F /* the-bar-y-v2.png */,
 				C5A27BA21ADE779500968033 /* events-icon.png */,
 				C5D473651AE56B540097E44F /* settings-icon.png */,
+				C5D4737F1AE795890097E44F /* bucket-white.png */,
 				C5A27BAB1ADEB5F100968033 /* menu.png */,
 				C5A27BA31ADE779500968033 /* profile-icon.png */,
 				C5A27BA41ADE779500968033 /* feed-icon.png */,
 				C5D473791AE6C29F0097E44F /* cross-simple.png */,
 				C5D473771AE69D500097E44F /* the-bar-x-v2.png */,
 				C5D473751AE699DE0097E44F /* the-bar.png */,
+				C5D473811AE7992E0097E44F /* people-icon.png */,
+				C5D473831AE799610097E44F /* people-icon-white.png */,
 				C5D4737D1AE6C6890097E44F /* slider-cross.png */,
 				C5A27B981ADE52CC00968033 /* miranda-kerr.jpg */,
 				C5576B4F1ADBE0DB009C1D5E /* wz-monkey-bg.jpg */,
@@ -362,6 +377,8 @@
 				C5D4736B1AE63F610097E44F /* FilterViewController.m */,
 				C5D4736F1AE66D820097E44F /* PartialTransparentView.h */,
 				C5D473701AE66D820097E44F /* PartialTransparentView.m */,
+				C5D473871AE79C590097E44F /* InfoViewController.h */,
+				C5D473881AE79C590097E44F /* InfoViewController.m */,
 			);
 			path = views;
 			sourceTree = "<group>";
@@ -576,16 +593,20 @@
 				C5A27B9B1ADE52CC00968033 /* miranda-kerr.jpg in Resources */,
 				C5576B451ADBD79A009C1D5E /* Localizable.strings in Resources */,
 				C5A27B991ADE52CC00968033 /* test1.jpg in Resources */,
+				C5D473801AE795890097E44F /* bucket-white.png in Resources */,
 				C5A27BAC1ADEB5F100968033 /* menu.png in Resources */,
 				C5D473641AE511730097E44F /* search-icon.png in Resources */,
+				C5D473821AE7992E0097E44F /* people-icon.png in Resources */,
 				C5A27BA51ADE779500968033 /* events-icon.png in Resources */,
 				C5576B421ADBC1FC009C1D5E /* camera-icon.png in Resources */,
+				C5D473861AE79BC80097E44F /* the-bar-y-v2.png in Resources */,
 				C5576B501ADBE0DB009C1D5E /* wz-monkey-bg.jpg in Resources */,
 				C57AD0B01AD7EDB800B6042A /* Main.storyboard in Resources */,
 				C57AD0B51AD7EDB800B6042A /* LaunchScreen.xib in Resources */,
 				C5D4737E1AE6C6890097E44F /* slider-cross.png in Resources */,
 				C5D473661AE56B540097E44F /* settings-icon.png in Resources */,
 				C57AD0B21AD7EDB800B6042A /* Images.xcassets in Resources */,
+				C5D473841AE799610097E44F /* people-icon-white.png in Resources */,
 				C5D4736E1AE640260097E44F /* bucket.png in Resources */,
 				C5A27B511ADC014E00968033 /* cross-white.png in Resources */,
 				C5D4737A1AE6C29F0097E44F /* cross-simple.png in Resources */,
@@ -628,6 +649,7 @@
 				C5A27B951ADE4F5500968033 /* ScrollingViewController.m in Sources */,
 				F1BD621C1AE460D400BDE1CA /* Carousel.m in Sources */,
 				C5576B381ADBC195009C1D5E /* ColorHelper.m in Sources */,
+				C5D473891AE79C590097E44F /* InfoViewController.m in Sources */,
 				C5A27B6F1ADD083300968033 /* ConfigHelper.m in Sources */,
 				C5D4736C1AE63F610097E44F /* FilterViewController.m in Sources */,
 				C5D473691AE635F80097E44F /* YTestViewController.m in Sources */,

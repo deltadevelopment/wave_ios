@@ -17,8 +17,10 @@
 @implementation FilterViewController{
     NSMutableArray *filterValues;
     NSMutableArray *filterImages;
+    NSMutableArray *filterIcons;
     NSMutableArray *filterTexts;
     bool notFirstFilter;
+    int currentIndex;
 }
 
 - (void)viewDidLoad {
@@ -33,17 +35,24 @@
     [UIHelper colorIcon:self.filterImage withColor:[ColorHelper darkBlueColor]];
     filterValues = [[NSMutableArray alloc] init];
     filterImages = [[NSMutableArray alloc] init];
+    filterIcons = [[NSMutableArray alloc] init];
      filterTexts = [[NSMutableArray alloc] init];
     // Do any additional setup after loading the view.
-    [self addFilterWithCapacity:300 withNumberOfFilter:4];
+    [self addFilterWithCapacity:340 withNumberOfFilter:4];
     [self addFilterImagesAndTexts];
+    currentIndex = -1;
 }
 
 -(void)addFilterImagesAndTexts{
     [filterImages addObject:@"bucket.png"];
+    [filterImages addObject:@"people-icon.png"];
     [filterImages addObject:@"bucket.png"];
     [filterImages addObject:@"bucket.png"];
-    [filterImages addObject:@"bucket.png"];
+    
+    [filterIcons addObject:@"bucket-white.png"];
+    [filterIcons addObject:@"people-icon-white.png"];
+    [filterIcons addObject:@"bucket.png"];
+    [filterIcons addObject:@"bucket.png"];
     
     [filterTexts addObject:@"BUCKETS"];
     [filterTexts addObject:@"PEOPLE"];
@@ -58,6 +67,7 @@
 }
 
 -(void)onDragStarted{
+    currentIndex = -1;
     self.view.hidden = NO;
     [UIView animateWithDuration:0.3f
                           delay:0.0f
@@ -65,6 +75,7 @@
                      animations:^{
                          self.view.alpha = 1.0;
                          self.filterImage.alpha = 0.5;
+                         self.filterTimeLine.alpha = 1.0;
                          self.view.backgroundColor = [UIColor colorWithRed:0.051 green:0.875 blue:0.843 alpha:0.9];
                          //[self.view layoutIfNeeded];
                      }
@@ -74,41 +85,59 @@
 
 
 -(void)onDragEnded{
-    self.view.alpha = 0;
-}
+    [UIView animateWithDuration:0.2f
+                          delay:0.0f
+                        options: UIViewAnimationOptionCurveLinear
+                     animations:^{
+                         self.view.alpha = 1.0;
+                         self.filterTimeLine.alpha = 0.0;
+                         self.view.layer.backgroundColor = [UIColor colorWithRed:0.051 green:0.875 blue:0.843 alpha:1.0].CGColor;
 
+                         
+                     }
+                     completion:^(BOOL finished){
+                         [UIView animateWithDuration:0.4f
+                                               delay:0.4f
+                                             options: UIViewAnimationOptionCurveLinear
+                                          animations:^{
+                                              self.view.alpha = 0.0;
+                                              
+                                              self.view.layer.backgroundColor = [UIColor colorWithRed:0.051 green:0.875 blue:0.843 alpha:0.0].CGColor;
+                                              [self.view layoutIfNeeded];
+                                              
+                                          }
+                                          completion:^(BOOL finished){
+                                              self.view.hidden = YES;
+                                          }];
+                     }];
+}
 
 -(void)onDragX:(NSNumber *)xPos{
     
     float x = [xPos floatValue];
     int index = 0;
     for(NSNumber *number in filterValues){
-    //    NSLog(@"xPOS: %f, filter: %f", x, [number floatValue]);
         if(index == [filterValues count]-1){
-            if(x + 25 >[number floatValue]){
-                NSLog(@"knapp er over, %d", index);
-                self.filterImage.image = [UIImage imageNamed:[filterImages objectAtIndex:index]];
-                self.filterBottomText.text = [filterTexts objectAtIndex:index];
+            if(x + 46 >[number floatValue]){
+                [self changeUIBasedOnFilter:index];
             }
         }else{
-            if(x + 25 >[number floatValue] && x + 25 < [[filterValues objectAtIndex:index + 1] floatValue]){
-                NSLog(@"knapp er over, %d", index);
-                self.filterImage.image = [UIImage imageNamed:[filterImages objectAtIndex:index]];
-                self.filterBottomText.text = [filterTexts objectAtIndex:index];
+            if(x + 46 >[number floatValue] && x + 46 < [[filterValues objectAtIndex:index + 1] floatValue]){
+                [self changeUIBasedOnFilter:index];
             }
         }
-        
-       
         index++;
     }
-    /*
-    float middle = ([UIHelper getScreenWidth]/2) - 25;
-    if([xPos floatValue] > middle){
-        self.view.backgroundColor =[ColorHelper redColor];
-    }else{
-        self.view.backgroundColor =[ColorHelper greenColor];
+}
+
+-(void)changeUIBasedOnFilter:(int) index{
+    NSLog(@"knapp er over, %d", index);
+    self.filterImage.image = [UIImage imageNamed:[filterImages objectAtIndex:index]];
+    self.filterBottomText.text = [filterTexts objectAtIndex:index];
+    if(currentIndex != index){
+        self.changeIcon([UIImage imageNamed:[filterIcons objectAtIndex:index]]);
+        currentIndex = index;
     }
-     */
 }
 
 -(void)addFilterWithCapacity:(float)size withNumberOfFilter:(float)filterNum

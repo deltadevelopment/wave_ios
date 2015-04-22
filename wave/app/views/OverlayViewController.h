@@ -9,8 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "ColorHelper.h"
 @interface OverlayViewController : UIViewController
+@property (nonatomic, copy) void (^changeIcon)(UIImage*(img));
 -(void)onDragStarted;
 -(void)onDragEnded;
 -(void)onDragX:(NSNumber *) xPos;
 -(void)onDragY:(NSNumber *) yPos;
+-(void)onDragSwitched;
 @end
