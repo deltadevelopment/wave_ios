@@ -19,6 +19,8 @@
 @property (nonatomic, copy) void (^onDragStartedY)(void);
 @property (nonatomic, copy) void (^onDragEndedX)(void);
 @property (nonatomic, copy) void (^onDragEndedY)(void);
+@property (nonatomic, copy) void (^onDragInStartArea)(void);
+@property (nonatomic, copy) void (^onDragInStartAreaEnded)(void);
 @property (nonatomic, copy) void (^onDragSwitchedFromX)(void);
 @property (nonatomic, copy) void (^onDragSwitchedFromY)(void);
 -(void)changeIcon:(UIImage *)img;

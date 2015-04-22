@@ -69,6 +69,7 @@
 -(void)onDragStarted{
     currentIndex = -1;
     self.view.hidden = NO;
+    /*
     [UIView animateWithDuration:0.3f
                           delay:0.0f
                         options: UIViewAnimationOptionCurveLinear
@@ -80,6 +81,11 @@
                          //[self.view layoutIfNeeded];
                      }
                      completion:nil];
+     */
+    self.view.alpha = 1.0;
+    self.filterImage.alpha = 0.5;
+    self.filterTimeLine.alpha = 1.0;
+    self.view.backgroundColor = [UIColor colorWithRed:0.051 green:0.875 blue:0.843 alpha:0.9];
 }
 
 

@@ -9,5 +9,10 @@
 #import "OverlayViewController.h"
 
 @interface InfoViewController : OverlayViewController
-
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *xButtonLeftConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *xButtonrightConstraint;
+@property (weak, nonatomic) IBOutlet UIView *xLineView;
+@property (weak, nonatomic) IBOutlet UIView *yLineView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *yLineTopConstraint;
+-(void)addBlur;
 @end

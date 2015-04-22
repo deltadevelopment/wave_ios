@@ -7,7 +7,7 @@
 //
 
 #import "InfoViewController.h"
-
+#import "UIHelper.h"
 @interface InfoViewController ()
 
 @end
@@ -16,6 +16,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [self addBlur:self.xLineView withRect:CGRectMake(0, 0, [UIHelper getScreenWidth] -36, 30)];
+    [self addBlur:self.yLineView withRect:CGRectMake(0, 0, 30, [UIHelper getScreenHeight])];
+    self.view.backgroundColor = [UIColor clearColor];
+    //[self addBlur];
     // Do any additional setup after loading the view.
 }
 
@@ -24,6 +29,31 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(void)addBlur:(UIView *) view withRect:(CGRect) frame{
+    view.layer.cornerRadius = 15;
+    view.clipsToBounds = YES;
+    view.alpha = 0.0;
+    view.hidden = YES;
+    UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+    
+    UIVisualEffectView  *blurEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+    blurEffectView.frame = frame;
+    // blurEffectView.alpha = 0.9;
+    //[view addSubview:blurEffectView];
+    //add auto layout constraints so that the blur fills the screen upon rotating device
+    [blurEffectView setTranslatesAutoresizingMaskIntoConstraints:NO];
+}
+
+-(void)addBlur{
+    UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+    
+    UIVisualEffectView  *blurEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+    blurEffectView.frame = CGRectMake(0, 0, [UIHelper getScreenWidth], [UIHelper getScreenHeight]);
+    // blurEffectView.alpha = 0.9;
+    [self.view addSubview:blurEffectView];
+    //add auto layout constraints so that the blur fills the screen upon rotating device
+    [blurEffectView setTranslatesAutoresizingMaskIntoConstraints:NO];
+}
 /*
 #pragma mark - Navigation
 

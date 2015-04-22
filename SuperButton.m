@@ -182,11 +182,12 @@ static int const FUDGE_FACTOR = 10;
         newY = MIN_POS_Y;
     }
     
+    
     if(newX == MIN_POS_X && newY == MIN_POS_Y){
         //SWITCH HERE
-         [button setImage:[UIHelper iconImage:[UIImage imageNamed:@"camera-icon.png"] withSize:150] forState:UIControlStateNormal];
+        [button setImage:[UIHelper iconImage:[UIImage imageNamed:@"camera-icon.png"] withSize:150] forState:UIControlStateNormal];
         [button layoutIfNeeded];
-       // button.backgroundColor = [ColorHelper purpleColor];
+        // button.backgroundColor = [ColorHelper purpleColor];
         if(toggleDragDirection){
             //AudioServicesPlayAlertSound(kSystemSoundID_Vibrate);
             startPosition = YES;
@@ -210,10 +211,25 @@ static int const FUDGE_FACTOR = 10;
         //KAN dra Y
         dragY = YES;
     }
+    else if(newX <= MIN_POS_X + FUDGE_FACTOR){
+        //VIS INFO
+        self.onDragInStartArea();
+          [button setImage:[UIHelper iconImage:[UIImage imageNamed:@"camera-icon.png"] withSize:150] forState:UIControlStateNormal];
+        if(xViewIsShowing){
+            //self.onDragEndedX();
+            self.onDragSwitchedFromX();
+        }else{
+            //self.onDragEndedY();
+            self.onDragSwitchedFromY();
+        }
+        startX = NO;
+       
+    }
     else{
         //Kan ikke dra Y
         //NSLog(@"X SKAL STARTE");
         if(!startX){
+            self.onDragInStartAreaEnded();
             self.onDragStartedX();
             xViewIsShowing = YES;
             startX = YES;
@@ -224,10 +240,24 @@ static int const FUDGE_FACTOR = 10;
         //KAN dra X
         dragX = YES;
     }
+    else if(newY <= MIN_POS_Y + FUDGE_FACTOR){
+        //VIS INFO
+        self.onDragInStartArea();
+          [button setImage:[UIHelper iconImage:[UIImage imageNamed:@"camera-icon.png"] withSize:150] forState:UIControlStateNormal];
+        if(xViewIsShowing){
+            //self.onDragEndedX();
+            self.onDragSwitchedFromX();
+        }else{
+            //self.onDragEndedY();
+            self.onDragSwitchedFromY();
+        }
+        startY = NO;
+    }
     else{
         //Kan ikke dra x
         // NSLog(@"Y SKAL STARTE");
         if(!startY){
+            self.onDragInStartAreaEnded();
             self.onDragStartedY();
             xViewIsShowing = NO;
             startY = YES;
@@ -247,9 +277,10 @@ static int const FUDGE_FACTOR = 10;
     }
     else if(gesture.state == UIGestureRecognizerStateEnded || gesture.state == UIGestureRecognizerStateFailed || gesture.state == UIGestureRecognizerStateCancelled)
     {
+        self.onDragInStartAreaEnded();
         
         if(dragY && dragYEnabled){
-            if(newY != MIN_POS_Y){
+            if(newY > MIN_POS_Y + FUDGE_FACTOR){
                 self.onDragEndedY();
                 [self fadeOutStatusButton];
             }else{
@@ -259,7 +290,7 @@ static int const FUDGE_FACTOR = 10;
         }
         
         else if(dragX && dragXEnabled){
-            if(newX != MIN_POS_X){
+            if(newX > MIN_POS_X + FUDGE_FACTOR){
                 self.onDragEndedX();
                 [self fadeOutStatusButton];
             }else{

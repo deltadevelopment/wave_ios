@@ -9,6 +9,7 @@
 #import "SuperViewController.h"
 #import "UIHelper.h"
 #import "CameraViewController.h"
+#import "InfoViewController.h"
 @interface SuperViewController ()
 
 @end
@@ -16,10 +17,15 @@
 @implementation SuperViewController{
     OverlayViewController *xView;
     OverlayViewController *yView;
+    InfoViewController *infoView;
+    bool infoIsVisible;
+    UIVisualEffectView  *blurEffectView;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    infoView = (InfoViewController *)[self createViewControllerWithStoryboardId:@"infoView"];
+    infoView.view.alpha = 0.0;
     [self initSuperButton];
     _camera = [[CameraViewController alloc]init];
    
@@ -103,7 +109,66 @@
     }
     
 }
+-(void)onDragInStartArea{
+    if(!infoIsVisible){
 
+        infoIsVisible = YES;
+        infoView.xLineView.alpha = 0.4;
+        infoView.yLineView.alpha = 0.4;
+        infoView.view.alpha = 1.0;
+        //blurEffectView.alpha = 1.0;
+       // infoView.xButtonLeftConstraint.constant = 350;
+        /*
+        [UIView animateWithDuration:0.3f
+                              delay:0.0f
+                            options: UIViewAnimationOptionCurveLinear
+                         animations:^{
+                             infoView.view.alpha = 0.9;
+                         }
+                         completion:^(BOOL finished){
+                             
+                             
+                             [UIView animateWithDuration:0.4f
+                                                   delay:0.0f
+                                                 options: UIViewAnimationOptionCurveLinear
+                                              animations:^{
+                                                  infoView.xLineView.alpha = 1;
+                                                  infoView.yLineView.alpha = 1;
+                                                  //infoView.xButtonLeftConstraint.constant = 10;
+                                                  [infoView.view layoutIfNeeded];
+                                              }
+                                              completion:nil];
+                         }];
+         */
+    }
+ 
+   
+    
+}
+
+-(void)onDragInStartAreaEnded{
+    [UIView animateWithDuration:0.3f
+                          delay:0.0f
+                        options: UIViewAnimationOptionCurveLinear
+                     animations:^{
+                         infoView.view.alpha = 0.0;
+                         blurEffectView.alpha = 0.0;
+                         infoIsVisible = NO;
+                     }
+                     completion:nil];
+   
+}
+-(void)addBlur{
+    
+    UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+    
+    blurEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+    blurEffectView.frame = CGRectMake(0, 0, [UIHelper getScreenWidth], [UIHelper getScreenHeight]);
+    // blurEffectView.alpha = 0.9;
+    [self.view insertSubview:blurEffectView belowSubview:[self.superButton getButton]];
+    //add auto layout constraints so that the blur fills the screen upon rotating device
+    [blurEffectView setTranslatesAutoresizingMaskIntoConstraints:NO];
+}
 -(void)onTap{
     //[self showCamera];
     NSLog(@"______TAPPING NOW");
@@ -156,8 +221,16 @@
     self.superButton.onDragSwitchedFromY = ^{
         [weakSelf onDragSwitchedFromY];
     };
+    self.superButton.onDragInStartArea = ^{
+        [weakSelf onDragInStartArea];
+    };
+    self.superButton.onDragInStartAreaEnded = ^{
+        [weakSelf onDragInStartAreaEnded];
+    };
     
 }
+
+
 
 -(OverlayViewController *)createViewControllerWithStoryboardId:(NSString *) identifier
 {
@@ -169,11 +242,18 @@
 
 -(void)attachViews:(OverlayViewController *) x withY:(OverlayViewController *) y
 {
+    [self addBlur];
+    blurEffectView.alpha = 0.0;
     xView = x;
     yView = y;
+    [self.view insertSubview:infoView.view belowSubview:[self.superButton getButton]];
+    [self addConstraints:infoView.view];
+    
+    [infoView.view layoutIfNeeded];
     __weak typeof(self) weakSelf = self;
     if(xView != nil)
     {
+        infoView.xLineView.hidden = NO;
         [_superButton enableDragX];
         xView.changeIcon =^(UIImage*(img)){
             [weakSelf changeIcon:img];
@@ -183,6 +263,7 @@
     }
     if(yView != nil)
     {
+        infoView.yLineView.hidden = NO;
         [_superButton enableDragY];
         [self.view insertSubview:yView.view belowSubview:[self.superButton getButton]];
         [self addConstraints:yView.view];
