@@ -12,4 +12,7 @@
 -(void)scrollUp;
 -(void)prepareCamera:(UIView *)view;
 -(void)onCameraOpen;
+-(void)oncameraClose;
+-(void)onImageTaken:(UIImage *)image;
+-(void)onCameraReady;
 @end

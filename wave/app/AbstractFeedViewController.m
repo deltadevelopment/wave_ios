@@ -22,8 +22,16 @@
 -(void)onCameraOpen{
 
 }
+-(void)onCameraReady{
 
+}
 -(void)prepareCamera:(UIView *)view{
+
+}
+-(void)oncameraClose{
+
+}
+-(void)onImageTaken:(UIImage *)image{
 
 }
 

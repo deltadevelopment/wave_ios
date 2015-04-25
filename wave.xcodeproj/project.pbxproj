@@ -82,6 +82,7 @@
 		C5D473891AE79C590097E44F /* InfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D473881AE79C590097E44F /* InfoViewController.m */; };
 		F1BD621C1AE460D400BDE1CA /* Carousel.m in Sources */ = {isa = PBXBuildFile; fileRef = F1BD621B1AE460D400BDE1CA /* Carousel.m */; };
 		F1BD621F1AE46EFC00BDE1CA /* ActivityTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F1BD621E1AE46EFC00BDE1CA /* ActivityTableViewCell.m */; };
+		F1BD62211AEBB46F00BDE1CA /* 169.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F1BD62201AEBB46F00BDE1CA /* 169.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -224,6 +225,7 @@
 		F1BD621B1AE460D400BDE1CA /* Carousel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Carousel.m; sourceTree = "<group>"; };
 		F1BD621D1AE46EFC00BDE1CA /* ActivityTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityTableViewCell.h; sourceTree = "<group>"; };
 		F1BD621E1AE46EFC00BDE1CA /* ActivityTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityTableViewCell.m; sourceTree = "<group>"; };
+		F1BD62201AEBB46F00BDE1CA /* 169.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 169.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -328,6 +330,7 @@
 				C5D473631AE511730097E44F /* search-icon.png */,
 				C5A27B961ADE52CC00968033 /* test1.jpg */,
 				C5A27B971ADE52CC00968033 /* test2.jpg */,
+				F1BD62201AEBB46F00BDE1CA /* 169.jpg */,
 				C5D473851AE79BC80097E44F /* the-bar-y-v2.png */,
 				C5A27BA21ADE779500968033 /* events-icon.png */,
 				C5D473651AE56B540097E44F /* settings-icon.png */,
@@ -592,6 +595,7 @@
 				C5A27BA71ADE779500968033 /* feed-icon.png in Resources */,
 				C5A27B9B1ADE52CC00968033 /* miranda-kerr.jpg in Resources */,
 				C5576B451ADBD79A009C1D5E /* Localizable.strings in Resources */,
+				F1BD62211AEBB46F00BDE1CA /* 169.jpg in Resources */,
 				C5A27B991ADE52CC00968033 /* test1.jpg in Resources */,
 				C5D473801AE795890097E44F /* bucket-white.png in Resources */,
 				C5A27BAC1ADEB5F100968033 /* menu.png in Resources */,

@@ -26,9 +26,12 @@
 }
 
 -(void)prepareCamera{
-    [camera setView:self.view withRect:CGRectZero];
+    //[camera setView:self.view withRect:CGRectZero];
+    camera = [[CameraHelper alloc]init];
+    [camera setView:self.view withRect:CGRectMake(0, 0, [UIHelper getScreenWidth], [UIHelper getScreenHeight])];
     [camera initaliseVideo];
     self.onCameraReady();
+    NSLog(@"prep");
   
     
 }
@@ -51,6 +54,7 @@
         self.onCameraOpen();
     }else{
         [self takePicture];
+        
         self.onCameraClose();
         cameraMode = NO;
     }

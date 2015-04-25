@@ -112,20 +112,25 @@
 }
 
 -(void)onCameraClose{
-    [currentController scrollUp];
+    [currentController oncameraClose];
+}
+-(void)showCamera{
+    [currentController onCameraReady];
 }
 
+
 -(void)onImageTaken:(UIImage *)image{
-    CGSize size = CGSizeMake([UIHelper getScreenWidth], [UIHelper getScreenHeight]);
+  CGSize size = CGSizeMake([UIHelper getScreenWidth], [UIHelper getScreenHeight]);
     
-    
-    [[currentController view] setBackgroundColor:[UIColor colorWithPatternImage:[self.camera imageByScalingAndCroppingForSize:size img:image]]];
+    [currentController onImageTaken:[self.camera imageByScalingAndCroppingForSize:size img:image]];
+  //[[currentController view] setBackgroundColor:[UIColor colorWithPatternImage:]];
 }
 
 -(void)onCameraOpen{
     [super onCameraOpen];
     [currentController onCameraOpen];
 }
+
 
 /*
 #pragma mark - Navigation

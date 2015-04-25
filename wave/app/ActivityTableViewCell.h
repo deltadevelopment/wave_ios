@@ -10,5 +10,10 @@
 
 @interface ActivityTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UIImageView *bucketImage;
+@property (weak, nonatomic) IBOutlet UIView *topBar;
+@property (weak, nonatomic) IBOutlet UILabel *availabilityIcon;
+@property (weak, nonatomic) IBOutlet UILabel *displayNameText;
+@property (weak, nonatomic) IBOutlet UIView *bottomBar;
+@property (weak, nonatomic) IBOutlet UIImageView *profilePictureIcon;
 
 @end

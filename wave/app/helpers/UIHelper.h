@@ -22,4 +22,7 @@
 +(UIImage *)iconImage:(UIImage *) image withSize:(float) size;
 +(void)colorIcon:(UIImageView *) imageView withColor:(UIColor *) color;
 +(UIImage *)imageNamed:(UIImage *)img withColor:(UIColor *)color;
++(void)roundedCorners:(UIView *) view withRadius:(float)radius;
++(void)applyThinLayoutOnLabel:(UILabel *) label withSize:(float) size;
++(void)applyThinLayoutOnLabel:(UILabel *) label withSize:(float) size withColor:(UIColor *) color;
 @end

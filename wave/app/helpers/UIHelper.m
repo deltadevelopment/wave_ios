@@ -60,9 +60,26 @@ static CGFloat screenHeight;
     [label setTintColor:[ColorHelper whiteColor]];
 }
 
++(void)applyThinLayoutOnLabel:(UILabel *) label withSize:(float) size{
+    [label setFont:[UIFont fontWithName:@"HelveticaNeue-Thin" size:size]];
+    [label setTextColor:[ColorHelper whiteColor]];
+    [label setTintColor:[ColorHelper whiteColor]];
+}
+
++(void)applyThinLayoutOnLabel:(UILabel *) label withSize:(float) size withColor:(UIColor *) color{
+    [label setFont:[UIFont fontWithName:@"HelveticaNeue-Thin" size:size]];
+    [label setTextColor:color];
+    [label setTintColor:color];
+}
+
 +(void)colorIcon:(UIImageView *) imageView withColor:(UIColor *) color{
     imageView.image = [imageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
     [imageView setTintColor:color];
+}
+
++(void)roundedCorners:(UIView *) view withRadius:(float)radius{
+    view.layer.cornerRadius = radius;
+    view.clipsToBounds = YES;
 }
 
 +(UIImage*)imageWithImage:(UIImage*)image
