@@ -8,6 +8,7 @@
 
 #import "SuperButton.h"
 #import <AudioToolbox/AudioToolbox.h>
+#import "BucketTypeModel.h"
 static int const MIN_POS = 20;
 static float const MIN_POS_X = 4.0;
 static float const MIN_POS_Y = 20.0;
@@ -18,7 +19,9 @@ static int const FUDGE_FACTOR = 10;
 
 @implementation SuperButton
 {
-    UIButton *button;
+    UIButton *cameraButton;
+    UIButton *cancelButton;
+    UIButton *typeButton;
     NSLayoutConstraint *buttonXConstraint;
     NSLayoutConstraint *buttonXConstraintMiddle;
     CGFloat buttonXConstraintDefault;
@@ -40,10 +43,14 @@ static int const FUDGE_FACTOR = 10;
     bool startX;
     bool startY;
     bool startedDrag;
+    UILabel *toolTip;
+    NSMutableArray *bucketTypes;
+    int currentTypeIndex;
+    bool pictureIsApproved;
 }
 
 -(UIButton *)getButton{
-    return button;
+    return cameraButton;
 }
 
 - (id)init:(UIView *)view
@@ -51,18 +58,30 @@ static int const FUDGE_FACTOR = 10;
     self = [super init];
     if (self) {
         superView = view;
-        button = [UIButton buttonWithType:UIButtonTypeCustom];
-        [self initUI:superView];
+        bucketTypes = [[NSMutableArray alloc]init];
+        cameraButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        typeButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        toolTip = [[UILabel alloc]init];
+        [self initBucketTypes];
+        [self initUI];
         [self addConstraints:superView];
         screenBound = [[UIScreen mainScreen] bounds];
         screenSize = screenBound.size;
         screenWidth = screenSize.width;
         screenHeight = screenSize.height;
+        
     }
     return self;
 }
+
+-(void)initBucketTypes{
+    [bucketTypes addObject:[[BucketTypeModel alloc] initWithProperties:0 withDescription:@"Create new shared bucket" withIconPath:@"bucket-white.png"]];
+    [bucketTypes addObject:[[BucketTypeModel alloc] initWithProperties:1 withDescription:@"Update your personal bucket" withIconPath:@"events-icon.png"]];
+}
+
 -(void)changeIcon:(UIImage *)img{
-    [button setImage:[UIHelper iconImage:img withSize:100] forState:UIControlStateNormal];
+    [cameraButton setImage:[UIHelper iconImage:img withSize:100] forState:UIControlStateNormal];
 }
 -(void)enableDragX{
     dragXEnabled = YES;
@@ -71,27 +90,99 @@ static int const FUDGE_FACTOR = 10;
     dragYEnabled = YES;
 }
 
--(void)initUI:(UIView *)view{
+-(void)initUI{
+    [self initCameraButton];
+    [self initCancelButton];
+    [self initTypeButton];
+    [self initToolTip];
+}
+
+-(void)initCameraButton{
+    [self applyUIOnButton:cameraButton];
+    [cameraButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"camera-icon.png"] withSize:150] forState:UIControlStateNormal];
+    cameraButton.backgroundColor = [ColorHelper purpleColor];
+    
+    [cameraButton addGestureRecognizer:[[UIPanGestureRecognizer alloc]
+                                        initWithTarget:self
+                                        action:@selector(cameraButtonDragged:)]];
+    [cameraButton addTarget:self action:@selector(tapCameraButton) forControlEvents:UIControlEventTouchUpInside];
+    [superView addSubview:cameraButton];
+}
+-(void)initCancelButton{
+    [self applyUIOnButton:cancelButton];
+    [cancelButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"cross.png"] withSize:150] forState:UIControlStateNormal];
+    cancelButton.backgroundColor = [[UIColor blackColor]colorWithAlphaComponent:0.4];
+    [cancelButton addTarget:self action:@selector(tapCancelButton) forControlEvents:UIControlEventTouchUpInside];
+    [superView addSubview:cancelButton];
+    [self addConstraintsToButton:superView withButton:cancelButton withPoint:CGPointMake(4, 20) fromLeft:NO];
+    cancelButton.hidden = YES;
+    cancelButton.alpha = 0.0;
+
+}
+-(void)initTypeButton{
+    [self applyUIOnButton:typeButton];
+    typeButton.backgroundColor = [[UIColor blackColor]colorWithAlphaComponent:0.4];
+    [typeButton addTarget:self action:@selector(tapTypeButton) forControlEvents:UIControlEventTouchUpInside];
+    [superView addSubview:typeButton];
+    [self addConstraintsToButton:superView withButton:typeButton withPoint:CGPointMake(4, 20) fromLeft:YES];
+    typeButton.hidden = YES;
+    typeButton.alpha = 0.0;
+
+}
+-(void)initToolTip{
+    [UIHelper applyThinLayoutOnLabel:toolTip];
+    [superView addSubview:toolTip];
+    toolTip.hidden = YES;
+    toolTip.alpha = 0.0;
+    [self addTooltipConstraint:superView withLabel:toolTip];
+    BucketTypeModel *bucketModel = [bucketTypes objectAtIndex:currentTypeIndex];
+    [typeButton setImage:[UIHelper iconImage:[UIImage imageNamed:[bucketModel icon_path]] withSize:150] forState:UIControlStateNormal];
+    toolTip.text = [bucketModel type_description];
+}
+
+-(void)showToolButtons{
+    typeButton.hidden = NO;
+    cancelButton.hidden = NO;
+    toolTip.hidden = NO;
+    [UIView animateWithDuration:0.3f
+                          delay:0.0f
+                        options: UIViewAnimationOptionCurveLinear
+                     animations:^{
+                         typeButton.alpha = 1.0;
+                         cancelButton.alpha = 1.0;
+                         toolTip.alpha = 1.0;
+                     }
+                     completion:nil];
+}
+
+-(void)hideToolButtons{
+    [UIView animateWithDuration:0.3f
+                          delay:0.0f
+                        options: UIViewAnimationOptionCurveLinear
+                     animations:^{
+                         typeButton.alpha = 0.0;
+                         cancelButton.alpha = 0.0;
+                         toolTip.alpha = 0.0;
+                     }
+                     completion:^(BOOL finished){
+                         typeButton.hidden = YES;
+                         cancelButton.hidden = YES;
+                         toolTip.hidden = YES;
+                     }];
+}
+
+-(void)applyUIOnButton:(UIButton *) button{
     button.layer.cornerRadius = 25;
-    [button setImage:[UIHelper iconImage:[UIImage imageNamed:@"camera-icon.png"] withSize:150] forState:UIControlStateNormal];
-    button.backgroundColor = [ColorHelper purpleColor];
-    [button setImageEdgeInsets:UIEdgeInsetsMake(10, 10, 10, 10)];
-    UIPanGestureRecognizer *gesture = [[UIPanGestureRecognizer alloc]
-                                       initWithTarget:self
-                                       action:@selector(buttonDragged:)];
-   // gesture.cancelsTouchesInView = NO;
-    [button addGestureRecognizer:gesture];
-    [button addTarget:self action:@selector(tap) forControlEvents:UIControlEventTouchUpInside];
-    [view addSubview:button];
+    [button setImageEdgeInsets:UIEdgeInsetsMake(11, 11, 11, 11)];
 }
 
 
 -(void)addConstraints:(UIView *)view{
-    button.translatesAutoresizingMaskIntoConstraints = NO;
+    cameraButton.translatesAutoresizingMaskIntoConstraints = NO;
     buttonXConstraint = [NSLayoutConstraint constraintWithItem:view
                                                      attribute:NSLayoutAttributeTrailingMargin
                                                      relatedBy:NSLayoutRelationEqual
-                                                        toItem:button
+                                                        toItem:cameraButton
                                                      attribute:NSLayoutAttributeTrailing
                                                     multiplier:1.0
                                                       constant:MIN_POS_X];
@@ -100,7 +191,7 @@ static int const FUDGE_FACTOR = 10;
     buttonYConstraint = [NSLayoutConstraint constraintWithItem:view
                                                      attribute:NSLayoutAttributeBottomMargin
                                                      relatedBy:NSLayoutRelationEqual
-                                                        toItem:button
+                                                        toItem:cameraButton
                                                      attribute:NSLayoutAttributeBottom
                                                     multiplier:1.0
                                                       constant:MIN_POS_Y];
@@ -108,7 +199,7 @@ static int const FUDGE_FACTOR = 10;
     buttonXConstraintMiddle = [NSLayoutConstraint constraintWithItem:superView
                                                             attribute:NSLayoutAttributeCenterX
                                                             relatedBy:NSLayoutRelationEqual
-                                                               toItem:button
+                                                               toItem:cameraButton
                                                             attribute:NSLayoutAttributeCenterX
                                                            multiplier:1.0
                                                              constant:0.0];
@@ -117,20 +208,103 @@ static int const FUDGE_FACTOR = 10;
     buttonYConstraintDefault = buttonYConstraint.constant;
     [view addConstraint:buttonXConstraint];
     [view addConstraint:buttonYConstraint];
+    [cameraButton addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[cameraButton(==50)]"
+                                                                   options:0
+                                                                   metrics:nil
+                                                                     views:NSDictionaryOfVariableBindings(cameraButton)]];
+    [cameraButton addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[cameraButton(==50)]"
+                                                                 options:0
+                                                                 metrics:nil
+                                                                   views:NSDictionaryOfVariableBindings(cameraButton)]];
+}
+
+-(void)addConstraintsToButton:(UIView *)view withButton:(UIButton *) button withPoint:(CGPoint) xy fromLeft:(bool) left{
+    button.translatesAutoresizingMaskIntoConstraints = NO;
+    if(left)
+    {
+        [view addConstraint:[NSLayoutConstraint constraintWithItem:view
+                                                         attribute:NSLayoutAttributeLeadingMargin
+                                                         relatedBy:NSLayoutRelationEqual
+                                                            toItem:button
+                                                         attribute:NSLayoutAttributeLeading
+                                                        multiplier:1.0
+                                                          constant:xy.x]];
+        
+    }else{
+        [view addConstraint:[NSLayoutConstraint constraintWithItem:view
+                                                         attribute:NSLayoutAttributeTrailingMargin
+                                                         relatedBy:NSLayoutRelationEqual
+                                                            toItem:button
+                                                         attribute:NSLayoutAttributeTrailing
+                                                        multiplier:1.0
+                                                          constant:xy.x]];
+    }
+    
+    [view addConstraint:[NSLayoutConstraint constraintWithItem:view
+                                                     attribute:NSLayoutAttributeBottomMargin
+                                                     relatedBy:NSLayoutRelationEqual
+                                                        toItem:button
+                                                     attribute:NSLayoutAttributeBottom
+                                                    multiplier:1.0
+                                                      constant:xy.y]];
+    [button addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[button(==50)]"
+                                                                         options:0
+                                                                         metrics:nil
+                                                                           views:NSDictionaryOfVariableBindings(button)]];
+    [button addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[button(==50)]"
+                                                                         options:0
+                                                                         metrics:nil
+                                                                           views:NSDictionaryOfVariableBindings(button)]];
+}
+
+-(void)addTooltipConstraint:(UIView *)view withLabel:(UILabel *) label{
+    label.translatesAutoresizingMaskIntoConstraints = NO;
+    
+    [view addConstraint:[NSLayoutConstraint constraintWithItem:view
+                                                     attribute:NSLayoutAttributeCenterX
+                                                     relatedBy:NSLayoutRelationEqual
+                                                        toItem:label
+                                                     attribute:NSLayoutAttributeCenterX
+                                                    multiplier:1.0
+                                                      constant:0.0]];
+    
+    
+    [view addConstraint:[NSLayoutConstraint constraintWithItem:view
+                                                     attribute:NSLayoutAttributeBottomMargin
+                                                     relatedBy:NSLayoutRelationEqual
+                                                        toItem:label
+                                                     attribute:NSLayoutAttributeBottom
+                                                    multiplier:1.0
+                                                      constant:90.0]];
+    /*
     [button addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[button(==50)]"
                                                                    options:0
                                                                    metrics:nil
                                                                      views:NSDictionaryOfVariableBindings(button)]];
     [button addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[button(==50)]"
-                                                                 options:0
-                                                                 metrics:nil
-                                                                   views:NSDictionaryOfVariableBindings(button)]];
+                                                                   options:0
+                                                                   metrics:nil
+                                                                     views:NSDictionaryOfVariableBindings(button)]];
+     */
 }
 
--(void)tap{
-    //animate
+-(void)tapCameraButton{
     self.onTap();
     [self animateButtonToMiddle];
+}
+
+-(void)tapCancelButton{
+
+}
+
+-(void)tapTypeButton{
+    currentTypeIndex ++;
+    if(currentTypeIndex == [bucketTypes count]){
+        currentTypeIndex = 0;
+    }
+    BucketTypeModel *bucketModel = [bucketTypes objectAtIndex:currentTypeIndex];
+    [typeButton setImage:[UIHelper iconImage:[UIImage imageNamed:[bucketModel icon_path]] withSize:150] forState:UIControlStateNormal];
+    toolTip.text = [bucketModel type_description];
 }
 
 -(void)animateButtonToMiddle{
@@ -152,7 +326,12 @@ static int const FUDGE_FACTOR = 10;
                          [superView  layoutIfNeeded];
                      }
                      completion:^(BOOL finished){
-                         
+                         if([self superViewHasConstraint]){
+                             [self showToolButtons];
+                         }else{
+                             [self hideToolButtons];
+                         }
+                        
                      }];
 
 }
@@ -170,7 +349,7 @@ static int const FUDGE_FACTOR = 10;
 }
 
 
-- (void)buttonDragged:(UIPanGestureRecognizer *)gesture
+- (void)cameraButtonDragged:(UIPanGestureRecognizer *)gesture
 {
     UILabel *label = (UILabel *)gesture.view;
     CGPoint translation = [gesture translationInView:label];
@@ -185,8 +364,8 @@ static int const FUDGE_FACTOR = 10;
     
     if(newX == MIN_POS_X && newY == MIN_POS_Y){
         //SWITCH HERE
-        [button setImage:[UIHelper iconImage:[UIImage imageNamed:@"camera-icon.png"] withSize:150] forState:UIControlStateNormal];
-        [button layoutIfNeeded];
+        [cameraButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"camera-icon.png"] withSize:150] forState:UIControlStateNormal];
+        [cameraButton layoutIfNeeded];
         // button.backgroundColor = [ColorHelper purpleColor];
         if(toggleDragDirection){
             //AudioServicesPlayAlertSound(kSystemSoundID_Vibrate);
@@ -214,7 +393,7 @@ static int const FUDGE_FACTOR = 10;
     else if(newX <= MIN_POS_X + FUDGE_FACTOR){
         //VIS INFO
         self.onDragInStartArea();
-          [button setImage:[UIHelper iconImage:[UIImage imageNamed:@"camera-icon.png"] withSize:150] forState:UIControlStateNormal];
+          [cameraButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"camera-icon.png"] withSize:150] forState:UIControlStateNormal];
         if(xViewIsShowing){
             //self.onDragEndedX();
             self.onDragSwitchedFromX();
@@ -243,7 +422,7 @@ static int const FUDGE_FACTOR = 10;
     else if(newY <= MIN_POS_Y + FUDGE_FACTOR){
         //VIS INFO
         self.onDragInStartArea();
-          [button setImage:[UIHelper iconImage:[UIImage imageNamed:@"camera-icon.png"] withSize:150] forState:UIControlStateNormal];
+          [cameraButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"camera-icon.png"] withSize:150] forState:UIControlStateNormal];
         if(xViewIsShowing){
             //self.onDragEndedX();
             self.onDragSwitchedFromX();
@@ -317,10 +496,10 @@ static int const FUDGE_FACTOR = 10;
                           delay:0.0f
                         options: UIViewAnimationOptionCurveLinear
                      animations:^{
-                        button.alpha = 0.0;
+                        cameraButton.alpha = 0.0;
                      }
                      completion:^(BOOL finished){
-                         [button setImage:[UIHelper iconImage:[UIImage imageNamed:@"camera-icon.png"] withSize:150] forState:UIControlStateNormal];
+                         [cameraButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"camera-icon.png"] withSize:150] forState:UIControlStateNormal];
                          buttonXConstraint.constant = buttonXConstraintDefault;
                          buttonYConstraint.constant = buttonYConstraintDefault;
                          
@@ -328,7 +507,7 @@ static int const FUDGE_FACTOR = 10;
                                                delay:0.4f
                                              options: UIViewAnimationOptionCurveLinear
                                           animations:^{
-                                              button.alpha = 1.0f;
+                                              cameraButton.alpha = 1.0f;
                                           }
                                           completion:nil];
                      }];

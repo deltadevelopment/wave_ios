@@ -15,5 +15,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *displayNameText;
 @property (weak, nonatomic) IBOutlet UIView *bottomBar;
 @property (weak, nonatomic) IBOutlet UIImageView *profilePictureIcon;
+@property (nonatomic) bool isInitialized;
+-(void)initialize;
 
 @end

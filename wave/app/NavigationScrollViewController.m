@@ -88,7 +88,7 @@
     AbstractFeedViewController *mainViewController = (AbstractFeedViewController *)[storyboard instantiateViewControllerWithIdentifier:name];
     UIView *View = [[UIView alloc] initWithFrame:ViewSize];
     CGRect frame = mainViewController.view.frame;
-    frame.size.height = frame.size.height -44;
+    frame.size.height = frame.size.height -64;
     
     mainViewController.view.frame = frame;
     

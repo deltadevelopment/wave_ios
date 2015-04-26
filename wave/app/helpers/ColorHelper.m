@@ -44,4 +44,5 @@ static UIColor *darkBlueColor;
 +(UIColor*)darkBlueColor{
     return darkBlueColor;
 }
+
 @end
