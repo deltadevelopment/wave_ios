@@ -13,4 +13,7 @@
 @property (weak, nonatomic) IBOutlet UIView *menuView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *horizontalSpace;
 -(void)showDrawer;
+-(void)addRootViewController:(NSString *) storyboardId;
+-(void)addBucketAsRoot:(NSString *) storyboardId;
+-(void)removeBucketAsRoot;
 @end

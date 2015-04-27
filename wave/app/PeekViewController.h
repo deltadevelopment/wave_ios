@@ -1,0 +1,17 @@
+//
+//  PeekViewController.h
+//  wave
+//
+//  Created by Simen Lie on 27.04.15.
+//  Copyright (c) 2015 ddev. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+
+@interface PeekViewController : UIViewController
+@property (weak, nonatomic) IBOutlet UIImageView *profilePicture;
+@property (weak, nonatomic) IBOutlet UILabel *displayName;
+@property (weak, nonatomic) IBOutlet UILabel *availability;
+@property (weak, nonatomic) IBOutlet UILabel *location;
+
+@end

@@ -170,12 +170,17 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     NSLog(@"selecting");
     //second
-    if(indexPath.row == 0){
-        self.onCellSelection(@"carousel");
+    if(indexPath.section == 0){
+        if(indexPath.row == 0){
+            self.onCellSelection(@"carousel");
+        }
     }
-    if(indexPath.row == 1){
-        self.onCellSelection(@"second");
+    else if(indexPath.section == 1){
+        if(indexPath.row == 0){
+            self.onCellSelection(@"second");
+        }
     }
+  
    //  self.availabilityLabel.backgroundColor = [ColorHelper greenColor];
     
 }
@@ -183,13 +188,13 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     MenuTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"menuCell" forIndexPath:indexPath];
     if(indexPath.section == 0){
-       cell.title.text = [list objectAtIndex:indexPath.row];
+        cell.title.text = [list objectAtIndex:indexPath.row];
         
         cell.icon.image = [UIHelper iconImage:[UIImage imageNamed:@"search-icon.png"]];
-          [UIHelper colorIcon:cell.icon withColor:[ColorHelper purpleColor]];
+        [UIHelper colorIcon:cell.icon withColor:[ColorHelper purpleColor]];
     }else{
-       cell.title.text = [recentList objectAtIndex:indexPath.row];
-         cell.labelSpace.constant = -20;
+        cell.title.text = [recentList objectAtIndex:indexPath.row];
+        cell.labelSpace.constant = -20;
     }
  
     

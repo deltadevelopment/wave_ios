@@ -14,6 +14,7 @@
 #import "ScrollingViewController.h"
 #import "NavigationScrollViewController.h"
 #import "ActivityViewController.h"
+#import "BucketViewController.h"
 @interface AppDelegate ()
 
 @end
@@ -29,6 +30,7 @@ AuthHelper *authHelper;
     }else{
         //[self setView:[[ViewController alloc] init] second:@"mainView"];
         [self setView:[[SlideMenuViewController alloc] init] second:@"slideMenuView"];
+       // [self setView:[[BucketViewController alloc] init] second:@"bucketView"];
         //[self setView:[[NavigationScrollViewController alloc] init] second:@"navigationScrollNav"];
        // [self setView:[[ActivityViewController alloc]init] second:@"activity"];
         

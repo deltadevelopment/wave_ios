@@ -55,6 +55,7 @@ static int const FUDGE_FACTOR = 10;
 
 - (id)init:(UIView *)view
 {
+    NSLog(@"INIT");
     self = [super init];
     if (self) {
         superView = view;

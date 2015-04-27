@@ -54,6 +54,10 @@
 
 }
 
+-(void)didGainFocus{
+//implemented by subclasses
+}
+
 
 
 -(void)viewDidAppear:(BOOL)animated{

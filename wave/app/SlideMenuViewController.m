@@ -20,6 +20,7 @@ static int const DRAWER_SIZE = 300;
     MenuTableViewController *menuViewController;
     UINavigationController *mainViewController;
     TestSuperViewController *root;
+    TestSuperViewController *oldRoot;
     UIStoryboard *storyboard ;
     bool drawerIsVisible;
     NSLayoutConstraint *rootViewHorisontalConstraint;
@@ -164,10 +165,35 @@ static int const DRAWER_SIZE = 300;
     [self.mainView layoutIfNeeded];
     CGRect frame2 = root.view.frame;
     frame2.origin.y = 64;
-    frame2.size.height -=20;
+    //frame2.size.height -=20;
     root.view.frame = frame2;
     
     [self.mainView layoutIfNeeded];
+}
+
+
+-(void)addBucketAsRoot:(NSString *) storyboardId{
+    oldRoot = root;
+    root = (TestSuperViewController *)[storyboard instantiateViewControllerWithIdentifier:storyboardId];
+    [root addViewController:self];
+    [mainViewController setViewControllers:@[root] animated:NO];
+    [self.mainView layoutIfNeeded];
+    CGRect frame2 = root.view.frame;
+    frame2.origin.y = 64;
+    //frame2.size.height -=20;
+    root.view.frame = frame2;
+    
+    [self.mainView layoutIfNeeded];
+}
+
+-(void)removeBucketAsRoot{
+    root = oldRoot;
+    [mainViewController setViewControllers:@[root] animated:NO];
+    [self.mainView layoutIfNeeded];
+    [self.mainView layoutIfNeeded];
+    [root didGainFocus];
+    
+    //do it
 }
 
 -(void)onCellSelection:(NSString *) storyboardId

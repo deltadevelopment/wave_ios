@@ -86,6 +86,10 @@
     Scroller.contentSize = CGSizeMake(PageCount * Scroller.bounds.size.width, Scroller.bounds.size.height);
     
     AbstractFeedViewController *mainViewController = (AbstractFeedViewController *)[storyboard instantiateViewControllerWithIdentifier:name];
+     __weak typeof(self) weakSelf = self;
+    mainViewController.onExpand = ^{
+        [weakSelf changeToBucket];
+    };
     UIView *View = [[UIView alloc] initWithFrame:ViewSize];
     CGRect frame = mainViewController.view.frame;
     frame.size.height = frame.size.height -64;
@@ -97,6 +101,15 @@
     [controllers addObject:mainViewController];
     [Scroller layoutIfNeeded];
     ViewSize = CGRectOffset(ViewSize, Scroller.bounds.size.width, 0);
+}
+
+-(void)changeToBucket{
+    NSLog(@"changing to bucket");
+    [self.superController addBucketAsRoot:@"bucketView"];
+}
+
+-(void)didGainFocus{
+    [currentController onFocusGained];
 }
 
 - (void)didReceiveMemoryWarning {

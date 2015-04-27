@@ -11,8 +11,10 @@
 @interface AbstractFeedViewController : UIViewController<FeedInterface>
 -(void)scrollUp;
 -(void)prepareCamera:(UIView *)view;
+@property (nonatomic, copy) void (^onExpand)(void);
 -(void)onCameraOpen;
 -(void)oncameraClose;
 -(void)onImageTaken:(UIImage *)image;
 -(void)onCameraReady;
+-(void)onFocusGained;
 @end

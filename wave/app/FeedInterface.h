@@ -15,4 +15,5 @@
 -(void)oncameraClose;
 -(void)onImageTaken:(UIImage *)image;
 -(void)onCameraReady;
+-(void)onFocusGained;
 @end

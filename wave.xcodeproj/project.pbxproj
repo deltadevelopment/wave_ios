@@ -85,6 +85,8 @@
 		F1BD62211AEBB46F00BDE1CA /* 169.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F1BD62201AEBB46F00BDE1CA /* 169.jpg */; };
 		F1BD62231AEC7FA300BDE1CA /* cross.png in Resources */ = {isa = PBXBuildFile; fileRef = F1BD62221AEC7FA300BDE1CA /* cross.png */; };
 		F1BD62261AEC871F00BDE1CA /* BucketTypeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F1BD62251AEC871F00BDE1CA /* BucketTypeModel.m */; };
+		F1BD622A1AED9EDB00BDE1CA /* BucketViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1BD62291AED9EDB00BDE1CA /* BucketViewController.m */; };
+		F1BD622D1AEDBC8C00BDE1CA /* PeekViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1BD622C1AEDBC8C00BDE1CA /* PeekViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -231,6 +233,10 @@
 		F1BD62221AEC7FA300BDE1CA /* cross.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cross.png; sourceTree = "<group>"; };
 		F1BD62241AEC871F00BDE1CA /* BucketTypeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BucketTypeModel.h; sourceTree = "<group>"; };
 		F1BD62251AEC871F00BDE1CA /* BucketTypeModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BucketTypeModel.m; sourceTree = "<group>"; };
+		F1BD62281AED9EDB00BDE1CA /* BucketViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BucketViewController.h; sourceTree = "<group>"; };
+		F1BD62291AED9EDB00BDE1CA /* BucketViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BucketViewController.m; sourceTree = "<group>"; };
+		F1BD622B1AEDBC8C00BDE1CA /* PeekViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PeekViewController.h; sourceTree = "<group>"; };
+		F1BD622C1AEDBC8C00BDE1CA /* PeekViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PeekViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -254,6 +260,7 @@
 		C5576B1C1ADBC195009C1D5E /* app */ = {
 			isa = PBXGroup;
 			children = (
+				F1BD62271AED9EBC00BDE1CA /* bucket */,
 				C5896A6A1AE133FC00EFCE2D /* Feed */,
 				C5A27B921ADE4F3600968033 /* UITesting(temporary) */,
 				C5A27B7F1ADD592E00968033 /* SlideMenu */,
@@ -517,6 +524,17 @@
 			name = "UITesting(temporary)";
 			sourceTree = "<group>";
 		};
+		F1BD62271AED9EBC00BDE1CA /* bucket */ = {
+			isa = PBXGroup;
+			children = (
+				F1BD62281AED9EDB00BDE1CA /* BucketViewController.h */,
+				F1BD62291AED9EDB00BDE1CA /* BucketViewController.m */,
+				F1BD622B1AEDBC8C00BDE1CA /* PeekViewController.h */,
+				F1BD622C1AEDBC8C00BDE1CA /* PeekViewController.m */,
+			);
+			name = bucket;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -678,6 +696,8 @@
 				C57AD0A71AD7EDB800B6042A /* main.m in Sources */,
 				C5A27B691ADD01D000968033 /* NotificationHelper.m in Sources */,
 				C5A27B821ADD594600968033 /* SlideMenuViewController.m in Sources */,
+				F1BD622D1AEDBC8C00BDE1CA /* PeekViewController.m in Sources */,
+				F1BD622A1AED9EDB00BDE1CA /* BucketViewController.m in Sources */,
 				C5576B3B1ADBC195009C1D5E /* CameraViewController.m in Sources */,
 				C5A27BAA1ADE78BF00968033 /* SlideMenuNavigationViewController.m in Sources */,
 				C5576B3F1ADBC195009C1D5E /* TestViewCoViewController.m in Sources */,

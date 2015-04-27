@@ -25,6 +25,8 @@
 -(void)onCameraReady{
 
 }
+
+-(void)onFocusGained{}
 -(void)prepareCamera:(UIView *)view{
 
 }

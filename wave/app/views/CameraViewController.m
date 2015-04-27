@@ -20,7 +20,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+   
     camera = [[CameraHelper alloc]init];
+    
+    
   // [self.view setBackgroundColor:[UIColor redColor]];
    // [self prepareCamera];
 }

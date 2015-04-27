@@ -53,10 +53,34 @@ const int EXPAND_SIZE = 400;
         }else{
             shouldExpand = true;
         }
+     
+        [CATransaction begin];
+        
+        [CATransaction setCompletionBlock:^{
+            // animation has finished
+            if(shouldExpand){
+            [self expandBucket];
+            }
+            
+        }];
+        
         [tableView beginUpdates];
         [tableView endUpdates];
-                [_tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+        [_tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+        [CATransaction commit];
+        
     }
+}
+
+-(void)onFocusGained{
+    shouldExpand = NO;
+    indexCurrent = nil;
+    [self.tableView beginUpdates];
+    [self.tableView endUpdates];
+}
+
+-(void)expandBucket{
+    self.onExpand();
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath*)indexPath
