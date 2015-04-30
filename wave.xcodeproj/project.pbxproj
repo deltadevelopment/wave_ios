@@ -87,6 +87,9 @@
 		F1BD62261AEC871F00BDE1CA /* BucketTypeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F1BD62251AEC871F00BDE1CA /* BucketTypeModel.m */; };
 		F1BD622A1AED9EDB00BDE1CA /* BucketViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1BD62291AED9EDB00BDE1CA /* BucketViewController.m */; };
 		F1BD622D1AEDBC8C00BDE1CA /* PeekViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1BD622C1AEDBC8C00BDE1CA /* PeekViewController.m */; };
+		F1BD62301AF057D100BDE1CA /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1BD622F1AF057D100BDE1CA /* ChatViewController.m */; };
+		F1BD62331AF0588000BDE1CA /* ChatTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F1BD62321AF0588000BDE1CA /* ChatTableViewCell.m */; };
+		F1BD62361AF05C0C00BDE1CA /* ChatMessageLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = F1BD62351AF05C0C00BDE1CA /* ChatMessageLabel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -237,6 +240,12 @@
 		F1BD62291AED9EDB00BDE1CA /* BucketViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BucketViewController.m; sourceTree = "<group>"; };
 		F1BD622B1AEDBC8C00BDE1CA /* PeekViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PeekViewController.h; sourceTree = "<group>"; };
 		F1BD622C1AEDBC8C00BDE1CA /* PeekViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PeekViewController.m; sourceTree = "<group>"; };
+		F1BD622E1AF057D100BDE1CA /* ChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatViewController.h; sourceTree = "<group>"; };
+		F1BD622F1AF057D100BDE1CA /* ChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatViewController.m; sourceTree = "<group>"; };
+		F1BD62311AF0588000BDE1CA /* ChatTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatTableViewCell.h; sourceTree = "<group>"; };
+		F1BD62321AF0588000BDE1CA /* ChatTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatTableViewCell.m; sourceTree = "<group>"; };
+		F1BD62341AF05C0C00BDE1CA /* ChatMessageLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatMessageLabel.h; sourceTree = "<group>"; };
+		F1BD62351AF05C0C00BDE1CA /* ChatMessageLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatMessageLabel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -531,6 +540,12 @@
 				F1BD62291AED9EDB00BDE1CA /* BucketViewController.m */,
 				F1BD622B1AEDBC8C00BDE1CA /* PeekViewController.h */,
 				F1BD622C1AEDBC8C00BDE1CA /* PeekViewController.m */,
+				F1BD622E1AF057D100BDE1CA /* ChatViewController.h */,
+				F1BD622F1AF057D100BDE1CA /* ChatViewController.m */,
+				F1BD62311AF0588000BDE1CA /* ChatTableViewCell.h */,
+				F1BD62321AF0588000BDE1CA /* ChatTableViewCell.m */,
+				F1BD62341AF05C0C00BDE1CA /* ChatMessageLabel.h */,
+				F1BD62351AF05C0C00BDE1CA /* ChatMessageLabel.m */,
 			);
 			name = bucket;
 			sourceTree = "<group>";
@@ -672,6 +687,7 @@
 				C5576B3A1ADBC195009C1D5E /* AvailabilityViewController.m in Sources */,
 				F1BD62261AEC871F00BDE1CA /* BucketTypeModel.m in Sources */,
 				C5576B4B1ADBDA22009C1D5E /* StartViewController.m in Sources */,
+				F1BD62331AF0588000BDE1CA /* ChatTableViewCell.m in Sources */,
 				C5A27B6C1ADD01F200968033 /* ApplicationHelper.m in Sources */,
 				C5A27B661ADD01C100968033 /* ParserHelper.m in Sources */,
 				C5A27B7E1ADD265400968033 /* LoginController.m in Sources */,
@@ -683,6 +699,7 @@
 				C5576B381ADBC195009C1D5E /* ColorHelper.m in Sources */,
 				C5D473891AE79C590097E44F /* InfoViewController.m in Sources */,
 				C5A27B6F1ADD083300968033 /* ConfigHelper.m in Sources */,
+				F1BD62361AF05C0C00BDE1CA /* ChatMessageLabel.m in Sources */,
 				C5D4736C1AE63F610097E44F /* FilterViewController.m in Sources */,
 				C5D473691AE635F80097E44F /* YTestViewController.m in Sources */,
 				C5576B541ADBE2C1009C1D5E /* RegisterViewController.m in Sources */,
@@ -707,6 +724,7 @@
 				C5576B571ADBE31A009C1D5E /* SuperLoginViewController.m in Sources */,
 				C5A27B541ADC060000968033 /* TextFieldWrapper.m in Sources */,
 				C5A27BA11ADE626800968033 /* NavigationScrollViewController.m in Sources */,
+				F1BD62301AF057D100BDE1CA /* ChatViewController.m in Sources */,
 				C5A27B781ADD128100968033 /* UserModel.m in Sources */,
 				C5576B401ADBC195009C1D5E /* ViewController.m in Sources */,
 				C55FE90A1AD81F45007663FB /* SuperButton.m in Sources */,
