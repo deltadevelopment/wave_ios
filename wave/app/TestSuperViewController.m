@@ -40,8 +40,8 @@
 }
 
 -(void)addLeftButton{
-    UIImage* image = [UIHelper iconImage:[UIImage imageNamed:@"menu.png"]];
-    CGRect frame = CGRectMake(0, 0, 22, 22);
+    UIImage* image = [UIHelper iconImage:[UIImage imageNamed:@"wave-logo.png"]];
+    CGRect frame = CGRectMake(0, 0, 26, 26);
     UIButton* someButton = [[UIButton alloc] initWithFrame:frame];
     [someButton setBackgroundImage:image forState:UIControlStateNormal];
     [someButton addTarget:self action:@selector(menuItemSelected) forControlEvents:UIControlEventTouchUpInside];

@@ -8,13 +8,15 @@
 
 #import "ChatViewController.h"
 #import "ChatTableViewCell.h"
-
+#import "UIHelper.h"
 @interface ChatViewController ()
 
 @end
 
 @implementation ChatViewController{
     NSMutableArray *messages;
+    bool keyBoardShown;
+    float replyPosition;
 }
 
 - (void)viewDidLoad {
@@ -22,15 +24,30 @@
     messages = [[NSMutableArray alloc]init];
     [messages addObject:@"Take me to heaven"];
     [messages addObject:@"Ikke mye, skal noen ut idag?"];
-    [messages addObject:@"hei. hvis dere skal gjøre dette er det viktig at all min tekst kommer med? dere skjønner det"];
+    [messages addObject:@"Hei. hvis dere skal gjøre dette er det viktig at all min tekst kommer med? dere skjønner det"];
     [messages addObject:@"Hva skjer da?"];
+    
+    //Simple textfield
+    UIView *spacerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 10, 10)];
+    [self.replyTextFieldSimple setLeftViewMode:UITextFieldViewModeAlways];
+    [self.replyTextFieldSimple setLeftView:spacerView];
+    self.replyTextFieldSimple.placeholder = @"Say something...";
+    self.replyTextFieldSimple.delegate = self;
+    self.replyTextFieldSimple.layer.cornerRadius = 2;
+    self.replyTextFieldSimple.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.1f];
+    self.replyTextFieldSimple.clipsToBounds = YES;
+    
+    self.replyTextFieldSimple.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"Say something..." attributes:@{                                                                                                                                 NSForegroundColorAttributeName: [[UIColor whiteColor]colorWithAlphaComponent:0.4]                                                              }];
+    
+    self.replyTextField.hidden = YES;
     self.replyTextField.textContainerInset = UIEdgeInsetsMake(10, 10, 10, 10);
     self.replyTextField.text = @"Say something...";
     self.replyTextField.delegate = self;
     self.replyTextField.layer.cornerRadius = 2;
     self.replyTextField.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.2f];
     self.replyTextField.clipsToBounds = YES;
-    self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"169.jpg"]];
+   // self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"169.jpg"]];
+    self.view.backgroundColor = [UIColor clearColor];
     // Do any additional setup after loading the view.
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.transform = CGAffineTransformMakeRotation(-M_PI);
@@ -40,9 +57,15 @@
                                                object:nil];
     
     [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillChange:)
+                                                 name:UIKeyboardDidShowNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillHide)
                                                  name:UIKeyboardWillHideNotification
                                                object:nil];
+    replyPosition = self.replyFieldConstraintSimple.constant;
   
 }
 
@@ -68,8 +91,18 @@
     
 }
 
+-(BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text{
+    if([text isEqual:@"\n"]){
+        [self.replyTextField resignFirstResponder];
+        [self sendAction:nil];
+        
+    }
+    return YES;
+}
+
 -(BOOL)textFieldShouldReturn:(UITextField *)textField{
     [textField resignFirstResponder];
+    [self sendAction:nil];
     return YES;
 }
 
@@ -77,17 +110,25 @@
 
 
 -(void)keyboardWillHide {
-       self.replyFieldConstraint.constant -= keyboardSize.height;
+    self.replyFieldConstraint.constant = replyPosition;
+    self.replyFieldConstraintSimple.constant = replyPosition;
 }
 
+-(void)keyboardWillChange:(NSNotification *)note {
+ 
+
+}
 
 -(void)keyboardWillShow:(NSNotification *)note {
-    NSLog(@"hit");
+ 
     NSDictionary* info = [note userInfo];
-    NSValue* aValue = [info objectForKey:UIKeyboardFrameBeginUserInfoKey];
+    NSValue* aValue = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
     keyboardSize = [aValue CGRectValue].size;
-    self.replyFieldConstraint.constant += keyboardSize.height;
+    self.replyFieldConstraintSimple.constant = replyPosition + keyboardSize.height;
+    
 }
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -107,9 +148,9 @@
                                                   context:nil];
     NSLog(@"%f", rect.size.height);
     if(rect.size.height <45){
-        return 65;
+        return 50;
     }
-    return rect.size.height + 25;
+    return rect.size.height - 6;
     
     
     
@@ -123,6 +164,7 @@
                                      options:NSStringDrawingUsesLineFragmentOrigin
                                   attributes:attributes
                                      context:nil];
+    
     return rect.size.height;
 }
 
@@ -140,9 +182,9 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     ChatTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"chatCell" forIndexPath:indexPath];
     cell.message.text = [messages objectAtIndex:indexPath.row];
-   cell.transform = CGAffineTransformMakeRotation(M_PI);
-    cell.messageImage.layer.cornerRadius = 20;
-    cell.message.textContainerInset = UIEdgeInsetsMake(10, 10, 10, 10);
+    cell.transform = CGAffineTransformMakeRotation(M_PI);
+    cell.messageImage.layer.cornerRadius = 15;
+    cell.message.textContainerInset = UIEdgeInsetsMake(5, 5, 5, 5);
     cell.messageImage.clipsToBounds = YES;
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     cell.message.layer.cornerRadius = 2;
@@ -156,13 +198,22 @@
 }
 
 - (IBAction)sendAction:(id)sender {
-    [messages insertObject:self.replyTextField.text atIndex:0];
-    [self.replyTextField resignFirstResponder];
-   
+    [messages insertObject:self.replyTextFieldSimple.text atIndex:0];
+    //[self.replyTextField resignFirstResponder];
+    [self.replyTextFieldSimple resignFirstResponder];
     NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     [self.tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationLeft];
-     self.replyTextField.text = @"Say something...";
+    self.replyTextFieldSimple.text = @"";
     [self.tableView beginUpdates];
     [self.tableView endUpdates];
 }
+
+-(void)sendFromSimpleReply{
+   
+    
+}
+
+
+
+
 @end

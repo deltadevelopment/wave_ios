@@ -37,8 +37,8 @@ AuthHelper *authHelper;
         
         
         
-       // [self setView:[[SlideMenuViewController alloc] init] second:@"slideMenuView"];
-        [self setView:[[ChatViewController alloc]init] second:@"chatView"];
+        [self setView:[[SlideMenuViewController alloc] init] second:@"slideMenuView"];
+       // [self setView:[[ChatViewController alloc]init] second:@"chatView"];
         
       
         

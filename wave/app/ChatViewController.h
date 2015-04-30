@@ -19,5 +19,7 @@ CGSize keyboardSize;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *replyTextHeight;
 @property (weak, nonatomic) IBOutlet UIButton *sendButton;
 - (IBAction)sendAction:(id)sender;
+@property (weak, nonatomic) IBOutlet UITextField *replyTextFieldSimple;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *replyFieldConstraintSimple;
 
 @end

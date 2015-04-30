@@ -23,6 +23,7 @@
     self.profilePicture.clipsToBounds = YES;
     self.profilePicture.contentMode = UIViewContentModeScaleAspectFill;
     self.availability.layer.cornerRadius = 5;
+    self.view.backgroundColor = [UIColor redColor];
     self.availability.clipsToBounds = YES;
     
     [UIHelper applyThinLayoutOnLabel:self.displayName withSize:24.0];

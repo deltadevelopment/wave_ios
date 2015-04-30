@@ -10,6 +10,7 @@
 #import "AvailabilityViewController.h"
 #import "FilterViewController.h"
 #import "PeekViewController.h"
+#import "ChatViewController.h"
 @interface BucketViewController ()
 
 @end
@@ -24,6 +25,7 @@
     PeekViewController *peekViewController;
     NSLayoutConstraint *topConstraint;
     UIVisualEffectView  *blurEffectView;
+    ChatViewController *chat;
 }
 
 - (void)viewDidLoad {
@@ -33,6 +35,10 @@
     // Do any additional setup after loading the view.
     AvailabilityViewController *viewControllerX = (AvailabilityViewController *)[self createViewControllerWithStoryboardId:@"availability"];
     FilterViewController *viewControllerY = (FilterViewController *)[self createViewControllerWithStoryboardId:@"filterView"];
+    chat = (ChatViewController *)[self createViewControllerWithStoryboardId:@"chatView"];
+    [self.view insertSubview:chat.view belowSubview:[self.superButton getButton]];
+    chat.view.hidden = YES;
+    [self addConstraints:chat.view];
     
     [self attachViews:viewControllerY withY:viewControllerX];
     UITapGestureRecognizer *despandBucketGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(despandBucket)];
@@ -47,6 +53,22 @@
                                         initWithTarget:self
                                         action:@selector(peekViewDrag:)]];
     [self animateElementsIn];
+    
+    UITapGestureRecognizer *chatGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showChat)];
+    
+    [self.view addGestureRecognizer:chatGesture];
+    
+}
+
+-(void)showChat{
+    NSLog(@"SHOWING CHAT");
+    if([chat.view isHidden]){
+        chat.view.hidden = NO;
+       
+    }else{
+        chat.view.hidden = YES;
+    }
+  
     
 }
 
@@ -275,6 +297,40 @@
     [self.view addSubview:blurEffectView];
     //add auto layout constraints so that the blur fills the screen upon rotating device
     [blurEffectView setTranslatesAutoresizingMaskIntoConstraints:NO];
+}
+
+-(void)addConstraints:(UIView *) view
+{
+     view.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.view
+                                                          attribute:NSLayoutAttributeTrailing
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:view
+                                                          attribute:NSLayoutAttributeTrailing
+                                                         multiplier:1.0
+                                                           constant:0.0]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.view
+                                                          attribute:NSLayoutAttributeTop
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:view
+                                                          attribute:NSLayoutAttributeTop
+                                                         multiplier:1.0
+                                                           constant:0.0]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.view
+                                                          attribute:NSLayoutAttributeBottom
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:view
+                                                          attribute:NSLayoutAttributeBottom
+                                                         multiplier:1.0
+                                                           constant:0.0]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.view
+                                                          attribute:NSLayoutAttributeLeading
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:view
+                                                          attribute:NSLayoutAttributeLeading
+                                                         multiplier:1.0
+                                                           constant:0.0]];
+    
 }
 
 
