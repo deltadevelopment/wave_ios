@@ -26,6 +26,7 @@
     NSLayoutConstraint *topConstraint;
     UIVisualEffectView  *blurEffectView;
     ChatViewController *chat;
+    bool peekExpanded;
 }
 
 - (void)viewDidLoad {
@@ -146,11 +147,11 @@
 
 
 -(void)addPeekView{
-      [self addBlur];
+    [self addBlur];
     peekViewController = (PeekViewController *)[storyboard instantiateViewControllerWithIdentifier:@"peekView"];
-    peekViewController.view.frame = CGRectMake(0, -[UIHelper getScreenHeight], [UIHelper getScreenWidth], [UIHelper getScreenHeight] - 64);
+    peekViewController.view.frame = CGRectMake(0, -360, [UIHelper getScreenWidth], 360);
     [self.view addSubview:peekViewController.view];
-  
+    
     peekViewController.view.backgroundColor = [UIColor clearColor];
     //[self addConstraints:peekViewController.view];
 }
@@ -237,15 +238,34 @@
     UILabel *label = (UILabel *)gesture.view;
     CGPoint translation = [gesture translationInView:label];
     CGRect frame = peekViewController.view.frame;
-    if(frame.origin.y + frame.size.height <= [UIHelper getScreenHeight] - 64){
-        peekViewController.view.frame = CGRectMake(0, peekViewController.view.frame.origin.y + translation.y, [UIHelper getScreenWidth], [UIHelper getScreenHeight]);
-        blurEffectView.frame = peekViewController.view.frame;
+    /*
+    if(peekExpanded){
+        if(frame.origin.y + frame.size.height <= [UIHelper getScreenHeight]){
+            peekViewController.view.frame = CGRectMake(0, peekViewController.view.frame.origin.y + translation.y, [UIHelper getScreenWidth], 296);
+            blurEffectView.frame = peekViewController.view.frame;
+            
+        }
+    }else{
+        if(frame.origin.y + frame.size.height <= [UIHelper getScreenHeight] - (360 + 64)){
+            peekViewController.view.frame = CGRectMake(0, peekViewController.view.frame.origin.y + translation.y, [UIHelper getScreenWidth], 296);
+            blurEffectView.frame = peekViewController.view.frame;
+          
+        }
     }
+    */
+   
+    if(frame.origin.y <= -44 - translation.y){
+        peekViewController.view.frame = CGRectMake(0, peekViewController.view.frame.origin.y + translation.y, [UIHelper getScreenWidth], 296);
+        [self calculateAlpha:-44 withTotal:frame.origin.y];
+        //-360 og -44
+        //blurEffectView.frame = peekViewController.view.frame;
+    }
+
     
     if(gesture.state == UIGestureRecognizerStateEnded || gesture.state == UIGestureRecognizerStateFailed || gesture.state == UIGestureRecognizerStateCancelled)
     {
-        
-        if(frame.origin.y + frame.size.height > ([UIHelper getScreenHeight]/2)){
+       // NSLog(@"stor %f", frame.origin.y + frame.size.height);
+        if(frame.origin.y + frame.size.height >= 296 - 64){
             [self animatePeekViewIn];
         }else{
             [self animatePeekViewOut];
@@ -255,19 +275,27 @@
     
 }
 
+-(void)calculateAlpha:(float) number withTotal:(float) total{
+   float alpha = ((number/total) * 100)/100;
+    NSLog(@"PRosent %f", alpha);
+    blurEffectView.alpha = alpha;
+}
+
 
 
 -(void)animatePeekViewIn{
     
-    
+    peekExpanded = YES;
     [UIView animateWithDuration:0.3f
                           delay:0.0f
                         options: UIViewAnimationOptionCurveLinear
                      animations:^{
                          CGRect frame = peekViewController.view.frame;
-                         frame.origin.y = -64;
+                         frame.origin.y = -44;
+                         frame.size.height = [UIHelper getScreenHeight];
                          peekViewController.view.frame = frame;
-                         blurEffectView.frame = frame;
+                       //  blurEffectView.frame = frame;
+                           blurEffectView.alpha = 1;
                      }
                      completion:nil];
     
@@ -279,9 +307,11 @@
                         options: UIViewAnimationOptionCurveLinear
                      animations:^{
                          CGRect frame = peekViewController.view.frame;
-                         frame.origin.y = -[UIHelper getScreenHeight];
+                         frame.origin.y = -360;
+                         frame.size.height = 296;
                          peekViewController.view.frame = frame;
-                         blurEffectView.frame = frame;
+                         //blurEffectView.frame = frame;
+                         blurEffectView.alpha = 0;
                          
                      }
                      completion:nil];
@@ -292,8 +322,9 @@
     UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
     
     blurEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
-    blurEffectView.frame = CGRectMake(0, -[UIHelper getScreenHeight], [UIHelper getScreenWidth], [UIHelper getScreenWidth]);
+    blurEffectView.frame = CGRectMake(0, 0, [UIHelper getScreenWidth], [UIHelper getScreenHeight]);
     // blurEffectView.alpha = 0.9;
+    blurEffectView.alpha = 0.0;
     [self.view addSubview:blurEffectView];
     //add auto layout constraints so that the blur fills the screen upon rotating device
     [blurEffectView setTranslatesAutoresizingMaskIntoConstraints:NO];
