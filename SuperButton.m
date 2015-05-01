@@ -295,7 +295,8 @@ static int const FUDGE_FACTOR = 10;
 }
 
 -(void)tapCancelButton{
-
+    [self animateButtonToMiddle];
+    self.onCancelTap();
 }
 
 -(void)tapTypeButton{
@@ -352,12 +353,18 @@ static int const FUDGE_FACTOR = 10;
 
 - (void)cameraButtonDragged:(UIPanGestureRecognizer *)gesture
 {
+
+   [self dragSuperbutton:gesture];
+}
+
+-(void)dragSuperbutton:(UIPanGestureRecognizer *) gesture{
+    
     UILabel *label = (UILabel *)gesture.view;
     CGPoint translation = [gesture translationInView:label];
     float newX = buttonXConstraint.constant;
     float newY = buttonYConstraint.constant;
     if(newX != MIN_POS_X && newY != MIN_POS_Y){
-    //SJEKK for å fjerne bugs
+        //SJEKK for å fjerne bugs
         newX = MIN_POS_X;
         newY = MIN_POS_Y;
     }
@@ -366,7 +373,7 @@ static int const FUDGE_FACTOR = 10;
     if(newX == MIN_POS_X && newY == MIN_POS_Y){
         //SWITCH HERE
         [cameraButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"camera-icon.png"] withSize:150] forState:UIControlStateNormal];
-        [cameraButton layoutIfNeeded];
+       // [cameraButton layoutIfNeeded];
         // button.backgroundColor = [ColorHelper purpleColor];
         if(toggleDragDirection){
             //AudioServicesPlayAlertSound(kSystemSoundID_Vibrate);
@@ -394,7 +401,7 @@ static int const FUDGE_FACTOR = 10;
     else if(newX <= MIN_POS_X + FUDGE_FACTOR){
         //VIS INFO
         self.onDragInStartArea();
-          [cameraButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"camera-icon.png"] withSize:150] forState:UIControlStateNormal];
+        [cameraButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"camera-icon.png"] withSize:150] forState:UIControlStateNormal];
         if(xViewIsShowing){
             //self.onDragEndedX();
             self.onDragSwitchedFromX();
@@ -403,7 +410,7 @@ static int const FUDGE_FACTOR = 10;
             self.onDragSwitchedFromY();
         }
         startX = NO;
-       
+        
     }
     else{
         //Kan ikke dra Y
@@ -423,7 +430,7 @@ static int const FUDGE_FACTOR = 10;
     else if(newY <= MIN_POS_Y + FUDGE_FACTOR){
         //VIS INFO
         self.onDragInStartArea();
-          [cameraButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"camera-icon.png"] withSize:150] forState:UIControlStateNormal];
+        [cameraButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"camera-icon.png"] withSize:150] forState:UIControlStateNormal];
         if(xViewIsShowing){
             //self.onDragEndedX();
             self.onDragSwitchedFromX();
@@ -453,7 +460,7 @@ static int const FUDGE_FACTOR = 10;
         NSLog(@"XPOS: %f, YPOS: %f", translation.x, translation.y);
         NSLog(@"newX: %f, newY: %f", newX, newY);
         startedDrag = YES;
-       // button.alpha = 0.0;
+        // button.alpha = 0.0;
     }
     else if(gesture.state == UIGestureRecognizerStateEnded || gesture.state == UIGestureRecognizerStateFailed || gesture.state == UIGestureRecognizerStateCancelled)
     {
@@ -476,7 +483,7 @@ static int const FUDGE_FACTOR = 10;
             }else{
                 self.onDragSwitchedFromX();
             }
-           
+            
         }
     }
     else{
@@ -488,8 +495,14 @@ static int const FUDGE_FACTOR = 10;
             translation.x < 0 ? [self moveLeft:newX withTranslation:translation] :[self moveRight:newX withTranslation:translation];
             self.onDragX([NSNumber numberWithFloat:newX]);
         }
+        
+        
         [gesture setTranslation:CGPointZero inView:label];
+        
+        
+        //
     }
+
 }
 
 -(void)fadeOutStatusButton{

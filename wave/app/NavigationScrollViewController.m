@@ -40,12 +40,14 @@
     ViewSize = Scroller.bounds;
 
     carousel = [[Carousel alloc]initWithPages:3];
+    
     [self addView:@"activity" withTitle:@"Activity"];
-    [self addView:@"activity" withTitle:@"Discover"];
-    [self addView:@"activity" withTitle:@"Pinned"];
+    [self addView:@"pinnedView" withTitle:@"Discover"];
+    [self addView:@"pinnedView" withTitle:@"Pinned"];
     self.navigationItem.titleView = [carousel getNavBar];
     
     currentController = [controllers objectAtIndex:0];
+     
     [self.view addSubview:Scroller];
     [super viewDidLoad];
     AvailabilityViewController *viewControllerX = (AvailabilityViewController *)[self createViewControllerWithStoryboardId:@"availability"];
@@ -72,10 +74,15 @@
     if (previousPage != page) {
         previousPage = page;
         currentPage = page;
-        [carousel updateCarousel:PageCount withCurrentPage:currentPage];
-        NSLog(@"CONTROLLEr: %ld", (long)currentPage);
-        currentController = [controllers objectAtIndex:currentPage];
-        [self prepareCamera];
+        if(currentPage > [controllers count] - 1){
+            
+        }else if(currentPage == -1){}
+        else{
+            [carousel updateCarousel:PageCount withCurrentPage:currentPage];
+            currentController = [controllers objectAtIndex:currentPage];
+            [self prepareCamera];
+        }
+        
     }
 }
 
@@ -120,7 +127,6 @@
 
 # pragma SuperButton callbacks
 -(void)prepareCamera{
-   
     [currentController prepareCamera:self.camera.view];
 }
 
@@ -130,7 +136,6 @@
 -(void)showCamera{
     [currentController onCameraReady];
 }
-
 
 -(void)onImageTaken:(UIImage *)image{
   CGSize size = CGSizeMake([UIHelper getScreenWidth], [UIHelper getScreenHeight]);

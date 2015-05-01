@@ -120,20 +120,31 @@
 
 -(void)onDragX:(NSNumber *)xPos{
     
-    float x = [xPos floatValue];
-    int index = 0;
-    for(NSNumber *number in filterValues){
-        if(index == [filterValues count]-1){
-            if(x + 46 >[number floatValue]){
-                [self changeUIBasedOnFilter:index];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        // feed = [feedController getFeed];
+        float x = [xPos floatValue];
+        int index = 0;
+        for(NSNumber *number in filterValues){
+            if(index == [filterValues count]-1){
+                
+                if(x + 46 >[number floatValue]){
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        // Update the UI
+                               [self changeUIBasedOnFilter:index];
+                    });
+             
+                }
+            }else{
+                if(x + 46 >[number floatValue] && x + 46 < [[filterValues objectAtIndex:index + 1] floatValue]){
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        // Update the UI
+                        [self changeUIBasedOnFilter:index];
+                    });
+                }
             }
-        }else{
-            if(x + 46 >[number floatValue] && x + 46 < [[filterValues objectAtIndex:index + 1] floatValue]){
-                [self changeUIBasedOnFilter:index];
-            }
+            index++;
         }
-        index++;
-    }
+    });
 }
 
 -(void)changeUIBasedOnFilter:(int) index{
@@ -148,6 +159,7 @@
 
 -(void)addFilterWithCapacity:(float)size withNumberOfFilter:(float)filterNum
 {
+    
     float res = (filterNum*15) + 15;
     float spacing = (size - res)/(filterNum-2) - ((filterNum-2)*7.5);
     
@@ -167,10 +179,10 @@
 }
 
 -(void)addfilter:(float) xPos isLast:(bool)last{
-    
+    NSLog(@"ADDING FILTER");
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(xPos, 7.5, 15, 15)];
   
-    NSLog(@"CENTER %f", label.center.x);
+  //  NSLog(@"CENTER %f", label.center.x);
     NSNumber *num = [NSNumber numberWithFloat:label.center.x];
     [filterValues addObject:num];  
     if(last){

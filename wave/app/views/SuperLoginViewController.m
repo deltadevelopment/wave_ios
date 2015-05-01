@@ -40,7 +40,7 @@
 
 -(void)showMainView{
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    ViewController *viewController = (ViewController *)[storyboard instantiateViewControllerWithIdentifier:@"mainView"];
+    ViewController *viewController = (ViewController *)[storyboard instantiateViewControllerWithIdentifier:@"slideMenuView"];
     [self presentViewController:viewController animated:YES completion:nil];
 }
 

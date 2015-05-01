@@ -13,5 +13,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *displayName;
 @property (weak, nonatomic) IBOutlet UILabel *availability;
 @property (weak, nonatomic) IBOutlet UILabel *location;
+@property (weak, nonatomic) IBOutlet UIButton *subscribeButton;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *subscribeVerticalconstraint;
 
 @end

@@ -23,6 +23,7 @@
 @property (nonatomic, copy) void (^onDragInStartAreaEnded)(void);
 @property (nonatomic, copy) void (^onDragSwitchedFromX)(void);
 @property (nonatomic, copy) void (^onDragSwitchedFromY)(void);
+@property (nonatomic, copy) void (^onCancelTap)(void);
 -(void)changeIcon:(UIImage *)img;
 -(void)enableDragX;
 -(void)enableDragY;

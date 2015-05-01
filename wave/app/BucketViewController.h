@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "TestSuperViewController.h"
 #import "SuperViewController.h"
-@interface BucketViewController : SuperViewController<UIScrollViewDelegate>
+@interface BucketViewController : SuperViewController<UIScrollViewDelegate, UIGestureRecognizerDelegate>
 @property (weak, nonatomic) IBOutlet UIView *topBar;
 @property (weak, nonatomic) IBOutlet UIImageView *profilePictureIcon;
 @property (weak, nonatomic) IBOutlet UILabel *displayNameText;

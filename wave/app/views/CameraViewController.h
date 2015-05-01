@@ -19,4 +19,5 @@
 - (UIImage*)imageByScalingAndCroppingForSize:(CGSize)targetSize img:(UIImage *) sourceImage;
 -(void)prepareCamera;
 -(void)takePicture;
+-(void)closeCamera;
 @end

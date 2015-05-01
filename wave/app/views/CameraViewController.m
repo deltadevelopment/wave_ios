@@ -30,13 +30,10 @@
 
 -(void)prepareCamera{
     //[camera setView:self.view withRect:CGRectZero];
-    camera = [[CameraHelper alloc]init];
+    //camera = [[CameraHelper alloc]init];
     [camera setView:self.view withRect:CGRectMake(0, 0, [UIHelper getScreenWidth], [UIHelper getScreenHeight])];
     [camera initaliseVideo];
-    self.onCameraReady();
-    NSLog(@"prep");
-  
-    
+    self.onCameraReady();    
 }
 
 - (UIImage*)imageByScalingAndCroppingForSize:(CGSize)targetSize img:(UIImage *) sourceImage{
@@ -57,11 +54,16 @@
         self.onCameraOpen();
     }else{
         [self takePicture];
-        
         self.onCameraClose();
         cameraMode = NO;
     }
     
+}
+
+-(void)closeCamera{
+    cameraMode = NO;
+     self.onCameraClose();
+    [camera stopCameraSession];
 }
 
 -(void)takePicture{

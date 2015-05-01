@@ -42,6 +42,7 @@
     _camera.onImageTaken =^(UIImage*(image)){
         [weakSelf onImageTaken:image];
     };
+    
   
    
 }
@@ -64,6 +65,10 @@
         [xView onDragX:xValue];
     }
     
+}
+
+-(void)onCancelTap{
+    [self.camera closeCamera];
 }
 -(void)onDragY:(NSNumber *) yValue{
     if(yView != nil){
@@ -226,6 +231,10 @@
     };
     self.superButton.onDragInStartAreaEnded = ^{
         [weakSelf onDragInStartAreaEnded];
+    };
+    
+    self.superButton.onCancelTap = ^{
+        [weakSelf onCancelTap];
     };
     
 }

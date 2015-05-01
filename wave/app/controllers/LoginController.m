@@ -34,16 +34,20 @@ onCompletion:(void (^)(UserModel*,ResponseModel*))callback;
     NSDictionary *body;
     if([authHelper getDeviceId] == nil){
         body = @{
-                 @"username" : username,
-                 @"password" : password
+                 @"user" : @{
+                         @"username" : username,
+                         @"password" : password
+                         }
                  };
     }else{
         NSLog(@"test");
         body= @{
-                @"username" : username,
-                @"password" : password,
-                @"device_id" : [authHelper getDeviceId],
-                @"device_type":@"ios"
+                @"user" :@{
+                        @"username" : username,
+                        @"password" : password,
+                        @"device_id" : [authHelper getDeviceId],
+                        @"device_type":@"ios"
+                        }
                 };
     }
     return body;

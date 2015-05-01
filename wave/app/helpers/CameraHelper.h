@@ -31,6 +31,7 @@
     
     
 }
+-(void)stopCameraSession;
 -(AVCaptureVideoPreviewLayer *)getLayer;
 -(void)setSquare:(bool) theSquare;
 -(void)cancelSession;

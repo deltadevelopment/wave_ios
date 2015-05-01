@@ -25,9 +25,16 @@
     self.availability.layer.cornerRadius = 5;
     self.view.backgroundColor = [UIColor redColor];
     self.availability.clipsToBounds = YES;
-    
+    self.subscribeButton.alpha = 0.0;
     [UIHelper applyThinLayoutOnLabel:self.displayName withSize:24.0];
     [UIHelper applyThinLayoutOnLabel:self.location withSize:17.0];
+    
+    [[self.subscribeButton layer] setBorderWidth:1.0f];
+    [[self.subscribeButton layer] setBorderColor:[UIColor whiteColor].CGColor];
+    self.subscribeButton.layer.cornerRadius = 10;
+    self.subscribeButton.clipsToBounds = YES;
+    [self.subscribeButton setTitle:@"Subscribe" forState:UIControlStateNormal];
+    self.subscribeVerticalconstraint.constant += 60;
 }
 
 - (void)didReceiveMemoryWarning {

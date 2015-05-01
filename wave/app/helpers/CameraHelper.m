@@ -72,16 +72,20 @@ bool square;
             NSData *imageData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageSampleBuffer];
             imgTaken = [UIImage imageWithData:imageData];
             [object performSelector:success withObject:imgTaken];
-           
+            
             //UIImageWriteToSavedPhotosAlbum(imgTaken, nil, nil, nil);
-            [CameraView removeFromSuperview];
-            [captureVideoPreviewLayer removeFromSuperlayer];
-            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                [CaptureSession stopRunning];
-            });
+            [self stopCameraSession];
         }
         
     }];
+}
+
+-(void)stopCameraSession{
+    [CameraView removeFromSuperview];
+    [captureVideoPreviewLayer removeFromSuperlayer];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [CaptureSession stopRunning];
+    });
 }
 
 -(void)cancelSession{

@@ -24,12 +24,15 @@
     [self.navigationItem setLeftBarButtonItem:self.menuItem];
     */
     [self addLeftButton];
-    
+   
     [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
     [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
     [self.navigationController.navigationBar setBarTintColor:[ColorHelper purpleColor]];
-    UIBarButtonItem *btnShare = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(share)];
+    /*
+    UIBarButtonItem *btnShare = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(showNotifications)];
     [self.navigationItem setRightBarButtonItem:btnShare];
+     */
+     [self addRightButton];
     [self.navigationItem setTitle:@"Feed"];
   
     if (self.navigationItem.hidesBackButton || self.navigationItem.rightBarButtonItem == nil) {
@@ -38,7 +41,10 @@
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain
                                                                             target:nil action:nil];
 }
+-(void)showNotifications{
+    NSLog(@"Notificatiion will appear");
 
+}
 -(void)addLeftButton{
     UIImage* image = [UIHelper iconImage:[UIImage imageNamed:@"wave-logo.png"]];
     CGRect frame = CGRectMake(0, 0, 26, 26);
@@ -52,6 +58,18 @@
     
 
 
+}
+
+-(void)addRightButton{
+    UIImage* image = [UIHelper iconImage:[UIImage imageNamed:@"ripples.png"]];
+    CGRect frame = CGRectMake(0, 0, 26, 26);
+    UIButton* someButton = [[UIButton alloc] initWithFrame:frame];
+    [someButton setBackgroundImage:image forState:UIControlStateNormal];
+    [someButton addTarget:self action:@selector(showNotifications) forControlEvents:UIControlEventTouchUpInside];
+    [someButton setShowsTouchWhenHighlighted:YES];
+    
+    
+    [self.navigationItem setRightBarButtonItem:[[UIBarButtonItem alloc] initWithCustomView:someButton]];
 }
 
 -(void)didGainFocus{

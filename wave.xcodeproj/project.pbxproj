@@ -81,6 +81,8 @@
 		C5D473861AE79BC80097E44F /* the-bar-y-v2.png in Resources */ = {isa = PBXBuildFile; fileRef = C5D473851AE79BC80097E44F /* the-bar-y-v2.png */; };
 		C5D473891AE79C590097E44F /* InfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D473881AE79C590097E44F /* InfoViewController.m */; };
 		C5D4738D1AF2BA8D0097E44F /* wave-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = C5D4738C1AF2BA8D0097E44F /* wave-logo.png */; };
+		C5D4738F1AF371E10097E44F /* ripples.png in Resources */ = {isa = PBXBuildFile; fileRef = C5D4738E1AF371E10097E44F /* ripples.png */; };
+		C5D473921AF3B5310097E44F /* PinnedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D473911AF3B5310097E44F /* PinnedViewController.m */; };
 		F1BD621C1AE460D400BDE1CA /* Carousel.m in Sources */ = {isa = PBXBuildFile; fileRef = F1BD621B1AE460D400BDE1CA /* Carousel.m */; };
 		F1BD621F1AE46EFC00BDE1CA /* ActivityTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F1BD621E1AE46EFC00BDE1CA /* ActivityTableViewCell.m */; };
 		F1BD62211AEBB46F00BDE1CA /* 169.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F1BD62201AEBB46F00BDE1CA /* 169.jpg */; };
@@ -230,6 +232,9 @@
 		C5D473871AE79C590097E44F /* InfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfoViewController.h; sourceTree = "<group>"; };
 		C5D473881AE79C590097E44F /* InfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InfoViewController.m; sourceTree = "<group>"; };
 		C5D4738C1AF2BA8D0097E44F /* wave-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wave-logo.png"; sourceTree = "<group>"; };
+		C5D4738E1AF371E10097E44F /* ripples.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ripples.png; sourceTree = "<group>"; };
+		C5D473901AF3B5310097E44F /* PinnedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PinnedViewController.h; sourceTree = "<group>"; };
+		C5D473911AF3B5310097E44F /* PinnedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PinnedViewController.m; sourceTree = "<group>"; };
 		F1BD621A1AE460D400BDE1CA /* Carousel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Carousel.h; sourceTree = "<group>"; };
 		F1BD621B1AE460D400BDE1CA /* Carousel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Carousel.m; sourceTree = "<group>"; };
 		F1BD621D1AE46EFC00BDE1CA /* ActivityTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityTableViewCell.h; sourceTree = "<group>"; };
@@ -353,6 +358,7 @@
 			children = (
 				C5D4736D1AE640260097E44F /* bucket.png */,
 				C5D473631AE511730097E44F /* search-icon.png */,
+				C5D4738E1AF371E10097E44F /* ripples.png */,
 				C5A27B961ADE52CC00968033 /* test1.jpg */,
 				C5A27B971ADE52CC00968033 /* test2.jpg */,
 				F1BD62201AEBB46F00BDE1CA /* 169.jpg */,
@@ -498,6 +504,8 @@
 				C5896A791AE15F4200EFCE2D /* ActivityViewController.m */,
 				F1BD621D1AE46EFC00BDE1CA /* ActivityTableViewCell.h */,
 				F1BD621E1AE46EFC00BDE1CA /* ActivityTableViewCell.m */,
+				C5D473901AF3B5310097E44F /* PinnedViewController.h */,
+				C5D473911AF3B5310097E44F /* PinnedViewController.m */,
 			);
 			name = Feed;
 			sourceTree = "<group>";
@@ -640,6 +648,7 @@
 				C5A27BA71ADE779500968033 /* feed-icon.png in Resources */,
 				C5A27B9B1ADE52CC00968033 /* miranda-kerr.jpg in Resources */,
 				C5576B451ADBD79A009C1D5E /* Localizable.strings in Resources */,
+				C5D4738F1AF371E10097E44F /* ripples.png in Resources */,
 				F1BD62211AEBB46F00BDE1CA /* 169.jpg in Resources */,
 				C5A27B991ADE52CC00968033 /* test1.jpg in Resources */,
 				C5D473801AE795890097E44F /* bucket-white.png in Resources */,
@@ -726,6 +735,7 @@
 				C5A27B5A1ADD002A00968033 /* ApplicationController.m in Sources */,
 				C5576B4E1ADBDB14009C1D5E /* NavigationController.m in Sources */,
 				C5576B571ADBE31A009C1D5E /* SuperLoginViewController.m in Sources */,
+				C5D473921AF3B5310097E44F /* PinnedViewController.m in Sources */,
 				C5A27B541ADC060000968033 /* TextFieldWrapper.m in Sources */,
 				C5A27BA11ADE626800968033 /* NavigationScrollViewController.m in Sources */,
 				F1BD62301AF057D100BDE1CA /* ChatViewController.m in Sources */,

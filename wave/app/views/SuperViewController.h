@@ -21,6 +21,7 @@
 -(void)prepareCamera;
 -(void)onCameraOpen;
 -(void)onCameraClose;
+-(void)onCancelTap;
 -(void)addConstraints:(UIView *) view;
 -(void)onImageTaken:(UIImage *)image;
 -(void)attachCameraToView:(UIView *)view;
