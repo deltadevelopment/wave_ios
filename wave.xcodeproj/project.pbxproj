@@ -93,6 +93,8 @@
 		F1BD62301AF057D100BDE1CA /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1BD622F1AF057D100BDE1CA /* ChatViewController.m */; };
 		F1BD62331AF0588000BDE1CA /* ChatTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F1BD62321AF0588000BDE1CA /* ChatTableViewCell.m */; };
 		F1BD62361AF05C0C00BDE1CA /* ChatMessageLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = F1BD62351AF05C0C00BDE1CA /* ChatMessageLabel.m */; };
+		F1D9AB481AF5A048005BFE2C /* EditImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1D9AB471AF5A048005BFE2C /* EditImageViewController.m */; };
+		F1D9AB4A1AF5A3E3005BFE2C /* RGB-colors.png in Resources */ = {isa = PBXBuildFile; fileRef = F1D9AB491AF5A3E3005BFE2C /* RGB-colors.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -253,6 +255,9 @@
 		F1BD62321AF0588000BDE1CA /* ChatTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatTableViewCell.m; sourceTree = "<group>"; };
 		F1BD62341AF05C0C00BDE1CA /* ChatMessageLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatMessageLabel.h; sourceTree = "<group>"; };
 		F1BD62351AF05C0C00BDE1CA /* ChatMessageLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatMessageLabel.m; sourceTree = "<group>"; };
+		F1D9AB461AF5A048005BFE2C /* EditImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditImageViewController.h; sourceTree = "<group>"; };
+		F1D9AB471AF5A048005BFE2C /* EditImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditImageViewController.m; sourceTree = "<group>"; };
+		F1D9AB491AF5A3E3005BFE2C /* RGB-colors.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RGB-colors.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -276,6 +281,7 @@
 		C5576B1C1ADBC195009C1D5E /* app */ = {
 			isa = PBXGroup;
 			children = (
+				F1D9AB451AF5A026005BFE2C /* pictureEdit */,
 				F1BD62271AED9EBC00BDE1CA /* bucket */,
 				C5896A6A1AE133FC00EFCE2D /* Feed */,
 				C5A27B921ADE4F3600968033 /* UITesting(temporary) */,
@@ -362,6 +368,7 @@
 				C5A27B961ADE52CC00968033 /* test1.jpg */,
 				C5A27B971ADE52CC00968033 /* test2.jpg */,
 				F1BD62201AEBB46F00BDE1CA /* 169.jpg */,
+				F1D9AB491AF5A3E3005BFE2C /* RGB-colors.png */,
 				C5D473851AE79BC80097E44F /* the-bar-y-v2.png */,
 				F1BD62221AEC7FA300BDE1CA /* cross.png */,
 				C5D4738C1AF2BA8D0097E44F /* wave-logo.png */,
@@ -561,6 +568,15 @@
 			name = bucket;
 			sourceTree = "<group>";
 		};
+		F1D9AB451AF5A026005BFE2C /* pictureEdit */ = {
+			isa = PBXGroup;
+			children = (
+				F1D9AB461AF5A048005BFE2C /* EditImageViewController.h */,
+				F1D9AB471AF5A048005BFE2C /* EditImageViewController.m */,
+			);
+			name = pictureEdit;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -672,6 +688,7 @@
 				C5D473761AE699DE0097E44F /* the-bar.png in Resources */,
 				C5A27BA61ADE779500968033 /* profile-icon.png in Resources */,
 				C5A27B9A1ADE52CC00968033 /* test2.jpg in Resources */,
+				F1D9AB4A1AF5A3E3005BFE2C /* RGB-colors.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -708,6 +725,7 @@
 				C57AD0AA1AD7EDB800B6042A /* AppDelegate.m in Sources */,
 				C5576B371ADBC195009C1D5E /* CameraHelper.m in Sources */,
 				C5A27B951ADE4F5500968033 /* ScrollingViewController.m in Sources */,
+				F1D9AB481AF5A048005BFE2C /* EditImageViewController.m in Sources */,
 				F1BD621C1AE460D400BDE1CA /* Carousel.m in Sources */,
 				C5576B381ADBC195009C1D5E /* ColorHelper.m in Sources */,
 				C5D473891AE79C590097E44F /* InfoViewController.m in Sources */,

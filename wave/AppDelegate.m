@@ -16,6 +16,7 @@
 #import "ActivityViewController.h"
 #import "BucketViewController.h"
 #import "ChatViewController.h"
+#import "EditImageViewController.h"
 @interface AppDelegate ()
 
 @end
@@ -36,8 +37,8 @@ AuthHelper *authHelper;
        // [self setView:[[ActivityViewController alloc]init] second:@"activity"];
         
         
-        
-        [self setView:[[SlideMenuViewController alloc] init] second:@"slideMenuView"];
+           [self setView:[[SlideMenuViewController alloc] init] second:@"slideMenuView"];
+        //[self setView:[[EditImageViewController alloc] init] second:@"editView"];
        // [self setView:[[ChatViewController alloc]init] second:@"chatView"];
         
       

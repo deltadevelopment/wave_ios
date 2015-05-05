@@ -2118,20 +2118,20 @@
                                 <exclude reference="2wJ-NQ-Mia"/>
                             </mask>
                             <mask key="constraints">
+                                <exclude reference="3tK-DJ-NX8"/>
+                                <exclude reference="Vfb-oT-U5q"/>
+                                <exclude reference="T8M-s8-AD6"/>
+                                <exclude reference="Gfe-ep-qTW"/>
+                                <exclude reference="aJ3-w5-uHn"/>
+                                <exclude reference="h1C-XU-sqU"/>
+                                <exclude reference="uI8-jg-Aex"/>
+                                <exclude reference="9rk-Lu-dHk"/>
+                                <exclude reference="Fl7-cM-oLn"/>
+                                <exclude reference="jUI-GV-nab"/>
                                 <exclude reference="8eM-zN-N0U"/>
                                 <exclude reference="Aa8-jf-Gnu"/>
                                 <exclude reference="OfH-Xm-nrF"/>
                                 <exclude reference="fN2-Vx-lAt"/>
-                                <exclude reference="aJ3-w5-uHn"/>
-                                <exclude reference="h1C-XU-sqU"/>
-                                <exclude reference="uI8-jg-Aex"/>
-                                <exclude reference="Gfe-ep-qTW"/>
-                                <exclude reference="3tK-DJ-NX8"/>
-                                <exclude reference="Vfb-oT-U5q"/>
-                                <exclude reference="9rk-Lu-dHk"/>
-                                <exclude reference="Fl7-cM-oLn"/>
-                                <exclude reference="jUI-GV-nab"/>
-                                <exclude reference="T8M-s8-AD6"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -2143,20 +2143,20 @@
                                 <include reference="2wJ-NQ-Mia"/>
                             </mask>
                             <mask key="constraints">
+                                <include reference="3tK-DJ-NX8"/>
+                                <include reference="Vfb-oT-U5q"/>
+                                <exclude reference="T8M-s8-AD6"/>
+                                <include reference="Gfe-ep-qTW"/>
+                                <include reference="aJ3-w5-uHn"/>
+                                <include reference="h1C-XU-sqU"/>
+                                <include reference="uI8-jg-Aex"/>
+                                <include reference="9rk-Lu-dHk"/>
+                                <exclude reference="Fl7-cM-oLn"/>
+                                <include reference="jUI-GV-nab"/>
                                 <exclude reference="8eM-zN-N0U"/>
                                 <exclude reference="Aa8-jf-Gnu"/>
                                 <include reference="OfH-Xm-nrF"/>
                                 <include reference="fN2-Vx-lAt"/>
-                                <include reference="aJ3-w5-uHn"/>
-                                <include reference="h1C-XU-sqU"/>
-                                <include reference="uI8-jg-Aex"/>
-                                <include reference="Gfe-ep-qTW"/>
-                                <include reference="3tK-DJ-NX8"/>
-                                <include reference="Vfb-oT-U5q"/>
-                                <include reference="9rk-Lu-dHk"/>
-                                <exclude reference="Fl7-cM-oLn"/>
-                                <include reference="jUI-GV-nab"/>
-                                <exclude reference="T8M-s8-AD6"/>
                             </mask>
                         </variation>
                     </view>
@@ -2440,6 +2440,7 @@
                         <viewControllerLayoutGuide type="bottom" id="pyx-u5-6DB"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="aMK-2K-D74">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -2447,6 +2448,107 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FGg-Pv-1De" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4143" y="1593.75"/>
+        </scene>
+        <!--Edit Image View Controller-->
+        <scene sceneID="CW0-hC-Uzq">
+            <objects>
+                <viewController storyboardIdentifier="editView" id="Vh8-nM-EEn" customClass="EditImageViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="QDG-vi-hmM"/>
+                        <viewControllerLayoutGuide type="bottom" id="Ie5-eN-lXC"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="UeF-rM-mb1">
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="RGB-colors.png" translatesAutoresizingMaskIntoConstraints="NO" id="qe8-MW-nUk">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="75" id="ceS-wx-bgk">
+                                        <variation key="heightClass=regular-widthClass=compact" constant="176"/>
+                                    </constraint>
+                                    <constraint firstAttribute="height" constant="176" id="keR-Zz-f5j"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="ceS-wx-bgk"/>
+                                        <exclude reference="keR-Zz-f5j"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="ceS-wx-bgk"/>
+                                        <include reference="keR-Zz-f5j"/>
+                                    </mask>
+                                </variation>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Btz-l7-iyY">
+                                <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                                <color key="backgroundColor" red="0.98039221759999995" green="0.45490199329999997" blue="0.42352944609999998" alpha="1" colorSpace="deviceRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="42" id="HCd-nx-hyd">
+                                        <variation key="heightClass=regular-widthClass=compact" constant="40"/>
+                                    </constraint>
+                                    <constraint firstAttribute="height" constant="21" id="k0g-9P-yfA">
+                                        <variation key="heightClass=regular-widthClass=compact" constant="40"/>
+                                    </constraint>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="HCd-nx-hyd"/>
+                                        <exclude reference="k0g-9P-yfA"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="HCd-nx-hyd"/>
+                                        <include reference="k0g-9P-yfA"/>
+                                    </mask>
+                                </variation>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="0.84335330490000004" green="0.82226005599999996" blue="0.84857302300000004" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="Btz-l7-iyY" firstAttribute="top" secondItem="QDG-vi-hmM" secondAttribute="bottom" constant="237" id="Hey-gf-lhV"/>
+                            <constraint firstItem="Btz-l7-iyY" firstAttribute="leading" secondItem="UeF-rM-mb1" secondAttribute="leadingMargin" constant="163" id="IWU-GA-Rcv"/>
+                            <constraint firstItem="qe8-MW-nUk" firstAttribute="top" secondItem="QDG-vi-hmM" secondAttribute="bottom" id="hUA-Nl-ijr"/>
+                            <constraint firstItem="qe8-MW-nUk" firstAttribute="leading" secondItem="UeF-rM-mb1" secondAttribute="leadingMargin" id="uuM-81-9bp"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="qe8-MW-nUk"/>
+                                <exclude reference="Btz-l7-iyY"/>
+                            </mask>
+                            <mask key="constraints">
+                                <exclude reference="hUA-Nl-ijr"/>
+                                <exclude reference="uuM-81-9bp"/>
+                                <exclude reference="Hey-gf-lhV"/>
+                                <exclude reference="IWU-GA-Rcv"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=regular-widthClass=compact">
+                            <mask key="subviews">
+                                <include reference="qe8-MW-nUk"/>
+                                <include reference="Btz-l7-iyY"/>
+                            </mask>
+                            <mask key="constraints">
+                                <include reference="hUA-Nl-ijr"/>
+                                <include reference="uuM-81-9bp"/>
+                                <include reference="Hey-gf-lhV"/>
+                                <include reference="IWU-GA-Rcv"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <connections>
+                        <outlet property="colorPicker" destination="qe8-MW-nUk" id="7bR-PC-64j"/>
+                        <outlet property="colorTracker" destination="Btz-l7-iyY" id="ghe-Ou-z4Y"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RAi-CG-SaX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5163" y="1593"/>
         </scene>
         <!--Slide Menu View Controller-->
         <scene sceneID="UKq-po-EX5">
@@ -2863,6 +2965,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="RGB-colors.png" width="1024" height="1024"/>
         <image name="bucket-white.png" width="500" height="500"/>
         <image name="bucket.png" width="500" height="500"/>
         <image name="miranda-kerr.jpg" width="634" height="699"/>
