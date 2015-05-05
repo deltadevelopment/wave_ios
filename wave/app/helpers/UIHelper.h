@@ -25,4 +25,5 @@
 +(void)roundedCorners:(UIView *) view withRadius:(float)radius;
 +(void)applyThinLayoutOnLabel:(UILabel *) label withSize:(float) size;
 +(void)applyThinLayoutOnLabel:(UILabel *) label withSize:(float) size withColor:(UIColor *) color;
++(void)addShadowToView:(UIView *) view;
 @end

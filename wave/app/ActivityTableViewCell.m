@@ -35,11 +35,17 @@
     
     [self.bucketImage setUserInteractionEnabled:YES];
     [self setUserInteractionEnabled:YES];
-    [UIHelper applyThinLayoutOnLabel:self.displayNameText withSize:18 withColor:[UIColor blackColor]];
+    [UIHelper applyThinLayoutOnLabel:self.displayNameText withSize:18 withColor:[UIColor whiteColor]];
     [UIHelper roundedCorners:self.profilePictureIcon withRadius:15];
     [UIHelper roundedCorners:self.availabilityIcon withRadius:7.5];
-    self.topBar.alpha = 0.9;
-    self.bottomBar.alpha = 0.9;
+    self.availabilityIcon.hidden = YES;
+    self.topBar.alpha = 1.0;
+    self.topBar.backgroundColor = [UIColor clearColor];
+    self.bottomBar.alpha = 1.0;
+    UIView *shadowView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, [UIHelper getScreenWidth], [UIHelper getScreenHeight]/4)];
+    [UIHelper addShadowToView:shadowView];
+    self.bucketImage.frame = CGRectOffset(self.frame, 50, 50);
+    [self.bucketImage addSubview:shadowView];
 
 }
 

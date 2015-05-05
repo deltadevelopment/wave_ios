@@ -11,6 +11,9 @@
 #import "FilterViewController.h"
 #import "PeekViewController.h"
 #import "ChatViewController.h"
+#import "DropViewController.h"
+#import "ConstraintHelper.h"
+#import "DropModel.h"
 @interface BucketViewController ()
 
 @end
@@ -36,15 +39,17 @@ const int PEEK_Y_START = 300;
     bool shiftPage;
     bool lastDropIsAdded;
     bool cameraMode;
+    NSMutableArray *dropsView;
+    DropViewController *drop;
+    
 }
 
 - (void)viewDidLoad {
      drops = [[NSMutableArray alloc]init];
     [self addImageScroller];
     [super viewDidLoad];
-    [self calculate];
     storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-   
+    dropsView = [[NSMutableArray alloc]init];
     // Do any additional setup after loading the view.
     AvailabilityViewController *viewControllerX = (AvailabilityViewController *)[self createViewControllerWithStoryboardId:@"availability"];
     FilterViewController *viewControllerY = (FilterViewController *)[self createViewControllerWithStoryboardId:@"filterView"];
@@ -132,11 +137,11 @@ const int PEEK_Y_START = 300;
     Scroller.delegate = self;
     
     ViewSize = Scroller.bounds;
-    [self addImage:@"miranda-kerr.jpg"];
-    [self addImage:@"169.jpg"];
-    [self addImage:@"test2.jpg"];
-    [self addImage:@"miranda-kerr.jpg"];
-    [self addImage:@"169.jpg"];
+    [self addDropToBucket:[[DropModel alloc] initWithTestData:@"miranda-kerr.jpg" withName:@"Miranda Kerr"]];
+    [self addDropToBucket:[[DropModel alloc] initWithTestData:@"169.jpg" withName:@"Chris"]];
+    [self addDropToBucket:[[DropModel alloc] initWithTestData:@"test2.jpg" withName:@"Matika"]];
+    [self addDropToBucket:[[DropModel alloc] initWithTestData:@"miranda-kerr.jpg" withName:@"Miranda Kerr"]];
+    [self addDropToBucket:[[DropModel alloc] initWithTestData:@"169.jpg" withName:@"Chris"]];
     [self.view addSubview:Scroller];
     CGPoint bottomOffset = CGPointMake(Scroller.bounds.size.width, 0);
     [Scroller setContentOffset:bottomOffset animated:NO];
@@ -159,7 +164,7 @@ const int PEEK_Y_START = 300;
         previousPage = page;
         currentPage = page;
         if(currentPage == PageCount - 1){
-            NSLog(@"________:::::");
+            
             if(cameraMode){
                 self.dropsAmount.text = [NSString stringWithFormat:@"%ld/%ld", (long)currentPage, [drops count]];
             }else{
@@ -222,32 +227,8 @@ const int PEEK_Y_START = 300;
         CGPoint bottomOffset = CGPointMake(Scroller.contentSize.width - (Scroller.bounds.size.width *2), 0);
         [Scroller setContentOffset:bottomOffset animated:NO];
     }
-    
-    /*
-    if(lastPage){
-        if(shiftPage){
-            CGPoint bottomOffset = CGPointMake(0, 0);
-            [Scroller setContentOffset:bottomOffset animated:NO];
-            lastPage = NO;
-            [self removeLastDrop];
-            shiftPage = NO;
-        }else{
-            NSLog(@"SHIFT PAGe");
-            shiftPage = YES;
-        }
-       
-    }
-     */
-
 }
 
--(void)calculate{
-    float constant = -44;
-    float var = -360;
-    
-    float calulcation = ((var/constant) *100);
-    NSLog(@"PROSENT; %f", calulcation);
-}
 
 
 -(void)addPeekView{
@@ -262,16 +243,49 @@ const int PEEK_Y_START = 300;
 
 
 
--(void)addImage:(NSString *) name
+-(void)addDropToBucket:(DropModel *)drop
 {
     PageCount +=1;
+    self.topBar.hidden = YES;
+    
+    //Drop topBar
+    UIView *topBar = [[UIView alloc]initWithFrame:CGRectMake(0, 32, [UIHelper getScreenWidth], 50)];
+    
+    //Drop profilePicture
+    UIImageView *profilePicture = [[UIImageView alloc] initWithFrame:CGRectMake(10, 8, 30, 30)];
+    profilePicture.image = [UIImage imageNamed:@"miranda-kerr.jpg"];
+    profilePicture.layer.cornerRadius = 15;
+    profilePicture.clipsToBounds = YES;
+    
+    //Drop Name Label
+    UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, -2, [UIHelper getScreenWidth] - 52, 50)];
+    nameLabel.text = [drop username];
+    [UIHelper applyThinLayoutOnLabel:nameLabel withSize:18 withColor:[UIColor whiteColor]];
+    [nameLabel setMinimumScaleFactor:12.0/17.0];
+    nameLabel.adjustsFontSizeToFitWidth = YES;
+    
     Scroller.contentSize = CGSizeMake(PageCount * Scroller.bounds.size.width, Scroller.bounds.size.height);
+    
+    //Shadow View
+    UIView *shadowView = [[UIView alloc]initWithFrame:CGRectMake(0, 32, [UIHelper getScreenWidth], [UIHelper getScreenHeight]/4)];
+    [UIHelper addShadowToView:shadowView];
+    
     UIImageView *ImgView = [[UIImageView alloc] initWithFrame:ViewSize];
-    [ImgView setImage:[UIImage imageNamed:name]];
+    
+    //Attach elements
+    [topBar addSubview:nameLabel];
+    [topBar addSubview:profilePicture];
+    
+    [ImgView setImage:[UIImage imageNamed:[drop media]]];
+    [ImgView addSubview:shadowView];
+    [ImgView addSubview:topBar];
+
     [Scroller addSubview:ImgView];
     [drops addObject:ImgView];
     ViewSize = CGRectOffset(ViewSize, Scroller.bounds.size.width, 0);
 }
+
+
 
 -(void)addImageWithImageReturned:(UIImageView *) imageView
 {
@@ -296,33 +310,22 @@ const int PEEK_Y_START = 300;
 }
 
 -(void)attachGUI{
-    //self.isInitialized = YES;
-    //self.bucketImage.contentMode = UIViewContentModeScaleAspectFill;
-    //self.bucketImage.clipsToBounds = YES;
-    //[self insertSubview:self.topBar aboveSubview:self.bucketImage];
-    //[self insertSubview:self.bottomBar aboveSubview:self.bucketImage];
-    //self.selectionStyle = UITableViewCellSelectionStyleNone;
-    //self.displayNameText.text = [feed objectAtIndex:indexPath.row];
-    
-   // [self.bucketImage setUserInteractionEnabled:YES];
-    //[self setUserInteractionEnabled:YES];
     [UIHelper applyThinLayoutOnLabel:self.displayNameText withSize:18 withColor:[UIColor blackColor]];
     [UIHelper roundedCorners:self.profilePictureIcon withRadius:15];
     [UIHelper roundedCorners:self.availabilityIcon withRadius:7.5];
     self.topBar.alpha = 0.9;
     self.displayNameText.text = @"Chris";
-    //self.bottomBar.alpha = 0.9;
     [self.navigationItem setTitle:@"Chris Aardal"];
     [UIHelper applyThinLayoutOnLabel:self.dropsAmount withSize:14];
     [UIHelper applyThinLayoutOnLabel:self.viewsAmount withSize:14];
-     self.dropsAmount.text = [NSString stringWithFormat:@"%ld/%ld", (long)currentPage, [drops count] - 2];
+    self.dropsAmount.text = [NSString stringWithFormat:@"%ld/%ld", (long)currentPage, [drops count] - 2];
     self.viewsAmount.text = @"4.5K";
     self.dropsAmount.alpha = 0.0;
     self.viewsAmount.alpha = 0.0;
     self.dropsIcon.alpha = 0.0;
     self.viewsIcon.alpha = 0.0;
-    self.viewsIcon.image = [UIHelper iconImage:[UIImage imageNamed:@"bucket-white.png"] withSize:30];
-    self.dropsIcon.image = [UIHelper iconImage:[UIImage imageNamed:@"bucket-white.png"] withSize:30];
+    self.viewsIcon.image = [UIHelper iconImage:[UIImage imageNamed:@"eye.png"] withSize:30];
+    self.dropsIcon.image = [UIHelper iconImage:[UIImage imageNamed:@"drop.png"] withSize:30];
     
 }
 
@@ -374,7 +377,7 @@ const int PEEK_Y_START = 300;
     [self.camera.view removeFromSuperview];
     NSLog(@"%f", ViewSize.size.width);
     ViewSize = CGRectOffset(ViewSize, -Scroller.bounds.size.width, 0);
-    [self addImage:@"169.jpg"];
+      [self addDropToBucket:[[DropModel alloc] initWithTestData:@"169.jpg" withName:@"Chris"]];
     self.dropsAmount.text = [NSString stringWithFormat:@"%ld/%ld", (long)currentPage, [drops count] - 2];
 }
 
@@ -384,7 +387,7 @@ const int PEEK_Y_START = 300;
     currentView.image = [self.camera imageByScalingAndCroppingForSize:size img:image];
     [drops addObject:currentView];
     self.dropsAmount.text = [NSString stringWithFormat:@"%ld/%ld", (long)currentPage, [drops count] - 1];
-    [self addImage:@"169.jpg"];
+       [self addDropToBucket:[[DropModel alloc] initWithTestData:@"169.jpg" withName:@"Chris"]];
     UIImageView *firstDrop = [drops objectAtIndex:0];
     firstDrop.image = image;
 }

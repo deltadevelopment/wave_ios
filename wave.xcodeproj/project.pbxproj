@@ -83,6 +83,11 @@
 		C5D4738D1AF2BA8D0097E44F /* wave-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = C5D4738C1AF2BA8D0097E44F /* wave-logo.png */; };
 		C5D4738F1AF371E10097E44F /* ripples.png in Resources */ = {isa = PBXBuildFile; fileRef = C5D4738E1AF371E10097E44F /* ripples.png */; };
 		C5D473921AF3B5310097E44F /* PinnedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D473911AF3B5310097E44F /* PinnedViewController.m */; };
+		C5D473951AF91C070097E44F /* DropViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D473941AF91C070097E44F /* DropViewController.m */; };
+		C5D473981AF920080097E44F /* ConstraintHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D473971AF920080097E44F /* ConstraintHelper.m */; };
+		C5D4739B1AF935580097E44F /* DropModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D4739A1AF935580097E44F /* DropModel.m */; };
+		C5D4739E1AF93A660097E44F /* drop.png in Resources */ = {isa = PBXBuildFile; fileRef = C5D4739C1AF93A660097E44F /* drop.png */; };
+		C5D4739F1AF93A660097E44F /* eye.png in Resources */ = {isa = PBXBuildFile; fileRef = C5D4739D1AF93A660097E44F /* eye.png */; };
 		F1BD621C1AE460D400BDE1CA /* Carousel.m in Sources */ = {isa = PBXBuildFile; fileRef = F1BD621B1AE460D400BDE1CA /* Carousel.m */; };
 		F1BD621F1AE46EFC00BDE1CA /* ActivityTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F1BD621E1AE46EFC00BDE1CA /* ActivityTableViewCell.m */; };
 		F1BD62211AEBB46F00BDE1CA /* 169.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F1BD62201AEBB46F00BDE1CA /* 169.jpg */; };
@@ -237,6 +242,14 @@
 		C5D4738E1AF371E10097E44F /* ripples.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ripples.png; sourceTree = "<group>"; };
 		C5D473901AF3B5310097E44F /* PinnedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PinnedViewController.h; sourceTree = "<group>"; };
 		C5D473911AF3B5310097E44F /* PinnedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PinnedViewController.m; sourceTree = "<group>"; };
+		C5D473931AF91C070097E44F /* DropViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DropViewController.h; sourceTree = "<group>"; };
+		C5D473941AF91C070097E44F /* DropViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DropViewController.m; sourceTree = "<group>"; };
+		C5D473961AF920080097E44F /* ConstraintHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConstraintHelper.h; sourceTree = "<group>"; };
+		C5D473971AF920080097E44F /* ConstraintHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConstraintHelper.m; sourceTree = "<group>"; };
+		C5D473991AF935580097E44F /* DropModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DropModel.h; sourceTree = "<group>"; };
+		C5D4739A1AF935580097E44F /* DropModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DropModel.m; sourceTree = "<group>"; };
+		C5D4739C1AF93A660097E44F /* drop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = drop.png; sourceTree = "<group>"; };
+		C5D4739D1AF93A660097E44F /* eye.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = eye.png; sourceTree = "<group>"; };
 		F1BD621A1AE460D400BDE1CA /* Carousel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Carousel.h; sourceTree = "<group>"; };
 		F1BD621B1AE460D400BDE1CA /* Carousel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Carousel.m; sourceTree = "<group>"; };
 		F1BD621D1AE46EFC00BDE1CA /* ActivityTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityTableViewCell.h; sourceTree = "<group>"; };
@@ -329,6 +342,8 @@
 				C5A27B6B1ADD01F200968033 /* ApplicationHelper.m */,
 				C5A27B6D1ADD083300968033 /* ConfigHelper.h */,
 				C5A27B6E1ADD083300968033 /* ConfigHelper.m */,
+				C5D473961AF920080097E44F /* ConstraintHelper.h */,
+				C5D473971AF920080097E44F /* ConstraintHelper.m */,
 			);
 			path = helpers;
 			sourceTree = "<group>";
@@ -355,6 +370,8 @@
 				C5A27B771ADD128100968033 /* UserModel.m */,
 				F1BD62241AEC871F00BDE1CA /* BucketTypeModel.h */,
 				F1BD62251AEC871F00BDE1CA /* BucketTypeModel.m */,
+				C5D473991AF935580097E44F /* DropModel.h */,
+				C5D4739A1AF935580097E44F /* DropModel.m */,
 			);
 			path = models;
 			sourceTree = "<group>";
@@ -365,6 +382,8 @@
 				C5D4736D1AE640260097E44F /* bucket.png */,
 				C5D473631AE511730097E44F /* search-icon.png */,
 				C5D4738E1AF371E10097E44F /* ripples.png */,
+				C5D4739C1AF93A660097E44F /* drop.png */,
+				C5D4739D1AF93A660097E44F /* eye.png */,
 				C5A27B961ADE52CC00968033 /* test1.jpg */,
 				C5A27B971ADE52CC00968033 /* test2.jpg */,
 				F1BD62201AEBB46F00BDE1CA /* 169.jpg */,
@@ -564,6 +583,8 @@
 				F1BD62321AF0588000BDE1CA /* ChatTableViewCell.m */,
 				F1BD62341AF05C0C00BDE1CA /* ChatMessageLabel.h */,
 				F1BD62351AF05C0C00BDE1CA /* ChatMessageLabel.m */,
+				C5D473931AF91C070097E44F /* DropViewController.h */,
+				C5D473941AF91C070097E44F /* DropViewController.m */,
 			);
 			name = bucket;
 			sourceTree = "<group>";
@@ -684,9 +705,11 @@
 				C5D473841AE799610097E44F /* people-icon-white.png in Resources */,
 				C5D4736E1AE640260097E44F /* bucket.png in Resources */,
 				C5A27B511ADC014E00968033 /* cross-white.png in Resources */,
+				C5D4739E1AF93A660097E44F /* drop.png in Resources */,
 				C5D4737A1AE6C29F0097E44F /* cross-simple.png in Resources */,
 				C5D473761AE699DE0097E44F /* the-bar.png in Resources */,
 				C5A27BA61ADE779500968033 /* profile-icon.png in Resources */,
+				C5D4739F1AF93A660097E44F /* eye.png in Resources */,
 				C5A27B9A1ADE52CC00968033 /* test2.jpg in Resources */,
 				F1D9AB4A1AF5A3E3005BFE2C /* RGB-colors.png in Resources */,
 			);
@@ -710,6 +733,7 @@
 				C5576B5A1ADBE77E009C1D5E /* Navigationbar.m in Sources */,
 				C5896A7A1AE15F4200EFCE2D /* ActivityViewController.m in Sources */,
 				C5A27B5F1ADD019900968033 /* SSKeychain.m in Sources */,
+				C5D4739B1AF935580097E44F /* DropModel.m in Sources */,
 				C5576B3C1ADBC195009C1D5E /* DefaultViewController.m in Sources */,
 				C5A27B911ADD8B2000968033 /* SecondViewController.m in Sources */,
 				C5A27B721ADD0BF500968033 /* RegisterController.m in Sources */,
@@ -735,9 +759,11 @@
 				C5D473691AE635F80097E44F /* YTestViewController.m in Sources */,
 				C5576B541ADBE2C1009C1D5E /* RegisterViewController.m in Sources */,
 				C5A27B851ADD5AC700968033 /* MenuTableViewController.m in Sources */,
+				C5D473951AF91C070097E44F /* DropViewController.m in Sources */,
 				C5896A771AE15F3700EFCE2D /* AbstractFeedViewController.m in Sources */,
 				F1BD621F1AE46EFC00BDE1CA /* ActivityTableViewCell.m in Sources */,
 				C5576B3E1ADBC195009C1D5E /* SuperViewController.m in Sources */,
+				C5D473981AF920080097E44F /* ConstraintHelper.m in Sources */,
 				C5A27B881ADD5ADF00968033 /* MainViewController.m in Sources */,
 				C5576B3D1ADBC195009C1D5E /* OverlayViewController.m in Sources */,
 				C5A27B601ADD019900968033 /* SSKeychainQuery.m in Sources */,

@@ -152,14 +152,14 @@
     textField.font = [UIFont fontWithName:fontName size:pointSize];
 
     */
-        UIFont *font = textField.font;
+    UIFont *font = textField.font;
     NSString *fontName = font.fontName;
     
     if([(UIPinchGestureRecognizer*)gestureRecognizer state] == UIGestureRecognizerStateBegan) {
         lastScale = 1.0;
-   
+        
         pointSize = font.pointSize;
-
+        
     }
     //pointSize = ((gestureRecognizer.velocity > 0) ? 1 : -1) * 1 + pointSize;
 

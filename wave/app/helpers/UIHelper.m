@@ -39,6 +39,7 @@ static CGFloat screenHeight;
 
 +(void)applyLayoutOnLabel:(UILabel *) label{
     [label setFont:[UIFont fontWithName:@"HelveticaNeue" size:17]];
+    //[label setFont:[UIFont fontWithName:@"ArialRoundedMTBold" size:20]];
     [label setTextColor:[ColorHelper whiteColor]];
     [label setTintColor:[ColorHelper whiteColor]];
 }
@@ -80,6 +81,18 @@ static CGFloat screenHeight;
 +(void)roundedCorners:(UIView *) view withRadius:(float)radius{
     view.layer.cornerRadius = radius;
     view.clipsToBounds = YES;
+}
+
++(void)addShadowToView:(UIView *) view{
+    view.backgroundColor = [UIColor blackColor];
+    view.alpha = 0.38;
+    CAGradientLayer *gradientLayer = [CAGradientLayer layer];
+    gradientLayer.frame = view.bounds;
+    gradientLayer.colors = [NSArray arrayWithObjects:(id)[UIColor whiteColor].CGColor, (id)[UIColor clearColor].CGColor, nil];
+    gradientLayer.startPoint = CGPointMake(1.0f, 0.1f);
+    gradientLayer.endPoint = CGPointMake(1.0f, 1.0f);
+    
+    view.layer.mask = gradientLayer;
 }
 
 +(UIImage*)imageWithImage:(UIImage*)image
