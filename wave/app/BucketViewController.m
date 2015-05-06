@@ -54,10 +54,12 @@ const int PEEK_Y_START = 300;
     AvailabilityViewController *viewControllerX = (AvailabilityViewController *)[self createViewControllerWithStoryboardId:@"availability"];
     FilterViewController *viewControllerY = (FilterViewController *)[self createViewControllerWithStoryboardId:@"filterView"];
     chat = (ChatViewController *)[self createViewControllerWithStoryboardId:@"chatView"];
-    [self.view insertSubview:chat.view belowSubview:[self.superButton getButton]];
+    //[self.view insertSubview:chat.view belowSubview:[self.superButton getButton]];
+    [Scroller addSubview:chat.view];
     chat.view.hidden = YES;
-    [self addConstraints:chat.view];
-    
+
+    //[self addConstraints:Scroller withSubview:chat.view];
+    [self addConstraintsChat:chat.view];
     [self attachViews:viewControllerY withY:viewControllerX];
     
     UITapGestureRecognizer *despandBucketGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(despandBucket)];
@@ -77,11 +79,12 @@ const int PEEK_Y_START = 300;
     UITapGestureRecognizer *chatGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showChat)];
     
     [self.view addGestureRecognizer:chatGesture];
+    
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
+    NSLog(@"touches BEGAN");
     UITouch *touch = [touches anyObject];
-    NSLog(@"trykk");
     if (touch.tapCount == 2) {
         //This will cancel the singleTap action
         [NSObject cancelPreviousPerformRequestsWithTarget:self];
@@ -91,25 +94,19 @@ const int PEEK_Y_START = 300;
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
     UITouch *touch = [touches anyObject];
     if (touch.tapCount == 1) {
-        //if they tapped within the coin then place the single tap action to fire after a delay of 0.3
-        NSLog(@"EN");
+
     } else if (touch.tapCount == 2) {
-        //this is the double tap action
-       // [theCoin changeCoin:coin];
-        NSLog(@"TO");
+  
     }
 }
 
 -(void)showChat{
-    NSLog(@"SHOWING CHAT");
+    NSLog(@"HEEYEY");
     if([chat.view isHidden]){
         chat.view.hidden = NO;
-       
     }else{
         chat.view.hidden = YES;
     }
-  
-    
 }
 
 -(void)animateElementsIn{
@@ -125,6 +122,7 @@ const int PEEK_Y_START = 300;
                      }
                      completion:nil];
 }
+
 
 -(void)addImageScroller{
     self.automaticallyAdjustsScrollViewInsets=NO;
@@ -184,7 +182,6 @@ const int PEEK_Y_START = 300;
         }
         
         if([self shouldGetMoreImages]){
-            //NSLog(@"adding images");
            // [self addImage:@"test1.jpg"];
             //[self addImage:@"test2.jpg"];
             //[self addImage:@"miranda-kerr.jpg"];
@@ -217,7 +214,6 @@ const int PEEK_Y_START = 300;
     float fractionalPage = scrollView.contentOffset.x / pageWidth;
     NSInteger page = lround(fractionalPage);
     if(page == PageCount - 1){
-        NSLog(@"kjør animasjon her");
         CGPoint bottomOffset = CGPointMake(Scroller.bounds.size.width, 0);
         [Scroller setContentOffset:bottomOffset animated:NO];
         //[Scroller scrollRectToVisible:CGRectMake([UIHelper getScreenWidth],0,[UIHelper getScreenHeight],HEIGHT_OF_IMAGE) animated:NO];
@@ -318,6 +314,7 @@ const int PEEK_Y_START = 300;
     [self.navigationItem setTitle:@"Chris Aardal"];
     [UIHelper applyThinLayoutOnLabel:self.dropsAmount withSize:14];
     [UIHelper applyThinLayoutOnLabel:self.viewsAmount withSize:14];
+    currentPage = 1;
     self.dropsAmount.text = [NSString stringWithFormat:@"%ld/%ld", (long)currentPage, [drops count] - 2];
     self.viewsAmount.text = @"4.5K";
     self.dropsAmount.alpha = 0.0;
@@ -334,7 +331,6 @@ const int PEEK_Y_START = 300;
 }
 
 -(void)despandBucket{
-    NSLog(@"despanding");
     [self.superController removeBucketAsRoot];
 }
 
@@ -375,7 +371,6 @@ const int PEEK_Y_START = 300;
     PageCount -=1;
     Scroller.contentSize = CGSizeMake(PageCount * Scroller.bounds.size.width, Scroller.bounds.size.height);
     [self.camera.view removeFromSuperview];
-    NSLog(@"%f", ViewSize.size.width);
     ViewSize = CGRectOffset(ViewSize, -Scroller.bounds.size.width, 0);
       [self addDropToBucket:[[DropModel alloc] initWithTestData:@"169.jpg" withName:@"Chris"]];
     self.dropsAmount.text = [NSString stringWithFormat:@"%ld/%ld", (long)currentPage, [drops count] - 2];
@@ -410,14 +405,11 @@ const int PEEK_Y_START = 300;
     if(frame.origin.y <= -44 - translation.y){
         peekViewController.view.frame = CGRectMake(0, peekViewController.view.frame.origin.y + (translation.y*1.4), [UIHelper getScreenWidth], PEEK_Y_START - 64);
         [self calculateAlpha:-44 withTotal:frame.origin.y];
-        //-360 og -44
-        //blurEffectView.frame = peekViewController.view.frame;
     }
 
     
     if(gesture.state == UIGestureRecognizerStateEnded || gesture.state == UIGestureRecognizerStateFailed || gesture.state == UIGestureRecognizerStateCancelled)
     {
-       // NSLog(@"stor %f", frame.origin.y + frame.size.height);
         if(frame.origin.y + frame.size.height >= (PEEK_Y_START-64) - 64){
             [self animatePeekViewIn];
             
@@ -547,6 +539,40 @@ const int PEEK_Y_START = 300;
                                                           attribute:NSLayoutAttributeBottom
                                                          multiplier:1.0
                                                            constant:0.0]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.view
+                                                          attribute:NSLayoutAttributeLeading
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:view
+                                                          attribute:NSLayoutAttributeLeading
+                                                         multiplier:1.0
+                                                           constant:0.0]];
+    
+}
+
+-(void)addConstraintsChat:(UIView *) view
+{
+    view.translatesAutoresizingMaskIntoConstraints = NO;
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.view
+                                                          attribute:NSLayoutAttributeTrailing
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:view
+                                                          attribute:NSLayoutAttributeTrailing
+                                                         multiplier:1.0
+                                                           constant:0.0]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.view
+                                                          attribute:NSLayoutAttributeTop
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:view
+                                                          attribute:NSLayoutAttributeTop
+                                                         multiplier:1.0
+                                                           constant:30.0]];
+    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.view
+                                                          attribute:NSLayoutAttributeBottom
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:view
+                                                          attribute:NSLayoutAttributeBottom
+                                                         multiplier:1.0
+                                                           constant:-30.0]];
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.view
                                                           attribute:NSLayoutAttributeLeading
                                                           relatedBy:NSLayoutRelationEqual

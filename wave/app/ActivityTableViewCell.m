@@ -23,8 +23,6 @@
 }
 
 -(void)initialize{
-    
-    
     self.isInitialized = YES;
     self.bucketImage.contentMode = UIViewContentModeScaleAspectFill;
     self.bucketImage.clipsToBounds = YES;

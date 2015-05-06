@@ -95,6 +95,31 @@ static CGFloat screenHeight;
     view.layer.mask = gradientLayer;
 }
 
++(void)addShadowToViewTwo:(UIView *) view{
+    view.backgroundColor = [UIColor colorWithWhite:0 alpha:0.1];
+    view.alpha = 1.0;
+    NSObject * transparent = (NSObject *) [[UIColor colorWithWhite:0 alpha:0] CGColor];
+    NSObject * opaque = (NSObject *) [[UIColor colorWithWhite:0 alpha:1] CGColor];
+    
+    
+    
+
+    CAGradientLayer *gradientLayer = [CAGradientLayer layer];
+    gradientLayer.frame = view.bounds;
+    //gradientLayer.colors = [NSArray arrayWithObjects:(id)[UIColor whiteColor].CGColor, (id)[UIColor clearColor].CGColor, nil];
+    gradientLayer.colors = [NSArray arrayWithObjects: transparent, opaque,
+                            opaque, transparent, nil];
+    //gradientLayer.startPoint = CGPointMake(1.0f, 0.1f);
+   // gradientLayer.endPoint = CGPointMake(1.0f, 1.0f);
+    gradientLayer.locations = [NSArray arrayWithObjects:
+                               [NSNumber numberWithFloat:0],
+                               [NSNumber numberWithFloat:0.2],
+                               [NSNumber numberWithFloat:1.0 - 0.2],
+                               [NSNumber numberWithFloat:1], nil];
+    
+    view.layer.mask = gradientLayer;
+}
+
 +(UIImage*)imageWithImage:(UIImage*)image
              scaledToSize:(CGSize)newSize;
 {

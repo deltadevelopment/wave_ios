@@ -88,6 +88,7 @@
 		C5D4739B1AF935580097E44F /* DropModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D4739A1AF935580097E44F /* DropModel.m */; };
 		C5D4739E1AF93A660097E44F /* drop.png in Resources */ = {isa = PBXBuildFile; fileRef = C5D4739C1AF93A660097E44F /* drop.png */; };
 		C5D4739F1AF93A660097E44F /* eye.png in Resources */ = {isa = PBXBuildFile; fileRef = C5D4739D1AF93A660097E44F /* eye.png */; };
+		C5D473A51AFA0E0E0097E44F /* ChatTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D473A41AFA0E0D0097E44F /* ChatTableView.m */; };
 		F1BD621C1AE460D400BDE1CA /* Carousel.m in Sources */ = {isa = PBXBuildFile; fileRef = F1BD621B1AE460D400BDE1CA /* Carousel.m */; };
 		F1BD621F1AE46EFC00BDE1CA /* ActivityTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F1BD621E1AE46EFC00BDE1CA /* ActivityTableViewCell.m */; };
 		F1BD62211AEBB46F00BDE1CA /* 169.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F1BD62201AEBB46F00BDE1CA /* 169.jpg */; };
@@ -250,6 +251,8 @@
 		C5D4739A1AF935580097E44F /* DropModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DropModel.m; sourceTree = "<group>"; };
 		C5D4739C1AF93A660097E44F /* drop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = drop.png; sourceTree = "<group>"; };
 		C5D4739D1AF93A660097E44F /* eye.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = eye.png; sourceTree = "<group>"; };
+		C5D473A31AFA0E0D0097E44F /* ChatTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatTableView.h; sourceTree = "<group>"; };
+		C5D473A41AFA0E0D0097E44F /* ChatTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatTableView.m; sourceTree = "<group>"; };
 		F1BD621A1AE460D400BDE1CA /* Carousel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Carousel.h; sourceTree = "<group>"; };
 		F1BD621B1AE460D400BDE1CA /* Carousel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Carousel.m; sourceTree = "<group>"; };
 		F1BD621D1AE46EFC00BDE1CA /* ActivityTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityTableViewCell.h; sourceTree = "<group>"; };
@@ -585,6 +588,8 @@
 				F1BD62351AF05C0C00BDE1CA /* ChatMessageLabel.m */,
 				C5D473931AF91C070097E44F /* DropViewController.h */,
 				C5D473941AF91C070097E44F /* DropViewController.m */,
+				C5D473A31AFA0E0D0097E44F /* ChatTableView.h */,
+				C5D473A41AFA0E0D0097E44F /* ChatTableView.m */,
 			);
 			name = bucket;
 			sourceTree = "<group>";
@@ -769,6 +774,7 @@
 				C5A27B601ADD019900968033 /* SSKeychainQuery.m in Sources */,
 				C57AD0A71AD7EDB800B6042A /* main.m in Sources */,
 				C5A27B691ADD01D000968033 /* NotificationHelper.m in Sources */,
+				C5D473A51AFA0E0E0097E44F /* ChatTableView.m in Sources */,
 				C5A27B821ADD594600968033 /* SlideMenuViewController.m in Sources */,
 				F1BD622D1AEDBC8C00BDE1CA /* PeekViewController.m in Sources */,
 				F1BD622A1AED9EDB00BDE1CA /* BucketViewController.m in Sources */,

@@ -2193,7 +2193,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="l88-Z5-2xR">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="l88-Z5-2xR" customClass="ChatTableView">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -2365,7 +2365,9 @@
                             <constraint firstItem="WOp-Mq-Rsz" firstAttribute="top" secondItem="DZV-X0-SKC" secondAttribute="bottom" constant="13" id="Rup-W5-g7k">
                                 <variation key="heightClass=regular-widthClass=compact" constant="7"/>
                             </constraint>
-                            <constraint firstItem="l88-Z5-2xR" firstAttribute="top" secondItem="62C-B4-9BE" secondAttribute="top" id="UEE-uf-o8r"/>
+                            <constraint firstItem="l88-Z5-2xR" firstAttribute="top" secondItem="62C-B4-9BE" secondAttribute="top" id="UEE-uf-o8r">
+                                <variation key="heightClass=regular-widthClass=compact" constant="110"/>
+                            </constraint>
                             <constraint firstAttribute="trailingMargin" secondItem="3qT-G0-Djv" secondAttribute="trailing" constant="7" id="XwS-wz-WaG">
                                 <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
                             </constraint>

@@ -26,4 +26,5 @@
 +(void)applyThinLayoutOnLabel:(UILabel *) label withSize:(float) size;
 +(void)applyThinLayoutOnLabel:(UILabel *) label withSize:(float) size withColor:(UIColor *) color;
 +(void)addShadowToView:(UIView *) view;
++(void)addShadowToViewTwo:(UIView *) view;
 @end

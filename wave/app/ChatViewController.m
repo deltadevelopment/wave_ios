@@ -26,8 +26,8 @@
     [messages addObject:@"Ikke mye, skal noen ut idag?"];
     [messages addObject:@"Hei. hvis dere skal gjøre dette er det viktig at all min tekst kommer med? dere skjønner det"];
     [messages addObject:@"Hva skjer da?"];
-    
-    //Simple textfield
+
+   
     UIView *spacerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 10, 10)];
     [self.replyTextFieldSimple setLeftViewMode:UITextFieldViewModeAlways];
     [self.replyTextFieldSimple setLeftView:spacerView];
@@ -66,8 +66,17 @@
                                                  name:UIKeyboardWillHideNotification
                                                object:nil];
     replyPosition = self.replyFieldConstraintSimple.constant;
+    
+   //UIView *shadowView = [[UIView alloc]initWithFrame:CGRectMake(0, 100, [UIHelper getScreenWidth], [UIHelper getScreenHeight]/4)];
+   //[UIHelper addShadowToViewTwo:self.tableView];
+    //[self.view addSubview:shadowView];
+    //[self.view insertSubview:self.tableView belowSubview:shadowView];
+    
+
   
 }
+
+
 
 - (BOOL) textViewShouldBeginEditing:(UITextView *)textView
 {
@@ -106,9 +115,6 @@
     return YES;
 }
 
-
-
-
 -(void)keyboardWillHide {
     self.replyFieldConstraint.constant = replyPosition;
     self.replyFieldConstraintSimple.constant = replyPosition;
@@ -146,14 +152,10 @@
                                                   options:NSStringDrawingUsesLineFragmentOrigin
                                                attributes:attributes
                                                   context:nil];
-    NSLog(@"%f", rect.size.height);
     if(rect.size.height <45){
         return 50;
     }
     return rect.size.height - 6;
-    
-    
-    
 }
 
 -(float)getHeightFromText:(NSString *) text{
