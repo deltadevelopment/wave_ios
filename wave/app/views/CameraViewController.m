@@ -14,33 +14,99 @@
 @end
 
 @implementation CameraViewController{
-    CameraHelper *camera;
+    CameraHelper *cameraHelper;
+    UIButton *selfieButton;
     bool cameraMode;
+    bool frontFacingMode;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-   
-    camera = [[CameraHelper alloc]init];
+    selfieButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [selfieButton setTitle:@"Selfie" forState:UIControlStateNormal];
+    selfieButton.userInteractionEnabled = YES;
+    [selfieButton addTarget:self action:@selector(flipCameraView:) forControlEvents:UIControlEventTouchDown];
+   // selfieButton.frame = CGRectMake([UIHelper getScreenWidth]-60, 12, 50, 25);
+  
+    [selfieButton setTintColor:[UIColor whiteColor]];
+    selfieButton.layer.borderWidth=1.0f;
+    selfieButton.layer.borderColor=[[UIColor whiteColor] CGColor];
+    //[selfieButton setBackgroundImage:[UIImage imageNamed:@"bucket.png"] forState:UIControlStateNormal];
+    cameraHelper = [[CameraHelper alloc]init];
     
+}
+
+-(void)viewDidAppear:(BOOL)animated{
+    frontFacingMode = NO;
+}
+
+-(void)flipCameraView:(id)sender{
+    frontFacingMode = frontFacingMode ? NO : YES;
+    [cameraHelper CameraToggleButtonPressed:frontFacingMode];
+}
+
+-(void)addConstraintsToButton:(UIView *)view withButton:(UIButton *) button withPoint:(CGPoint) xy fromLeft:(bool) left fromTop:(bool) top{
+    button.translatesAutoresizingMaskIntoConstraints = NO;
+    if(left)
+    {
+        [view addConstraint:[NSLayoutConstraint constraintWithItem:view
+                                                         attribute:NSLayoutAttributeLeadingMargin
+                                                         relatedBy:NSLayoutRelationEqual
+                                                            toItem:button
+                                                         attribute:NSLayoutAttributeLeading
+                                                        multiplier:1.0
+                                                          constant:xy.x]];
+        
+    }else{
+        [view addConstraint:[NSLayoutConstraint constraintWithItem:view
+                                                         attribute:NSLayoutAttributeTrailingMargin
+                                                         relatedBy:NSLayoutRelationEqual
+                                                            toItem:button
+                                                         attribute:NSLayoutAttributeTrailing
+                                                        multiplier:1.0
+                                                          constant:xy.x]];
+    }
     
-  // [self.view setBackgroundColor:[UIColor redColor]];
-   // [self prepareCamera];
+    if(top){
+        [view addConstraint:[NSLayoutConstraint constraintWithItem:view
+                                                         attribute:NSLayoutAttributeTopMargin
+                                                         relatedBy:NSLayoutRelationEqual
+                                                            toItem:button
+                                                         attribute:NSLayoutAttributeTop
+                                                        multiplier:1.0
+                                                          constant:xy.y]];
+    }
+    
+    else{
+        [view addConstraint:[NSLayoutConstraint constraintWithItem:view
+                                                         attribute:NSLayoutAttributeBottomMargin
+                                                         relatedBy:NSLayoutRelationEqual
+                                                            toItem:button
+                                                         attribute:NSLayoutAttributeBottom
+                                                        multiplier:1.0
+                                                          constant:xy.y]];
+    }
+    [button addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[button(==50)]"
+                                                                   options:0
+                                                                   metrics:nil
+                                                                     views:NSDictionaryOfVariableBindings(button)]];
+    [button addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[button(==50)]"
+                                                                   options:0
+                                                                   metrics:nil
+                                                                     views:NSDictionaryOfVariableBindings(button)]];
 }
 
 -(void)prepareCamera{
-    //[camera setView:self.view withRect:CGRectZero];
-    //camera = [[CameraHelper alloc]init];
-    [camera setView:self.view withRect:CGRectMake(0, 0, [UIHelper getScreenWidth], [UIHelper getScreenHeight])];
-    [camera initaliseVideo];
-    self.onCameraReady();    
+    [cameraHelper setView:self.view withRect:CGRectMake(0, 0, [UIHelper getScreenWidth], [UIHelper getScreenHeight])];
+    [cameraHelper initaliseVideo];
+        [self.view addSubview:selfieButton];
+    [self addConstraintsToButton:self.view withButton:selfieButton withPoint:CGPointMake(10, -50) fromLeft:NO fromTop:YES];
+    self.onCameraReady();
 }
 
 - (UIImage*)imageByScalingAndCroppingForSize:(CGSize)targetSize img:(UIImage *) sourceImage{
-    return [camera imageByScalingAndCroppingForSize:targetSize img:sourceImage];
+    return [cameraHelper imageByScalingAndCroppingForSize:targetSize img:sourceImage];
 }
-
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -48,7 +114,6 @@
 }
 
 -(void)onTap{
-    NSLog(@"ON CAMARE tap");
     if(!cameraMode){
         cameraMode = YES;
         self.onCameraOpen();
@@ -63,11 +128,11 @@
 -(void)closeCamera{
     cameraMode = NO;
      self.onCameraClose();
-    [camera stopCameraSession];
+    [cameraHelper stopCameraSession];
 }
 
 -(void)takePicture{
-    [camera capImage:self withSuccess:@selector(imageWasTaken:)];
+    [cameraHelper capImage:self withSuccess:@selector(imageWasTaken:)];
 }
 
 -(void)imageWasTaken:(UIImage *)image{
@@ -76,11 +141,11 @@
 }
 
 -(UIView *)getCameraView{
-    return [camera getView];
+    return [cameraHelper getView];
 }
 
 -(AVCaptureVideoPreviewLayer *)getLayer{
-    return [camera getLayer];
+    return [cameraHelper getLayer];
 }
 /*
 #pragma mark - Navigation

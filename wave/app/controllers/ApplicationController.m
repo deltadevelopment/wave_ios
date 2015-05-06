@@ -18,7 +18,7 @@
         authHelper = [[AuthHelper alloc] init];
         parserHelper = [[ParserHelper alloc] init];
         applicationHelper = [[ApplicationHelper alloc] init];
-        
+        mediaController = [[MediaController alloc] init];
     }
     return self;
 }
@@ -108,6 +108,8 @@
                                }
                                else
                                {
+                                   NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) response;
+                                   NSLog(@"response status code: %ld", (long)[httpResponse statusCode]);
                                    // There was an error, alert the user
                                    //[self showNotification:view withData:data];
                                    //[view performSelector:errorAction withObject:error];

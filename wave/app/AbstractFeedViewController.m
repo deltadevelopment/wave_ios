@@ -18,28 +18,15 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
 }
-
--(void)onCameraOpen{
-
-}
--(void)onCameraReady{
-
-}
-
+-(void)onCancelTap{}
+-(void)onCameraOpen{}
+-(void)onCameraReady{}
 -(void)onFocusGained{}
--(void)prepareCamera:(UIView *)view{
+-(void)prepareCamera:(UIView *)view{}
+-(void)oncameraClose{}
+-(void)onImageTaken:(UIImage *)image{}
 
-}
--(void)oncameraClose{
-
-}
--(void)onImageTaken:(UIImage *)image{
-
-}
-
--(void)scrollUp{
-    NSLog(@"scrolling up");
-}
+-(void)scrollUp{}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

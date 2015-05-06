@@ -12,6 +12,7 @@
 #import "NotificationHelper.h"
 #import "ApplicationHelper.h"
 #import "ResponseModel.h"
+#import "MediaController.h"
 @interface ApplicationController : NSObject{
     AuthHelper *authHelper;
     ParserHelper *parserHelper;
@@ -22,6 +23,7 @@
     NSObject *mediaUploadSuccessObject;
     NSObject *mediaUploadSuccessArg;
     NotificationHelper *notificationHelper;
+    MediaController *mediaController;
 }
 -(void)getHttpRequest:(NSString *) url
          onCompletion:(void (^)(NSURLResponse*, NSData *, NSError*))callback;

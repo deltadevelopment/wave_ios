@@ -94,7 +94,6 @@ bool square;
     [captureVideoPreviewLayer removeFromSuperlayer];
 }
 
-
 -(void)setSquare:(bool) theSquare
 {
     square = theSquare;

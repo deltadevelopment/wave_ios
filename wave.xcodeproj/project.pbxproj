@@ -89,6 +89,9 @@
 		C5D4739E1AF93A660097E44F /* drop.png in Resources */ = {isa = PBXBuildFile; fileRef = C5D4739C1AF93A660097E44F /* drop.png */; };
 		C5D4739F1AF93A660097E44F /* eye.png in Resources */ = {isa = PBXBuildFile; fileRef = C5D4739D1AF93A660097E44F /* eye.png */; };
 		C5D473A51AFA0E0E0097E44F /* ChatTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D473A41AFA0E0D0097E44F /* ChatTableView.m */; };
+		C5D473A81AFA4A800097E44F /* BucketController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D473A71AFA4A800097E44F /* BucketController.m */; };
+		C5D473AB1AFA4BEB0097E44F /* BucketModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D473AA1AFA4BEB0097E44F /* BucketModel.m */; };
+		C5D473AE1AFA5BB30097E44F /* MediaController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D473AD1AFA5BB30097E44F /* MediaController.m */; };
 		F1BD621C1AE460D400BDE1CA /* Carousel.m in Sources */ = {isa = PBXBuildFile; fileRef = F1BD621B1AE460D400BDE1CA /* Carousel.m */; };
 		F1BD621F1AE46EFC00BDE1CA /* ActivityTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F1BD621E1AE46EFC00BDE1CA /* ActivityTableViewCell.m */; };
 		F1BD62211AEBB46F00BDE1CA /* 169.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F1BD62201AEBB46F00BDE1CA /* 169.jpg */; };
@@ -253,6 +256,12 @@
 		C5D4739D1AF93A660097E44F /* eye.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = eye.png; sourceTree = "<group>"; };
 		C5D473A31AFA0E0D0097E44F /* ChatTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatTableView.h; sourceTree = "<group>"; };
 		C5D473A41AFA0E0D0097E44F /* ChatTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatTableView.m; sourceTree = "<group>"; };
+		C5D473A61AFA4A800097E44F /* BucketController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BucketController.h; sourceTree = "<group>"; };
+		C5D473A71AFA4A800097E44F /* BucketController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BucketController.m; sourceTree = "<group>"; };
+		C5D473A91AFA4BEB0097E44F /* BucketModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BucketModel.h; sourceTree = "<group>"; };
+		C5D473AA1AFA4BEB0097E44F /* BucketModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BucketModel.m; sourceTree = "<group>"; };
+		C5D473AC1AFA5BB30097E44F /* MediaController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaController.h; sourceTree = "<group>"; };
+		C5D473AD1AFA5BB30097E44F /* MediaController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaController.m; sourceTree = "<group>"; };
 		F1BD621A1AE460D400BDE1CA /* Carousel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Carousel.h; sourceTree = "<group>"; };
 		F1BD621B1AE460D400BDE1CA /* Carousel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Carousel.m; sourceTree = "<group>"; };
 		F1BD621D1AE46EFC00BDE1CA /* ActivityTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityTableViewCell.h; sourceTree = "<group>"; };
@@ -322,6 +331,10 @@
 				C5A27B711ADD0BF500968033 /* RegisterController.m */,
 				C5A27B7C1ADD265400968033 /* LoginController.h */,
 				C5A27B7D1ADD265400968033 /* LoginController.m */,
+				C5D473A61AFA4A800097E44F /* BucketController.h */,
+				C5D473A71AFA4A800097E44F /* BucketController.m */,
+				C5D473AC1AFA5BB30097E44F /* MediaController.h */,
+				C5D473AD1AFA5BB30097E44F /* MediaController.m */,
 			);
 			path = controllers;
 			sourceTree = "<group>";
@@ -375,6 +388,8 @@
 				F1BD62251AEC871F00BDE1CA /* BucketTypeModel.m */,
 				C5D473991AF935580097E44F /* DropModel.h */,
 				C5D4739A1AF935580097E44F /* DropModel.m */,
+				C5D473A91AFA4BEB0097E44F /* BucketModel.h */,
+				C5D473AA1AFA4BEB0097E44F /* BucketModel.m */,
 			);
 			path = models;
 			sourceTree = "<group>";
@@ -763,6 +778,7 @@
 				C5D4736C1AE63F610097E44F /* FilterViewController.m in Sources */,
 				C5D473691AE635F80097E44F /* YTestViewController.m in Sources */,
 				C5576B541ADBE2C1009C1D5E /* RegisterViewController.m in Sources */,
+				C5D473AB1AFA4BEB0097E44F /* BucketModel.m in Sources */,
 				C5A27B851ADD5AC700968033 /* MenuTableViewController.m in Sources */,
 				C5D473951AF91C070097E44F /* DropViewController.m in Sources */,
 				C5896A771AE15F3700EFCE2D /* AbstractFeedViewController.m in Sources */,
@@ -771,6 +787,7 @@
 				C5D473981AF920080097E44F /* ConstraintHelper.m in Sources */,
 				C5A27B881ADD5ADF00968033 /* MainViewController.m in Sources */,
 				C5576B3D1ADBC195009C1D5E /* OverlayViewController.m in Sources */,
+				C5D473A81AFA4A800097E44F /* BucketController.m in Sources */,
 				C5A27B601ADD019900968033 /* SSKeychainQuery.m in Sources */,
 				C57AD0A71AD7EDB800B6042A /* main.m in Sources */,
 				C5A27B691ADD01D000968033 /* NotificationHelper.m in Sources */,
@@ -780,6 +797,7 @@
 				F1BD622A1AED9EDB00BDE1CA /* BucketViewController.m in Sources */,
 				C5576B3B1ADBC195009C1D5E /* CameraViewController.m in Sources */,
 				C5A27BAA1ADE78BF00968033 /* SlideMenuNavigationViewController.m in Sources */,
+				C5D473AE1AFA5BB30097E44F /* MediaController.m in Sources */,
 				C5576B3F1ADBC195009C1D5E /* TestViewCoViewController.m in Sources */,
 				C5A27B8B1ADD6DD500968033 /* TestSuperViewController.m in Sources */,
 				C5A27B5A1ADD002A00968033 /* ApplicationController.m in Sources */,

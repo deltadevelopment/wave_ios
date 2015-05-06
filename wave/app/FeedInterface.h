@@ -16,4 +16,5 @@
 -(void)onImageTaken:(UIImage *)image;
 -(void)onCameraReady;
 -(void)onFocusGained;
+-(void)onCancelTap;
 @end

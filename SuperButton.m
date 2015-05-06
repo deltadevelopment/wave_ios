@@ -47,6 +47,7 @@ static int const FUDGE_FACTOR = 10;
     NSMutableArray *bucketTypes;
     int currentTypeIndex;
     bool pictureIsApproved;
+    bool lockButton;
 }
 
 -(UIButton *)getButton{
@@ -318,10 +319,12 @@ static int const FUDGE_FACTOR = 10;
                          {
                              [superView removeConstraint:buttonXConstraintMiddle];
                              [superView addConstraint:buttonXConstraint];
+                             lockButton = NO;
                          
                          }else{
                              [superView  removeConstraint:buttonXConstraint];
                              [superView  addConstraint:buttonXConstraintMiddle];
+                             lockButton = YES;
                          }
                        
                          
@@ -353,8 +356,10 @@ static int const FUDGE_FACTOR = 10;
 
 - (void)cameraButtonDragged:(UIPanGestureRecognizer *)gesture
 {
+    if(!lockButton){
+       [self dragSuperbutton:gesture];
+    }
 
-   [self dragSuperbutton:gesture];
 }
 
 -(void)dragSuperbutton:(UIPanGestureRecognizer *) gesture{

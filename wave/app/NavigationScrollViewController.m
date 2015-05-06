@@ -93,9 +93,17 @@
     Scroller.contentSize = CGSizeMake(PageCount * Scroller.bounds.size.width, Scroller.bounds.size.height);
     
     AbstractFeedViewController *mainViewController = (AbstractFeedViewController *)[storyboard instantiateViewControllerWithIdentifier:name];
-     __weak typeof(self) weakSelf = self;
-    mainViewController.onExpand = ^{
-        [weakSelf changeToBucket];
+    __weak typeof(self) weakSelf = self;
+    mainViewController.onExpand=^(UIImage*(image)){
+        [weakSelf changeToBucket:image];
+    };
+    
+    mainViewController.onLockScreenToggle = ^{
+        if(Scroller.scrollEnabled){
+            Scroller.scrollEnabled = NO;
+        }else{
+            Scroller.scrollEnabled = YES;
+        }
     };
     UIView *View = [[UIView alloc] initWithFrame:ViewSize];
     CGRect frame = mainViewController.view.frame;
@@ -110,9 +118,9 @@
     ViewSize = CGRectOffset(ViewSize, Scroller.bounds.size.width, 0);
 }
 
--(void)changeToBucket{
+-(void)changeToBucket:(UIImage *) bucket{
     NSLog(@"changing to bucket");
-    [self.superController addBucketAsRoot:@"bucketView"];
+    [self.superController addBucketAsRoot:@"bucketView" withBucket:bucket];
 }
 
 -(void)didGainFocus{
@@ -147,6 +155,11 @@
 -(void)onCameraOpen{
     [super onCameraOpen];
     [currentController onCameraOpen];
+}
+
+-(void)onCancelTap{
+    [super onCancelTap];
+    [currentController onCancelTap];
 }
 
 

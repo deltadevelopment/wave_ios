@@ -16,4 +16,5 @@
 @property (nonatomic, copy) void (^onDrawerTap)(void);
 -(void)addViewController:(SlideMenuViewController *) viewController;
 -(void)didGainFocus;
+-(void)setBucket:(UIImage *) bucket;
 @end

@@ -9,12 +9,15 @@
 #import <UIKit/UIKit.h>
 #import "FeedInterface.h"
 @interface AbstractFeedViewController : UIViewController<FeedInterface>
+//@property (nonatomic, copy) void (^onExpand)(void);
+@property (nonatomic, copy) void (^onExpand)(UIImage*(bucketImage));
+@property (nonatomic, copy) void (^onLockScreenToggle)(void);
 -(void)scrollUp;
 -(void)prepareCamera:(UIView *)view;
-@property (nonatomic, copy) void (^onExpand)(void);
 -(void)onCameraOpen;
 -(void)oncameraClose;
 -(void)onImageTaken:(UIImage *)image;
 -(void)onCameraReady;
 -(void)onFocusGained;
+-(void)onCancelTap;
 @end

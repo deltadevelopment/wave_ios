@@ -40,6 +40,7 @@
     self.topBar.alpha = 1.0;
     self.topBar.backgroundColor = [UIColor clearColor];
     self.bottomBar.alpha = 1.0;
+    self.bottomBar.hidden = YES;
     UIView *shadowView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, [UIHelper getScreenWidth], [UIHelper getScreenHeight]/4)];
     [UIHelper addShadowToView:shadowView];
     self.bucketImage.frame = CGRectOffset(self.frame, 50, 50);

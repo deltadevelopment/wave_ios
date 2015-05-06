@@ -41,6 +41,7 @@ const int PEEK_Y_START = 300;
     bool cameraMode;
     NSMutableArray *dropsView;
     DropViewController *drop;
+    UIImage *firstBucket;
     
 }
 
@@ -127,7 +128,7 @@ const int PEEK_Y_START = 300;
 -(void)addImageScroller{
     self.automaticallyAdjustsScrollViewInsets=NO;
     PageCount = 0;
-    int navigationHeight = self.navigationController.navigationBar.frame.size.height;
+    //int navigationHeight = self.navigationController.navigationBar.frame.size.height;
     Scroller = [[UIScrollView alloc] initWithFrame:CGRectMake(0, -32, [UIHelper getScreenWidth], [UIHelper getScreenHeight])];
     Scroller.backgroundColor = [UIColor clearColor];
     Scroller.pagingEnabled = YES;
@@ -135,11 +136,14 @@ const int PEEK_Y_START = 300;
     Scroller.delegate = self;
     
     ViewSize = Scroller.bounds;
+    DropModel *firstDrop = [[DropModel alloc] initWithTestData:@"169.jpg" withName:@"Chris"];
+    firstDrop.image = firstBucket;
+    
     [self addDropToBucket:[[DropModel alloc] initWithTestData:@"miranda-kerr.jpg" withName:@"Miranda Kerr"]];
-    [self addDropToBucket:[[DropModel alloc] initWithTestData:@"169.jpg" withName:@"Chris"]];
+    [self addDropToBucket:firstDrop];
     [self addDropToBucket:[[DropModel alloc] initWithTestData:@"test2.jpg" withName:@"Matika"]];
     [self addDropToBucket:[[DropModel alloc] initWithTestData:@"miranda-kerr.jpg" withName:@"Miranda Kerr"]];
-    [self addDropToBucket:[[DropModel alloc] initWithTestData:@"169.jpg" withName:@"Chris"]];
+    [self addDropToBucket:firstDrop];
     [self.view addSubview:Scroller];
     CGPoint bottomOffset = CGPointMake(Scroller.bounds.size.width, 0);
     [Scroller setContentOffset:bottomOffset animated:NO];
@@ -190,12 +194,12 @@ const int PEEK_Y_START = 300;
 }
 
 -(void)removeLastDrop{
-        lastDropIsAdded = NO;
-        PageCount -=1;
-        Scroller.contentSize = CGSizeMake(PageCount * Scroller.bounds.size.width, Scroller.bounds.size.height);
-          ViewSize = CGRectOffset(ViewSize, -Scroller.bounds.size.width, 0);
-        [[Scroller subviews] objectAtIndex:[drops count]-1];
-        [drops removeObjectAtIndex:[drops count]-1];
+    lastDropIsAdded = NO;
+    PageCount -=1;
+    Scroller.contentSize = CGSizeMake(PageCount * Scroller.bounds.size.width, Scroller.bounds.size.height);
+    ViewSize = CGRectOffset(ViewSize, -Scroller.bounds.size.width, 0);
+    [[Scroller subviews] objectAtIndex:[drops count]-1];
+    [drops removeObjectAtIndex:[drops count]-1];
 }
 
 -(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
@@ -249,6 +253,7 @@ const int PEEK_Y_START = 300;
     
     //Drop profilePicture
     UIImageView *profilePicture = [[UIImageView alloc] initWithFrame:CGRectMake(10, 8, 30, 30)];
+    
     profilePicture.image = [UIImage imageNamed:@"miranda-kerr.jpg"];
     profilePicture.layer.cornerRadius = 15;
     profilePicture.clipsToBounds = YES;
@@ -271,8 +276,12 @@ const int PEEK_Y_START = 300;
     //Attach elements
     [topBar addSubview:nameLabel];
     [topBar addSubview:profilePicture];
+    if(drop.image !=nil){
+        [ImgView setImage:drop.image];
+    }else{
+        [ImgView setImage:[UIImage imageNamed:[drop media]]];
+    }
     
-    [ImgView setImage:[UIImage imageNamed:[drop media]]];
     [ImgView addSubview:shadowView];
     [ImgView addSubview:topBar];
 
@@ -333,6 +342,9 @@ const int PEEK_Y_START = 300;
 -(void)despandBucket{
     [self.superController removeBucketAsRoot];
 }
+-(void)setBucket:(UIImage *)bucket{
+    firstBucket = bucket;
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -352,7 +364,7 @@ const int PEEK_Y_START = 300;
 }
 
 -(void)showCamera{
-
+    chat.view.hidden = YES;
     [self removeLastDrop];
     UIImageView *plcCamera = [self addImageWithCamera];
     [plcCamera addSubview:cameraView];
@@ -462,8 +474,6 @@ const int PEEK_Y_START = 300;
                          peekViewController.view.frame = frame;
                          //  blurEffectView.frame = frame;
                          blurEffectView.alpha = 1;
-                         
-                         
                          peekViewController.subscribeButton.alpha = 1.0;
                          peekViewController.subscribeVerticalconstraint.constant -= 60;
                          [peekViewController.view layoutIfNeeded];

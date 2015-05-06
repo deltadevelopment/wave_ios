@@ -172,9 +172,10 @@ static int const DRAWER_SIZE = 300;
 }
 
 
--(void)addBucketAsRoot:(NSString *) storyboardId{
+-(void)addBucketAsRoot:(NSString *) storyboardId withBucket:(UIImage *)bucket{
     oldRoot = root;
     root = (TestSuperViewController *)[storyboard instantiateViewControllerWithIdentifier:storyboardId];
+    [root setBucket:bucket];
     [root addViewController:self];
     [mainViewController setViewControllers:@[root] animated:NO];
     [self.mainView layoutIfNeeded];
