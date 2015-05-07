@@ -14,14 +14,15 @@
 @property (nonatomic, copy) void (^onCameraClose)(void);
 @property (nonatomic, copy) void (^onImageReady)(void);
 @property (nonatomic, copy) void (^onImageTaken)(UIImage*(imageTaken));
-
+@property (nonatomic, copy) void (^onPictureDiscard)(void);
+@property (nonatomic, copy) void (^onPictureUploading)(void);
 @property (nonatomic, copy) void (^onCameraCancel)(void);
 
 -(void)onTap:(NSNumber *) mode;
 -(UIView *)getCameraView;
 -(AVCaptureVideoPreviewLayer *)getLayer;
 - (UIImage*)imageByScalingAndCroppingForSize:(CGSize)targetSize img:(UIImage *) sourceImage;
--(void)prepareCamera;
+-(void)prepareCamera:(bool)rearCamera;
 -(void)takePicture;
 -(void)closeCamera;
 @end

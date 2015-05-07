@@ -27,6 +27,7 @@
     int currentTypeIndex;
      NSMutableArray *bucketTypes;
     UILabel *toolTip;
+    int intMode;
 }
 
 - (void)viewDidLoad {
@@ -80,15 +81,15 @@
     [typeButton addTarget:self action:@selector(tapTypeButton) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:typeButton];
     [self addConstraintsToButton:self.view withButton:typeButton withPoint:CGPointMake(-4, 10) fromLeft:YES];
-   // typeButton.hidden = YES;
-    typeButton.alpha = 1.0;
+    typeButton.hidden = YES;
+    typeButton.alpha = 0.0;
 }
 
 -(void)initToolTip{
     [UIHelper applyThinLayoutOnLabel:toolTip];
     [self.view addSubview:toolTip];
-    //toolTip.hidden = YES;
-    toolTip.alpha = 1.0;
+    toolTip.hidden = NO;
+    toolTip.alpha = 0.0;
     [self addTooltipConstraint:self.view withLabel:toolTip];
     BucketTypeModel *bucketModel = [bucketTypes objectAtIndex:currentTypeIndex];
     [typeButton setImage:[UIHelper iconImage:[UIImage imageNamed:[bucketModel icon_path]] withSize:150] forState:UIControlStateNormal];
@@ -96,12 +97,19 @@
 }
 
 -(void)tapCancelButton{
-    self.onCameraCancel();
-   // superButtonMode = NONE;
-    //[self animateButtonToRight];
-    //[cameraButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"camera-icon.png"] withSize:150] forState:UIControlStateNormal];
-    //self.onCancelTap();
-    
+    if(intMode == 1){
+        self.onCameraCancel();
+    }
+    else if (intMode == 2){
+        if(frontFacingMode){
+            [self prepareCamera:NO];
+        }else{
+            [self prepareCamera:YES];
+        }
+       
+        intMode = 1;
+        self.onPictureDiscard();
+    }
 }
 
 -(void)tapTypeButton{
@@ -179,11 +187,12 @@
                                                                      views:NSDictionaryOfVariableBindings(button)]];
 }
 
--(void)prepareCamera{
+-(void)prepareCamera:(bool)rearCamera{
     [cameraHelper setView:self.view withRect:CGRectMake(0, 0, [UIHelper getScreenWidth], [UIHelper getScreenHeight])];
-    [cameraHelper initaliseVideo];
+    [cameraHelper initaliseVideo:rearCamera];
     [self.view addSubview:selfieButton];
     [self initUI];
+    [self showTools];
     [self addConstraintsToButton:self.view withButton:selfieButton withPoint:CGPointMake(10, -64) fromLeft:NO fromTop:YES];
     self.onCameraReady();
 }
@@ -198,7 +207,7 @@
 }
 
 -(void)onTap:(NSNumber *) mode{
-    int intMode = [mode intValue];
+    intMode = [mode intValue];
     if(intMode == 1){
         cameraMode = YES;
         self.onCameraOpen();
@@ -208,15 +217,20 @@
     }
     else if(intMode == 0){
         if(imageReadyForUpload){
-            self.onCameraClose();
-            cameraMode = NO;
-            imageReadyForUpload = NO;
-            self.onImageTaken(imgTaken);
+             [self uploadImage];
         }else{
         //camera is not ready
-        
+           
         }
     }
+}
+
+-(void)uploadImage{
+   // self.onPictureUploading();
+    self.onCameraClose();
+   cameraMode = NO;
+   imageReadyForUpload = NO;
+    self.onImageTaken(imgTaken);
 }
 
 -(void)closeCamera{
@@ -236,6 +250,38 @@
     [self.view insertSubview:imageView belowSubview:cancelButton];
     imageReadyForUpload = YES;
     self.onImageReady();
+    [self hideTools];
+}
+
+-(void)hideTools{
+    [UIView animateWithDuration:0.3f
+                          delay:0.0f
+                        options: UIViewAnimationOptionCurveLinear
+                     animations:^{
+                         typeButton.alpha = 0.0;
+                         toolTip.alpha = 0.0;
+                         
+                     }
+                     completion:^(BOOL finished){
+                         typeButton.hidden = YES;
+                         toolTip.hidden = YES;
+                     }];
+}
+
+-(void)showTools{
+    typeButton.hidden = NO;
+    toolTip.hidden = NO;
+    [UIView animateWithDuration:0.3f
+                          delay:0.0f
+                        options: UIViewAnimationOptionCurveLinear
+                     animations:^{
+                         typeButton.alpha = 0.9;
+                         toolTip.alpha = 0.9;
+                         
+                     }
+                     completion:^(BOOL finished){
+                         
+                     }];
 }
 
 -(UIView *)getCameraView{

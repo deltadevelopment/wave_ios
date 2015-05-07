@@ -27,4 +27,5 @@
 +(void)applyThinLayoutOnLabel:(UILabel *) label withSize:(float) size withColor:(UIColor *) color;
 +(void)addShadowToView:(UIView *) view;
 +(void)addShadowToViewTwo:(UIView *) view;
++(UIImage *)iconImage:(UIImage *) image withPoint:(CGPoint) point;
 @end

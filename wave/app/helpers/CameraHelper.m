@@ -98,7 +98,7 @@ bool square;
 {
     square = theSquare;
 }
--(void)initaliseVideo{
+-(void)initaliseVideo:(bool)rearCamera{
     NSLog(@"-------_________SETTER KAMERA");
     NSLog(@"Setting up capture session");
     CaptureSession = [[AVCaptureSession alloc] init];
@@ -106,13 +106,16 @@ bool square;
     NSLog(@"Adding video input");
     
     //ADD VIDEO INPUT
+  
     VideoDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+   
     
     //Set frame rate (if requried)
     
     if (VideoDevice)
     {
         NSError *error;
+       // VideoInputDevice = [[AVCaptureDeviceInput alloc] initWithDevice:[self CameraWithPosition:AVCaptureDevicePositionFront] error:&error];
         VideoInputDevice = [AVCaptureDeviceInput deviceInputWithDevice:VideoDevice error:&error];
         if (!error)
         {
@@ -152,9 +155,6 @@ bool square;
     
     [[self PreviewLayer] setVideoGravity:AVLayerVideoGravityResizeAspectFill];
     
-    
-    
-    
     //ADD MOVIE FILE OUTPUT
     NSLog(@"Adding movie file output");
     MovieFileOutput = [[AVCaptureMovieFileOutput alloc] init];
@@ -171,8 +171,6 @@ bool square;
     
     [self addImageOutput];
     //(We call a method as it also has to be done after changing camera)
-    
-    
     
     //----- SET THE IMAGE QUALITY / RESOLUTION -----
     //Options:
@@ -216,6 +214,10 @@ bool square;
     //----- START THE CAPTURE SESSION RUNNING -----
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
        [CaptureSession startRunning];
+        if(!rearCamera){
+        [self CameraToggleButtonPressed:YES];
+        }
+        
     });
     
 }

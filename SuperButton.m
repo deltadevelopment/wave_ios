@@ -20,7 +20,8 @@ static int const FUDGE_FACTOR = 10;
 typedef enum {
     NONE,
     MIDDLE,
-    EDIT
+    EDIT,
+    UPLOADING
 } SuperButtonMode;
 
 @implementation SuperButton
@@ -55,6 +56,8 @@ typedef enum {
     bool pictureIsApproved;
     bool lockButton;
     SuperButtonMode superButtonMode;
+    int pixels;
+    NSTimer *timer;
 }
 
 -(UIButton *)getButton{
@@ -73,6 +76,7 @@ typedef enum {
         //typeButton = [UIButton buttonWithType:UIButtonTypeCustom];
         //toolTip = [[UILabel alloc]init];
         [self initBucketTypes];
+        pixels = 2;
         [self initUI];
         [self addConstraints:superView];
         screenBound = [[UIScreen mainScreen] bounds];
@@ -81,8 +85,32 @@ typedef enum {
         screenHeight = screenSize.height;
         superButtonMode = NONE;
     }
-    
     return self;
+}
+
+-(void)animateProgress{
+    UIImage *buttonImage = [UIHelper iconImage:[UIImage imageNamed:@"triangle.png"] withPoint:CGPointMake(200, 100)];
+    UIImage *stretchableButtonImage = [buttonImage stretchableImageWithLeftCapWidth:12 topCapHeight:0];
+    [cameraButton setImage:nil forState:UIControlStateNormal];
+    [cameraButton setImage:stretchableButtonImage forState:UIControlStateNormal];
+  // [cameraButton imageView].frame = CGRectMake(0, 0, [UIHelper getScreenWidth], [cameraButton imageView].frame.size.height);
+    cameraButton.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, -200);
+    [self startTimer];
+}
+
+-(void)startTimer{
+    timer = [NSTimer scheduledTimerWithTimeInterval:0.03 target:self
+                                           selector:@selector(animate) userInfo:nil repeats:YES];
+    
+}
+
+-(void)animate{
+    CGRect frame = [cameraButton imageView].frame;
+    [cameraButton imageView].frame = CGRectMake(frame.origin.x - pixels,frame.origin.y, frame.size.width, frame.size.height);
+    if((frame.origin.x - pixels) <= -150){
+        [timer invalidate];
+        [self animateButtonToRight];
+    }
 }
 
 -(void)initBucketTypes{
@@ -186,6 +214,7 @@ typedef enum {
 -(void)applyUIOnButton:(UIButton *) button{
     button.layer.cornerRadius = 25;
     [button setImageEdgeInsets:UIEdgeInsetsMake(11, 11, 11, 11)];
+    button.clipsToBounds = YES;
 }
 
 
@@ -339,6 +368,11 @@ typedef enum {
     self.onCancelTap();
 
 }
+-(void)discard{
+    superButtonMode = MIDDLE;
+    [cameraButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"camera-icon.png"] withSize:150] forState:UIControlStateNormal];
+}
+
 /*
 -(void)tapTypeButton{
     currentTypeIndex ++;

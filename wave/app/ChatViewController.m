@@ -27,7 +27,7 @@
     [messages addObject:@"Hei. hvis dere skal gjøre dette er det viktig at all min tekst kommer med? dere skjønner det"];
     [messages addObject:@"Hva skjer da?"];
 
-   
+  
     UIView *spacerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 10, 10)];
     [self.replyTextFieldSimple setLeftViewMode:UITextFieldViewModeAlways];
     [self.replyTextFieldSimple setLeftView:spacerView];
@@ -48,6 +48,7 @@
     self.replyTextField.clipsToBounds = YES;
    // self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"169.jpg"]];
     self.view.backgroundColor = [UIColor clearColor];
+     //self.view.backgroundColor = [UIColor redColor]
     // Do any additional setup after loading the view.
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     self.tableView.transform = CGAffineTransformMakeRotation(-M_PI);
@@ -73,7 +74,25 @@
     //[self.view insertSubview:self.tableView belowSubview:shadowView];
     
     self.tableView.hidden = YES;
+    
+    UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
+    [self.view addGestureRecognizer:gestureRecognizer];
+    gestureRecognizer.cancelsTouchesInView = NO;  // this prevents the gesture recognizers to 'block' touches
   
+}
+
+-(void)hideKeyboard{
+    if([self.replyTextFieldSimple isFirstResponder]){
+        self.replyTextFieldSimple.text = @"";
+     [self.replyTextFieldSimple resignFirstResponder];
+    }else{
+        if([self isChatVisible]){
+            [self hideChat];
+        }else{
+            [self showChat];
+        }
+    }
+   
 }
 
 
@@ -134,6 +153,27 @@
 -(void)keyboardWillChange:(NSNotification *)note {
  
 
+}
+
+
+-(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch{
+    if ([gestureRecognizer isMemberOfClass:[UITapGestureRecognizer class]] ) {
+        if(![self isChatVisible]){
+            return NO;
+        }
+        return YES;
+    }
+    
+    return YES;
+}
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
+    NSLog(@"HEY");
+    UITouch *touch = [[event allTouches] anyObject];
+    if ([self.replyTextFieldSimple isFirstResponder] && [touch view] != self.replyTextFieldSimple) {
+        [self.replyTextFieldSimple resignFirstResponder];
+    }
+    [super touchesBegan:touches withEvent:event];
 }
 
 -(void)keyboardWillShow:(NSNotification *)note {

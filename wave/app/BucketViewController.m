@@ -43,6 +43,8 @@ const int PEEK_Y_START = 300;
     DropViewController *drop;
     UIImage *firstBucket;
     UIView *cameraHolder;
+    bool isPeeking;
+    bool canPeek;
     
 }
 
@@ -50,6 +52,7 @@ const int PEEK_Y_START = 300;
      drops = [[NSMutableArray alloc]init];
     [self addImageScroller];
     [super viewDidLoad];
+    canPeek = YES;
     storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     dropsView = [[NSMutableArray alloc]init];
     // Do any additional setup after loading the view.
@@ -59,7 +62,7 @@ const int PEEK_Y_START = 300;
     //[self.view insertSubview:chat.view belowSubview:[self.superButton getButton]];
     [Scroller addSubview:chat.view];
    // chat.view.hidden = YES;
-    
+  
     cameraHolder = [[UIView alloc]initWithFrame:CGRectMake(0, -64, [UIHelper getScreenWidth],[UIHelper getScreenHeight])];
     cameraHolder.backgroundColor = [UIColor whiteColor];
 
@@ -92,7 +95,7 @@ const int PEEK_Y_START = 300;
 
 -(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch{
     if ([gestureRecognizer isMemberOfClass:[UISwipeGestureRecognizer class]] ) {
-        if([chat isChatVisible]){
+        if([chat isChatVisible] || isPeeking || cameraMode){
             return NO;
         }
         return YES;
@@ -386,6 +389,7 @@ const int PEEK_Y_START = 300;
 
 -(void)onCameraClose{
     cameraMode = NO;
+    
     [super onCameraClose];
 }
 
@@ -409,6 +413,7 @@ const int PEEK_Y_START = 300;
                              }
                              completion:^(BOOL finished){
                                  cameraHolder.hidden = NO;
+                                 canPeek = NO;
                                  //[self showToolButtons];
                                  
                                  
@@ -455,30 +460,36 @@ const int PEEK_Y_START = 300;
 
 - (void)peekViewDrag:(UIPanGestureRecognizer *)gesture
 {
-    UILabel *label = (UILabel *)gesture.view;
-    CGPoint translation = [gesture translationInView:label];
-    CGRect frame = peekViewController.view.frame;
-    
-    if(gesture.state == UIGestureRecognizerStateBegan){
-        [self hideSubscribeButton];
-    }
-   
-    if(frame.origin.y <= -44 - translation.y){
-        peekViewController.view.frame = CGRectMake(0, peekViewController.view.frame.origin.y + (translation.y*1.4), [UIHelper getScreenWidth], PEEK_Y_START - 64);
-        [self calculateAlpha:-44 withTotal:frame.origin.y];
-    }
-
-    
-    if(gesture.state == UIGestureRecognizerStateEnded || gesture.state == UIGestureRecognizerStateFailed || gesture.state == UIGestureRecognizerStateCancelled)
-    {
-        if(frame.origin.y + frame.size.height >= (PEEK_Y_START-64) - 64){
-            [self animatePeekViewIn];
-            
-        }else{
-            [self animatePeekViewOut];
+    if(!cameraMode){
+        isPeeking = YES;
+        UILabel *label = (UILabel *)gesture.view;
+        CGPoint translation = [gesture translationInView:label];
+        CGRect frame = peekViewController.view.frame;
+        
+        if(gesture.state == UIGestureRecognizerStateBegan){
+            [self hideSubscribeButton];
         }
+        
+        if(frame.origin.y <= -44 - translation.y){
+            peekViewController.view.frame = CGRectMake(0, peekViewController.view.frame.origin.y + (translation.y*1.4), [UIHelper getScreenWidth], PEEK_Y_START - 64);
+            [self calculateAlpha:-44 withTotal:frame.origin.y];
+        }
+        
+        
+        if(gesture.state == UIGestureRecognizerStateEnded || gesture.state == UIGestureRecognizerStateFailed || gesture.state == UIGestureRecognizerStateCancelled)
+        {
+            if(frame.origin.y + frame.size.height >= (PEEK_Y_START-64) - 64){
+                [self animatePeekViewIn];
+                
+            }else{
+                [self animatePeekViewOut];
+                isPeeking = NO;
+            }
+            
+        }
+        [gesture setTranslation:CGPointZero inView:label];
     }
-    [gesture setTranslation:CGPointZero inView:label];
+    
     
 }
 

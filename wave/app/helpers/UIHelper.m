@@ -171,6 +171,10 @@ static CGFloat screenHeight;
 +(UIImage *)iconImage:(UIImage *) image withSize:(float) size{
     return [self imageWithImage:image scaledToSize:CGSizeMake(size, size)];
 }
+
++(UIImage *)iconImage:(UIImage *) image withPoint:(CGPoint) point{
+    return [self imageWithImage:image scaledToSize:CGSizeMake(point.x, point.y)];
+}
 +(UIImage*)imageByScalingAndCroppingForSize:(CGSize)targetSize img:(UIImage *) sourceImage
 {
     NSLog(@"----SCALING IMAGE");

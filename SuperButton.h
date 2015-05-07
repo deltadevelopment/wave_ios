@@ -26,14 +26,15 @@
 @property (nonatomic, copy) void (^onCancelTap)(void);
 
 @property (nonatomic) bool lockActions;
-
+-(void)discard;
 -(void)changeIcon:(UIImage *)img;
 -(void)enableDragX;
 -(void)enableDragY;
 -(id)init:(UIView *)view;
 -(UIButton *)getButton;
 -(void)tapCancelButton;
-
+-(void)animateProgress;
+-(void)startTimer;
 typedef enum tagName{
     None = 1,
     Middle = 2,

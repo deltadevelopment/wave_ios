@@ -41,7 +41,7 @@
                  withObject:(NSObject*) object;
 @property (retain) AVCaptureVideoPreviewLayer *PreviewLayer;
 - (void)StartStopRecording;
--(void)initaliseVideo;
+-(void)initaliseVideo:(bool)rearCamera;
 - (void)CameraToggleButtonPressed:(bool)isFrontCamera;
 -(void)setView:(UIView *)videoView withRect:(CGRect) rect;
 -(UIView*)getView;

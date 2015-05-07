@@ -48,10 +48,24 @@
     _camera.onCameraCancel=^{
         [weakSelf onCameraCancel];
     };
+    _camera.onPictureDiscard=^{
+        [weakSelf onPictureDiscard];
+    };
+    _camera.onPictureUploading=^{
+        [weakSelf onPictureUploading];
+    };
+}
+-(void)onPictureUploading{
+    [self.superButton animateProgress];
 }
 -(void)onCameraCancel{
     [self.superButton tapCancelButton];
 }
+
+-(void)onPictureDiscard{
+    [self.superButton discard];
+}
+
 -(void)onImageReady{
     self.superButton.lockActions = NO;
 }
@@ -188,7 +202,7 @@
 }
 
 -(void)onCameraOpen{
-    [_camera prepareCamera];
+    [_camera prepareCamera:YES];
 }
 -(void)onCameraClose
 {
