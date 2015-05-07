@@ -42,9 +42,18 @@
     _camera.onImageTaken =^(UIImage*(image)){
         [weakSelf onImageTaken:image];
     };
-    
-  
-   
+    _camera.onImageReady=^{
+        [weakSelf onImageReady];
+    };
+    _camera.onCameraCancel=^{
+        [weakSelf onCameraCancel];
+    };
+}
+-(void)onCameraCancel{
+    [self.superButton tapCancelButton];
+}
+-(void)onImageReady{
+    self.superButton.lockActions = NO;
 }
 
 -(void)prepareCamera{
@@ -174,19 +183,13 @@
     //add auto layout constraints so that the blur fills the screen upon rotating device
     [blurEffectView setTranslatesAutoresizingMaskIntoConstraints:NO];
 }
--(void)onTap{
-    //[self showCamera];
-    NSLog(@"______TAPPING NOW");
-    [_camera onTap];
-    
+-(void)onTap:(NSNumber *)mode{
+    [_camera onTap:mode];
 }
 
 -(void)onCameraOpen{
     [_camera prepareCamera];
 }
-
-
-
 -(void)onCameraClose
 {
     
@@ -217,8 +220,8 @@
     self.superButton.onDragEndedY =^{
         [weakSelf onDragEndedY];
     };
-    self.superButton.onTap = ^{
-        [weakSelf onTap];
+    self.superButton.onTap = ^(NSNumber*(mode)){
+        [weakSelf onTap:mode];
     };
     self.superButton.onDragSwitchedFromX = ^{
         [weakSelf onDragSwitchedFromX];

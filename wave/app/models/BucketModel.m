@@ -20,7 +20,15 @@
     self.when_datetime= [dic objectForKey:@"when_datetime"];
     self.created_at= [dic objectForKey:@"created_at"];
     self.updated_at= [dic objectForKey:@"updated_at"];
+    self.drops = [[NSMutableArray alloc] init];
 
     return self;
 };
+
+-(id)init{
+    self =[super init];
+    self.drops = [[NSMutableArray alloc] init];
+    self.isInitalized = NO;
+    return self;
+}
 @end

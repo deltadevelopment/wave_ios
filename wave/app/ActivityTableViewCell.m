@@ -8,8 +8,10 @@
 
 #import "ActivityTableViewCell.h"
 #import "UIHelper.h"
+#import "BucketModel.h"
+#import "DropModel.h"
 @implementation ActivityTableViewCell{
-    
+    UIView *shadowView;
 }
 
 - (void)awakeFromNib {
@@ -41,11 +43,27 @@
     self.topBar.backgroundColor = [UIColor clearColor];
     self.bottomBar.alpha = 1.0;
     self.bottomBar.hidden = YES;
-    UIView *shadowView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, [UIHelper getScreenWidth], [UIHelper getScreenHeight]/4)];
+    shadowView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, [UIHelper getScreenWidth], [UIHelper getScreenHeight]/4)];
     [UIHelper addShadowToView:shadowView];
     self.bucketImage.frame = CGRectOffset(self.frame, 50, 50);
-    [self.bucketImage addSubview:shadowView];
+   [self.bucketImage addSubview:shadowView];
+    self.layer.shouldRasterize = YES;
+    self.layer.rasterizationScale = [UIScreen mainScreen].scale;
+}
+-(void)update:(BucketModel *) bucket{
+        DropModel *drop = [[bucket drops] objectAtIndex:0];
+        if(drop.media_img != nil){
+             self.bucketImage.image = drop.media_img;
+          
+        }else{
+             self.bucketImage.image = [UIImage imageNamed:drop.media];
+        }
+        
+        self.displayNameText.text = bucket.title;
+}
 
+-(void)updateDropImage:(UIImage *) image{
+    self.bucketImage.image = image;
 }
 
 @end

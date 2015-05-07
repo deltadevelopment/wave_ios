@@ -7,6 +7,8 @@
 //
 
 #import "ApplicationHelper.h"
+#import "BucketModel.h"
+#import "DropModel.h"
 static NSIndexPath *currrentIndex = 0;
 NSArray *availableTexts;
 NSArray *unAvailableTexts;
@@ -49,6 +51,23 @@ NSArray *unAvailableTexts;
 }
 -(NSString*)getUnAvailableText{
     return unAvailableTexts[rand()%4];
+}
+
+
++(NSMutableArray *)bucketTestData{
+    NSMutableArray * buckets = [[NSMutableArray alloc] init];
+    for(int i = 0; i<6;i++){
+        BucketModel *bucket = [[BucketModel alloc] init];
+        DropModel *drop = [[DropModel alloc] init];
+        drop.media = @"169.jpg";
+        bucket.title = @"My amazing Bucket";
+        bucket.drops = [[NSMutableArray alloc] initWithObjects:drop, nil];
+        [buckets addObject:bucket];
+        
+    }
+   
+    return buckets;
+
 }
 /*
 -(void)alertUser:(NSString *) text{

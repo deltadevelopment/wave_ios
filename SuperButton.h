@@ -12,7 +12,7 @@
 #import "UIHelper.h"
 @interface SuperButton : NSObject
 
-@property (nonatomic, copy) void (^onTap)(void);
+@property (nonatomic, copy) void (^onTap)(NSNumber*(mode));
 @property (nonatomic, copy) void (^onDragX)(NSNumber*(xValue));
 @property (nonatomic, copy) void (^onDragY)(NSNumber*(yValue));
 @property (nonatomic, copy) void (^onDragStartedX)(void);
@@ -24,9 +24,21 @@
 @property (nonatomic, copy) void (^onDragSwitchedFromX)(void);
 @property (nonatomic, copy) void (^onDragSwitchedFromY)(void);
 @property (nonatomic, copy) void (^onCancelTap)(void);
+
+@property (nonatomic) bool lockActions;
+
 -(void)changeIcon:(UIImage *)img;
 -(void)enableDragX;
 -(void)enableDragY;
 -(id)init:(UIView *)view;
 -(UIButton *)getButton;
+-(void)tapCancelButton;
+
+typedef enum tagName{
+    None = 1,
+    Middle = 2,
+    Editing = 3,
+} tah;
+
+
 @end

@@ -32,7 +32,7 @@
         CAGradientLayer * gradientLayer = [CAGradientLayer layer];
         gradientLayer.frame = CGRectMake(self.bounds.origin.x, 0,
                                          self.bounds.size.width, self.bounds.size.height);
-        
+        gradientLayer.shadowPath = [UIBezierPath bezierPathWithRect:gradientLayer.bounds].CGPath;
         gradientLayer.colors = [NSArray arrayWithObjects: transparent, opaque,
                                 opaque, transparent, nil];
         

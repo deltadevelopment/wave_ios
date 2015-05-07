@@ -21,5 +21,8 @@ CGSize keyboardSize;
 - (IBAction)sendAction:(id)sender;
 @property (weak, nonatomic) IBOutlet UITextField *replyTextFieldSimple;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *replyFieldConstraintSimple;
+-(void)showChat;
+-(void)hideChat;
+-(BOOL)isChatVisible;
 
 @end

@@ -14,4 +14,6 @@
 @property (weak, nonatomic) IBOutlet UITextView *message;
 @property (weak, nonatomic) IBOutlet UIImageView *messageImage;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *cellRightConstraint;
+@property (nonatomic) bool isInitialized;
+-(void)initalize;
 @end

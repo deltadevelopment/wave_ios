@@ -42,6 +42,7 @@ const int PEEK_Y_START = 300;
     NSMutableArray *dropsView;
     DropViewController *drop;
     UIImage *firstBucket;
+    UIView *cameraHolder;
     
 }
 
@@ -57,30 +58,52 @@ const int PEEK_Y_START = 300;
     chat = (ChatViewController *)[self createViewControllerWithStoryboardId:@"chatView"];
     //[self.view insertSubview:chat.view belowSubview:[self.superButton getButton]];
     [Scroller addSubview:chat.view];
-    chat.view.hidden = YES;
+   // chat.view.hidden = YES;
+    
+    cameraHolder = [[UIView alloc]initWithFrame:CGRectMake(0, -64, [UIHelper getScreenWidth],[UIHelper getScreenHeight])];
+    cameraHolder.backgroundColor = [UIColor whiteColor];
 
     //[self addConstraints:Scroller withSubview:chat.view];
     [self addConstraintsChat:chat.view];
     [self attachViews:viewControllerY withY:viewControllerX];
-    
-    UITapGestureRecognizer *despandBucketGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(despandBucket)];
-    despandBucketGesture.numberOfTapsRequired = 2;
-    despandBucketGesture.numberOfTouchesRequired = 2;
-    despandBucketGesture.cancelsTouchesInView = NO;
-    [self.view addGestureRecognizer:despandBucketGesture];
-    
+
     [self attachGUI];
     [self.view insertSubview:self.topBar aboveSubview:Scroller];
     [self addPeekView];
-    [self.view addGestureRecognizer:[[UIPanGestureRecognizer alloc]
-                                        initWithTarget:self
-                                        action:@selector(peekViewDrag:)]];
+    
+    UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(peekViewDrag:)];
+   // pan.delegate = self;
+    [self.view addGestureRecognizer:pan];
     [self animateElementsIn];
     
     UITapGestureRecognizer *chatGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showChat)];
     
     [self.view addGestureRecognizer:chatGesture];
+    UISwipeGestureRecognizer *gestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(despandBucket:)];
+    gestureRecognizer.delegate = self;
+    [gestureRecognizer setDirection:(UISwipeGestureRecognizerDirectionUp)];
+    gestureRecognizer.numberOfTouchesRequired = 1;
+    gestureRecognizer.cancelsTouchesInView = NO;
+    [self.view addGestureRecognizer:gestureRecognizer];
     
+    [self.view insertSubview:cameraHolder belowSubview:[self.superButton getButton ]];
+    cameraHolder.hidden = YES;
+}
+
+-(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch{
+    if ([gestureRecognizer isMemberOfClass:[UISwipeGestureRecognizer class]] ) {
+        if([chat isChatVisible]){
+            return NO;
+        }
+        return YES;
+    }
+    
+    return YES;
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
+{
+    return YES;
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
@@ -102,11 +125,10 @@ const int PEEK_Y_START = 300;
 }
 
 -(void)showChat{
-    NSLog(@"HEEYEY");
-    if([chat.view isHidden]){
-        chat.view.hidden = NO;
+    if([chat isChatVisible]){
+        [chat hideChat];
     }else{
-        chat.view.hidden = YES;
+        [chat showChat];
     }
 }
 
@@ -339,7 +361,7 @@ const int PEEK_Y_START = 300;
     cameraPlaceHolder = [[UIImageView alloc] initWithFrame:ViewSize];
 }
 
--(void)despandBucket{
+-(void)despandBucket:(UISwipeGestureRecognizer *)recognizer {
     [self.superController removeBucketAsRoot];
 }
 -(void)setBucket:(UIImage *)bucket{
@@ -354,9 +376,13 @@ const int PEEK_Y_START = 300;
 
 # pragma SuperButton callbacks
 -(void)prepareCamera{
-    [self initCameraPlaceholder];
-    cameraView = self.camera.view;
+    if(cameraView == nil){
+        [self initCameraPlaceholder];
+        cameraView = self.camera.view;
+        [cameraHolder addSubview:cameraView];
+    }
 }
+
 
 -(void)onCameraClose{
     cameraMode = NO;
@@ -365,32 +391,55 @@ const int PEEK_Y_START = 300;
 
 -(void)showCamera{
     chat.view.hidden = YES;
+    Scroller.userInteractionEnabled = NO;
+    
     [self removeLastDrop];
     UIImageView *plcCamera = [self addImageWithCamera];
-    [plcCamera addSubview:cameraView];
+    //[plcCamera addSubview:cameraView];
      currentView = plcCamera;
     dispatch_queue_t main_queue = dispatch_get_main_queue();
     dispatch_async(main_queue, ^{
           CGPoint bottomOffset = CGPointMake(Scroller.contentSize.width - Scroller.bounds.size.width, 0);
         dispatch_async(main_queue, ^{
-            [Scroller setContentOffset:bottomOffset animated:YES];
+            [UIView animateWithDuration:0.3f
+                                  delay:0.0f
+                                options: UIViewAnimationOptionCurveLinear
+                             animations:^{
+                                   [Scroller setContentOffset:bottomOffset animated:NO];
+                             }
+                             completion:^(BOOL finished){
+                                 cameraHolder.hidden = NO;
+                                 //[self showToolButtons];
+                                 
+                                 
+                             }];
+          
+            
+            
         });
     });
+    
+    
+    
 }
 
 -(void)onCancelTap{
     [super onCancelTap];
+     cameraHolder.hidden = YES;
+    Scroller.userInteractionEnabled = YES;
     PageCount -=1;
     Scroller.contentSize = CGSizeMake(PageCount * Scroller.bounds.size.width, Scroller.bounds.size.height);
-    [self.camera.view removeFromSuperview];
     ViewSize = CGRectOffset(ViewSize, -Scroller.bounds.size.width, 0);
       [self addDropToBucket:[[DropModel alloc] initWithTestData:@"169.jpg" withName:@"Chris"]];
     self.dropsAmount.text = [NSString stringWithFormat:@"%ld/%ld", (long)currentPage, [drops count] - 2];
 }
 
 -(void)onImageTaken:(UIImage *)image{
+     cameraHolder.hidden = YES;
+    Scroller.userInteractionEnabled = YES;
+
     CGSize size = CGSizeMake([UIHelper getScreenWidth], [UIHelper getScreenHeight]);
-    [self.camera.view removeFromSuperview];
+    //[self.camera.view removeFromSuperview];
     currentView.image = [self.camera imageByScalingAndCroppingForSize:size img:image];
     [drops addObject:currentView];
     self.dropsAmount.text = [NSString stringWithFormat:@"%ld/%ld", (long)currentPage, [drops count] - 1];

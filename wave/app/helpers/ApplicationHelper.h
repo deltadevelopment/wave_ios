@@ -19,4 +19,5 @@
 -(void)addUnAvailableTexts;
 //-(NSString*) formatPhoneNumber:(NSString*) simpleNumber deleteLastChar:(BOOL)deleteLastChar;
 //-(void)alertUser:(NSString *) text;
++(NSMutableArray *)bucketTestData;
 @end

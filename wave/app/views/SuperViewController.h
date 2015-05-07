@@ -17,7 +17,7 @@
 -(void)attachViews:(OverlayViewController *) x withY:(OverlayViewController *) y;
 -(OverlayViewController *)createViewControllerWithStoryboardId:(NSString *) identifier;
 -(void)attachSuperButtonToView;
--(void)onTap;
+-(void)onTap:(NSNumber *) mode;
 -(void)prepareCamera;
 -(void)onCameraOpen;
 -(void)onCameraClose;

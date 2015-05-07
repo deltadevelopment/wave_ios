@@ -11,6 +11,8 @@
 #import "UIHelper.h"
 #import "BucketController.h"
 #import "DropModel.h"
+#import "BucketModel.h"
+#import "ApplicationHelper.h"
 @interface ActivityViewController ()
 
 @end
@@ -22,24 +24,37 @@ const int EXPAND_SIZE = 400;
     UIView *cameraView;
     bool cameraMode;
     UIImage *imgTaken;
-    ActivityTableViewCell *cameraCell;
-    ActivityTableViewCell *topCell;
     BucketController *bucketController;
+    UIView *cameraHolder;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    feed = [[NSMutableArray alloc]init];
+    //feed = [ApplicationHelper bucketTestData];
+    
+    feed = [ApplicationHelper bucketTestData];
+    
+    /*
+         feed = [[NSMutableArray alloc]init];
     [feed addObject:@"Chris"];
     [feed addObject:@"Christian"];
-    [feed addObject:@"Chris"];
-    [feed addObject:@"Christian"];
-    [feed addObject:@"Chris"];
-    [feed addObject:@"Christian"];
+    [feed addObject:@"Olav"];
+    [feed addObject:@"Jakob"];
+    [feed addObject:@"Jens"];
+    [feed addObject:@"Rune"];
+     */
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
     bucketController = [[BucketController alloc] init];
+    cameraHolder = [[UIView alloc]initWithFrame:CGRectMake(0, -64, [UIHelper getScreenWidth],[UIHelper getScreenHeight])];
+    cameraHolder.backgroundColor = [UIColor whiteColor];
+}
+
+-(void)viewDidLayoutSubviews{
+    [self.view addSubview:cameraHolder];
+    cameraHolder.hidden = YES;
+    [self.view insertSubview:self.tableView belowSubview:cameraHolder];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -67,7 +82,6 @@ const int EXPAND_SIZE = 400;
         [CATransaction begin];
         
         [CATransaction setCompletionBlock:^{
-            // animation has finished
             if(shouldExpand){
                 [self expandBucketWithId:indexPath.row];
             }
@@ -117,41 +131,14 @@ const int EXPAND_SIZE = 400;
     static NSString *CellIdentifier = @"activityCell";
     ActivityTableViewCell *cell = (ActivityTableViewCell  *)[tableView  dequeueReusableCellWithIdentifier:CellIdentifier];
     if(cell == nil){
-        NSLog(@"CELL ER NULL");
         cell = [[ActivityTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     if(!cell.isInitialized){
+        //Applying GUI to cell first time
         [cell initialize];
     }
-    cell.displayNameText.text = [feed objectAtIndex:indexPath.row];
-    if(imgTaken == nil){
-        cell.bucketImage.image = [UIImage imageNamed:@"169.jpg"]; //[self createImage];
-        
-    }else{
-        indexPath.row != 0 ? cell.bucketImage.image = [UIImage imageNamed:@"169.jpg"] : nil;
-    }
-
-    if([[feed objectAtIndex:indexPath.row] isEqual: @"Simen"]){
-        if(!cameraMode){
-            [cameraView removeFromSuperview];
-        }
-        NSLog(@"-----------------------");
-        cameraCell = cell;
-        cameraCell.profilePictureIcon.image = [UIImage imageNamed:@"bucket.png"];
-        
-    }
-    else{
-        if(!cameraMode){
-            [cameraView removeFromSuperview];
-        }
-        cameraCell.profilePictureIcon.image = [UIImage imageNamed:@"miranda-kerr.jpg"];
-        cameraCell = nil;
-        [cameraView removeFromSuperview];
-    }
-   
-   
-    
-    
+    //Updating cell from changes in bucket
+    [cell update:[feed objectAtIndex:indexPath.row]];
     return cell;
 }
 
@@ -160,6 +147,7 @@ const int EXPAND_SIZE = 400;
 -(void)prepareCamera:(UIView *)view{
     if(cameraView == nil){
         cameraView = view;
+        [cameraHolder addSubview:cameraView];
     }
 }
 
@@ -172,32 +160,30 @@ const int EXPAND_SIZE = 400;
     NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     shouldExpand = true;
     indexCurrent = newIndexPath;
+    BucketModel *firstBucket = [feed objectAtIndex:0];
     
-    if(![[feed objectAtIndex:0] isEqualToString:@"Simen"]){
-        NSLog(@"_______LEGGER TIL");
-        [feed insertObject:@"Simen" atIndex:0];
+    if(![firstBucket.title isEqualToString:@"Simen"]){
+ 
+        BucketModel *bucket = [[BucketModel alloc] init];
+        DropModel *drop = [[DropModel alloc] init];
+        //drop.media = @"169.jpg";
+        bucket.drops = [[NSMutableArray alloc] initWithObjects:drop, nil];
+        bucket.title = @"Simen";
+        
+        [feed insertObject:bucket atIndex:0];
         [CATransaction begin];
         [CATransaction setCompletionBlock:^{
-            [cameraCell.bucketImage addSubview:cameraView];
+            cameraHolder.hidden = NO;
         }];
-   
-   
         [self.tableView beginUpdates];
         [_tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationTop];
         [self.tableView endUpdates];
         [CATransaction commit];
-        //topCell = (ActivityTableViewCell  *)[_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-        NSLog(@"LEGGER TIL KAMERA VIEW");
-        //[topCell.bucketImage addSubview:cameraView];
-        
-      //  cameraCell.bottomBar.alpha = 0.0;
     }
     else{
-        //FIKS for å få kamera view opp alle ganger
-        cameraCell = (ActivityTableViewCell  *)[_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
         [CATransaction begin];
         [CATransaction setCompletionBlock:^{
-            [cameraCell.bucketImage addSubview:cameraView];
+            cameraHolder.hidden = NO;
         }];
         [self.tableView beginUpdates];
         [self.tableView endUpdates];
@@ -217,6 +203,7 @@ const int EXPAND_SIZE = 400;
 -(void)oncameraClose{
    // ActivityTableViewCell *cell = (ActivityTableViewCell  *)[_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
     //cell.bucketImage.image = nil;
+    
     _tableView.scrollEnabled = YES;
 }
 
@@ -250,22 +237,31 @@ const int EXPAND_SIZE = 400;
                       }];
      
        */
+    cameraHolder.hidden = YES;
     imgTaken = image;
     //[cameraView removeFromSuperview];
-    //ActivityTableViewCell *cell = (ActivityTableViewCell  *)[_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-    cameraCell.bucketImage.image = imgTaken;
+    ActivityTableViewCell *cell = (ActivityTableViewCell  *)[_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+    cell.bucketImage.image = imgTaken;
+    //cameraCell.bucketImage.image = imgTaken;
+    BucketModel *bucket = [feed objectAtIndex:0];
+ 
+    DropModel *drop = [bucket.drops objectAtIndex:0];
+    drop.media_img = imgTaken;
+    //bucket.isInitalized = NO;
+    
     //cell.bottomBar.alpha = 1.0;
     //cameraCell = cell;
     cameraMode = NO;
     shouldExpand = NO;
     indexCurrent = nil;
-     self.onLockScreenToggle();
+    self.onLockScreenToggle();
     [self.tableView beginUpdates];
     [self.tableView endUpdates];
 }
 
 -(void)onCancelTap{
     //[cameraView removeFromSuperview];
+    cameraHolder.hidden = YES;
     self.onLockScreenToggle();
     NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
     

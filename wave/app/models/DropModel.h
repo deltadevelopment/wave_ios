@@ -23,6 +23,7 @@
 
 //Properties for client
 @property (nonatomic,strong) NSData *media_tmp;
+@property (nonatomic,strong) UIImage *media_img;
 @property (nonatomic,strong) UIImage *image;
 
 //Test properties

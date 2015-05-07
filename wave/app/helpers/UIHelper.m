@@ -88,6 +88,7 @@ static CGFloat screenHeight;
     view.alpha = 0.38;
     CAGradientLayer *gradientLayer = [CAGradientLayer layer];
     gradientLayer.frame = view.bounds;
+    gradientLayer.shadowPath = [UIBezierPath bezierPathWithRect:gradientLayer.bounds].CGPath;
     gradientLayer.colors = [NSArray arrayWithObjects:(id)[UIColor whiteColor].CGColor, (id)[UIColor clearColor].CGColor, nil];
     gradientLayer.startPoint = CGPointMake(1.0f, 0.1f);
     gradientLayer.endPoint = CGPointMake(1.0f, 1.0f);

@@ -17,5 +17,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *profilePictureIcon;
 @property (nonatomic) bool isInitialized;
 -(void)initialize;
+-(void)update:(NSString *)name;
+-(void)updateDropImage:(UIImage *) image;
 
 @end

@@ -26,4 +26,6 @@
 @property (nonatomic,strong) DropModel *rootDrop;
 @property (nonatomic,strong) NSMutableArray *drops;
 
+@property (nonatomic) BOOL isInitalized;
+
 @end

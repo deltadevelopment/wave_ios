@@ -9,19 +9,25 @@
 #import "SuperButton.h"
 #import <AudioToolbox/AudioToolbox.h>
 #import "BucketTypeModel.h"
-static int const MIN_POS = 20;
+//static int const MIN_POS = 20;
+//static int const MAX_POS = 549;
 static float const MIN_POS_X = 4.0;
 static float const MIN_POS_Y = 20.0;
-static int const MAX_POS = 549;
 static float MAX_POS_Y = 135;
 static float MAX_POS_X = 80;
 static int const FUDGE_FACTOR = 10;
 
+typedef enum {
+    NONE,
+    MIDDLE,
+    EDIT
+} SuperButtonMode;
+
 @implementation SuperButton
 {
     UIButton *cameraButton;
-    UIButton *cancelButton;
-    UIButton *typeButton;
+   // UIButton *cancelButton;
+   // UIButton *typeButton;
     NSLayoutConstraint *buttonXConstraint;
     NSLayoutConstraint *buttonXConstraintMiddle;
     CGFloat buttonXConstraintDefault;
@@ -43,11 +49,12 @@ static int const FUDGE_FACTOR = 10;
     bool startX;
     bool startY;
     bool startedDrag;
-    UILabel *toolTip;
+    //UILabel *toolTip;
     NSMutableArray *bucketTypes;
     int currentTypeIndex;
     bool pictureIsApproved;
     bool lockButton;
+    SuperButtonMode superButtonMode;
 }
 
 -(UIButton *)getButton{
@@ -62,9 +69,9 @@ static int const FUDGE_FACTOR = 10;
         superView = view;
         bucketTypes = [[NSMutableArray alloc]init];
         cameraButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        typeButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        toolTip = [[UILabel alloc]init];
+        //cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        //typeButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        //toolTip = [[UILabel alloc]init];
         [self initBucketTypes];
         [self initUI];
         [self addConstraints:superView];
@@ -72,8 +79,9 @@ static int const FUDGE_FACTOR = 10;
         screenSize = screenBound.size;
         screenWidth = screenSize.width;
         screenHeight = screenSize.height;
-        
+        superButtonMode = NONE;
     }
+    
     return self;
 }
 
@@ -94,9 +102,9 @@ static int const FUDGE_FACTOR = 10;
 
 -(void)initUI{
     [self initCameraButton];
-    [self initCancelButton];
-    [self initTypeButton];
-    [self initToolTip];
+   // [self initCancelButton];
+    //[self initTypeButton];
+    //[self initToolTip];
 }
 
 -(void)initCameraButton{
@@ -110,6 +118,7 @@ static int const FUDGE_FACTOR = 10;
     [cameraButton addTarget:self action:@selector(tapCameraButton) forControlEvents:UIControlEventTouchUpInside];
     [superView addSubview:cameraButton];
 }
+/*
 -(void)initCancelButton{
     [self applyUIOnButton:cancelButton];
     [cancelButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"cross.png"] withSize:150] forState:UIControlStateNormal];
@@ -131,6 +140,7 @@ static int const FUDGE_FACTOR = 10;
     typeButton.alpha = 0.0;
 
 }
+
 -(void)initToolTip{
     [UIHelper applyThinLayoutOnLabel:toolTip];
     [superView addSubview:toolTip];
@@ -172,7 +182,7 @@ static int const FUDGE_FACTOR = 10;
                          toolTip.hidden = YES;
                      }];
 }
-
+ */
 -(void)applyUIOnButton:(UIButton *) button{
     button.layer.cornerRadius = 25;
     [button setImageEdgeInsets:UIEdgeInsetsMake(11, 11, 11, 11)];
@@ -291,15 +301,45 @@ static int const FUDGE_FACTOR = 10;
 }
 
 -(void)tapCameraButton{
-    self.onTap();
-    [self animateButtonToMiddle];
+    [self test];
+}
+
+-(void)test{
+    switch (superButtonMode) {
+        case NONE:
+            [self animateButtonToMiddle];
+            [cameraButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"camera-icon.png"] withSize:150] forState:UIControlStateNormal];
+            superButtonMode = MIDDLE;
+            self.onTap([NSNumber numberWithInt:1]);
+            break;
+        case MIDDLE:
+            //animateToEdit
+            [cameraButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"tick.png"] withSize:150] forState:UIControlStateNormal];
+            self.onTap([NSNumber numberWithInt:2]);
+            self.lockActions = YES;
+            superButtonMode = EDIT;
+            break;
+        case EDIT:
+            if(!self.lockActions){
+                superButtonMode = NONE;
+                [cameraButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"camera-icon.png"] withSize:150] forState:UIControlStateNormal];
+                self.onTap([NSNumber numberWithInt:0]);
+                [self animateButtonToRight];
+            }
+            break;
+        default:
+            break;
+    }
 }
 
 -(void)tapCancelButton{
-    [self animateButtonToMiddle];
+    superButtonMode = NONE;
+    [self animateButtonToRight];
+    [cameraButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"camera-icon.png"] withSize:150] forState:UIControlStateNormal];
     self.onCancelTap();
-}
 
+}
+/*
 -(void)tapTypeButton{
     currentTypeIndex ++;
     if(currentTypeIndex == [bucketTypes count]){
@@ -309,36 +349,51 @@ static int const FUDGE_FACTOR = 10;
     [typeButton setImage:[UIHelper iconImage:[UIImage imageNamed:[bucketModel icon_path]] withSize:150] forState:UIControlStateNormal];
     toolTip.text = [bucketModel type_description];
 }
-
+*/
 -(void)animateButtonToMiddle{
     [UIView animateWithDuration:0.3f
                           delay:0.0f
                         options: UIViewAnimationOptionCurveLinear
                      animations:^{
-                         if([self superViewHasConstraint])
-                         {
-                             [superView removeConstraint:buttonXConstraintMiddle];
-                             [superView addConstraint:buttonXConstraint];
-                             lockButton = NO;
-                         
-                         }else{
+                       
                              [superView  removeConstraint:buttonXConstraint];
                              [superView  addConstraint:buttonXConstraintMiddle];
                              lockButton = YES;
-                         }
+                         
                        
                          
                          [superView  layoutIfNeeded];
                      }
                      completion:^(BOOL finished){
-                         if([self superViewHasConstraint]){
-                             [self showToolButtons];
-                         }else{
-                             [self hideToolButtons];
-                         }
+                    
+                             //[self showToolButtons];
+                        
                         
                      }];
 
+}
+
+-(void)animateButtonToRight{
+    [UIView animateWithDuration:0.3f
+                          delay:0.0f
+                        options: UIViewAnimationOptionCurveLinear
+                     animations:^{
+                        
+                             [superView removeConstraint:buttonXConstraintMiddle];
+                             [superView addConstraint:buttonXConstraint];
+                             lockButton = NO;
+                             
+                         
+                         
+                         
+                         [superView  layoutIfNeeded];
+                     }
+                     completion:^(BOOL finished){
+                      
+                             //[self hideToolButtons];
+                         
+                         
+                     }];
 }
 
 -(bool)superViewHasConstraint{

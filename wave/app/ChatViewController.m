@@ -72,10 +72,21 @@
     //[self.view addSubview:shadowView];
     //[self.view insertSubview:self.tableView belowSubview:shadowView];
     
-
+    self.tableView.hidden = YES;
   
 }
 
+
+-(void)showChat{
+    self.tableView.hidden = NO;
+}
+-(void)hideChat{
+    self.tableView.hidden = YES;
+}
+
+-(BOOL)isChatVisible{
+    return !self.tableView.hidden;
+}
 
 
 - (BOOL) textViewShouldBeginEditing:(UITextView *)textView
@@ -126,7 +137,7 @@
 }
 
 -(void)keyboardWillShow:(NSNotification *)note {
- 
+ self.tableView.hidden = NO;
     NSDictionary* info = [note userInfo];
     NSValue* aValue = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
     keyboardSize = [aValue CGRectValue].size;
@@ -183,15 +194,12 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     ChatTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"chatCell" forIndexPath:indexPath];
+    
+    if(!cell.isInitialized){
+        [cell initalize];
+    }
     cell.message.text = [messages objectAtIndex:indexPath.row];
-    cell.transform = CGAffineTransformMakeRotation(M_PI);
-    cell.messageImage.layer.cornerRadius = 15;
-    cell.message.textContainerInset = UIEdgeInsetsMake(5, 5, 5, 5);
-    cell.messageImage.clipsToBounds = YES;
-    cell.selectionStyle = UITableViewCellSelectionStyleNone;
-    cell.message.layer.cornerRadius = 2;
-    cell.message.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.2f];
-    cell.message.clipsToBounds = YES;
+    
     return cell;
 }
 
