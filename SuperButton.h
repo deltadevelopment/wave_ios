@@ -24,6 +24,9 @@
 @property (nonatomic, copy) void (^onDragSwitchedFromX)(void);
 @property (nonatomic, copy) void (^onDragSwitchedFromY)(void);
 @property (nonatomic, copy) void (^onCancelTap)(void);
+@property (nonatomic, copy) void (^onLongPressStarted)(void);
+@property (nonatomic, copy) void (^onLongPressEnded)(void);
+
 
 @property (nonatomic) bool lockActions;
 -(void)discard;
@@ -31,6 +34,8 @@
 -(void)enableDragX;
 -(void)enableDragY;
 -(id)init:(UIView *)view;
+
+-(void)videoRecorded;
 -(UIButton *)getButton;
 -(void)tapCancelButton;
 -(void)animateProgress;

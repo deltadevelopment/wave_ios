@@ -11,7 +11,7 @@
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <UIKit/UIKit.h>
 
-@interface CameraHelper : NSObject{
+@interface CameraHelper : NSObject<AVCaptureFileOutputRecordingDelegate>{
     AVCaptureStillImageOutput * stillImageOutput;
     AVCaptureVideoDataOutput * videoImageOutput;
     UIImage *imgTaken;
@@ -26,11 +26,13 @@
     AVCaptureSession *CaptureSession;
     AVCaptureMovieFileOutput *MovieFileOutput;
     AVCaptureDeviceInput *VideoInputDevice;
+    AVCaptureDeviceInput *FrontFacingInputDevice;
     SEL mediaSuccessSelector;
     NSObject *mediaSuccessObject;
     
     
 }
+@property (nonatomic, copy) void (^onVideoRecorded)(NSData*(video));
 -(void)stopCameraSession;
 -(AVCaptureVideoPreviewLayer *)getLayer;
 -(void)setSquare:(bool) theSquare;
@@ -40,10 +42,12 @@
 -(void)setMediaDoneSelector:(SEL) successSelector
                  withObject:(NSObject*) object;
 @property (retain) AVCaptureVideoPreviewLayer *PreviewLayer;
-- (void)StartStopRecording;
 -(void)initaliseVideo:(bool)rearCamera;
 - (void)CameraToggleButtonPressed:(bool)isFrontCamera;
 -(void)setView:(UIView *)videoView withRect:(CGRect) rect;
 -(UIView*)getView;
-- (UIImage*)imageByScalingAndCroppingForSize:(CGSize)targetSize img:(UIImage *) sourceImage;
+-(void)startRecording;
+
+-(void)stopRecording;
+
 @end

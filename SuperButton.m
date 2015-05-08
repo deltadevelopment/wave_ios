@@ -144,6 +144,13 @@ typedef enum {
                                         initWithTarget:self
                                         action:@selector(cameraButtonDragged:)]];
     [cameraButton addTarget:self action:@selector(tapCameraButton) forControlEvents:UIControlEventTouchUpInside];
+    
+    UILongPressGestureRecognizer *longGesture = [[UILongPressGestureRecognizer alloc]
+                                                 initWithTarget:self action:@selector(longPressGesture:)];
+    [longGesture setMinimumPressDuration:0.6];
+    [cameraButton addGestureRecognizer:longGesture];
+    
+    
     [superView addSubview:cameraButton];
 }
 /*
@@ -359,6 +366,13 @@ typedef enum {
         default:
             break;
     }
+}
+
+
+-(void)videoRecorded{
+    [cameraButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"tick.png"] withSize:150] forState:UIControlStateNormal];
+    superButtonMode = EDIT;
+    self.lockActions = NO;
 }
 
 -(void)tapCancelButton{
@@ -666,6 +680,58 @@ typedef enum {
         buttonYConstraint.constant -= translation.y;
     }
 }
+
+-(void)longPressGesture:(UILongPressGestureRecognizer *) recognizer{
+    if(superButtonMode == MIDDLE){
+        if (recognizer.state == UIGestureRecognizerStateBegan)
+        {
+            //on longpress started
+            self.onLongPressStarted();
+            // Long press detected, start the timer
+            self.lockActions = YES;
+             NSLog(@"starter filme her");
+            
+             //CircleIndicatorView = [[CircleIndicatorView alloc] initWithFrame:CGRectMake(0, 0, 80, 80)];
+            // [self.indicatorView addSubview:circleIndicator];
+             
+           //  [circleIndicator setIndicatorWithMaxTime:10];
+            // recordTimer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(decrementSpin) userInfo:nil repeats:YES];
+             //YES == front camera
+             // [session stopRunning];
+             //[captureVideoPreviewLayer removeFromSuperlayer];
+             //[mediaHelper setView:cameraCell.statusImage];
+             //[mediaHelper initaliseVideo];
+             //[mediaHelper CameraToggleButtonPressed:NO];
+           //  [mediaHelper StartStopRecording];
+             
+             
+             
+            
+        }
+        
+        
+        else
+        {
+            
+            if (recognizer.state == UIGestureRecognizerStateCancelled
+                || recognizer.state == UIGestureRecognizerStateFailed
+                || recognizer.state == UIGestureRecognizerStateEnded)
+            {
+                self.onLongPressEnded();
+                /*
+                 // Long press ended, stop the timer
+                 if(cameraIsShown){
+                 [self stopRecording];
+                 
+                 }
+                 */
+            }
+        }
+    }
+ 
+}
+
+
 
 
 

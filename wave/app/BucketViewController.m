@@ -14,6 +14,7 @@
 #import "DropViewController.h"
 #import "ConstraintHelper.h"
 #import "DropModel.h"
+#import "GraphicsHelper.h"
 @interface BucketViewController ()
 
 @end
@@ -445,7 +446,7 @@ const int PEEK_Y_START = 300;
 
     CGSize size = CGSizeMake([UIHelper getScreenWidth], [UIHelper getScreenHeight]);
     //[self.camera.view removeFromSuperview];
-    currentView.image = [self.camera imageByScalingAndCroppingForSize:size img:image];
+    currentView.image = [GraphicsHelper imageByScalingAndCroppingForSize:size img:image];
     [drops addObject:currentView];
     self.dropsAmount.text = [NSString stringWithFormat:@"%ld/%ld", (long)currentPage, [drops count] - 1];
        [self addDropToBucket:[[DropModel alloc] initWithTestData:@"169.jpg" withName:@"Chris"]];

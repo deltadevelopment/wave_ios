@@ -10,6 +10,7 @@
 #import "UIHelper.h"
 #import "CameraViewController.h"
 #import "InfoViewController.h"
+#import "GraphicsHelper.h"
 @interface SuperViewController ()
 
 @end
@@ -54,7 +55,14 @@
     _camera.onPictureUploading=^{
         [weakSelf onPictureUploading];
     };
+    _camera.onVideoRecorded =^{
+        [weakSelf onVideoRecorded];
+    };
 }
+-(void)onVideoRecorded{
+    [self.superButton videoRecorded];
+}
+
 -(void)onPictureUploading{
     [self.superButton animateProgress];
 }
@@ -76,7 +84,7 @@
 
 -(void)onImageTaken:(UIImage *)image{
     CGSize size = CGSizeMake([UIHelper getScreenWidth], [UIHelper getScreenHeight]);
-    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[_camera imageByScalingAndCroppingForSize:size img:image]]];
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[GraphicsHelper imageByScalingAndCroppingForSize:size img:image]]];
 }
 
 -(void)showCamera{
@@ -254,8 +262,21 @@
         [weakSelf onCancelTap];
     };
     
+    self.superButton.onLongPressStarted =^{
+        [weakSelf onLongPressStarted];
+    };
+    self.superButton.onLongPressEnded = ^{
+        [weakSelf onLongPressEnded];
+    };
+    
 }
 
+-(void)onLongPressStarted{
+    [_camera startRecording];
+}
+-(void)onLongPressEnded{
+    [_camera stopRecording];
+}
 
 
 -(OverlayViewController *)createViewControllerWithStoryboardId:(NSString *) identifier

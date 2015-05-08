@@ -12,6 +12,7 @@
 #import "AbstractFeedViewController.h"
 #import "Carousel.h"
 #import "FilterViewController.h"
+#import "GraphicsHelper.h"
 @interface NavigationScrollViewController ()
 
 @end
@@ -146,10 +147,9 @@
 }
 
 -(void)onImageTaken:(UIImage *)image{
-  CGSize size = CGSizeMake([UIHelper getScreenWidth], [UIHelper getScreenHeight]);
-    
-    [currentController onImageTaken:[self.camera imageByScalingAndCroppingForSize:size img:image]];
-  //[[currentController view] setBackgroundColor:[UIColor colorWithPatternImage:]];
+    CGSize size = CGSizeMake([UIHelper getScreenWidth], [UIHelper getScreenHeight]);
+    [currentController onImageTaken:[GraphicsHelper imageByScalingAndCroppingForSize:size img:image]];
+    //[[currentController view] setBackgroundColor:[UIColor colorWithPatternImage:]];
 }
 
 -(void)onCameraOpen{

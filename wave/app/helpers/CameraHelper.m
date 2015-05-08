@@ -19,6 +19,7 @@ AVCaptureDevicePosition position;
 UIView *CameraView;
 //VideoController *videoController;
 NSData *lastRecordedVideo;
+AVCaptureDevice *frontFacingDevice;
 bool square;
 
 -(id)init{
@@ -85,6 +86,10 @@ bool square;
     [captureVideoPreviewLayer removeFromSuperlayer];
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [CaptureSession stopRunning];
+        CaptureSession = nil;
+        MovieFileOutput = nil;
+        VideoInputDevice = nil;
+        VideoDevice = nil;
     });
 }
 
@@ -106,11 +111,12 @@ bool square;
     NSLog(@"Adding video input");
     
     //ADD VIDEO INPUT
-  
-    VideoDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
-   
     
-    //Set frame rate (if requried)
+  
+    
+        VideoDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
+    
+    
     
     if (VideoDevice)
     {
@@ -188,7 +194,7 @@ bool square;
             [CaptureSession setSessionPreset:AVCaptureSessionPresetiFrame960x540];
         
     }else{
-        [CaptureSession setSessionPreset:AVCaptureSessionPresetPhoto];
+            [CaptureSession setSessionPreset:AVCaptureSessionPresetPhoto];
     }
     
     
@@ -213,13 +219,26 @@ bool square;
     
     //----- START THE CAPTURE SESSION RUNNING -----
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-       [CaptureSession startRunning];
+        [CaptureSession startRunning];
         if(!rearCamera){
-        [self CameraToggleButtonPressed:YES];
+            [self CameraToggleButtonPressed:YES];
         }
-        
     });
-    
+}
+
+- (AVCaptureDevice *)frontCamera {
+    if(frontFacingDevice == nil){
+        NSArray *devices = [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo];
+        for (AVCaptureDevice *device in devices) {
+            if ([device position] == AVCaptureDevicePositionFront) {
+                frontFacingDevice = device;
+                return frontFacingDevice;
+            }
+        }
+        return nil;
+    }
+    return frontFacingDevice;
+  
 }
 
 -(void)addImageOutput{
@@ -338,7 +357,12 @@ bool square;
         }
     }
 }
+
+
+
+
 //********** START STOP RECORDING BUTTON **********
+/*
 - (void)StartStopRecording
 {
     if (!recording)
@@ -374,7 +398,7 @@ bool square;
         [CaptureSession stopRunning];
     }
 }
-
+*/
 //********** DID FINISH RECORDING TO OUTPUT FILE AT URL **********
 - (void)captureOutput:(AVCaptureFileOutput *)captureOutput
 didFinishRecordingToOutputFileAtURL:(NSURL *)outputFileURL
@@ -413,11 +437,13 @@ didFinishRecordingToOutputFileAtURL:(NSURL *)outputFileURL
         NSString *path = [outputFileURL path];
         NSData *data = [[NSFileManager defaultManager] contentsAtPath:path];
         lastRecordedVideo = data;
+        self.onVideoRecorded(data);
         //[videoController sendVideoToServer:data withSelector:mediaSuccessSelector withObject:mediaSuccessObject withArg:nil];
         CaptureSession = nil;
         MovieFileOutput = nil;
         VideoInputDevice = nil;
         //[library release];
+        NSLog(@"ferdig å recorde film");
         
     }
 }
@@ -448,70 +474,41 @@ didFinishRecordingToOutputFileAtURL:(NSURL *)outputFileURL
  }
  */
 
-- (UIImage*)imageByScalingAndCroppingForSize:(CGSize)targetSize img:(UIImage *) sourceImage
-{
-    NSLog(@"----SCALING IMAGE");
-    // NSLog(@"THE size is width: %f height: %f", targetSize.width, targetSize.height);
-    UIImage *newImage = nil;
-    CGSize imageSize = sourceImage.size;
-    CGFloat width = imageSize.width;
-    CGFloat height = imageSize.height;
-    CGFloat targetWidth = targetSize.width;
-    CGFloat targetHeight = targetSize.height;
-    CGFloat scaleFactor = 0.0;
-    CGFloat scaledWidth = targetWidth;
-    CGFloat scaledHeight = targetHeight;
-    CGPoint thumbnailPoint = CGPointMake(0.0,0.0);
-    
-    if (CGSizeEqualToSize(imageSize, targetSize) == NO)
+#pragma New Camera structure
+-(void)startRecording{
+    if (!recording)
     {
-        CGFloat widthFactor = targetWidth / width;
-        CGFloat heightFactor = targetHeight / height;
+        recording = YES;
         
-        
-        //NSLog(@"fit height %f", targetSize.width);
-        scaleFactor = widthFactor; // scale to fit height
-        
-        
-        
-        
-        scaledWidth  = width * scaleFactor;
-        scaledHeight = height * scaleFactor;
-        
-        // center the image
-        if (widthFactor > heightFactor)
+        //Create temporary URL to record to
+        NSString *outputPath = [[NSString alloc] initWithFormat:@"%@%@", NSTemporaryDirectory(), @"output.mov"];
+        NSURL *outputURL = [[NSURL alloc] initFileURLWithPath:outputPath];
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        if ([fileManager fileExistsAtPath:outputPath])
         {
-            thumbnailPoint.y = 0;
-        }
-        else
-        {
-            if (widthFactor < heightFactor)
+            NSError *error;
+            if ([fileManager removeItemAtPath:outputPath error:&error] == NO)
             {
-                thumbnailPoint.x = 0;
+                //Error - handle if requried
             }
         }
+        //[outputPath release];
+        //Start recording
+        [MovieFileOutput startRecordingToOutputFileURL:outputURL recordingDelegate:self];
+        //[outputURL release];
     }
-    
-    UIGraphicsBeginImageContext(targetSize); // this will crop
-    
-    CGRect thumbnailRect = CGRectZero;
-    thumbnailRect.origin = thumbnailPoint;
-    thumbnailRect.size.width  = scaledWidth;
-    thumbnailRect.size.height = scaledHeight;
-    
-    [sourceImage drawInRect:thumbnailRect];
-    
-    newImage = UIGraphicsGetImageFromCurrentImageContext();
-    
-    if(newImage == nil)
-    {
-        NSLog(@"could not scale image");
-    }
-    
-    //pop the context to get back to the default
-    UIGraphicsEndImageContext();
-    
-    return newImage;
 }
+
+-(void)stopRecording{
+    if(recording)
+    {
+        recording = NO;
+        [CameraView removeFromSuperview];
+        [MovieFileOutput stopRecording];
+        [CaptureSession stopRunning];
+    }
+}
+
+
 
 @end
