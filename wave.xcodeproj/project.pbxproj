@@ -105,6 +105,8 @@
 		F1D9AB4A1AF5A3E3005BFE2C /* RGB-colors.png in Resources */ = {isa = PBXBuildFile; fileRef = F1D9AB491AF5A3E3005BFE2C /* RGB-colors.png */; };
 		F1E127AA1AFED2E7000E3F2C /* DropView.m in Sources */ = {isa = PBXBuildFile; fileRef = F1E127A91AFED2E7000E3F2C /* DropView.m */; };
 		F1E127AD1AFEDB5D000E3F2C /* DropController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1E127AC1AFEDB5D000E3F2C /* DropController.m */; };
+		F1E127B01AFEE09F000E3F2C /* TagController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1E127AF1AFEE09F000E3F2C /* TagController.m */; };
+		F1E127B31AFEE1BA000E3F2C /* SubscribeController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1E127B21AFEE1BA000E3F2C /* SubscribeController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -284,6 +286,10 @@
 		F1E127A91AFED2E7000E3F2C /* DropView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DropView.m; sourceTree = "<group>"; };
 		F1E127AB1AFEDB5D000E3F2C /* DropController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DropController.h; sourceTree = "<group>"; };
 		F1E127AC1AFEDB5D000E3F2C /* DropController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DropController.m; sourceTree = "<group>"; };
+		F1E127AE1AFEE09F000E3F2C /* TagController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TagController.h; sourceTree = "<group>"; };
+		F1E127AF1AFEE09F000E3F2C /* TagController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TagController.m; sourceTree = "<group>"; };
+		F1E127B11AFEE1BA000E3F2C /* SubscribeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubscribeController.h; sourceTree = "<group>"; };
+		F1E127B21AFEE1BA000E3F2C /* SubscribeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubscribeController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -335,6 +341,10 @@
 				C5D473AD1AFA5BB30097E44F /* MediaController.m */,
 				F1E127AB1AFEDB5D000E3F2C /* DropController.h */,
 				F1E127AC1AFEDB5D000E3F2C /* DropController.m */,
+				F1E127AE1AFEE09F000E3F2C /* TagController.h */,
+				F1E127AF1AFEE09F000E3F2C /* TagController.m */,
+				F1E127B11AFEE1BA000E3F2C /* SubscribeController.h */,
+				F1E127B21AFEE1BA000E3F2C /* SubscribeController.m */,
 			);
 			path = controllers;
 			sourceTree = "<group>";
@@ -811,6 +821,7 @@
 				C5D473B51AFCCE790097E44F /* GraphicsHelper.m in Sources */,
 				C5576B3C1ADBC195009C1D5E /* DefaultViewController.m in Sources */,
 				C5A27B721ADD0BF500968033 /* RegisterController.m in Sources */,
+				F1E127B31AFEE1BA000E3F2C /* SubscribeController.m in Sources */,
 				C5D473621AE50CA30097E44F /* MenuTableViewCell.m in Sources */,
 				C5576B3A1ADBC195009C1D5E /* AvailabilityViewController.m in Sources */,
 				F1BD62261AEC871F00BDE1CA /* BucketTypeModel.m in Sources */,
@@ -845,6 +856,7 @@
 				C57AD0A71AD7EDB800B6042A /* main.m in Sources */,
 				C5A27B691ADD01D000968033 /* NotificationHelper.m in Sources */,
 				F1E127AD1AFEDB5D000E3F2C /* DropController.m in Sources */,
+				F1E127B01AFEE09F000E3F2C /* TagController.m in Sources */,
 				C5D473BF1AFD0BB70097E44F /* CircleIndicatorView.m in Sources */,
 				C5D473A51AFA0E0E0097E44F /* ChatTableView.m in Sources */,
 				C5A27B821ADD594600968033 /* SlideMenuViewController.m in Sources */,
