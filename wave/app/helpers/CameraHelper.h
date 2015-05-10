@@ -33,6 +33,8 @@
     
 }
 @property (nonatomic, copy) void (^onVideoRecorded)(NSData*(video));
+@property (nonatomic, copy) void (^onMediaSavedToDisk)(void);
+@property (nonatomic, copy) void (^onMediaSavedToDiskError)(void);
 -(void)stopCameraSession;
 -(AVCaptureVideoPreviewLayer *)getLayer;
 -(void)setSquare:(bool) theSquare;
@@ -49,5 +51,10 @@
 -(void)startRecording;
 
 -(void)stopRecording;
+
+
+-(void)saveImageToDisk;
+
+-(void)saveVideoToDisk;
 
 @end

@@ -19,6 +19,8 @@ AVCaptureDevicePosition position;
 UIView *CameraView;
 //VideoController *videoController;
 NSData *lastRecordedVideo;
+NSURL *lastRecordedVideoURL;
+
 AVCaptureDevice *frontFacingDevice;
 bool square;
 
@@ -421,6 +423,8 @@ didFinishRecordingToOutputFileAtURL:(NSURL *)outputFileURL
     if (RecordedSuccessfully)
     {
         //----- RECORDED SUCESSFULLY -----
+        /*
+         //KODE FOR Å LAGRE TIL DISK
         NSLog(@"didFinishRecordingToOutputFileAtURL - success");
         ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
         if ([library videoAtPathIsCompatibleWithSavedPhotosAlbum:outputFileURL])
@@ -434,9 +438,11 @@ didFinishRecordingToOutputFileAtURL:(NSURL *)outputFileURL
                  }
              }];
         }
+         */
         NSString *path = [outputFileURL path];
         NSData *data = [[NSFileManager defaultManager] contentsAtPath:path];
         lastRecordedVideo = data;
+        lastRecordedVideoURL = outputFileURL;
         self.onVideoRecorded(data);
         //[videoController sendVideoToServer:data withSelector:mediaSuccessSelector withObject:mediaSuccessObject withArg:nil];
         CaptureSession = nil;
@@ -447,6 +453,43 @@ didFinishRecordingToOutputFileAtURL:(NSURL *)outputFileURL
         
     }
 }
+
+-(void)saveImageToDisk{
+    ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+    [library writeImageToSavedPhotosAlbum:[imgTaken CGImage] orientation:(ALAssetOrientation)[imgTaken imageOrientation] completionBlock:^(NSURL *assetURL, NSError *error){
+        if (error) {
+            self.onMediaSavedToDiskError();
+        } else {
+            self.onMediaSavedToDisk();
+        }
+    }];
+}
+
+-(void)saveVideoToDisk{
+    //KODE FOR Å LAGRE TIL DISK
+    if(lastRecordedVideoURL != nil){
+        NSLog(@"didFinishRecordingToOutputFileAtURL - success");
+        ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
+        
+        if ([library videoAtPathIsCompatibleWithSavedPhotosAlbum:lastRecordedVideoURL])
+        {
+            [library writeVideoAtPathToSavedPhotosAlbum:lastRecordedVideoURL
+                                        completionBlock:^(NSURL *assetURL, NSError *error)
+             {
+                 if (error)
+                 {
+                     self.onMediaSavedToDiskError();
+                 }
+                 else{
+                     self.onMediaSavedToDisk();
+                 }
+             }];
+        }
+    }
+  
+}
+
+
 -(NSData*)getLastRecordedVideo{
     return lastRecordedVideo;
 }

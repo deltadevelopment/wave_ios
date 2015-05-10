@@ -24,3 +24,9 @@
 "validation_display_name_format"= "NA";
 "validation_phone_number_numerical"= "NA";
 "validation_phone_number_exists"= "NA";
+"progress_txt" = "Lagrer...";
+"progress_txt_suc" = "Lagret til bibliotek";
+"progress_txt_err" = "En feil oppstod";
+"activity_title" = "Aktivitet";
+"discover_title" = "Utforsk";
+"pinned_title" = "Pinned";

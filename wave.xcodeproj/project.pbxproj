@@ -107,6 +107,8 @@
 		F1E127AD1AFEDB5D000E3F2C /* DropController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1E127AC1AFEDB5D000E3F2C /* DropController.m */; };
 		F1E127B01AFEE09F000E3F2C /* TagController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1E127AF1AFEE09F000E3F2C /* TagController.m */; };
 		F1E127B31AFEE1BA000E3F2C /* SubscribeController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1E127B21AFEE1BA000E3F2C /* SubscribeController.m */; };
+		F1E127B51AFFCB1E000E3F2C /* download-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = F1E127B41AFFCB1E000E3F2C /* download-icon.png */; };
+		F1E127B81AFFD191000E3F2C /* ProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = F1E127B71AFFD191000E3F2C /* ProgressView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -290,6 +292,9 @@
 		F1E127AF1AFEE09F000E3F2C /* TagController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TagController.m; sourceTree = "<group>"; };
 		F1E127B11AFEE1BA000E3F2C /* SubscribeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubscribeController.h; sourceTree = "<group>"; };
 		F1E127B21AFEE1BA000E3F2C /* SubscribeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubscribeController.m; sourceTree = "<group>"; };
+		F1E127B41AFFCB1E000E3F2C /* download-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "download-icon.png"; sourceTree = "<group>"; };
+		F1E127B61AFFD190000E3F2C /* ProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressView.h; sourceTree = "<group>"; };
+		F1E127B71AFFD191000E3F2C /* ProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -409,6 +414,7 @@
 		C5576B271ADBC195009C1D5E /* res */ = {
 			isa = PBXGroup;
 			children = (
+				F1E127B41AFFCB1E000E3F2C /* download-icon.png */,
 				C5D4736D1AE640260097E44F /* bucket.png */,
 				C5D473631AE511730097E44F /* search-icon.png */,
 				C5D4738E1AF371E10097E44F /* ripples.png */,
@@ -620,6 +626,8 @@
 				C5D473881AE79C590097E44F /* InfoViewController.m */,
 				F1BD621A1AE460D400BDE1CA /* Carousel.h */,
 				F1BD621B1AE460D400BDE1CA /* Carousel.m */,
+				F1E127B61AFFD190000E3F2C /* ProgressView.h */,
+				F1E127B71AFFD191000E3F2C /* ProgressView.m */,
 			);
 			name = modules;
 			sourceTree = "<group>";
@@ -775,6 +783,7 @@
 				C5A27BAC1ADEB5F100968033 /* menu.png in Resources */,
 				C5D4738D1AF2BA8D0097E44F /* wave-logo.png in Resources */,
 				C5D473641AE511730097E44F /* search-icon.png in Resources */,
+				F1E127B51AFFCB1E000E3F2C /* download-icon.png in Resources */,
 				C5D473821AE7992E0097E44F /* people-icon.png in Resources */,
 				C5A27BA51ADE779500968033 /* events-icon.png in Resources */,
 				C5576B421ADBC1FC009C1D5E /* camera-icon.png in Resources */,
@@ -866,6 +875,7 @@
 				C5A27BAA1ADE78BF00968033 /* SlideMenuNavigationViewController.m in Sources */,
 				C5D473AE1AFA5BB30097E44F /* MediaController.m in Sources */,
 				C5A27B8B1ADD6DD500968033 /* NavigationControlViewController.m in Sources */,
+				F1E127B81AFFD191000E3F2C /* ProgressView.m in Sources */,
 				C5A27B5A1ADD002A00968033 /* ApplicationController.m in Sources */,
 				C5576B4E1ADBDB14009C1D5E /* NavigationController.m in Sources */,
 				C5576B571ADBE31A009C1D5E /* SuperLoginViewController.m in Sources */,

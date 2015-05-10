@@ -24,3 +24,9 @@
 "validation_display_name_format"= "NA";
 "validation_phone_number_numerical"= "NA";
 "validation_phone_number_exists"= "NA";
+"progress_txt" = "Saving...";
+"progress_txt_suc" = "Saved to library";
+"progress_txt_err" = "An error occured";
+"activity_title" = "Activity";
+"discover_title" = "Discover";
+"pinned_title" = "Pinned";

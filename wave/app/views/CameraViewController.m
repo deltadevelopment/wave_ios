@@ -13,6 +13,7 @@
 #import "GraphicsHelper.h"
 #import "CircleIndicatorView.h"
 #import "MediaPlayerViewController.h"
+#import "ProgressView.h"
 @interface CameraViewController ()
 
 @end
@@ -22,7 +23,7 @@
     CircleIndicatorView *circleIndicatorView;
     UIButton *selfieButton;
     UIButton *saveMediaButton;
-    
+    ProgressView *saveMediaProgressView;
     bool cameraMode;
     bool frontFacingMode;
     bool imageReadyForUpload;
@@ -48,6 +49,7 @@
     selfieButton = [UIButton buttonWithType:UIButtonTypeCustom];
    // [selfieButton setTitle:@"Selfie" forState:UIControlStateNormal];
    [selfieButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"profile-icon.png"] withSize:150] forState:UIControlStateNormal];
+    
     selfieButton.imageEdgeInsets = UIEdgeInsetsMake(11, 11,11, 11);
     selfieButton.userInteractionEnabled = YES;
     [selfieButton addTarget:self action:@selector(flipCameraView:) forControlEvents:UIControlEventTouchDown];
@@ -58,11 +60,12 @@
     //selfieButton.layer.borderColor=[[UIColor whiteColor] CGColor];
     
     saveMediaButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [saveMediaButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"profile-icon.png"] withSize:150] forState:UIControlStateNormal];
+    [saveMediaButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"download-icon.png"] withSize:150] forState:UIControlStateNormal];
     saveMediaButton.imageEdgeInsets = UIEdgeInsetsMake(11, 11,11, 11);
     saveMediaButton.userInteractionEnabled = YES;
+    saveMediaButton.alpha = 0.0;
     [saveMediaButton addTarget:self action:@selector(saveMediaToDisk:) forControlEvents:UIControlEventTouchDown];
-    
+    saveMediaButton.hidden = YES;
     //[selfieButton setBackgroundImage:[UIImage imageNamed:@"bucket.png"] forState:UIControlStateNormal];
     cameraHelper = [[CameraHelper alloc]init];
     __weak typeof(self) weakSelf = self;
@@ -70,14 +73,28 @@
         cameraHelper.onVideoRecorded = ^(NSData *(video)){
             [weakSelf onVideorecorded:video];
         };
+    cameraHelper.onMediaSavedToDisk = ^{
+        [weakSelf onMediaSavedToDisk];
+    };
+    cameraHelper.onMediaSavedToDiskError = ^{
+        [weakSelf onMediaSavedToDiskError];
+    };
     cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
     typeButton = [UIButton buttonWithType:UIButtonTypeCustom];
     toolTip = [[UILabel alloc]init];
     
     [self initBucketTypes];
+    [self initProgressView];
     // [self initUI];
 }
 
+-(void)initProgressView{
+    float width = [UIHelper getScreenWidth] - 40;
+    saveMediaProgressView = [[ProgressView alloc] initWithFrame:CGRectMake(([UIHelper getScreenWidth]/2) - (width/2),
+                                                                     ([UIHelper getScreenHeight]/2) - 35,
+                                                                     width,
+                                                                     70)];
+}
 
 -(void)onVideorecorded:(NSData *) video{
     intMode = 2;
@@ -85,11 +102,12 @@
     mediaPlayer.view.hidden = NO;
     imageReadyForUpload = YES;
     mediaPlayer.view.frame = CGRectMake(0, 0, [UIHelper getScreenWidth], [UIHelper getScreenHeight]);
-    [self.view insertSubview:mediaPlayer.view belowSubview:cancelButton];
+    [self.view insertSubview:mediaPlayer.view belowSubview:saveMediaButton];
     [mediaPlayer setVideo:video];
     [mediaPlayer playVideo];
     self.onVideoRecorded();
     [self showButton:cancelButton];
+    [self hideTools];
     imgTaken = [mediaPlayer getVideoThumbnail];
    // [mediaPlayer ]
 }
@@ -192,7 +210,40 @@
 }
 
 -(void)saveMediaToDisk:(id)sender{
-    NSLog(@"Saving media to disk");
+    [saveMediaProgressView setProgressString:NSLocalizedString(@"progress_txt", nil)];
+    [saveMediaProgressView startProgress];
+    if(mediaIsVideo){
+        [cameraHelper saveVideoToDisk];
+        
+    }
+    else{
+        [cameraHelper saveImageToDisk];
+    }
+    
+}
+
+
+-(void)onMediaSavedToDisk{
+    [saveMediaProgressView stopProgress];
+    [saveMediaProgressView setProgressString:NSLocalizedString(@"progress_txt_suc", nil)];
+    [self animateProgressOut];
+}
+
+-(void)animateProgressOut{
+    [UIView animateWithDuration:0.8f
+                          delay:0.4f
+                        options: UIViewAnimationOptionCurveLinear
+                     animations:^{
+                         saveMediaProgressView.alpha = 0.0;
+                     }
+                     completion:^(BOOL finished){
+                         saveMediaProgressView.hidden = YES;
+                     }];
+}
+
+-(void)onMediaSavedToDiskError{
+    [saveMediaProgressView setProgressString:NSLocalizedString(@"progress_txt_err", nil)];
+    [self animateProgressOut];
 }
 
 -(void)addConstraintsToButton:(UIView *)view withButton:(UIButton *) button withPoint:(CGPoint) xy fromLeft:(bool) left fromTop:(bool) top{
@@ -252,10 +303,14 @@
     frontFacingMode = !rearCamera;
     [cameraHelper setView:self.view withRect:CGRectMake(0, 0, [UIHelper getScreenWidth], [UIHelper getScreenHeight])];
     [cameraHelper initaliseVideo:rearCamera];
+
     [self.view addSubview:selfieButton];
+    [self.view addSubview:saveMediaButton];
+    [self.view addSubview:saveMediaProgressView];
     [self initUI];
     [self showTools];
-    [self addConstraintsToButton:self.view withButton:selfieButton withPoint:CGPointMake(10, -64) fromLeft:NO fromTop:YES];
+    [self addConstraintsToButton:self.view withButton:selfieButton withPoint:CGPointMake(0, -64) fromLeft:NO fromTop:YES];
+    [self addConstraintsToButton:self.view withButton:saveMediaButton withPoint:CGPointMake(-4, 10) fromLeft:YES fromTop:NO];
     self.onCameraReady();
 }
 
@@ -363,19 +418,21 @@
     
     imageView = [[UIImageView alloc] initWithFrame:self.view.frame];
     imageView.image = imgTaken;
-    [self.view insertSubview:imageView belowSubview:cancelButton];
+    [self.view insertSubview:imageView belowSubview:saveMediaButton];
     imageReadyForUpload = YES;
     self.onImageReady();
     [self hideTools];
 }
 
 -(void)hideTools{
+    saveMediaButton.hidden = NO;
     [UIView animateWithDuration:0.3f
                           delay:0.0f
                         options: UIViewAnimationOptionCurveLinear
                      animations:^{
                          typeButton.alpha = 0.0;
                          toolTip.alpha = 0.0;
+                         saveMediaButton.alpha = 0.9;
                          
                      }
                      completion:^(BOOL finished){
@@ -439,10 +496,10 @@
                          typeButton.alpha = 0.9;
                          toolTip.alpha = 0.9;
                          selfieButton.alpha = 0.9;
-                         
+                         saveMediaButton.alpha = 0.0;
                      }
                      completion:^(BOOL finished){
-                         
+                         saveMediaButton.hidden = YES;
                      }];
 }
 

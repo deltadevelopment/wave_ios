@@ -42,9 +42,9 @@
 
     carousel = [[Carousel alloc]initWithPages:3];
     
-    [self addView:@"activity" withTitle:@"Activity"];
-    [self addView:@"pinnedView" withTitle:@"Discover"];
-    [self addView:@"pinnedView" withTitle:@"Pinned"];
+    [self addView:@"activity" withTitle:NSLocalizedString(@"activity_title", nil)];
+    [self addView:@"pinnedView" withTitle:NSLocalizedString(@"discover_title", nil)];
+    [self addView:@"pinnedView" withTitle:NSLocalizedString(@"pinned_title", nil)];
     self.navigationItem.titleView = [carousel getNavBar];
     
     currentController = [controllers objectAtIndex:0];
