@@ -6,15 +6,15 @@
 //  Copyright (c) 2015 ddev. All rights reserved.
 //
 
-#import "MenuTableViewController.h"
+#import "DrawerViewController.h"
 #import "ColorHelper.h"
 #import "UIHelper.h"
 #import "MenuTableViewCell.h"
-@interface MenuTableViewController ()
+@interface DrawerViewController ()
 
 @end
 
-@implementation MenuTableViewController{
+@implementation DrawerViewController{
     NSMutableArray *list;
     NSMutableArray *recentList;
 }
@@ -63,7 +63,7 @@
 }
 
 -(void)goToProfileAction{
-    self.onCellSelection(@"second");
+    //self.onCellSelection(@"second");
 }
 
 -(void)addBlur{
@@ -177,7 +177,7 @@
     }
     else if(indexPath.section == 1){
         if(indexPath.row == 0){
-            self.onCellSelection(@"second");
+            //self.onCellSelection(@"second");
         }
     }
   

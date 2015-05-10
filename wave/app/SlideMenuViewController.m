@@ -7,20 +7,20 @@
 //
 
 #import "SlideMenuViewController.h"
-#import "MenuTableViewController.h"
+#import "DrawerViewController.h"
 #import "MainViewController.h"
-#import "ViewController.h"
+
 #import "AppDelegate.h"
 #import "UIHelper.h"
 @interface SlideMenuViewController ()
 
 @end
-static int const DRAWER_SIZE = 300;
+static int const DRAWER_SIZE = 280;
 @implementation SlideMenuViewController{
-    MenuTableViewController *menuViewController;
+    DrawerViewController *menuViewController;
     UINavigationController *mainViewController;
-    TestSuperViewController *root;
-    TestSuperViewController *oldRoot;
+    NavigationControlViewController *root;
+    NavigationControlViewController *oldRoot;
     UIStoryboard *storyboard ;
     bool drawerIsVisible;
     NSLayoutConstraint *rootViewHorisontalConstraint;
@@ -35,7 +35,7 @@ static int const DRAWER_SIZE = 300;
     [super viewDidLoad];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    menuViewController = (MenuTableViewController *)[storyboard instantiateViewControllerWithIdentifier:@"menuTableView"];
+    menuViewController = (DrawerViewController *)[storyboard instantiateViewControllerWithIdentifier:@"menuTableView"];
     mainViewController = (UINavigationController *)[storyboard instantiateViewControllerWithIdentifier:@"mainViewMenuNav"];
     [self addRootViewController:@"carousel"];
     
@@ -159,7 +159,7 @@ static int const DRAWER_SIZE = 300;
 }
 
 -(void)addRootViewController:(NSString *) storyboardId{
-    root = (TestSuperViewController *)[storyboard instantiateViewControllerWithIdentifier:storyboardId];
+    root = (NavigationControlViewController *)[storyboard instantiateViewControllerWithIdentifier:storyboardId];
     [root addViewController:self];
     [mainViewController setViewControllers:@[root] animated:NO];
     [self.mainView layoutIfNeeded];
@@ -174,7 +174,7 @@ static int const DRAWER_SIZE = 300;
 
 -(void)addBucketAsRoot:(NSString *) storyboardId withBucket:(UIImage *)bucket{
     oldRoot = root;
-    root = (TestSuperViewController *)[storyboard instantiateViewControllerWithIdentifier:storyboardId];
+    root = (NavigationControlViewController *)[storyboard instantiateViewControllerWithIdentifier:storyboardId];
     [root setBucket:bucket];
     [root addViewController:self];
     [mainViewController setViewControllers:@[root] animated:NO];

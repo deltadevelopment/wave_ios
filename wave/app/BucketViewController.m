@@ -11,7 +11,6 @@
 #import "FilterViewController.h"
 #import "PeekViewController.h"
 #import "ChatViewController.h"
-#import "DropViewController.h"
 #import "ConstraintHelper.h"
 #import "DropModel.h"
 #import "GraphicsHelper.h"
@@ -34,14 +33,13 @@ const int PEEK_Y_START = 300;
     bool firstTime;
     float initalAlpha;
     UIImageView *cameraPlaceHolder;
-    UIImageView *currentView;
+    DropView *currentView;
     NSMutableArray *drops;
     bool lastPage;
     bool shiftPage;
     bool lastDropIsAdded;
     bool cameraMode;
     NSMutableArray *dropsView;
-    DropViewController *drop;
     UIImage *firstBucket;
     UIView *cameraHolder;
     bool isPeeking;
@@ -96,6 +94,9 @@ const int PEEK_Y_START = 300;
 
 -(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch{
     if ([gestureRecognizer isMemberOfClass:[UISwipeGestureRecognizer class]] ) {
+        NSLog(@"chat %s", [chat isChatVisible] ? "YES" : "NO");
+        NSLog(@"peek %s", isPeeking ? "YES" : "NO");
+        NSLog(@"cameramode %s", cameraMode ? "YES" : "NO");
         if([chat isChatVisible] || isPeeking || cameraMode){
             return NO;
         }
@@ -273,46 +274,16 @@ const int PEEK_Y_START = 300;
 {
     PageCount +=1;
     self.topBar.hidden = YES;
-    
-    //Drop topBar
-    UIView *topBar = [[UIView alloc]initWithFrame:CGRectMake(0, 32, [UIHelper getScreenWidth], 50)];
-    
-    //Drop profilePicture
-    UIImageView *profilePicture = [[UIImageView alloc] initWithFrame:CGRectMake(10, 8, 30, 30)];
-    
-    profilePicture.image = [UIImage imageNamed:@"miranda-kerr.jpg"];
-    profilePicture.layer.cornerRadius = 15;
-    profilePicture.clipsToBounds = YES;
-    
-    //Drop Name Label
-    UILabel *nameLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, -2, [UIHelper getScreenWidth] - 52, 50)];
-    nameLabel.text = [drop username];
-    [UIHelper applyThinLayoutOnLabel:nameLabel withSize:18 withColor:[UIColor whiteColor]];
-    [nameLabel setMinimumScaleFactor:12.0/17.0];
-    nameLabel.adjustsFontSizeToFitWidth = YES;
-    
     Scroller.contentSize = CGSizeMake(PageCount * Scroller.bounds.size.width, Scroller.bounds.size.height);
-    
-    //Shadow View
-    UIView *shadowView = [[UIView alloc]initWithFrame:CGRectMake(0, 32, [UIHelper getScreenWidth], [UIHelper getScreenHeight]/4)];
-    [UIHelper addShadowToView:shadowView];
-    
-    UIImageView *ImgView = [[UIImageView alloc] initWithFrame:ViewSize];
-    
-    //Attach elements
-    [topBar addSubview:nameLabel];
-    [topBar addSubview:profilePicture];
+    DropView *dropView = [[DropView alloc] initWithFrame:ViewSize];
+    dropView.dropTitle.text = [drop username];
     if(drop.image !=nil){
-        [ImgView setImage:drop.image];
+        [dropView setImage:drop.image];
     }else{
-        [ImgView setImage:[UIImage imageNamed:[drop media]]];
+        [dropView setImage:[UIImage imageNamed:[drop media]]];
     }
-    
-    [ImgView addSubview:shadowView];
-    [ImgView addSubview:topBar];
-
-    [Scroller addSubview:ImgView];
-    [drops addObject:ImgView];
+    [Scroller addSubview:dropView];
+    [drops addObject:dropView];
     ViewSize = CGRectOffset(ViewSize, Scroller.bounds.size.width, 0);
 }
 
@@ -329,15 +300,16 @@ const int PEEK_Y_START = 300;
 }
 
 
--(UIImageView *)addImageWithCamera
+-(DropView *)addImageWithCamera
 {
     PageCount +=1;
     Scroller.contentSize = CGSizeMake(PageCount * Scroller.bounds.size.width, Scroller.bounds.size.height);
-    UIImageView *ImgView = [[UIImageView alloc] initWithFrame:ViewSize];
-    [Scroller addSubview:ImgView];
+     DropView *dropView = [[DropView alloc] initWithFrame:ViewSize];
+    dropView.dropTitle.text = @"Simen";
+    [Scroller addSubview:dropView];
     [Scroller layoutIfNeeded];
     ViewSize = CGRectOffset(ViewSize, Scroller.bounds.size.width, 0);
-    return ImgView;
+    return dropView;
 }
 
 -(void)attachGUI{
@@ -390,18 +362,20 @@ const int PEEK_Y_START = 300;
 
 -(void)onCameraClose{
     cameraMode = NO;
+    NSLog(@"CLOSING");
     
     [super onCameraClose];
 }
+
 
 -(void)showCamera{
     chat.view.hidden = YES;
     Scroller.userInteractionEnabled = NO;
     
     [self removeLastDrop];
-    UIImageView *plcCamera = [self addImageWithCamera];
+    //DropView *plcCamera = ;
     //[plcCamera addSubview:cameraView];
-     currentView = plcCamera;
+     currentView = [self addImageWithCamera];
     dispatch_queue_t main_queue = dispatch_get_main_queue();
     dispatch_async(main_queue, ^{
           CGPoint bottomOffset = CGPointMake(Scroller.contentSize.width - Scroller.bounds.size.width, 0);

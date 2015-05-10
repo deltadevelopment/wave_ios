@@ -6,35 +6,39 @@
 //  Copyright (c) 2015 ddev. All rights reserved.
 //
 
-#import "TestSuperViewController.h"
+#import "NavigationControlViewController.h"
 #import "ColorHelper.h"
 #import "UIHelper.h"
-@interface TestSuperViewController ()
+@interface NavigationControlViewController ()
 
 @end
 
-@implementation TestSuperViewController
+@implementation NavigationControlViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     /*
-    UIImage *image = [self resizeImage:[UIHelper iconImage:[UIImage imageNamed:@"menu.png"] withSize:20 ] newSize:CGSizeMake(10,10)];
-    self.menuItem = [[UIBarButtonItem alloc] initWithImage:image style:UIBarButtonItemStylePlain target:self action:@selector(menuItemSelected)];
-    [self.navigationItem setLeftBarButtonItem:self.menuItem];
-    */
-    [self addLeftButton];
-   
-    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
-    [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
-    [self.navigationController.navigationBar setBarTintColor:[ColorHelper purpleColor]];
-    /*
-    UIBarButtonItem *btnShare = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(showNotifications)];
-    [self.navigationItem setRightBarButtonItem:btnShare];
+     UIImage *image = [self resizeImage:[UIHelper iconImage:[UIImage imageNamed:@"menu.png"] withSize:20 ] newSize:CGSizeMake(10,10)];
+     self.menuItem = [[UIBarButtonItem alloc] initWithImage:image style:UIBarButtonItemStylePlain target:self action:@selector(menuItemSelected)];
+     [self.navigationItem setLeftBarButtonItem:self.menuItem];
      */
-     [self addRightButton];
+    [self addLeftButton];
+    
+    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
+   // [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
+    [self.navigationController.navigationBar setBarTintColor:[ColorHelper purpleColor]];
+    [self.navigationController.navigationBar setTitleTextAttributes: @{
+                                                            NSForegroundColorAttributeName: [UIColor whiteColor],
+                                                            NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue-Thin" size:18.0f]
+                                                            }];
+    /*
+     UIBarButtonItem *btnShare = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemAction target:self action:@selector(showNotifications)];
+     [self.navigationItem setRightBarButtonItem:btnShare];
+     */
+    [self addRightButton];
     [self.navigationItem setTitle:@"Feed"];
-  
+    
     if (self.navigationItem.hidesBackButton || self.navigationItem.rightBarButtonItem == nil) {
         [self.navigationController.navigationBar setNeedsLayout];
     }

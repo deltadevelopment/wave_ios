@@ -6,18 +6,18 @@
 //  Copyright (c) 2015 ddev. All rights reserved.
 //
 
-#import "NavigationScrollViewController.h"
+#import "CarouselViewController.h"
 #import "UIHelper.h"
 #import "AvailabilityViewController.h"
 #import "AbstractFeedViewController.h"
 #import "Carousel.h"
 #import "FilterViewController.h"
 #import "GraphicsHelper.h"
-@interface NavigationScrollViewController ()
+@interface CarouselViewController ()
 
 @end
 
-@implementation NavigationScrollViewController{
+@implementation CarouselViewController{
     UIScrollView *Scroller;
     CGRect ViewSize;
     int PageCount;

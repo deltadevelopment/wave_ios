@@ -78,7 +78,7 @@
 -(void)addNavigationTitle:(NSString *) title withPageCount:(int)pageCount{
     UILabel *navTitle = [[UILabel alloc] initWithFrame:CGRectMake([UIHelper getScreenWidth] * pageCount, 0, 250, 34)];
     [navTitle  setTextAlignment:NSTextAlignmentCenter];
-    [UIHelper applyLayoutOnLabel:navTitle];
+    [UIHelper applyThinLayoutOnLabel:navTitle];
     navTitle.text = title;
     
     [carouselTitles addObject:navTitle];

@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "TextFieldWrapper.h"
 #import "NotificationHelper.h"
-#import "ViewController.h"
 @interface SuperLoginViewController : UIViewController{
     CGSize keyboardSize;
     NSLayoutConstraint* verticalSpaceConstraintButton;

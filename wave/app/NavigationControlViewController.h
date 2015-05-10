@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "SlideMenuViewController.h"
-@interface TestSuperViewController : UIViewController
+@interface NavigationControlViewController : UIViewController
 @property (strong, nonatomic) UIBarButtonItem *menuItem;
 @property (strong, nonatomic) UIView *topView;
 @property (strong, nonatomic) SlideMenuViewController *superController;

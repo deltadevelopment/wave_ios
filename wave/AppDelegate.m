@@ -8,11 +8,9 @@
 
 #import "AppDelegate.h"
 #import "AuthHelper.h"
-#import "ViewController.h"
 #import "StartViewController.h"
 #import "SlideMenuViewController.h"
-#import "ScrollingViewController.h"
-#import "NavigationScrollViewController.h"
+#import "CarouselViewController.h"
 #import "ActivityViewController.h"
 #import "BucketViewController.h"
 #import "ChatViewController.h"

@@ -33,6 +33,8 @@
     self.message.layer.cornerRadius = 2;
     self.message.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.2f];
     self.message.clipsToBounds = YES;
+    self.layer.shouldRasterize = YES;
+    self.layer.rasterizationScale = [UIScreen mainScreen].scale;
 }
 
 @end

@@ -26,25 +26,21 @@
 @property (nonatomic, copy) void (^onCancelTap)(void);
 @property (nonatomic, copy) void (^onLongPressStarted)(void);
 @property (nonatomic, copy) void (^onLongPressEnded)(void);
-
-
 @property (nonatomic) bool lockActions;
--(void)discard;
+
+-(id)init:(UIView *)view;
+
+-(UIButton *)getButton;
+
 -(void)changeIcon:(UIImage *)img;
 -(void)enableDragX;
 -(void)enableDragY;
--(id)init:(UIView *)view;
 
+-(void)discard;
 -(void)videoRecorded;
--(UIButton *)getButton;
 -(void)tapCancelButton;
+
 -(void)animateProgress;
--(void)startTimer;
-typedef enum tagName{
-    None = 1,
-    Middle = 2,
-    Editing = 3,
-} tah;
 
 
 @end

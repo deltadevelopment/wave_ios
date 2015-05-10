@@ -148,7 +148,7 @@
 }
 
 -(void)changeUIBasedOnFilter:(int) index{
-    NSLog(@"knapp er over, %d", index);
+    //NSLog(@"knapp er over, %d", index);
     self.filterImage.image = [UIImage imageNamed:[filterImages objectAtIndex:index]];
     self.filterBottomText.text = [filterTexts objectAtIndex:index];
     if(currentIndex != index){

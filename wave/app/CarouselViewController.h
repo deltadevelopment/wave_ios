@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "TestSuperViewController.h"
+#import "NavigationControlViewController.h"
 #import "SuperViewController.h"
-@interface NavigationScrollViewController : SuperViewController<UIScrollViewDelegate>
+@interface CarouselViewController : SuperViewController<UIScrollViewDelegate>
 
 @end

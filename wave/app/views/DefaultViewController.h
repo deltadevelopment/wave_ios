@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "TestSuperViewController.h"
-@interface DefaultViewController : TestSuperViewController
+#import "NavigationControlViewController.h"
+@interface DefaultViewController : NavigationControlViewController
 
 @end

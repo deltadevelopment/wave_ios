@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface MenuTableViewController : UITableViewController
+@interface DrawerViewController : UITableViewController
 @property (weak, nonatomic) IBOutlet UITableViewCell *buttonOne;
 @property (nonatomic, copy) void (^onCellSelection)(NSString*(storyboardId));
 @property (weak, nonatomic) IBOutlet UIImageView *bucketImage;

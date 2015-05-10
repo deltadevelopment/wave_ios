@@ -7,7 +7,7 @@
 //
 
 #import "SuperLoginViewController.h"
-
+#import "SlideMenuViewController.h"
 @interface SuperLoginViewController ()
 
 @end
@@ -40,7 +40,7 @@
 
 -(void)showMainView{
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    ViewController *viewController = (ViewController *)[storyboard instantiateViewControllerWithIdentifier:@"slideMenuView"];
+    SlideMenuViewController *viewController = (SlideMenuViewController *)[storyboard instantiateViewControllerWithIdentifier:@"slideMenuView"];
     [self presentViewController:viewController animated:YES completion:nil];
 }
 
