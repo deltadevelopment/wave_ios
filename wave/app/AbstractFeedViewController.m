@@ -25,6 +25,7 @@
 -(void)prepareCamera:(UIView *)view{}
 -(void)oncameraClose{}
 -(void)onImageTaken:(UIImage *)image{}
+-(void)onVideoTaken:(NSData *) video withImage:(UIImage *)image{}
 
 -(void)scrollUp{}
 

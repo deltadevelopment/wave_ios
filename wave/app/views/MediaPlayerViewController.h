@@ -11,9 +11,12 @@
 #import <AVFoundation/AVFoundation.h>
 #import <AVFoundation/AVAsset.h>
 @interface MediaPlayerViewController : UIViewController
-
--(void)setVideo:(NSData *) video;
+@property (nonatomic, copy) void (^onVideoFinishedPlaying)(void);
+-(void)setVideo:(NSData *) video withId:(int) Id;
 -(void)playVideo;
 -(void)stopVideo;
+-(void)pauseVideo;
+-(void)playVideoOnce;
 -(UIImage *)getVideoThumbnail;
+@property (nonatomic) BOOL isPlaying;
 @end

@@ -40,11 +40,16 @@
     MediaPlayerViewController *mediaPlayer;
     bool mediaIsVideo;
     UIImageView *imageView;
+    NSData *lastRecordedVideo;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     mediaPlayer = [[MediaPlayerViewController alloc] init];
+    mediaPlayer.onVideoFinishedPlaying = ^{
+        
+    };
+
     bucketTypes = [[NSMutableArray alloc]init];
     selfieButton = [UIButton buttonWithType:UIButtonTypeCustom];
    // [selfieButton setTitle:@"Selfie" forState:UIControlStateNormal];
@@ -97,13 +102,14 @@
 }
 
 -(void)onVideorecorded:(NSData *) video{
+    lastRecordedVideo = video;
     intMode = 2;
     mediaIsVideo = YES;
     mediaPlayer.view.hidden = NO;
     imageReadyForUpload = YES;
     mediaPlayer.view.frame = CGRectMake(0, 0, [UIHelper getScreenWidth], [UIHelper getScreenHeight]);
     [self.view insertSubview:mediaPlayer.view belowSubview:saveMediaButton];
-    [mediaPlayer setVideo:video];
+    [mediaPlayer setVideo:video withId:-1];
     [mediaPlayer playVideo];
     self.onVideoRecorded();
     [self showButton:cancelButton];
@@ -385,7 +391,6 @@
     
     if(mediaIsVideo){
         [mediaPlayer stopVideo];
-        mediaIsVideo = NO;
     }
     
     //LAST OPP HER
@@ -393,7 +398,15 @@
     self.onCameraClose();
     cameraMode = NO;
     imageReadyForUpload = NO;
-    self.onImageTaken(imgTaken);
+    if(mediaIsVideo){
+        self.onVideoTaken(lastRecordedVideo, imgTaken);
+    }
+    else{
+        self.onImageTaken(imgTaken);
+    }
+
+            mediaIsVideo = NO;
+   
 }
 
 -(void)closeCamera{

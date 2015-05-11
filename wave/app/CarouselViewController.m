@@ -152,6 +152,10 @@
     //[[currentController view] setBackgroundColor:[UIColor colorWithPatternImage:]];
 }
 
+-(void)onVideoTaken:(NSData *)video withImage:(UIImage *)image{
+    [currentController onVideoTaken:video withImage:image];
+}
+
 -(void)onCameraOpen{
     [super onCameraOpen];
     [currentController onCameraOpen];

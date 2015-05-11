@@ -1520,7 +1520,7 @@
                         <viewControllerLayoutGuide type="top" id="um1-L2-oeL"/>
                         <viewControllerLayoutGuide type="bottom" id="JV8-PW-fCh"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="32N-ZX-n1N">
+                    <view key="view" contentMode="scaleToFill" id="32N-ZX-n1N" customClass="BucketView">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>

@@ -43,6 +43,9 @@
     _camera.onImageTaken =^(UIImage*(image)){
         [weakSelf onImageTaken:image];
     };
+    _camera.onVideoTaken =^(NSData *(video), UIImage *(image)){
+        [weakSelf onVideoTaken:video withImage:image];
+    };
     _camera.onImageReady=^{
         [weakSelf onImageReady];
     };
@@ -85,6 +88,9 @@
 -(void)onImageTaken:(UIImage *)image{
     CGSize size = CGSizeMake([UIHelper getScreenWidth], [UIHelper getScreenHeight]);
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[GraphicsHelper imageByScalingAndCroppingForSize:size img:image]]];
+}
+-(void)onVideoTaken:(NSData *) video withImage:(UIImage *) image{
+
 }
 
 -(void)showCamera{

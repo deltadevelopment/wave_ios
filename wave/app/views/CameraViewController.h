@@ -14,6 +14,7 @@
 @property (nonatomic, copy) void (^onCameraClose)(void);
 @property (nonatomic, copy) void (^onImageReady)(void);
 @property (nonatomic, copy) void (^onImageTaken)(UIImage*(imageTaken));
+@property (nonatomic, copy) void (^onVideoTaken)(NSData*(videoTaken),UIImage*(imageTaken));
 @property (nonatomic, copy) void (^onPictureDiscard)(void);
 @property (nonatomic, copy) void (^onPictureUploading)(void);
 @property (nonatomic, copy) void (^onCameraCancel)(void);

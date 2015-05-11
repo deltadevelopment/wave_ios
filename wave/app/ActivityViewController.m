@@ -258,6 +258,10 @@ const int EXPAND_SIZE = 400;
     [self.tableView beginUpdates];
     [self.tableView endUpdates];
 }
+-(void)onVideoTaken:(NSData *)video withImage:(UIImage *)image{
+    [self onImageTaken:image];
+}
+
 
 -(void)onCancelTap{
     //[cameraView removeFromSuperview];

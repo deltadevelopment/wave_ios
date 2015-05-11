@@ -8,11 +8,18 @@
 
 #import "DropView.h"
 #import "UIHelper.h"
+#import "MediaPlayerViewController.h"
+#import "GraphicsHelper.h"
 @implementation DropView
+{
+    MediaPlayerViewController *mediaPlayer;
+    UIButton *playButton;
+    
+}
 
 -(id)initWithFrame:(CGRect)frame{
     self = [super initWithFrame:frame];
-    
+    mediaPlayer = [[MediaPlayerViewController alloc] init];
     //Drop topBar
     self.topBar = [[UIView alloc]initWithFrame:CGRectMake(0, 32, [UIHelper getScreenWidth], 50)];
     
@@ -40,9 +47,61 @@
     
     [self addSubview:shadowView];
     [self addSubview:self.topBar];
+    __weak typeof(self) weakSelf = self;
+    mediaPlayer.onVideoFinishedPlaying = ^{
+        [weakSelf onVideoFinished];
+    };
     
     return self;
 
+}
+
+-(void)onVideoFinished{
+    [playButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"play.png"] withSize:150] forState:UIControlStateNormal];
+}
+
+-(void)setMedia:(NSObject *) media withIndexId:(int) indexId{
+    if([media isKindOfClass:[UIImage class]]){
+    //BILDE
+        self.hasVideo = NO;
+        self.image = (UIImage*)media;
+    }else if([media isKindOfClass:[NSData class]]){
+    //VIDEO
+        self.hasVideo = YES;
+        NSLog(@"SPILLER AV VIDEO");
+        NSData *video =(NSData *)media;
+        mediaPlayer.view.frame = CGRectMake(0, 0, [UIHelper getScreenWidth], [UIHelper getScreenHeight]);
+        [self addSubview:mediaPlayer.view];
+        [mediaPlayer setVideo:video withId:indexId];
+        //[mediaPlayer playVideo];
+    }
+}
+
+-(void)dropWillHide{
+    if(self.hasVideo){
+        [mediaPlayer stopVideo];
+    }
+}
+
+-(void)playMediaWithButton:(UIButton *) button{
+    playButton = button;
+    if(self.hasVideo){
+        [mediaPlayer isPlaying] ? [self stopVideo] : [self playVideo];
+    }
+}
+
+-(void)playVideo{
+    self.isPlaying = YES;
+    [playButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"media-pause.png"] withSize:150] forState:UIControlStateNormal];
+
+    [mediaPlayer playVideoOnce];
+}
+
+-(void)stopVideo{
+    [mediaPlayer stopVideo];
+    [playButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"play.png"] withSize:150] forState:UIControlStateNormal];
+
+    self.isPlaying = NO;
 }
 
 

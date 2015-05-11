@@ -12,4 +12,11 @@
 @property (strong, nonatomic) UIImageView *profilePicture;
 @property (strong, nonatomic) UILabel *dropTitle;
 @property (strong, nonatomic) UIView *topBar;
+@property (nonatomic) BOOL hasVideo;
+@property (nonatomic) BOOL isPlaying;
+-(void)setMedia:(NSObject *) media withIndexId:(int) indexId;
+-(void)dropWillHide;
+-(void)playVideo;
+-(void)stopVideo;
+-(void)playMediaWithButton:(UIButton *) button;
 @end

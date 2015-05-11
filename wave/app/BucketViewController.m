@@ -14,6 +14,7 @@
 #import "ConstraintHelper.h"
 #import "DropModel.h"
 #import "GraphicsHelper.h"
+#import "BucketView.h"
 @interface BucketViewController ()
 
 @end
@@ -44,6 +45,7 @@ const int PEEK_Y_START = 300;
     UIView *cameraHolder;
     bool isPeeking;
     bool canPeek;
+    UIButton *playButton;
     
 }
 
@@ -57,9 +59,8 @@ const int PEEK_Y_START = 300;
     // Do any additional setup after loading the view.
     AvailabilityViewController *viewControllerX = (AvailabilityViewController *)[self createViewControllerWithStoryboardId:@"availability"];
     FilterViewController *viewControllerY = (FilterViewController *)[self createViewControllerWithStoryboardId:@"filterView"];
-    chat = (ChatViewController *)[self createViewControllerWithStoryboardId:@"chatView"];
-    //[self.view insertSubview:chat.view belowSubview:[self.superButton getButton]];
-    [Scroller addSubview:chat.view];
+   
+
    // chat.view.hidden = YES;
   
     cameraHolder = [[UIView alloc]initWithFrame:CGRectMake(0, -64, [UIHelper getScreenWidth],[UIHelper getScreenHeight])];
@@ -90,9 +91,13 @@ const int PEEK_Y_START = 300;
     
     [self.view insertSubview:cameraHolder belowSubview:[self.superButton getButton ]];
     cameraHolder.hidden = YES;
+    [self initPlayButton];
 }
 
 -(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch{
+    if([gestureRecognizer isMemberOfClass:[UITapGestureRecognizer class]]){
+        return NO;
+    }
     if ([gestureRecognizer isMemberOfClass:[UISwipeGestureRecognizer class]] ) {
         NSLog(@"chat %s", [chat isChatVisible] ? "YES" : "NO");
         NSLog(@"peek %s", isPeeking ? "YES" : "NO");
@@ -102,6 +107,7 @@ const int PEEK_Y_START = 300;
         }
         return YES;
     }
+   
     
     return YES;
 }
@@ -163,14 +169,18 @@ const int PEEK_Y_START = 300;
     Scroller.delegate = self;
     
     ViewSize = Scroller.bounds;
+    chat = (ChatViewController *)[self createViewControllerWithStoryboardId:@"chatView"];
+    //[self.view insertSubview:chat.view belowSubview:[self.superButton getButton]];
+    [Scroller addSubview:chat.view];
+
     DropModel *firstDrop = [[DropModel alloc] initWithTestData:@"169.jpg" withName:@"Chris"];
     firstDrop.image = firstBucket;
-    
     [self addDropToBucket:[[DropModel alloc] initWithTestData:@"miranda-kerr.jpg" withName:@"Miranda Kerr"]];
     [self addDropToBucket:firstDrop];
     [self addDropToBucket:[[DropModel alloc] initWithTestData:@"test2.jpg" withName:@"Matika"]];
     [self addDropToBucket:[[DropModel alloc] initWithTestData:@"miranda-kerr.jpg" withName:@"Miranda Kerr"]];
     [self addDropToBucket:firstDrop];
+  
     [self.view addSubview:Scroller];
     CGPoint bottomOffset = CGPointMake(Scroller.bounds.size.width, 0);
     [Scroller setContentOffset:bottomOffset animated:NO];
@@ -192,6 +202,22 @@ const int PEEK_Y_START = 300;
     if (previousPage != page) {
         previousPage = page;
         currentPage = page;
+        if([drops count] > currentPage - 1){
+            DropView *lastDropView = [drops objectAtIndex:currentPage - 1];
+            [lastDropView dropWillHide];
+            playButton.hidden = YES;
+        }
+        if([drops count] > currentPage){
+            currentView = [drops objectAtIndex:currentPage];
+            if([currentView hasVideo]){
+            //VIS PLAY KNAPP
+                playButton.hidden = NO;
+            }
+        }
+        
+
+        
+        
         if(currentPage == PageCount - 1){
             
             if(cameraMode){
@@ -218,6 +244,8 @@ const int PEEK_Y_START = 300;
             //[self addImage:@"miranda-kerr.jpg"];
         }
     }
+   
+    
 }
 
 -(void)removeLastDrop{
@@ -282,7 +310,7 @@ const int PEEK_Y_START = 300;
     }else{
         [dropView setImage:[UIImage imageNamed:[drop media]]];
     }
-    [Scroller addSubview:dropView];
+    [Scroller insertSubview:dropView belowSubview:chat.view];
     [drops addObject:dropView];
     ViewSize = CGRectOffset(ViewSize, Scroller.bounds.size.width, 0);
 }
@@ -306,7 +334,7 @@ const int PEEK_Y_START = 300;
     Scroller.contentSize = CGSizeMake(PageCount * Scroller.bounds.size.width, Scroller.bounds.size.height);
      DropView *dropView = [[DropView alloc] initWithFrame:ViewSize];
     dropView.dropTitle.text = @"Simen";
-    [Scroller addSubview:dropView];
+    [Scroller insertSubview:dropView belowSubview:chat.view];
     [Scroller layoutIfNeeded];
     ViewSize = CGRectOffset(ViewSize, Scroller.bounds.size.width, 0);
     return dropView;
@@ -405,28 +433,62 @@ const int PEEK_Y_START = 300;
 
 -(void)onCancelTap{
     [super onCancelTap];
-     cameraHolder.hidden = YES;
+    cameraHolder.hidden = YES;
     Scroller.userInteractionEnabled = YES;
     PageCount -=1;
     Scroller.contentSize = CGSizeMake(PageCount * Scroller.bounds.size.width, Scroller.bounds.size.height);
     ViewSize = CGRectOffset(ViewSize, -Scroller.bounds.size.width, 0);
-      [self addDropToBucket:[[DropModel alloc] initWithTestData:@"169.jpg" withName:@"Chris"]];
+    [self addDropToBucket:[[DropModel alloc] initWithTestData:@"169.jpg" withName:@"Chris"]];
     self.dropsAmount.text = [NSString stringWithFormat:@"%ld/%ld", (long)currentPage, [drops count] - 2];
 }
 
+-(void)initPlayButton{
+    playButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    playButton.frame = CGRectMake([UIHelper getScreenWidth]/2 - 50, [UIHelper getScreenHeight]/2 - 50 - 64, 100, 100);
+    playButton.alpha = 0.7;
+    [playButton addTarget:self action:@selector(startStopVideo:) forControlEvents:UIControlEventTouchUpInside];
+    [playButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"play.png"] withSize:150] forState:UIControlStateNormal];
+    playButton.hidden = YES;
+    [self.view addSubview:playButton];
+}
+
+-(void)startStopVideo:(id)sender{
+    if(currentView !=nil){
+        [currentView playMediaWithButton:playButton];
+     
+    }
+}
+
 -(void)onImageTaken:(UIImage *)image{
+      NSLog(@"IMAGE TAKEN");
      cameraHolder.hidden = YES;
     Scroller.userInteractionEnabled = YES;
 
     CGSize size = CGSizeMake([UIHelper getScreenWidth], [UIHelper getScreenHeight]);
     //[self.camera.view removeFromSuperview];
-    currentView.image = [GraphicsHelper imageByScalingAndCroppingForSize:size img:image];
+    [currentView setMedia:[GraphicsHelper imageByScalingAndCroppingForSize:size img:image] withIndexId:[drops count]];
+    // currentView.image = [GraphicsHelper imageByScalingAndCroppingForSize:size img:image];
     [drops addObject:currentView];
     self.dropsAmount.text = [NSString stringWithFormat:@"%ld/%ld", (long)currentPage, [drops count] - 1];
-       [self addDropToBucket:[[DropModel alloc] initWithTestData:@"169.jpg" withName:@"Chris"]];
+    [self addDropToBucket:[[DropModel alloc] initWithTestData:@"169.jpg" withName:@"Chris"]];
     UIImageView *firstDrop = [drops objectAtIndex:0];
     firstDrop.image = image;
+    chat.view.hidden = NO;
 }
+-(void)onVideoTaken:(NSData *)video withImage:(UIImage *)image{
+    cameraHolder.hidden = YES;
+    Scroller.userInteractionEnabled = YES;
+    [currentView setMedia:video withIndexId:[drops count]];
+    [drops addObject:currentView];
+    self.dropsAmount.text = [NSString stringWithFormat:@"%ld/%ld", (long)currentPage, [drops count] - 1];
+    [self addDropToBucket:[[DropModel alloc] initWithTestData:@"169.jpg" withName:@"Chris"]];
+    // DropView *firstDrop = [drops objectAtIndex:0];
+    //[firstDrop setMedia:video];
+    playButton.hidden = NO;
+    chat.view.hidden = NO;
+}
+
+
 
 -(void)onCameraOpen{
     cameraMode = YES;

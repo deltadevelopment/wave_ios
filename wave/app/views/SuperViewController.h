@@ -24,6 +24,7 @@
 -(void)onCancelTap;
 -(void)addConstraints:(UIView *) view;
 -(void)onImageTaken:(UIImage *)image;
+-(void)onVideoTaken:(NSData *) video withImage:(UIImage *) image;
 -(void)attachCameraToView:(UIView *)view;
 -(void)showCamera;
 @end

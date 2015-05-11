@@ -160,6 +160,7 @@ bool square;
     [self setPreviewLayer:[[AVCaptureVideoPreviewLayer alloc] initWithSession:CaptureSession]];
     
     //_PreviewLayer.orientation = AVCaptureVideoOrientationPortrait;		//<<SET ORIENTATION.  You can deliberatly set this wrong to flip the image and may actually need to set it wrong to get the right image
+    //_PreviewLayer.orientation = AVCaptureVideoOrientationPortrait;
     
     [[self PreviewLayer] setVideoGravity:AVLayerVideoGravityResizeAspectFill];
     
@@ -171,7 +172,6 @@ bool square;
     int32_t preferredTimeScale = 30;	//Frames per second
     CMTime maxDuration = CMTimeMakeWithSeconds(TotalSeconds, preferredTimeScale);	//<<SET MAX DURATION
     MovieFileOutput.maxRecordedDuration = maxDuration;
-    
     MovieFileOutput.minFreeDiskSpaceLimit = 1024 * 1024;						//<<SET MIN FREE SPACE IN BYTES FOR RECORDING TO CONTINUE ON A VOLUME
     
     if ([CaptureSession canAddOutput:MovieFileOutput])
@@ -228,6 +228,7 @@ bool square;
     });
 }
 
+
 - (AVCaptureDevice *)frontCamera {
     if(frontFacingDevice == nil){
         NSArray *devices = [AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo];
@@ -265,6 +266,7 @@ bool square;
 {
     //SET THE CONNECTION PROPERTIES (output properties)
     AVCaptureConnection *CaptureConnection = [MovieFileOutput connectionWithMediaType:AVMediaTypeVideo];
+    CaptureConnection.videoMirrored = YES;
     [CaptureConnection setVideoOrientation:AVCaptureVideoOrientationPortrait];
     
     //Set landscape (if required)

@@ -19,5 +19,6 @@
 -(void)onImageTaken:(UIImage *)image;
 -(void)onCameraReady;
 -(void)onFocusGained;
+-(void)onVideoTaken:(NSData *) video withImage:(UIImage *)image;
 -(void)onCancelTap;
 @end

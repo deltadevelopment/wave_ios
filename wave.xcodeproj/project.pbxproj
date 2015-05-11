@@ -109,6 +109,9 @@
 		F1E127B31AFEE1BA000E3F2C /* SubscribeController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1E127B21AFEE1BA000E3F2C /* SubscribeController.m */; };
 		F1E127B51AFFCB1E000E3F2C /* download-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = F1E127B41AFFCB1E000E3F2C /* download-icon.png */; };
 		F1E127B81AFFD191000E3F2C /* ProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = F1E127B71AFFD191000E3F2C /* ProgressView.m */; };
+		F1E127BA1B00141E000E3F2C /* play.png in Resources */ = {isa = PBXBuildFile; fileRef = F1E127B91B00141E000E3F2C /* play.png */; };
+		F1E127BD1B0018FB000E3F2C /* BucketView.m in Sources */ = {isa = PBXBuildFile; fileRef = F1E127BC1B0018FB000E3F2C /* BucketView.m */; };
+		F1E127BF1B0023C0000E3F2C /* media-pause.png in Resources */ = {isa = PBXBuildFile; fileRef = F1E127BE1B0023C0000E3F2C /* media-pause.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -295,6 +298,10 @@
 		F1E127B41AFFCB1E000E3F2C /* download-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "download-icon.png"; sourceTree = "<group>"; };
 		F1E127B61AFFD190000E3F2C /* ProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProgressView.h; sourceTree = "<group>"; };
 		F1E127B71AFFD191000E3F2C /* ProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressView.m; sourceTree = "<group>"; };
+		F1E127B91B00141E000E3F2C /* play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = play.png; sourceTree = "<group>"; };
+		F1E127BB1B0018FB000E3F2C /* BucketView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BucketView.h; sourceTree = "<group>"; };
+		F1E127BC1B0018FB000E3F2C /* BucketView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BucketView.m; sourceTree = "<group>"; };
+		F1E127BE1B0023C0000E3F2C /* media-pause.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "media-pause.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -414,6 +421,7 @@
 		C5576B271ADBC195009C1D5E /* res */ = {
 			isa = PBXGroup;
 			children = (
+				F1E127BE1B0023C0000E3F2C /* media-pause.png */,
 				F1E127B41AFFCB1E000E3F2C /* download-icon.png */,
 				C5D4736D1AE640260097E44F /* bucket.png */,
 				C5D473631AE511730097E44F /* search-icon.png */,
@@ -429,6 +437,7 @@
 				C5D473851AE79BC80097E44F /* the-bar-y-v2.png */,
 				F1BD62221AEC7FA300BDE1CA /* cross.png */,
 				C5D4738C1AF2BA8D0097E44F /* wave-logo.png */,
+				F1E127B91B00141E000E3F2C /* play.png */,
 				C5A27BA21ADE779500968033 /* events-icon.png */,
 				C5D473651AE56B540097E44F /* settings-icon.png */,
 				C5D4737F1AE795890097E44F /* bucket-white.png */,
@@ -579,6 +588,8 @@
 			children = (
 				F1BD62281AED9EDB00BDE1CA /* BucketViewController.h */,
 				F1BD62291AED9EDB00BDE1CA /* BucketViewController.m */,
+				F1E127BB1B0018FB000E3F2C /* BucketView.h */,
+				F1E127BC1B0018FB000E3F2C /* BucketView.m */,
 				F1BD622B1AEDBC8C00BDE1CA /* PeekViewController.h */,
 				F1BD622C1AEDBC8C00BDE1CA /* PeekViewController.m */,
 				F1E127A81AFED2E7000E3F2C /* DropView.h */,
@@ -772,6 +783,7 @@
 			files = (
 				F1BD62231AEC7FA300BDE1CA /* cross.png in Resources */,
 				C5D473781AE69D500097E44F /* the-bar-x-v2.png in Resources */,
+				F1E127BF1B0023C0000E3F2C /* media-pause.png in Resources */,
 				C5D473B01AFB67D80097E44F /* tick.png in Resources */,
 				C5A27BA71ADE779500968033 /* feed-icon.png in Resources */,
 				C5A27B9B1ADE52CC00968033 /* miranda-kerr.jpg in Resources */,
@@ -799,6 +811,7 @@
 				C5D473B21AFBB7600097E44F /* triangle.png in Resources */,
 				C5A27B511ADC014E00968033 /* cross-white.png in Resources */,
 				C5D4739E1AF93A660097E44F /* drop.png in Resources */,
+				F1E127BA1B00141E000E3F2C /* play.png in Resources */,
 				C5D4737A1AE6C29F0097E44F /* cross-simple.png in Resources */,
 				C5D473761AE699DE0097E44F /* the-bar.png in Resources */,
 				C5A27BA61ADE779500968033 /* profile-icon.png in Resources */,
@@ -862,6 +875,7 @@
 				F1E127AA1AFED2E7000E3F2C /* DropView.m in Sources */,
 				C5D473BB1AFD05BB0097E44F /* MediaPlayerViewController.m in Sources */,
 				C5A27B601ADD019900968033 /* SSKeychainQuery.m in Sources */,
+				F1E127BD1B0018FB000E3F2C /* BucketView.m in Sources */,
 				C57AD0A71AD7EDB800B6042A /* main.m in Sources */,
 				C5A27B691ADD01D000968033 /* NotificationHelper.m in Sources */,
 				F1E127AD1AFEDB5D000E3F2C /* DropController.m in Sources */,
