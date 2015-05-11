@@ -106,6 +106,16 @@
             Scroller.scrollEnabled = YES;
         }
     };
+    mainViewController.onProgression = ^(int(progression)){
+        [weakSelf increaseProgress:progression];
+    };
+    mainViewController.onNetworkError = ^(UIView *(view)){
+        [weakSelf addErrorMessage:view];
+    };
+    
+    mainViewController.onNetworkErrorHide=^{
+        [weakSelf hideError];
+    };
     UIView *View = [[UIView alloc] initWithFrame:ViewSize];
     CGRect frame = mainViewController.view.frame;
     frame.size.height = frame.size.height -64;

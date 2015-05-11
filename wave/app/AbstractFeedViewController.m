@@ -33,7 +33,10 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+-(void)increazeProgress:(int)progress
+{
 
+}
 /*
 #pragma mark - Navigation
 

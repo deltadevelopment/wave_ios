@@ -23,7 +23,7 @@
 -(void)onTap:(NSNumber *) mode;
 -(UIView *)getCameraView;
 -(AVCaptureVideoPreviewLayer *)getLayer;
--(void)prepareCamera:(bool)rearCamera;
+-(void)prepareCamera:(bool)rearCamera withReply:(bool)reply;
 -(void)takePicture;
 -(void)closeCamera;
 -(void)startRecording;

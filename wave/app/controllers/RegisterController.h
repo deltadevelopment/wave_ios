@@ -14,5 +14,6 @@
 -(void)registerUser:(NSString *) username
                pass:(NSString *) password
               email:(NSString *) email
-       onCompletion:(void (^)(UserModel*,ResponseModel*))callback;
+       onCompletion:(void (^)(UserModel*,ResponseModel*))callback
+ onError:(void(^)(NSError *))errorCallback;
 @end

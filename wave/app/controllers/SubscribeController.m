@@ -10,10 +10,11 @@
 
 @implementation SubscribeController
 -(void)subscribeToUser:(int) user_id
-         withSubscribeeId:(int) subscribee_id
-         onCompletion:(void (^)(ResponseModel*))completionCallback
+      withSubscribeeId:(int) subscribee_id
+          onCompletion:(void (^)(ResponseModel*))completionCallback
+               onError:(void(^)(NSError *))errorCallback
 {
-
+    
     [self postHttpRequest:[NSString stringWithFormat:@"/user/%d/subscribe/%d", user_id, subscribee_id]
                      json:nil
              onCompletion:^(NSURLResponse *response,NSData *data,NSError *error)
@@ -21,19 +22,21 @@
          NSMutableDictionary *dic = [parserHelper parse:data];
          ResponseModel *responseModel = [[ResponseModel alloc] init:dic];
          completionCallback(responseModel);
-     }];
+     } onError:errorCallback];
+    
     
 }
 
 -(void)unSubscribeToUser:(int) user_id
         withSubscribeeId:(int) subscribee_id
-    onCompletion:(void (^)(ResponseModel*))completionCallback
+            onCompletion:(void (^)(ResponseModel*))completionCallback
+                 onError:(void(^)(NSError *))errorCallback
 {
     [self deleteHttpRequest:[NSString stringWithFormat:@"/user/%d/subscribe/%d", user_id, subscribee_id]
                onCompletion:^(NSURLResponse *response,NSData *data,NSError *error){
                    NSMutableDictionary *dic = [parserHelper parse:data];
                    ResponseModel *responseModel = [[ResponseModel alloc] init:dic];
                    completionCallback(responseModel);
-               }];
+               } onError:errorCallback];
 }
 @end

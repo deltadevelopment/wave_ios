@@ -11,6 +11,9 @@
 @interface AbstractFeedViewController : UIViewController<FeedInterface>
 //@property (nonatomic, copy) void (^onExpand)(void);
 @property (nonatomic, copy) void (^onExpand)(UIImage*(bucketImage));
+@property (nonatomic, copy) void (^onProgression)(int(progress));
+@property (nonatomic, copy) void (^onNetworkError)(UIView*(view));
+@property (nonatomic, copy) void (^onNetworkErrorHide)(void);
 @property (nonatomic, copy) void (^onLockScreenToggle)(void);
 -(void)scrollUp;
 -(void)prepareCamera:(UIView *)view;
@@ -21,4 +24,5 @@
 -(void)onFocusGained;
 -(void)onVideoTaken:(NSData *) video withImage:(UIImage *)image;
 -(void)onCancelTap;
+-(void)increazeProgress:(int)progress;
 @end

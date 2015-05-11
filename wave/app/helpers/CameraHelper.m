@@ -19,6 +19,7 @@ AVCaptureDevicePosition position;
 UIView *CameraView;
 //VideoController *videoController;
 NSData *lastRecordedVideo;
+//NSData *lastRecordedVideoCompressed;
 NSURL *lastRecordedVideoURL;
 
 AVCaptureDevice *frontFacingDevice;
@@ -109,6 +110,7 @@ bool square;
     NSLog(@"-------_________SETTER KAMERA");
     NSLog(@"Setting up capture session");
     CaptureSession = [[AVCaptureSession alloc] init];
+   // CaptureSession.sessionPreset = AVCaptureSessionPresetLow;
     //----- ADD INPUTS -----
     NSLog(@"Adding video input");
     
@@ -172,7 +174,9 @@ bool square;
     int32_t preferredTimeScale = 30;	//Frames per second
     CMTime maxDuration = CMTimeMakeWithSeconds(TotalSeconds, preferredTimeScale);	//<<SET MAX DURATION
     MovieFileOutput.maxRecordedDuration = maxDuration;
-    MovieFileOutput.minFreeDiskSpaceLimit = 1024 * 1024;						//<<SET MIN FREE SPACE IN BYTES FOR RECORDING TO CONTINUE ON A VOLUME
+    MovieFileOutput.minFreeDiskSpaceLimit = 1024 * 1024;
+    
+    //<<SET MIN FREE SPACE IN BYTES FOR RECORDING TO CONTINUE ON A VOLUME
     
     if ([CaptureSession canAddOutput:MovieFileOutput])
         [CaptureSession addOutput:MovieFileOutput];
@@ -409,6 +413,8 @@ didFinishRecordingToOutputFileAtURL:(NSURL *)outputFileURL
       fromConnections:(NSArray *)connections
                 error:(NSError *)error
 {
+    self.isCompressed = NO;
+    self.lastRecordedVideoCompressed = nil;
     NSLog(@"Local path: %@", [outputFileURL path]);
     NSLog(@"didFinishRecordingToOutputFileAtURL - enter");
     
@@ -441,11 +447,33 @@ didFinishRecordingToOutputFileAtURL:(NSURL *)outputFileURL
              }];
         }
          */
+        self.onVideoPrepareForPlayback();
+           __weak typeof(self) weakSelf = self;
         NSString *path = [outputFileURL path];
         NSData *data = [[NSFileManager defaultManager] contentsAtPath:path];
+     
+         NSString *outputPath = [[NSString alloc] initWithFormat:@"%@%@", NSTemporaryDirectory(), @"outpute.mov"];
+             NSURL *outputURL = [[NSURL alloc] initFileURLWithPath:outputPath];
+        [self convertVideoToLowQuailtyWithInputURL:outputFileURL outputURL:outputURL handler:^(AVAssetExportSession *exportSession)
+         {
+             NSLog(@"her");
+             if (exportSession.status == AVAssetExportSessionStatusCompleted)
+             {
+                 weakSelf.lastRecordedVideoCompressed = [[NSFileManager defaultManager] contentsAtPath:[outputURL path]];
+                 [self performSelectorOnMainThread:@selector(compressionDone) withObject:nil waitUntilDone:NO];
+                 printf("completed\n");
+                 
+             }
+             else
+             {
+                 NSLog(@"%@",[exportSession.error debugDescription]);
+             }
+         }];
         lastRecordedVideo = data;
+        //self.onVideoRecorded(lastRecordedVideo);
+      //  lastRecordedVideo = data;
         lastRecordedVideoURL = outputFileURL;
-        self.onVideoRecorded(data);
+        //self.onVideoRecorded(lastRecordedVideo);
         //[videoController sendVideoToServer:data withSelector:mediaSuccessSelector withObject:mediaSuccessObject withArg:nil];
         CaptureSession = nil;
         MovieFileOutput = nil;
@@ -454,6 +482,33 @@ didFinishRecordingToOutputFileAtURL:(NSURL *)outputFileURL
         NSLog(@"ferdig å recorde film");
         
     }
+}
+
+-(void)compressionDone{
+    self.onVideoRecorded([self getlastRecordedVideoCompressed]);
+    self.isCompressed = YES;
+}
+
+-(NSData*)getlastRecordedVideoCompressed{
+    return self.lastRecordedVideoCompressed;
+}
+
+- (void)convertVideoToLowQuailtyWithInputURL:(NSURL*)inputURL
+                                   outputURL:(NSURL*)outputURL
+                                     handler:(void (^)(AVAssetExportSession*))handler
+{
+    [[NSFileManager defaultManager] removeItemAtURL:outputURL error:nil];
+    AVURLAsset *asset = [AVURLAsset URLAssetWithURL:inputURL options:nil];
+    AVAssetExportSession *exportSession = [[AVAssetExportSession alloc] initWithAsset:asset presetName:AVAssetExportPreset640x480];
+    exportSession.outputURL = outputURL;
+    exportSession.outputFileType = AVFileTypeQuickTimeMovie;
+    [exportSession exportAsynchronouslyWithCompletionHandler:^(void)
+     {
+         dispatch_async(dispatch_get_main_queue(), ^{
+              handler(exportSession);
+         });
+     }];
+    
 }
 
 -(void)saveImageToDisk{
@@ -470,7 +525,6 @@ didFinishRecordingToOutputFileAtURL:(NSURL *)outputFileURL
 -(void)saveVideoToDisk{
     //KODE FOR Å LAGRE TIL DISK
     if(lastRecordedVideoURL != nil){
-        NSLog(@"didFinishRecordingToOutputFileAtURL - success");
         ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
         
         if ([library videoAtPathIsCompatibleWithSavedPhotosAlbum:lastRecordedVideoURL])
@@ -548,9 +602,12 @@ didFinishRecordingToOutputFileAtURL:(NSURL *)outputFileURL
     if(recording)
     {
         recording = NO;
-        [CameraView removeFromSuperview];
-        [MovieFileOutput stopRecording];
-        [CaptureSession stopRunning];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            [CameraView removeFromSuperview];
+            [MovieFileOutput stopRecording];
+            [CaptureSession stopRunning];
+        });
+      
     }
 }
 

@@ -12,6 +12,7 @@
 -(void)addTagToBucket:(NSString*) tag
          withBucketId:(int) bucket_id
           onCompletion:(void (^)(ResponseModel*))completionCallback
+ onError:(void(^)(NSError *))errorCallback
 {
     NSDictionary *body = @{
                            @"tag":@{
@@ -26,18 +27,19 @@
          NSMutableDictionary *dic = [parserHelper parse:data];
          ResponseModel *responseModel = [[ResponseModel alloc] init:dic];
          completionCallback(responseModel);
-     }];
+     } onError:errorCallback];
 
 }
 
 -(void)deleteTag:(int)tag_id
      onCompletion:(void (^)(ResponseModel*))completionCallback
+ onError:(void(^)(NSError *))errorCallback
 {
     [self deleteHttpRequest:[NSString stringWithFormat:@"tag/%d", tag_id]
                onCompletion:^(NSURLResponse *response,NSData *data,NSError *error){
                    NSMutableDictionary *dic = [parserHelper parse:data];
                    ResponseModel *responseModel = [[ResponseModel alloc] init:dic];
                    completionCallback(responseModel);
-               }];
+               } onError:errorCallback];
 }
 @end

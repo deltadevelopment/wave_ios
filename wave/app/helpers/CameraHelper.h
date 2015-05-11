@@ -32,7 +32,10 @@
     
     
 }
+@property (nonatomic, strong) NSData *lastRecordedVideoCompressed;
+@property (nonatomic) bool isCompressed;
 @property (nonatomic, copy) void (^onVideoRecorded)(NSData*(video));
+@property (nonatomic, copy) void (^onVideoPrepareForPlayback)(void);
 @property (nonatomic, copy) void (^onMediaSavedToDisk)(void);
 @property (nonatomic, copy) void (^onMediaSavedToDiskError)(void);
 -(void)stopCameraSession;
@@ -52,7 +55,7 @@
 
 -(void)stopRecording;
 
-
+-(NSData*)getlastRecordedVideoCompressed;
 -(void)saveImageToDisk;
 
 -(void)saveVideoToDisk;

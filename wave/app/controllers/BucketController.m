@@ -12,23 +12,58 @@
 @implementation BucketController
 
 
--(void)createNewBucket:(BucketModel *)bucket
-          onProgress:(void (^)(NSNumber*))progression
-          onCompletion:(void (^)(BucketModel*,ResponseModel*))completionCallback
+-(void)createNewBucket:(NSData *)media
+       withBucketTitle:(NSString *) bucketTitle
+ withBucketDescription:(NSString *) bucketDescription
+       withDropCaption:(NSString *) dropCaption
+            onProgress:(void (^)(NSNumber*))progression
+          onCompletion:(void (^)(ResponseModel*))completionCallback
+               onError:(void(^)(NSError *))errorCallback
 {
     //Generate URL
     [self postHttpRequest:@"drop/generate_upload_url"
                      json:nil
              onCompletion:^(NSURLResponse *response,NSData *data,NSError *error){
-                 [self uploadImage:[[bucket rootDrop] media_tmp]
-                          withData:data withBucket:bucket
-                    withCompletion:completionCallback
-                   withProgression:progression];
-             }];
+                 NSMutableDictionary *dic = [parserHelper parse:data];
+                 ResponseModel *responseModel = [[ResponseModel alloc] init:dic];
+                 NSString *uploadURL =  [[[responseModel data] objectForKey:@"upload_url"] objectForKey:@"url"];
+                 NSString *media_key = [[[responseModel data] objectForKey:@"upload_url"] objectForKey:@"media_key"];
+                 
+                 [mediaController putHttpRequestWithImage:media
+                                                    token:uploadURL
+                                             onCompletion:^(NSNumber *percentage)
+                  {
+                      progression(percentage);
+                      //NSLog(@"LASTET OPP %ld", [percentage longValue]);
+                      if([percentage longValue] == 100){
+                          NSDictionary *body = @{
+                                                 @"bucket":@{
+                                                         @"title" : bucketTitle,
+                                                         @"description" : bucketDescription
+                                                         },
+                                                 @"drop":@{
+                                                         @"media_key" : media_key,
+                                                         @"caption" : dropCaption
+                                                         }
+                                                 };
+                          NSString *jsonData = [applicationHelper generateJsonFromDictionary:body];
+                          [self postHttpRequest:@"bucket"
+                                           json:jsonData
+                                   onCompletion:^(NSURLResponse *response,NSData *data,NSError *error)
+                           {
+                               NSMutableDictionary *dic = [parserHelper parse:data];
+                               ResponseModel *responseModel = [[ResponseModel alloc] init:dic];
+                               completionCallback(responseModel);
+                           } onError:errorCallback];
+                      }
+                      
+                  }];
+             } onError:errorCallback];
 }
 
 -(void)updateBucket:(BucketModel *) bucket
        onCompletion:(void (^)(ResponseModel*))completionCallback
+ onError:(void(^)(NSError *))errorCallback
 {
     NSDictionary *body = @{
                            @"bucket":@{
@@ -48,74 +83,40 @@
                 NSMutableDictionary *dic = [parserHelper parse:data];
                 ResponseModel *responseModel = [[ResponseModel alloc] init:dic];
                 completionCallback(responseModel);
-            }];
+            } onError:errorCallback];
 
 }
 
 -(void)deleteBucket:(BucketModel *) bucket
  onCompletion:(void (^)(ResponseModel*))completionCallback
+ onError:(void(^)(NSError *))errorCallback
 {
     [self deleteHttpRequest:[NSString stringWithFormat:@"bucket/%d", [bucket Id]]
                onCompletion:^(NSURLResponse *response,NSData *data,NSError *error){
         NSMutableDictionary *dic = [parserHelper parse:data];
         ResponseModel *responseModel = [[ResponseModel alloc] init:dic];
         completionCallback(responseModel); 
-    }];
+    } onError:errorCallback];
 }
 
 #pragma Private methods
-
+/*
 -(void)uploadImage:(NSData *) imageData
           withData:(NSData *) data
         withBucket:(BucketModel *)bucket
     withCompletion:(void (^)(BucketModel*,ResponseModel*))completionCallback
    withProgression:(void (^)(NSNumber*))progression
 {
-    NSMutableDictionary *dic = [parserHelper parse:data];
-    ResponseModel *responseModel = [[ResponseModel alloc] init:dic];
-    NSString *uploadURL =  [[[responseModel data] objectForKey:@"upload_url"] objectForKey:@"url"];
-    NSString *media_key = [[[responseModel data] objectForKey:@"upload_url"] objectForKey:@"media_key"];
-    
-    [mediaController putHttpRequestWithImage:imageData
-                                       token:uploadURL
-                                onCompletion:^(NSNumber *percentage)
-    {
-        progression(percentage);
-        //NSLog(@"LASTET OPP %ld", [percentage longValue]);
-        if([percentage longValue] == 100){
-            [bucket rootDrop].media_key = media_key;
-            [self createBucket:bucket withCompletion:completionCallback];
-        }
-        
-    }];
+   
 }
 
 -(void)createBucket:(BucketModel *) bucket withCompletion:(void (^)(BucketModel*,ResponseModel*))completionCallback{
-    NSDictionary *body = @{
-                           @"bucket":@{
-                                   @"title" : bucket.title,
-                                   @"description" : bucket.bucket_description
-                                   },
-                           @"drop":@{
-                                   @"media_key" : [bucket rootDrop].media_key,
-                                   @"caption" : [bucket rootDrop].caption
-                                   }
-                           
-                           };
-    NSString *jsonData = [applicationHelper generateJsonFromDictionary:body];
-    [self postHttpRequest:@"bucket"
-                     json:jsonData
-             onCompletion:^(NSURLResponse *response,NSData *data,NSError *error)
-    {
-        NSMutableDictionary *dic = [parserHelper parse:data];
-        ResponseModel *responseModel = [[ResponseModel alloc] init:dic];
-        completionCallback(bucket, responseModel);
-    }];
+  
 }
 
 -(void)createSharedBucket
 {
 
 }
-
+*/
 @end

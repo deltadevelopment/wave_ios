@@ -11,6 +11,7 @@
 #import "CameraViewController.h"
 #import "InfoViewController.h"
 #import "GraphicsHelper.h"
+#import "ColorHelper.h"
 @interface SuperViewController ()
 
 @end
@@ -21,6 +22,10 @@
     InfoViewController *infoView;
     bool infoIsVisible;
     UIVisualEffectView  *blurEffectView;
+    UIView *progressIndicator;
+    UIImageView *tickView;
+    UIView *errorView;
+    UIButton *crossButton;
 }
 
 - (void)viewDidLoad {
@@ -29,6 +34,27 @@
     infoView.view.alpha = 0.0;
     [self initSuperButton];
     _camera = [[CameraViewController alloc]init];
+    
+    progressIndicator = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 4)];
+    progressIndicator.backgroundColor = [ColorHelper blueColor];
+    progressIndicator.hidden = YES;
+    
+    errorView =[[UIView alloc] initWithFrame:CGRectMake(0, -50, [UIHelper getScreenWidth], 50)];
+    errorView.backgroundColor = [ColorHelper redColor];
+    [self.view addSubview:errorView];
+   crossButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    crossButton.frame = CGRectMake([UIHelper getScreenWidth] - 40,15 , 20, 20);
+                             
+    [crossButton setImage:[UIImage imageNamed:@"cross.png"] forState:UIControlStateNormal];
+    [crossButton addTarget:self action:@selector(dismissError) forControlEvents:UIControlEventTouchUpInside];
+    [errorView addSubview:crossButton];
+    
+    tickView = [[UIImageView alloc] initWithFrame:CGRectMake([UIHelper getScreenWidth]/2-25, [UIHelper getScreenHeight]/2-25, 50, 50)];
+    tickView.image = [UIImage imageNamed:@"tick.png"];
+    tickView.alpha = 0.0;
+    tickView.hidden = YES;
+    [self.view addSubview:tickView];
+    [self.view addSubview:progressIndicator];
    
     __weak typeof(self) weakSelf = self;
     _camera.onCameraReady = ^{
@@ -64,6 +90,88 @@
 }
 -(void)onVideoRecorded{
     [self.superButton videoRecorded];
+}
+
+-(void)addErrorMessage:(UIView *) view{
+    errorView.hidden = NO;
+    self.superButton.hasError = YES;
+    if([view superview] == errorView){
+        NSLog(@"SKJEDDE");
+    
+        
+    }else{
+     [errorView addSubview:view];
+        [errorView insertSubview:crossButton aboveSubview:view];
+    
+    }
+     errorView.hidden = NO;
+    [UIView animateWithDuration:0.3f
+                          delay:0.0f
+                        options: UIViewAnimationOptionCurveLinear
+                     animations:^{
+                         CGRect frame = errorView.frame;
+                         frame.origin.y = 0;
+                         errorView.frame = frame;
+                         [errorView layoutIfNeeded];
+                     }
+                     completion:nil];
+   
+}
+-(void)dismissError{
+    NSLog(@"here");
+    self.superButton.hasError = NO;
+    [UIView animateWithDuration:0.3f
+                          delay:0.0f
+                        options: UIViewAnimationOptionCurveLinear
+                     animations:^{
+                         CGRect frame = errorView.frame;
+                         frame.origin.y = -50;
+                         errorView.frame = frame;
+                         [errorView layoutIfNeeded];
+                     }
+                     completion:^(BOOL finished){
+                          errorView.hidden = YES;
+                     }];
+}
+
+-(void)hideError{
+    [self dismissError];
+}
+
+-(void)increaseProgress:(int) progress{
+    if(progressIndicator.hidden){
+        progressIndicator.hidden = NO;
+    }
+    
+    float maxWidth = [UIHelper getScreenWidth];
+    float percentageOfMax = (progress * maxWidth)/100;
+    progressIndicator.frame = CGRectMake(0, 0, percentageOfMax, 4);
+    if(progress == 100){
+        progressIndicator.hidden = YES;
+        NSLog(@"HIDING PROGRESS");
+        [self animateTick];
+        
+    }
+}
+
+-(void)animateTick{
+    tickView.hidden = NO;
+    [UIView animateWithDuration:0.3f
+                          delay:0.0f
+                        options: UIViewAnimationOptionCurveLinear
+                     animations:^{
+                         tickView.alpha = 0.8;
+                     }
+                     completion:^(BOOL finished){
+                         [UIView animateWithDuration:0.3f
+                                               delay:0.5f
+                                             options: UIViewAnimationOptionCurveLinear
+                                          animations:^{
+                                              tickView.alpha = 0.0;
+                                              [infoView.view layoutIfNeeded];
+                                          }
+                                          completion:nil];
+                     }];
 }
 
 -(void)onPictureUploading{
@@ -216,7 +324,7 @@
 }
 
 -(void)onCameraOpen{
-    [_camera prepareCamera:YES];
+    [_camera prepareCamera:YES withReply:NO];
 }
 -(void)onCameraClose
 {
@@ -227,11 +335,17 @@
     _superButton = [[SuperButton alloc]init:self.view];
 }
 
+
+
+
 -(void)initSuperButton{
     [self attachSuperButtonToView];
     __weak typeof(self) weakSelf = self;
     self.superButton.onDragX =^(NSNumber*(xValue)){
         [weakSelf onDragX:xValue];
+    };
+    self.superButton.onErrorDismissed=^{
+        [weakSelf dismissError];
     };
     self.superButton.onDragY =^(NSNumber*(yValue)){
         [weakSelf onDragY:yValue];

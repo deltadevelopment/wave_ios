@@ -11,7 +11,9 @@
 @interface TagController : ApplicationController
 -(void)addTagToBucket:(NSString*) tag
          withBucketId:(int) bucket_id
-         onCompletion:(void (^)(ResponseModel*))completionCallback;
+         onCompletion:(void (^)(ResponseModel*))completionCallback
+              onError:(void(^)(NSError *))errorCallback;
 -(void)deleteTag:(int)tag_id
-    onCompletion:(void (^)(ResponseModel*))completionCallback;
+    onCompletion:(void (^)(ResponseModel*))completionCallback
+         onError:(void(^)(NSError *))errorCallback;
 @end

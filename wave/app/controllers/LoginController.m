@@ -10,7 +10,8 @@
 @implementation LoginController
 -(void)login:(NSString *) username
         pass:(NSString *) password
-onCompletion:(void (^)(UserModel*,ResponseModel*))callback;
+onCompletion:(void (^)(UserModel*,ResponseModel*))callback
+ onError:(void(^)(NSError *))errorCallback;
 {
     NSLog(@"Device Id sending: %@", [authHelper getDeviceId]);
     NSDictionary *credentials = [self loginBody:username pass:password];
@@ -24,7 +25,7 @@ onCompletion:(void (^)(UserModel*,ResponseModel*))callback;
         UserModel *user = [[UserModel alloc] init:[[dic objectForKey:@"data"] objectForKey:@"user"]];
         [self storeCredentials:[responseModel.data objectForKey:@"user_session"]];
         callback(user, responseModel);
-    }];
+    } onError:errorCallback];
 
 }
 

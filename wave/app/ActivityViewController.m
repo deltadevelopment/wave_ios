@@ -13,6 +13,9 @@
 #import "DropModel.h"
 #import "BucketModel.h"
 #import "ApplicationHelper.h"
+#import "SuperViewController.h"
+#import "DataHelper.h"
+#import "GraphicsHelper.h"
 @interface ActivityViewController ()
 
 @end
@@ -26,6 +29,7 @@ const int EXPAND_SIZE = 400;
     UIImage *imgTaken;
     BucketController *bucketController;
     UIView *cameraHolder;
+    UIView *errorView;
 }
 
 - (void)viewDidLoad {
@@ -207,36 +211,34 @@ const int EXPAND_SIZE = 400;
     _tableView.scrollEnabled = YES;
 }
 
-
-
--(void)onImageTaken:(UIImage *)image{
-       /*
-    BucketModel *newBucket = [[BucketModel alloc] init];
-    newBucket.Id = 3;
-    newBucket.title = @"My new Crazy bucket";
-    newBucket.bucket_description = @"My new crazy description";
-    DropModel *newDrop = [[DropModel alloc] init];
-    newDrop.caption = @"My crazy new drop!";
-    newDrop.media_tmp = UIImagePNGRepresentation(image);
-    newBucket.rootDrop = newDrop;
- 
-    [bucketController createNewBucket:newBucket
-                           onProgress:^(NSNumber *progression){
-                               NSLog(@"LASTET OPP: %@", progression);
-                               
-                           }
-                         onCompletion:^(BucketModel *bucket, ResponseModel *response){
-                             NSLog(@"ALT ER FERDIG LASTET OPP!");
-                             
-                         }];
-   
-    [bucketController updateBucket:newBucket
-                      onCompletion:^(ResponseModel *response){
-                          NSLog(@"BUCKET ENDRET");
-                          
-                      }];
+-(void)mediaTaken:(UIImage *) image{
+    /*
+     BucketModel *newBucket = [[BucketModel alloc] init];
+     newBucket.Id = 3;
+     newBucket.title = @"My new Crazy bucket";
+     newBucket.bucket_description = @"My new crazy description";
+     DropModel *newDrop = [[DropModel alloc] init];
+     newDrop.caption = @"My crazy new drop!";
+     newDrop.media_tmp = UIImagePNGRepresentation(image);
+     newBucket.rootDrop = newDrop;
      
-       */
+     [bucketController createNewBucket:newBucket
+     onProgress:^(NSNumber *progression){
+     NSLog(@"LASTET OPP: %@", progression);
+     
+     }
+     onCompletion:^(BucketModel *bucket, ResponseModel *response){
+     NSLog(@"ALT ER FERDIG LASTET OPP!");
+     
+     }];
+     
+     [bucketController updateBucket:newBucket
+     onCompletion:^(ResponseModel *response){
+     NSLog(@"BUCKET ENDRET");
+     
+     }];
+     
+     */
     cameraHolder.hidden = YES;
     imgTaken = image;
     //[cameraView removeFromSuperview];
@@ -244,7 +246,7 @@ const int EXPAND_SIZE = 400;
     cell.bucketImage.image = imgTaken;
     //cameraCell.bucketImage.image = imgTaken;
     BucketModel *bucket = [feed objectAtIndex:0];
- 
+    
     DropModel *drop = [bucket.drops objectAtIndex:0];
     drop.media_img = imgTaken;
     //bucket.isInitalized = NO;
@@ -258,9 +260,60 @@ const int EXPAND_SIZE = 400;
     [self.tableView beginUpdates];
     [self.tableView endUpdates];
 }
--(void)onVideoTaken:(NSData *)video withImage:(UIImage *)image{
-    [self onImageTaken:image];
+
+-(void)onImageTaken:(UIImage *)image{
+    [self mediaTaken:image];
+    [self uploadMedia:UIImagePNGRepresentation(image)];
 }
+-(void)onVideoTaken:(NSData *)video withImage:(UIImage *)image{
+    [self mediaTaken:image];
+    [self uploadMedia:video];
+    NSLog(@"File size is : %.2f MB",(float)video.length/1024.0f/1024.0f);
+}
+
+-(void)uploadMedia:(NSData *) media{
+
+     __weak typeof(self) weakSelf = self;
+    [bucketController createNewBucket:media
+                      withBucketTitle:@"My new Crazy bucket"
+                withBucketDescription:@"My new crazy description"
+                      withDropCaption:@"My crazy new drop!"
+                           onProgress:^(NSNumber *progression)
+     {
+        // NSLog(@"LASTET OPP: %@", progression);
+         weakSelf.onProgression([progression intValue]);
+         
+         
+     }
+                         onCompletion:^(ResponseModel *response)
+     {
+         NSLog(@"ALT ER FERDIG LASTET OPP!");
+     } onError:^(NSError *error){
+        [DataHelper storeData:media];
+         //[weakSelf addErrorMessage];
+         errorView = [GraphicsHelper getErrorView:[error localizedDescription]
+                                          withParent:self
+                                     withButtonTitle:@"Prøv igjen"
+                           withButtonPressedSelector:@selector(uploadAgain)];
+        
+         
+         weakSelf.onNetworkError(errorView);
+      
+     }];
+}
+
+-(void)viewWillDisappear:(BOOL)animated{
+        
+}
+
+-(void)uploadAgain{
+    [errorView removeFromSuperview];
+    self.onNetworkErrorHide();
+    [self uploadMedia:[DataHelper getData]];
+    
+}
+
+
 
 
 -(void)onCancelTap{

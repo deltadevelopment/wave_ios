@@ -91,6 +91,8 @@
 		C5D473B51AFCCE790097E44F /* GraphicsHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D473B41AFCCE790097E44F /* GraphicsHelper.m */; };
 		C5D473BB1AFD05BB0097E44F /* MediaPlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D473BA1AFD05BB0097E44F /* MediaPlayerViewController.m */; };
 		C5D473BF1AFD0BB70097E44F /* CircleIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D473BE1AFD0BB70097E44F /* CircleIndicatorView.m */; };
+		C5D473C21B010A440097E44F /* DataHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D473C11B010A440097E44F /* DataHelper.m */; };
+		C5D473C41B0120F90097E44F /* refresh.png in Resources */ = {isa = PBXBuildFile; fileRef = C5D473C31B0120F90097E44F /* refresh.png */; };
 		F1BD621C1AE460D400BDE1CA /* Carousel.m in Sources */ = {isa = PBXBuildFile; fileRef = F1BD621B1AE460D400BDE1CA /* Carousel.m */; };
 		F1BD621F1AE46EFC00BDE1CA /* ActivityTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F1BD621E1AE46EFC00BDE1CA /* ActivityTableViewCell.m */; };
 		F1BD62211AEBB46F00BDE1CA /* 169.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F1BD62201AEBB46F00BDE1CA /* 169.jpg */; };
@@ -266,6 +268,9 @@
 		C5D473BA1AFD05BB0097E44F /* MediaPlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaPlayerViewController.m; sourceTree = "<group>"; };
 		C5D473BD1AFD0BB70097E44F /* CircleIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CircleIndicatorView.h; sourceTree = "<group>"; };
 		C5D473BE1AFD0BB70097E44F /* CircleIndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CircleIndicatorView.m; sourceTree = "<group>"; };
+		C5D473C01B010A440097E44F /* DataHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataHelper.h; sourceTree = "<group>"; };
+		C5D473C11B010A440097E44F /* DataHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataHelper.m; sourceTree = "<group>"; };
+		C5D473C31B0120F90097E44F /* refresh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = refresh.png; sourceTree = "<group>"; };
 		F1BD621A1AE460D400BDE1CA /* Carousel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Carousel.h; sourceTree = "<group>"; };
 		F1BD621B1AE460D400BDE1CA /* Carousel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Carousel.m; sourceTree = "<group>"; };
 		F1BD621D1AE46EFC00BDE1CA /* ActivityTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityTableViewCell.h; sourceTree = "<group>"; };
@@ -384,6 +389,8 @@
 				C5D473971AF920080097E44F /* ConstraintHelper.m */,
 				C5D473B31AFCCE790097E44F /* GraphicsHelper.h */,
 				C5D473B41AFCCE790097E44F /* GraphicsHelper.m */,
+				C5D473C01B010A440097E44F /* DataHelper.h */,
+				C5D473C11B010A440097E44F /* DataHelper.m */,
 			);
 			path = helpers;
 			sourceTree = "<group>";
@@ -421,6 +428,7 @@
 		C5576B271ADBC195009C1D5E /* res */ = {
 			isa = PBXGroup;
 			children = (
+				C5D473C31B0120F90097E44F /* refresh.png */,
 				F1E127BE1B0023C0000E3F2C /* media-pause.png */,
 				F1E127B41AFFCB1E000E3F2C /* download-icon.png */,
 				C5D4736D1AE640260097E44F /* bucket.png */,
@@ -782,6 +790,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F1BD62231AEC7FA300BDE1CA /* cross.png in Resources */,
+				C5D473C41B0120F90097E44F /* refresh.png in Resources */,
 				C5D473781AE69D500097E44F /* the-bar-x-v2.png in Resources */,
 				F1E127BF1B0023C0000E3F2C /* media-pause.png in Resources */,
 				C5D473B01AFB67D80097E44F /* tick.png in Resources */,
@@ -896,6 +905,7 @@
 				C5D473921AF3B5310097E44F /* PinnedViewController.m in Sources */,
 				C5A27B541ADC060000968033 /* TextFieldWrapper.m in Sources */,
 				C5A27BA11ADE626800968033 /* CarouselViewController.m in Sources */,
+				C5D473C21B010A440097E44F /* DataHelper.m in Sources */,
 				F1BD62301AF057D100BDE1CA /* ChatViewController.m in Sources */,
 				C5A27B781ADD128100968033 /* UserModel.m in Sources */,
 				C55FE90A1AD81F45007663FB /* SuperButton.m in Sources */,

@@ -27,4 +27,7 @@
 -(void)onVideoTaken:(NSData *) video withImage:(UIImage *) image;
 -(void)attachCameraToView:(UIView *)view;
 -(void)showCamera;
+-(void)increaseProgress:(int) progress;
+-(void)addErrorMessage:(UIView *) view;
+-(void)hideError;
 @end

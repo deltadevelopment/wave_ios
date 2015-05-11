@@ -15,4 +15,5 @@
 -(void)setProgressString:(NSString *) text;
 -(void)startProgress;
 -(void)stopProgress;
+-(void)turnOffText;
 @end

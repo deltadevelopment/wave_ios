@@ -28,4 +28,5 @@
 +(void)addShadowToView:(UIView *) view;
 +(void)addShadowToViewTwo:(UIView *) view;
 +(UIImage *)iconImage:(UIImage *) image withPoint:(CGPoint) point;
++(void)applyThinLayoutOnButton:(UIButton *) button;
 @end

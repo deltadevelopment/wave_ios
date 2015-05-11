@@ -42,6 +42,11 @@
     return self;
 }
 
+-(void)turnOffText{
+    self.progressText.hidden = YES;
+    self.spinner.center = CGPointMake(self.frame.size.width/2, self.frame.size.height / 2);
+}
+
 
 -(void)setProgressString:(NSString *) text{
     self.progressText.text = text;
@@ -53,7 +58,30 @@
     [self.spinner startAnimating];
 }
 -(void)stopProgress{
-    [self.spinner stopAnimating];
+    if(!self.progressText.hidden){
+        [self.spinner stopAnimating];
+        [UIView animateWithDuration:0.8f
+                              delay:0.4f
+                            options: UIViewAnimationOptionCurveLinear
+                         animations:^{
+                             self.alpha = 0.0;
+                         }
+                         completion:^(BOOL finished){
+                             self.hidden = YES;
+                         }];
+    }
+    
+    else{
+        [UIView animateWithDuration:0.8f
+                              delay:0.0f
+                            options: UIViewAnimationOptionCurveLinear
+                         animations:^{
+                             self.alpha = 0.0;
+                         }
+                         completion:^(BOOL finished){
+                             self.hidden = YES;
+                         }];
+    }
 }
 
 

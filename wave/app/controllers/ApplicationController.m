@@ -23,18 +23,22 @@
     return self;
 }
 
--(void)getHttpRequest:(NSString *) url onCompletion:(void (^)(NSURLResponse*, NSData *, NSError*))callback{
+-(void)getHttpRequest:(NSString *) url
+         onCompletion:(void (^)(NSURLResponse*, NSData *, NSError*))callback
+              onError:(void(^)(NSError *))errorCallback
+{
     NSURL *urlFromString = [NSURL URLWithString:[applicationHelper generateUrl:url]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:urlFromString cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:1200.0];
     [request setValue:@"text" forHTTPHeaderField:@"Content-type"];
     [request addValue:[authHelper getAuthToken] forHTTPHeaderField:@"X-AUTH-TOKEN"];
     [request setHTTPMethod:@"GET"];
-    [self sendRequestAsync:request onCompletion:callback];
+    [self sendRequestAsync:request onCompletion:callback onError:errorCallback];
 }
 
 -(void) postHttpRequest:(NSString *) url
                    json:(NSString *) data
            onCompletion:(void (^)(NSURLResponse*, NSData *, NSError*))callback
+                onError:(void(^)(NSError *))errorCallback
 {
     NSURL * urlFromString = [NSURL URLWithString:[applicationHelper generateUrl:url]];
     NSMutableURLRequest * request = [NSMutableURLRequest requestWithURL:urlFromString];
@@ -43,23 +47,25 @@
     [request setHTTPMethod:@"POST"];
     [request setHTTPBody:[data dataUsingEncoding:NSUTF8StringEncoding]];
     NSLog(@"%@",[request URL]);
-    [self sendRequestAsync:request onCompletion:callback];
+    [self sendRequestAsync:request onCompletion:callback onError:errorCallback];
 };
 
 -(void) deleteHttpRequest:(NSString *) url
              onCompletion:(void (^)(NSURLResponse*, NSData *, NSError*))callback
+                  onError:(void(^)(NSError *))errorCallback
 {
     NSURL *urlFromString = [NSURL URLWithString:[applicationHelper generateUrl:url]];
     NSMutableURLRequest * request = [NSMutableURLRequest requestWithURL:urlFromString];
     [request setValue:@"text" forHTTPHeaderField:@"Content-type"];
     [request addValue:[authHelper getAuthToken] forHTTPHeaderField:@"X-AUTH-TOKEN"];
     [request setHTTPMethod:@"DELETE"];
-    [self sendRequestAsync:request onCompletion:callback];
+    [self sendRequestAsync:request onCompletion:callback onError:errorCallback];
     
 };
 -(void) putHttpRequest:(NSString *) url
                   json:(NSString *) data
           onCompletion:(void (^)(NSURLResponse*, NSData *, NSError*))callback
+               onError:(void(^)(NSError *))errorCallback
 {
     NSURL *urlFromString = [NSURL URLWithString:[applicationHelper generateUrl:url]];
     NSMutableURLRequest * request = [NSMutableURLRequest requestWithURL:urlFromString];
@@ -67,23 +73,26 @@
     [request addValue:[authHelper getAuthToken] forHTTPHeaderField:@"X-AUTH-TOKEN"];
     [request setHTTPMethod:@"PUT"];
     [request setHTTPBody:[data dataUsingEncoding:NSUTF8StringEncoding]];
-    [self sendRequestAsync:request onCompletion:callback];
+    [self sendRequestAsync:request onCompletion:callback onError:errorCallback];
     
     
     
 };
 
--(void)sendRequestAsync:(NSMutableURLRequest *)request onCompletion:(void (^)(NSURLResponse*, NSData *, NSError*))callback{
+-(void)sendRequestAsync:(NSMutableURLRequest *)request
+           onCompletion:(void (^)(NSURLResponse*, NSData *, NSError*))callback
+                onError:(void(^)(NSError *))errorCallback
+{
     
     [NSURLConnection sendAsynchronousRequest:request
                                        queue:[NSOperationQueue currentQueue]
                            completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
                                
-                               callback(response,data,error);
+                               
                                if (data != nil && error == nil)
                                {
                                    //Ferdig lastet ned
-                                   
+                                   callback(response,data,error);
                                    NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) response;
                                    NSLog(@"response status code: %ld", (long)[httpResponse statusCode]);
                                    NSInteger statuscode = [httpResponse statusCode];
@@ -110,6 +119,7 @@
                                {
                                    NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) response;
                                    NSLog(@"response status code: %ld", (long)[httpResponse statusCode]);
+                                   errorCallback(error);
                                    // There was an error, alert the user
                                    //[self showNotification:view withData:data];
                                    //[view performSelector:errorAction withObject:error];

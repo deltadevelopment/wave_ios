@@ -26,8 +26,9 @@
 @property (nonatomic, copy) void (^onCancelTap)(void);
 @property (nonatomic, copy) void (^onLongPressStarted)(void);
 @property (nonatomic, copy) void (^onLongPressEnded)(void);
+@property (nonatomic, copy) void (^onErrorDismissed)(void);
 @property (nonatomic) bool lockActions;
-
+@property (nonatomic) bool hasError;
 -(id)init:(UIView *)view;
 
 -(UIButton *)getButton;

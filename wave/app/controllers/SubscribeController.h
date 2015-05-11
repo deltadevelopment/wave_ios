@@ -12,9 +12,11 @@
 
 -(void)subscribeToUser:(int) user_id
       withSubscribeeId:(int) subscribee_id
-          onCompletion:(void (^)(ResponseModel*))completionCallback;
+          onCompletion:(void (^)(ResponseModel*))completionCallback
+               onError:(void(^)(NSError *))errorCallback;
 
 -(void)unSubscribeToUser:(int) user_id
         withSubscribeeId:(int) subscribee_id
-            onCompletion:(void (^)(ResponseModel*))completionCallback;
+            onCompletion:(void (^)(ResponseModel*))completionCallback
+                 onError:(void(^)(NSError *))errorCallback;
 @end

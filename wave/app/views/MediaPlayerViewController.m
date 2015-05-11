@@ -124,9 +124,12 @@
      name:MPMoviePlayerPlaybackDidFinishNotification
      object:thePlayer];
     NSLog(@"DONE PLAYING VIDEO");
-    [self stopVideo];
-    
-    self.onVideoFinishedPlaying();
+    if(![player repeatMode]){
+        [self stopVideo];
+        
+        self.onVideoFinishedPlaying();
+    }
+ 
     
    
     //[player stop];

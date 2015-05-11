@@ -11,4 +11,8 @@
 @interface GraphicsHelper : NSObject
 +(UIImage *)mirrorImageWithImage:(UIImage *) image;
 + (UIImage*)imageByScalingAndCroppingForSize:(CGSize)targetSize img:(UIImage *) sourceImage;
++(UIView *)getErrorView:(NSString *) errorMessage
+             withParent:(NSObject *) parent
+        withButtonTitle:(NSString *) title
+withButtonPressedSelector:(SEL) buttonSelector;
 @end

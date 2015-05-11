@@ -26,17 +26,21 @@
     MediaController *mediaController;
 }
 -(void)getHttpRequest:(NSString *) url
-         onCompletion:(void (^)(NSURLResponse*, NSData *, NSError*))callback;
+         onCompletion:(void (^)(NSURLResponse*, NSData *, NSError*))callback
+              onError:(void(^)(NSError *))errorCallback;
 
 -(void) postHttpRequest:(NSString *) url
                    json:(NSString *) data
-           onCompletion:(void (^)(NSURLResponse*, NSData *, NSError*))callback;
+           onCompletion:(void (^)(NSURLResponse*, NSData *, NSError*))callback
+                onError:(void(^)(NSError *))errorCallback;
 
 -(void) deleteHttpRequest:(NSString *) url
-             onCompletion:(void (^)(NSURLResponse*, NSData *, NSError*))callback;
+             onCompletion:(void (^)(NSURLResponse*, NSData *, NSError*))callback
+                  onError:(void(^)(NSError *))errorCallback;
 
 -(void) putHttpRequest:(NSString *) url
                   json:(NSString *) data
-          onCompletion:(void (^)(NSURLResponse*, NSData *, NSError*))callback;
+          onCompletion:(void (^)(NSURLResponse*, NSData *, NSError*))callback
+               onError:(void(^)(NSError *))errorCallback;
 
 @end

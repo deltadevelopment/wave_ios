@@ -18,4 +18,5 @@
 -(void)onCameraReady;
 -(void)onFocusGained;
 -(void)onCancelTap;
+-(void)increazeProgress:(int)progress;
 @end

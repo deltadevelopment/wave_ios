@@ -9,13 +9,19 @@
 #import "ApplicationController.h"
 #import "BucketModel.h"
 @interface BucketController : ApplicationController
--(void)createNewBucket:(BucketModel *)bucket
+-(void)createNewBucket:(NSData *)media
+       withBucketTitle:(NSString *) bucketTitle
+ withBucketDescription:(NSString *) bucketDescription
+       withDropCaption:(NSString *) dropCaption
             onProgress:(void (^)(NSNumber*))progression
-          onCompletion:(void (^)(BucketModel*,ResponseModel*))completionCallback;
+          onCompletion:(void (^)(ResponseModel*))completionCallback
+               onError:(void(^)(NSError *))errorCallback;
 
 -(void)updateBucket:(BucketModel *) bucket
-       onCompletion:(void (^)(ResponseModel*))completionCallback;
+       onCompletion:(void (^)(ResponseModel*))completionCallback
+            onError:(void(^)(NSError *))errorCallback;
 
 -(void)deleteBucket:(BucketModel *) bucket
-       onCompletion:(void (^)(ResponseModel*))completionCallback;
+       onCompletion:(void (^)(ResponseModel*))completionCallback
+            onError:(void(^)(NSError *))errorCallback;
 @end

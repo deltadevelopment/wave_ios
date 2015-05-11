@@ -15,6 +15,8 @@
 #import "DropModel.h"
 #import "GraphicsHelper.h"
 #import "BucketView.h"
+#import "BucketController.h"
+#import "DropController.h"
 @interface BucketViewController ()
 
 @end
@@ -46,11 +48,15 @@ const int PEEK_Y_START = 300;
     bool isPeeking;
     bool canPeek;
     UIButton *playButton;
+    BucketController *bucketController;
+    DropController *dropController;
     
 }
 
 - (void)viewDidLoad {
      drops = [[NSMutableArray alloc]init];
+    bucketController = [[BucketController alloc] init];
+    dropController = [[DropController alloc] init];
     [self addImageScroller];
     [super viewDidLoad];
     canPeek = YES;
@@ -474,6 +480,7 @@ const int PEEK_Y_START = 300;
     UIImageView *firstDrop = [drops objectAtIndex:0];
     firstDrop.image = image;
     chat.view.hidden = NO;
+    [self uploadMedia:UIImagePNGRepresentation(image)];
 }
 -(void)onVideoTaken:(NSData *)video withImage:(UIImage *)image{
     cameraHolder.hidden = YES;
@@ -486,13 +493,70 @@ const int PEEK_Y_START = 300;
     //[firstDrop setMedia:video];
     playButton.hidden = NO;
     chat.view.hidden = NO;
+    [self uploadMedia:video];
+}
+
+
+
+-(void)uploadMedia:(NSData *)media{
+    /*
+    BucketModel *newBucket = [[BucketModel alloc] init];
+    newBucket.Id = 3;
+    newBucket.title = @"My new Crazy bucket";
+    newBucket.bucket_description = @"My new crazy description";
+    DropModel *newDrop = [[DropModel alloc] init];
+    newDrop.caption = @"My crazy new drop!";
+    newDrop.media_tmp = UIImagePNGRepresentation(image);
+    newBucket.rootDrop = newDrop;
+     */
+    
+    /*
+    [bucketController createNewBucket:media
+                      withBucketTitle:@"My new Crazy bucket"
+                withBucketDescription:@"My new crazy description"
+                      withDropCaption:@"My crazy new drop!"
+                           onProgress:^(NSNumber *progression)
+     {
+         NSLog(@"LASTET OPP: %@", progression);
+         
+     }
+                         onCompletion:^(ResponseModel *response)
+     {
+         NSLog(@"ALT ER FERDIG LASTET OPP!");
+         
+     
+     }];
+    */
+    [dropController addDropToBucket:@"My drop caption"
+                          withMedia:media
+                       withBucketId:1
+                         onProgress:^(NSNumber *progression)
+     {
+         NSLog(@"LASTET OPP: %@", progression);
+         
+     }
+                       onCompletion:^(ResponseModel *response)
+     {
+         NSLog(@"ALT ER FERDIG LASTET OPP!");
+         
+     }];
+    
+    /*
+    [bucketController updateBucket:newBucket
+                      onCompletion:^(ResponseModel *response){
+                          NSLog(@"BUCKET ENDRET");
+                          
+                      }];
+     */
+     
+     
 }
 
 
 
 -(void)onCameraOpen{
     cameraMode = YES;
-    [super onCameraOpen];
+    [self.camera prepareCamera:YES withReply:YES];
 }
 
 - (void)peekViewDrag:(UIPanGestureRecognizer *)gesture

@@ -14,6 +14,7 @@
           withBucketId:(int)bucket_id
             onProgress:(void (^)(NSNumber*))onProgression
           onCompletion:(void (^)(ResponseModel*))completionCallback
+ onError:(void(^)(NSError *))errorCallback
 {
     [self postHttpRequest:@"drop/generate_upload_url"
                      json:nil
@@ -43,23 +44,24 @@
                                NSMutableDictionary *dic = [parserHelper parse:data];
                                ResponseModel *responseModel = [[ResponseModel alloc] init:dic];
                                completionCallback(responseModel);
-                           }];
+                           } onError:errorCallback];
                           
                       }
                       
                   }];
-             }];
+             } onError:errorCallback];
 }
 
 -(void)deleteDrop:(int)drop_id
-       onCompletion:(void (^)(ResponseModel*))completionCallback
+     onCompletion:(void (^)(ResponseModel*))completionCallback
+          onError:(void(^)(NSError *))errorCallback
 {
     [self deleteHttpRequest:[NSString stringWithFormat:@"bucket/%d", drop_id]
                onCompletion:^(NSURLResponse *response,NSData *data,NSError *error){
                    NSMutableDictionary *dic = [parserHelper parse:data];
                    ResponseModel *responseModel = [[ResponseModel alloc] init:dic];
                    completionCallback(responseModel);
-               }];
+               } onError:errorCallback];
 }
 
 

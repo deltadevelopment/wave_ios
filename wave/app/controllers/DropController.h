@@ -13,8 +13,10 @@
              withMedia:(NSData*) media
           withBucketId:(int)bucket_id
             onProgress:(void (^)(NSNumber*))onProgression
-          onCompletion:(void (^)(ResponseModel*))completionCallback;
+          onCompletion:(void (^)(ResponseModel*))completionCallback
+ onError:(void(^)(NSError *))errorCallback;
 
 -(void)deleteDrop:(int)drop_id
-     onCompletion:(void (^)(ResponseModel*))completionCallback;
+     onCompletion:(void (^)(ResponseModel*))completionCallback
+ onError:(void(^)(NSError *))errorCallback;
 @end

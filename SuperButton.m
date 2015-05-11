@@ -161,31 +161,36 @@ typedef enum {
 # pragma GESTURES
 
 -(void)tapSuperButton{
-    switch (superButtonMode) {
-        case NONE:
-            [self animateButtonToMiddle];
-            [superButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"camera-icon.png"] withSize:150] forState:UIControlStateNormal];
-            superButtonMode = MIDDLE;
-            self.onTap([NSNumber numberWithInt:1]);
-            break;
-        case MIDDLE:
-            //animateToEdit
-            [superButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"tick.png"] withSize:150] forState:UIControlStateNormal];
-            self.onTap([NSNumber numberWithInt:2]);
-            self.lockActions = YES;
-            superButtonMode = EDIT;
-            break;
-        case EDIT:
-            if(!self.lockActions){
-                superButtonMode = NONE;
+    if(self.hasError){
+        [self showErrorAlert];
+    }else{
+        switch (superButtonMode) {
+            case NONE:
+                [self animateButtonToMiddle];
                 [superButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"camera-icon.png"] withSize:150] forState:UIControlStateNormal];
-                self.onTap([NSNumber numberWithInt:0]);
-                [self animateButtonToRight];
-            }
-            break;
-        default:
-            break;
+                superButtonMode = MIDDLE;
+                self.onTap([NSNumber numberWithInt:1]);
+                break;
+            case MIDDLE:
+                //animateToEdit
+                [superButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"tick.png"] withSize:150] forState:UIControlStateNormal];
+                self.onTap([NSNumber numberWithInt:2]);
+                self.lockActions = YES;
+                superButtonMode = EDIT;
+                break;
+            case EDIT:
+                if(!self.lockActions){
+                    superButtonMode = NONE;
+                    [superButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"camera-icon.png"] withSize:150] forState:UIControlStateNormal];
+                    self.onTap([NSNumber numberWithInt:0]);
+                    [self animateButtonToRight];
+                }
+                break;
+            default:
+                break;
+        }
     }
+  
 }
 
 -(void)longPressGesture:(UILongPressGestureRecognizer *) recognizer{
@@ -430,6 +435,28 @@ typedef enum {
                                                                         options:0
                                                                         metrics:nil
                                                                           views:NSDictionaryOfVariableBindings(superButton)]];
+}
+
+#pragma ALERTS
+-(void)showErrorAlert{
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Bucket not saved"
+                                                   message:@"Are you sure you want to dismiss the bucket?"
+                                                  delegate:self
+                                         cancelButtonTitle:@"Cancel"
+                                         otherButtonTitles:@"Ok",nil];
+    [alert show];
+}
+
+- (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0)
+    {
+        //ikke logg ut
+    }else{
+        self.hasError = NO;
+        [self tapSuperButton];
+        self.onErrorDismissed();
+    }
 }
 
 

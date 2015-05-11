@@ -7,7 +7,7 @@
 //
 
 #import "GraphicsHelper.h"
-
+#import "UIHelper.h"
 @implementation GraphicsHelper
 
 +(UIImage *)mirrorImageWithImage:(UIImage *) image{
@@ -34,6 +34,34 @@
     UIImage* subImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     return subImage;
+}
+
+
++(UIView *)getErrorView:(NSString *) errorMessage
+         withParent:(NSObject *) parent
+        withButtonTitle:(NSString *) title
+withButtonPressedSelector:(SEL) buttonSelector
+{
+    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [UIHelper getScreenWidth], 50)];
+    UILabel *errorMessageLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 10, [UIHelper getScreenWidth] - 100, 30)];
+
+    
+ 
+    [errorMessageLabel setMinimumScaleFactor:12.0/17.0];
+    
+    errorMessageLabel.adjustsFontSizeToFitWidth = YES;
+    [UIHelper applyThinLayoutOnLabel:errorMessageLabel];
+    errorMessageLabel.text = errorMessage;
+    
+    UIButton *errorButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [UIHelper applyThinLayoutOnButton:errorButton];
+    errorButton.frame = CGRectMake([UIHelper getScreenWidth] - 70, 15, 20, 20);
+    //[errorButton setTitle:title forState:UIControlStateNormal];
+    [errorButton setImage:[UIImage imageNamed:@"refresh.png"] forState:UIControlStateNormal];
+    [errorButton addTarget:parent action:buttonSelector forControlEvents:UIControlEventTouchUpInside];
+    [view addSubview:errorButton];
+    [view addSubview:errorMessageLabel];
+    return view;
 }
 
 + (UIImage*)imageByScalingAndCroppingForSize:(CGSize)targetSize img:(UIImage *) sourceImage

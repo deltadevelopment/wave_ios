@@ -24,6 +24,7 @@
     UIButton *selfieButton;
     UIButton *saveMediaButton;
     ProgressView *saveMediaProgressView;
+    ProgressView *loadVideoProgressView;
     bool cameraMode;
     bool frontFacingMode;
     bool imageReadyForUpload;
@@ -41,6 +42,7 @@
     bool mediaIsVideo;
     UIImageView *imageView;
     NSData *lastRecordedVideo;
+    bool isReply;
 }
 
 - (void)viewDidLoad {
@@ -78,6 +80,9 @@
         cameraHelper.onVideoRecorded = ^(NSData *(video)){
             [weakSelf onVideorecorded:video];
         };
+    cameraHelper.onVideoPrepareForPlayback = ^{
+        [weakSelf onVideoPrepareForPlayBack];
+    };
     cameraHelper.onMediaSavedToDisk = ^{
         [weakSelf onMediaSavedToDisk];
     };
@@ -99,9 +104,20 @@
                                                                      ([UIHelper getScreenHeight]/2) - 35,
                                                                      width,
                                                                      70)];
+    loadVideoProgressView = [[ProgressView alloc] initWithFrame:CGRectMake(([UIHelper getScreenWidth]/2) - (width/2),
+                                                                           ([UIHelper getScreenHeight]/2) - 35,
+                                                                           width,
+                                                                           70)];
+   // [loadVideoProgressView setProgressString:@"Laster inn..."];
+    [loadVideoProgressView turnOffText];
 }
+-(void)onVideoPrepareForPlayBack{
 
+}
 -(void)onVideorecorded:(NSData *) video{
+    [loadVideoProgressView stopProgress];
+    NSLog(@"ONVIDEORECORDED");
+    //mediaPlayer = [[MediaPlayerViewController alloc] init];
     lastRecordedVideo = video;
     intMode = 2;
     mediaIsVideo = YES;
@@ -232,24 +248,10 @@
 -(void)onMediaSavedToDisk{
     [saveMediaProgressView stopProgress];
     [saveMediaProgressView setProgressString:NSLocalizedString(@"progress_txt_suc", nil)];
-    [self animateProgressOut];
-}
-
--(void)animateProgressOut{
-    [UIView animateWithDuration:0.8f
-                          delay:0.4f
-                        options: UIViewAnimationOptionCurveLinear
-                     animations:^{
-                         saveMediaProgressView.alpha = 0.0;
-                     }
-                     completion:^(BOOL finished){
-                         saveMediaProgressView.hidden = YES;
-                     }];
 }
 
 -(void)onMediaSavedToDiskError{
     [saveMediaProgressView setProgressString:NSLocalizedString(@"progress_txt_err", nil)];
-    [self animateProgressOut];
 }
 
 -(void)addConstraintsToButton:(UIView *)view withButton:(UIButton *) button withPoint:(CGPoint) xy fromLeft:(bool) left fromTop:(bool) top{
@@ -303,15 +305,23 @@
                                                                      views:NSDictionaryOfVariableBindings(button)]];
 }
 
+-(void)prepareCamera:(bool)rearCamera withReply:(bool)reply{
+    isReply = reply;
+    NSLog(@"reply is %@", isReply ? @"YES" :@"NO");
+    [self prepareCamera:rearCamera];
+}
+
 -(void)prepareCamera:(bool)rearCamera{
     imgTaken = nil;
     mediaPlayer.view.hidden = YES;
     frontFacingMode = !rearCamera;
     [cameraHelper setView:self.view withRect:CGRectMake(0, 0, [UIHelper getScreenWidth], [UIHelper getScreenHeight])];
     [cameraHelper initaliseVideo:rearCamera];
-
+    
     [self.view addSubview:selfieButton];
     [self.view addSubview:saveMediaButton];
+
+    [self.view addSubview:loadVideoProgressView];
     [self.view addSubview:saveMediaProgressView];
     [self initUI];
     [self showTools];
@@ -365,6 +375,8 @@
 {
     //sjekke her om videoen allerede er stoppet. kan skje hvis tiden går ut å brukeren deretter slipper knappen
     if(isRecording){
+        [loadVideoProgressView startProgress];
+       
         [cameraHelper stopRecording];
         isRecording = NO;
         NSLog(@"stopping recording");
@@ -389,6 +401,8 @@
 -(void)uploadMedia{
     // self.onPictureUploading();
     
+    
+    
     if(mediaIsVideo){
         [mediaPlayer stopVideo];
     }
@@ -399,14 +413,20 @@
     cameraMode = NO;
     imageReadyForUpload = NO;
     if(mediaIsVideo){
-        self.onVideoTaken(lastRecordedVideo, imgTaken);
+        if([cameraHelper isCompressed]){
+            self.onVideoTaken([cameraHelper getlastRecordedVideoCompressed], imgTaken);
+            
+        }else{
+            self.onVideoTaken(lastRecordedVideo, imgTaken);
+        }
+        
     }
     else{
         self.onImageTaken(imgTaken);
     }
-
-            mediaIsVideo = NO;
-   
+    
+    mediaIsVideo = NO;
+    
 }
 
 -(void)closeCamera{
@@ -499,8 +519,8 @@
 }
 
 -(void)showTools{
-    typeButton.hidden = NO;
-    toolTip.hidden = NO;
+    typeButton.hidden = isReply ? YES : NO;
+    toolTip.hidden = isReply ? YES : NO;
     selfieButton.hidden = NO;
     [UIView animateWithDuration:0.3f
                           delay:0.0f

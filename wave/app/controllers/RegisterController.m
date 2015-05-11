@@ -13,7 +13,8 @@
 -(void)registerUser:(NSString *) username
                pass:(NSString *) password
               email:(NSString *) email
-       onCompletion:(void (^)(UserModel*,ResponseModel*))callback;
+       onCompletion:(void (^)(UserModel*,ResponseModel*))callback
+ onError:(void(^)(NSError *))errorCallback;
 
 {
     //Logout
@@ -30,17 +31,19 @@
     
     [self postHttpRequest:@"register"
                      json:jsonData
-             onCompletion:^(NSURLResponse *response,NSData *data,NSError *error){
-                 //request finished
-                 //NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) response;
-                 //NSInteger statuscode = [httpResponse statusCode];
-                 NSString *strdata=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
-                 NSLog(@"%@",strdata);
-                 NSMutableDictionary *dic = [parserHelper parse:data];
-                 ResponseModel *responseModel = [[ResponseModel alloc] init:dic];
-                 UserModel *user = [[UserModel alloc] init:[[dic objectForKey:@"data"] objectForKey:@"user"]];
-                 callback(user, responseModel);
-             }];
+             onCompletion:^(NSURLResponse *response,NSData *data,NSError *error)
+     
+     {
+         //request finished
+         //NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) response;
+         //NSInteger statuscode = [httpResponse statusCode];
+         NSString *strdata=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+         NSLog(@"%@",strdata);
+         NSMutableDictionary *dic = [parserHelper parse:data];
+         ResponseModel *responseModel = [[ResponseModel alloc] init:dic];
+         UserModel *user = [[UserModel alloc] init:[[dic objectForKey:@"data"] objectForKey:@"user"]];
+         callback(user, responseModel);
+     } onError:errorCallback];
     
 };
 
