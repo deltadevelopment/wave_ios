@@ -12,6 +12,8 @@
 #import "InfoViewController.h"
 #import "GraphicsHelper.h"
 #import "ColorHelper.h"
+#import "NotificationHelper.h"
+#import "BucketModel.h"
 @interface SuperViewController ()
 
 @end
@@ -26,6 +28,7 @@
     UIImageView *tickView;
     UIView *errorView;
     UIButton *crossButton;
+    NotificationHelper *notificationHelper;
 }
 
 - (void)viewDidLoad {
@@ -33,6 +36,7 @@
     infoView = (InfoViewController *)[self createViewControllerWithStoryboardId:@"infoView"];
     infoView.view.alpha = 0.0;
     [self initSuperButton];
+    
     _camera = [[CameraViewController alloc]init];
     
     progressIndicator = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 4)];
@@ -66,11 +70,11 @@
     _camera.onCameraClose=^{
         [weakSelf onCameraClose];
     };
-    _camera.onImageTaken =^(UIImage*(image)){
-        [weakSelf onImageTaken:image];
+    _camera.onImageTaken =^(UIImage*(image),NSString *(text)){
+        [weakSelf onImageTaken:image withText:text];
     };
-    _camera.onVideoTaken =^(NSData *(video), UIImage *(image)){
-        [weakSelf onVideoTaken:video withImage:image];
+    _camera.onVideoTaken =^(NSData *(video), UIImage *(image),NSString*(text)){
+        [weakSelf onVideoTaken:video withImage:image withtext:text];
     };
     _camera.onImageReady=^{
         [weakSelf onImageReady];
@@ -87,7 +91,36 @@
     _camera.onVideoRecorded =^{
         [weakSelf onVideoRecorded];
     };
+    _camera.onCameraModeChanged = ^(bool(canChange)){
+        [weakSelf onCameraModeChanged:canChange];
+    };
+    _camera.onNotificatonShow=^(NSString *(message)){
+        [weakSelf onNotification:message];
+    };
+    _camera.onProgression = ^(int(progression)){
+        [weakSelf increaseProgress:progression];
+    };
+    _camera.onNetworkError = ^(UIView *(view)){
+        [weakSelf addErrorMessage:view];
+    };
+    _camera.onNetworkErrorHide=^{
+        [weakSelf hideError];
+    };
+    _camera.onMediaPosted=^(BucketModel *(bucket)){
+        [weakSelf onMediaPosted:bucket];
+    };
 }
+
+
+-(void)onMediaPosted:(BucketModel *) bucket{
+
+}
+-(void)onNotification:(NSString *) message{
+    notificationHelper =[[NotificationHelper alloc] initNotification];
+    [notificationHelper setNotificationMessage:message];
+    [notificationHelper addNotificationToView:self.navigationController.view];
+}
+
 -(void)onVideoRecorded{
     [self.superButton videoRecorded];
 }
@@ -193,11 +226,11 @@
     [self.view insertSubview:_camera.view atIndex:0];
 }
 
--(void)onImageTaken:(UIImage *)image{
+-(void)onImageTaken:(UIImage *)image withText:(NSString *) text{
     CGSize size = CGSizeMake([UIHelper getScreenWidth], [UIHelper getScreenHeight]);
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[GraphicsHelper imageByScalingAndCroppingForSize:size img:image]]];
 }
--(void)onVideoTaken:(NSData *) video withImage:(UIImage *) image{
+-(void)onVideoTaken:(NSData *) video withImage:(UIImage *) image withtext:(NSString *) text{
 
 }
 
@@ -336,8 +369,6 @@
 }
 
 
-
-
 -(void)initSuperButton{
     [self attachSuperButtonToView];
     __weak typeof(self) weakSelf = self;
@@ -389,6 +420,11 @@
         [weakSelf onLongPressEnded];
     };
     
+}
+
+-(void)onCameraModeChanged:(bool) canChange
+{
+    self.superButton.shouldChangeMode = canChange;
 }
 
 -(void)onLongPressStarted{

@@ -29,6 +29,7 @@
 @property (nonatomic, copy) void (^onErrorDismissed)(void);
 @property (nonatomic) bool lockActions;
 @property (nonatomic) bool hasError;
+@property (nonatomic) bool shouldChangeMode;
 -(id)init:(UIView *)view;
 
 -(UIButton *)getButton;

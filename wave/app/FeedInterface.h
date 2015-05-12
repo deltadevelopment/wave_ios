@@ -7,14 +7,15 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import "BucketModel.h"
 @protocol FeedInterface <NSObject>
 -(void)scrollUp;
 -(void)prepareCamera:(UIView *) view;
 -(void)onCameraOpen;
 -(void)oncameraClose;
--(void)onImageTaken:(UIImage *)image;
--(void)onVideoTaken:(NSData *) video withImage:(UIImage *)image;
+-(void)onImageTaken:(UIImage *)image withText:(NSString *)text;
+-(void)onMediaPosted:(BucketModel *) bucket;
+-(void)onVideoTaken:(NSData *) video withImage:(UIImage *)image withtext:(NSString *)text;
 -(void)onCameraReady;
 -(void)onFocusGained;
 -(void)onCancelTap;

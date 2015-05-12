@@ -12,6 +12,7 @@
 #import "DropModel.h"
 @implementation ActivityTableViewCell{
     UIView *shadowView;
+    UIActivityIndicatorView *spinner;
 }
 
 - (void)awakeFromNib {
@@ -26,6 +27,16 @@
 
 -(void)initialize{
     self.isInitialized = YES;
+    
+    spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+    float center = ([UIHelper getScreenHeight] - 64)/2;
+    spinner.center = CGPointMake([UIHelper getScreenWidth]/2-10, center/2-10);
+    
+    spinner.hidesWhenStopped = YES;
+    spinner.hidden = YES;
+    
+    
+    
     self.bucketImage.contentMode = UIViewContentModeScaleAspectFill;
     self.bucketImage.clipsToBounds = YES;
     [self insertSubview:self.topBar aboveSubview:self.bucketImage];
@@ -46,9 +57,17 @@
     shadowView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, [UIHelper getScreenWidth], [UIHelper getScreenHeight]/4)];
     [UIHelper addShadowToView:shadowView];
     self.bucketImage.frame = CGRectOffset(self.frame, 50, 50);
-   [self.bucketImage addSubview:shadowView];
+    [self.bucketImage addSubview:shadowView];
     self.layer.shouldRasterize = YES;
     self.layer.rasterizationScale = [UIScreen mainScreen].scale;
+    [self addSubview:spinner];
+}
+
+-(void)startSpinnerAnimtation{
+    [spinner startAnimating];
+}
+-(void)stopSpinnerAnimation{
+    [spinner stopAnimating];
 }
 -(void)update:(BucketModel *) bucket{
         DropModel *drop = [[bucket drops] objectAtIndex:0];

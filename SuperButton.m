@@ -172,11 +172,15 @@ typedef enum {
                 self.onTap([NSNumber numberWithInt:1]);
                 break;
             case MIDDLE:
-                //animateToEdit
-                [superButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"tick.png"] withSize:150] forState:UIControlStateNormal];
+                if(self.shouldChangeMode){
+                    //animateToEdit
+                    [superButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"tick.png"] withSize:150] forState:UIControlStateNormal];
+                    
+                    self.lockActions = YES;
+                    superButtonMode = EDIT;
+                }
                 self.onTap([NSNumber numberWithInt:2]);
-                self.lockActions = YES;
-                superButtonMode = EDIT;
+              
                 break;
             case EDIT:
                 if(!self.lockActions){

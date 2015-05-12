@@ -26,7 +26,7 @@ AuthHelper *authHelper;
      authHelper = [[AuthHelper alloc] init];
    // [authHelper resetCredentials];
     if([authHelper getAuthToken] == nil){
-        [self setView:[[StartViewController alloc] init] second:@"startNav"];
+        //[self setView:[[StartViewController alloc] init] second:@"startNav"];
     }else{
         //[self setView:[[ViewController alloc] init] second:@"mainView"];
 

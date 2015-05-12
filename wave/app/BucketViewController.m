@@ -322,7 +322,10 @@ const int PEEK_Y_START = 300;
         [dropView setImage:drop.image];
     }
     else if(drop.media_tmp != nil){
-        [dropView setImage:[UIImage imageWithData:drop.media_tmp]];
+        UIImage *img = [UIImage imageWithData:drop.media_tmp];
+        CGSize size = CGSizeMake([UIHelper getScreenWidth], [UIHelper getScreenHeight]);
+       
+        [dropView setImage:[GraphicsHelper imageByScalingAndCroppingForSize:size img:img]];
     }
     else{
         [dropView setImage:[UIImage imageNamed:[drop media]]];

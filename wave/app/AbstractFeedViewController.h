@@ -20,10 +20,11 @@
 -(void)prepareCamera:(UIView *)view;
 -(void)onCameraOpen;
 -(void)oncameraClose;
--(void)onImageTaken:(UIImage *)image;
+-(void)onImageTaken:(UIImage *)image withText:(NSString *)text;
 -(void)onCameraReady;
 -(void)onFocusGained;
--(void)onVideoTaken:(NSData *) video withImage:(UIImage *)image;
+-(void)onVideoTaken:(NSData *) video withImage:(UIImage *)image withtext:(NSString *)text;
 -(void)onCancelTap;
 -(void)increazeProgress:(int)progress;
+-(void)onMediaPosted:(BucketModel *)bucket;
 @end

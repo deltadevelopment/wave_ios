@@ -11,46 +11,52 @@
 #import <AssetsLibrary/AssetsLibrary.h>
 #import <UIKit/UIKit.h>
 
-@interface CameraHelper : NSObject<AVCaptureFileOutputRecordingDelegate>{
-    AVCaptureStillImageOutput * stillImageOutput;
-    AVCaptureVideoDataOutput * videoImageOutput;
-    UIImage *imgTaken;
-    AVCaptureSession *session;
-    AVCaptureVideoPreviewLayer *captureVideoPreviewLayer;
-    AVCaptureDevice *frontCamera;
-    AVCaptureDevice *backCamera;
-    bool frontFacing;
-    UIView *view;
-    
-    //Video
-    AVCaptureSession *CaptureSession;
-    AVCaptureMovieFileOutput *MovieFileOutput;
-    AVCaptureDeviceInput *VideoInputDevice;
-    AVCaptureDeviceInput *FrontFacingInputDevice;
-    SEL mediaSuccessSelector;
-    NSObject *mediaSuccessObject;
-    
-    
-}
+@interface CameraHelper : NSObject<AVCaptureFileOutputRecordingDelegate>
+
 @property (nonatomic, strong) NSData *lastRecordedVideoCompressed;
 @property (nonatomic) bool isCompressed;
 @property (nonatomic, copy) void (^onVideoRecorded)(NSData*(video));
 @property (nonatomic, copy) void (^onVideoPrepareForPlayback)(void);
 @property (nonatomic, copy) void (^onMediaSavedToDisk)(void);
 @property (nonatomic, copy) void (^onMediaSavedToDiskError)(void);
+
+@property (nonatomic) bool recording;
+@property (nonatomic, strong) AVCaptureDevice *VideoDevice;
+@property (nonatomic) AVCaptureDevicePosition position;
+@property (nonatomic, strong) UIView *CameraView;
+
+@property (nonatomic, strong)NSData *lastRecordedVideo;
+
+@property (nonatomic, strong)NSURL *lastRecordedVideoURL;
+@property (nonatomic, retain)AVCaptureVideoPreviewLayer *PreviewLayer;
+@property (nonatomic, retain)AVCaptureSession *CaptureSession;
+
+@property (nonatomic, strong)AVCaptureDevice *frontFacingDevice;
+@property (nonatomic, strong)NSDictionary *outputSettings;
+@property (nonatomic) bool square;
+
+@property (nonatomic, strong)AVCaptureStillImageOutput * stillImageOutput;
+
+@property (nonatomic, strong)UIImage *imgTaken;
+
+
+@property (nonatomic) bool frontFacing;
+@property (nonatomic, retain) AVCaptureConnection *videoConnection;
+
+@property (nonatomic, strong) AVCaptureMovieFileOutput *movieFileOutput;
+@property (nonatomic, strong) AVCaptureDeviceInput *VideoInputDevice;
+@property (nonatomic, strong) AVCaptureDeviceInput *FrontFacingInputDevice;
+
+@property (nonatomic, strong) AVCaptureDevice *audioCaptureDevice;
+@property (nonatomic, strong) AVCaptureDeviceInput *audioInput;
+
+
 -(void)stopCameraSession;
--(AVCaptureVideoPreviewLayer *)getLayer;
--(void)setSquare:(bool) theSquare;
--(void)cancelSession;
-- (void) capImage:(NSObject *) object withSuccess:(SEL) success;
+//-(void) capImage:(NSObject *) object withSuccess:(SEL) success;
+-(void) captureNow:(NSObject *) object withSuccess:(SEL) success;
 -(NSData*)getLastRecordedVideo;
--(void)setMediaDoneSelector:(SEL) successSelector
-                 withObject:(NSObject*) object;
-@property (retain) AVCaptureVideoPreviewLayer *PreviewLayer;
--(void)initaliseVideo:(bool)rearCamera;
+-(void)initaliseVideo:(bool)rearCamera withView:(UIView *) view;
 - (void)CameraToggleButtonPressed:(bool)isFrontCamera;
--(void)setView:(UIView *)videoView withRect:(CGRect) rect;
--(UIView*)getView;
 -(void)startRecording;
 
 -(void)stopRecording;

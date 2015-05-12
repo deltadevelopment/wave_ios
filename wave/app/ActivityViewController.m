@@ -213,7 +213,7 @@ const int EXPAND_SIZE = 400;
     _tableView.scrollEnabled = YES;
 }
 
--(void)mediaTaken:(UIImage *) image{
+-(void)mediaTaken:(UIImage *) image withText:(NSString *) text{
     /*
      BucketModel *newBucket = [[BucketModel alloc] init];
      newBucket.Id = 3;
@@ -246,6 +246,8 @@ const int EXPAND_SIZE = 400;
     //[cameraView removeFromSuperview];
     ActivityTableViewCell *cell = (ActivityTableViewCell  *)[_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
     cell.bucketImage.image = imgTaken;
+    cell.displayNameText.text = [text isEqualToString:@""] ? @"Simen Lie" : text;
+    [cell startSpinnerAnimtation];
     //cameraCell.bucketImage.image = imgTaken;
     BucketModel *bucket = [feed objectAtIndex:0];
     
@@ -263,18 +265,25 @@ const int EXPAND_SIZE = 400;
     [self.tableView endUpdates];
 }
 
--(void)onImageTaken:(UIImage *)image{
-    [self mediaTaken:image];
-    [self uploadMedia:UIImagePNGRepresentation(image)];
+-(void)onImageTaken:(UIImage *)image withText:(NSString *)text{
+    [self mediaTaken:image withText:text];
+   // [self uploadMedia:UIImagePNGRepresentation(image)];
 }
--(void)onVideoTaken:(NSData *)video withImage:(UIImage *)image{
-    [self mediaTaken:image];
-    [self uploadMedia:video];
+-(void)onVideoTaken:(NSData *)video withImage:(UIImage *)image withtext:(NSString *)text{
+    [self mediaTaken:image withText:text];
+   // [self uploadMedia:video];
     NSLog(@"File size is : %.2f MB",(float)video.length/1024.0f/1024.0f);
 }
 
--(void)uploadMedia:(NSData *) media{
+-(void)onMediaPosted:(BucketModel *)bucket{
+    NSLog(@"POSTEDT");
+    ActivityTableViewCell *cell = (ActivityTableViewCell  *)[_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+    [cell stopSpinnerAnimation];
+    [feed replaceObjectAtIndex:0 withObject:bucket];
+}
 
+-(void)uploadMedia:(NSData *) media{
+/*
      __weak typeof(self) weakSelf = self;
     [bucketController createNewBucket:media
                       withBucketTitle:@"My new Crazy bucket"
@@ -305,7 +314,10 @@ const int EXPAND_SIZE = 400;
          weakSelf.onNetworkError(errorView);
       
      }];
+ */
 }
+
+
 
 -(void)viewWillDisappear:(BOOL)animated{
         

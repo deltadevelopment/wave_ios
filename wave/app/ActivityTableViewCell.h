@@ -19,5 +19,7 @@
 -(void)initialize;
 -(void)update:(NSString *)name;
 -(void)updateDropImage:(UIImage *) image;
+-(void)startSpinnerAnimtation;
+-(void)stopSpinnerAnimation;
 
 @end

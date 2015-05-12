@@ -37,6 +37,8 @@
 {
 
 }
+
+-(void)onMediaPosted:(BucketModel *)bucket{}
 /*
 #pragma mark - Navigation
 

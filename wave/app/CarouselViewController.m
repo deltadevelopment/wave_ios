@@ -117,6 +117,7 @@
     mainViewController.onNetworkErrorHide=^{
         [weakSelf hideError];
     };
+    
     UIView *View = [[UIView alloc] initWithFrame:ViewSize];
     CGRect frame = mainViewController.view.frame;
     frame.size.height = frame.size.height -64;
@@ -150,6 +151,10 @@
     [currentController prepareCamera:self.camera.view];
 }
 
+-(void)onMediaPosted:(BucketModel *)bucket{
+    [currentController onMediaPosted:bucket];
+}
+
 -(void)onCameraClose{
     [currentController oncameraClose];
 }
@@ -157,14 +162,14 @@
     [currentController onCameraReady];
 }
 
--(void)onImageTaken:(UIImage *)image{
+-(void)onImageTaken:(UIImage *)image withText:(NSString *)text{
     CGSize size = CGSizeMake([UIHelper getScreenWidth], [UIHelper getScreenHeight]);
-    [currentController onImageTaken:[GraphicsHelper imageByScalingAndCroppingForSize:size img:image]];
+    [currentController onImageTaken:[GraphicsHelper imageByScalingAndCroppingForSize:size img:image] withText:text];
     //[[currentController view] setBackgroundColor:[UIColor colorWithPatternImage:]];
 }
 
--(void)onVideoTaken:(NSData *)video withImage:(UIImage *)image{
-    [currentController onVideoTaken:video withImage:image];
+-(void)onVideoTaken:(NSData *)video withImage:(UIImage *)image withtext:(NSString *)text{
+    [currentController onVideoTaken:video withImage:image withtext:text];
 }
 
 -(void)onCameraOpen{

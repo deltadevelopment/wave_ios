@@ -13,7 +13,7 @@
 #import "CameraViewController.h"
 @interface SuperViewController : DefaultViewController
 @property(strong, nonatomic) SuperButton *superButton;
-@property (strong, nonatomic) CameraViewController *camera;
+@property (strong) CameraViewController *camera;
 -(void)attachViews:(OverlayViewController *) x withY:(OverlayViewController *) y;
 -(OverlayViewController *)createViewControllerWithStoryboardId:(NSString *) identifier;
 -(void)attachSuperButtonToView;
@@ -22,9 +22,10 @@
 -(void)onCameraOpen;
 -(void)onCameraClose;
 -(void)onCancelTap;
+-(void)onMediaPosted:(BucketModel *) bucket;
 -(void)addConstraints:(UIView *) view;
--(void)onImageTaken:(UIImage *)image;
--(void)onVideoTaken:(NSData *) video withImage:(UIImage *) image;
+-(void)onImageTaken:(UIImage *)image withText:(NSString *) text;
+-(void)onVideoTaken:(NSData *) video withImage:(UIImage *) image withtext:(NSString *) text;
 -(void)attachCameraToView:(UIView *)view;
 -(void)showCamera;
 -(void)increaseProgress:(int) progress;

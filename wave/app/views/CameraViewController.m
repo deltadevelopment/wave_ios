@@ -14,12 +14,14 @@
 #import "CircleIndicatorView.h"
 #import "MediaPlayerViewController.h"
 #import "ProgressView.h"
+#import "BucketController.h"
+#import "DataHelper.h"
+
 @interface CameraViewController ()
 
 @end
-
 @implementation CameraViewController{
-    CameraHelper *cameraHelper;
+    
     CircleIndicatorView *circleIndicatorView;
     UIButton *selfieButton;
     UIButton *saveMediaButton;
@@ -43,7 +45,13 @@
     UIImageView *imageView;
     NSData *lastRecordedVideo;
     bool isReply;
+    UITextField *titleTextField;
+    BucketController *bucketController;
+    UIView *errorView;
+    
 }
+
+@synthesize cameraHelper;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -51,7 +59,7 @@
     mediaPlayer.onVideoFinishedPlaying = ^{
         
     };
-
+    bucketController = [[BucketController alloc] init];
     bucketTypes = [[NSMutableArray alloc]init];
     selfieButton = [UIButton buttonWithType:UIButtonTypeCustom];
    // [selfieButton setTitle:@"Selfie" forState:UIControlStateNormal];
@@ -74,12 +82,12 @@
     [saveMediaButton addTarget:self action:@selector(saveMediaToDisk:) forControlEvents:UIControlEventTouchDown];
     saveMediaButton.hidden = YES;
     //[selfieButton setBackgroundImage:[UIImage imageNamed:@"bucket.png"] forState:UIControlStateNormal];
-    cameraHelper = [[CameraHelper alloc]init];
+    self.cameraHelper = [[CameraHelper alloc]init];
     __weak typeof(self) weakSelf = self;
 
-        cameraHelper.onVideoRecorded = ^(NSData *(video)){
-            [weakSelf onVideorecorded:video];
-        };
+    cameraHelper.onVideoRecorded = ^(NSData *(video)){
+        [weakSelf onVideorecorded:video];
+    };
     cameraHelper.onVideoPrepareForPlayback = ^{
         [weakSelf onVideoPrepareForPlayBack];
     };
@@ -95,7 +103,44 @@
     
     [self initBucketTypes];
     [self initProgressView];
+    [self initTextField];
     // [self initUI];
+}
+
+-(void)addShadow{
+    UIView *shadowView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, [UIHelper getScreenWidth], [UIHelper getScreenHeight]/4)];
+    [UIHelper addShadowToView:shadowView];
+    [self.view addSubview:shadowView];
+}
+
+-(void)initTextField{
+    float width = [UIHelper getScreenWidth] -100;
+    titleTextField = [[UITextField alloc] initWithFrame:CGRectMake(20, 64, width, 60)];
+    titleTextField.font = [UIFont fontWithName:@"HelveticaNeue-Thin" size:19.0f];
+    [titleTextField setTextColor:[UIColor whiteColor]];
+    titleTextField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"Add a title" attributes:@{                                                                                                                                 NSForegroundColorAttributeName: [[UIColor whiteColor]colorWithAlphaComponent:0.8]                                                                                                                                                                     }];
+    titleTextField.delegate = self;
+       titleTextField.returnKeyType = UIReturnKeyDone;
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillChange:)
+                                                 name:UIKeyboardDidShowNotification
+                                               object:nil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
+    UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
+    [self.view addGestureRecognizer:gestureRecognizer];
+    gestureRecognizer.cancelsTouchesInView = NO;
+    titleTextField.hidden = YES;
+
+    
 }
 
 -(void)initProgressView{
@@ -136,8 +181,9 @@
 
 
 -(void)initBucketTypes{
-    [bucketTypes addObject:[[BucketTypeModel alloc] initWithProperties:0 withDescription:@"Create new shared bucket" withIconPath:@"bucket-white.png"]];
-    [bucketTypes addObject:[[BucketTypeModel alloc] initWithProperties:1 withDescription:@"Update your personal bucket" withIconPath:@"events-icon.png"]];
+    [bucketTypes addObject:[[BucketTypeModel alloc] initWithProperties:0 withDescription:@"Update your personal bucket" withIconPath:@"events-icon.png"]];
+    [bucketTypes addObject:[[BucketTypeModel alloc] initWithProperties:1 withDescription:@"Create new shared bucket" withIconPath:@"bucket-white.png"]];
+    
 }
 
 -(void)initUI{
@@ -201,7 +247,7 @@
         }else{
             [self prepareCamera:YES];
         }
-       
+       titleTextField.text = @"";
         intMode = 1;
         self.onPictureDiscard();
     }
@@ -211,6 +257,13 @@
     currentTypeIndex ++;
     if(currentTypeIndex == [bucketTypes count]){
         currentTypeIndex = 0;
+    }
+    if(currentTypeIndex != 1){
+        titleTextField.hidden = YES;
+        self.onCameraModeChanged(YES);
+    }else{
+        titleTextField.hidden = NO;
+        self.onCameraModeChanged(NO);
     }
     BucketTypeModel *bucketModel = [bucketTypes objectAtIndex:currentTypeIndex];
     [typeButton setImage:[UIHelper iconImage:[UIImage imageNamed:[bucketModel icon_path]] withSize:150] forState:UIControlStateNormal];
@@ -315,19 +368,26 @@
     imgTaken = nil;
     mediaPlayer.view.hidden = YES;
     frontFacingMode = !rearCamera;
-    [cameraHelper setView:self.view withRect:CGRectMake(0, 0, [UIHelper getScreenWidth], [UIHelper getScreenHeight])];
-    [cameraHelper initaliseVideo:rearCamera];
+    self.onCameraModeChanged(YES);
     
+        cameraHelper = [[CameraHelper alloc] init];
+        //[self.cameraHelper setView:self.view withRect:CGRectMake(0, 0, [UIHelper getScreenWidth], [UIHelper getScreenHeight])];
+        [cameraHelper initaliseVideo:rearCamera withView:self.view];
+    
+  
+    [self addShadow];
     [self.view addSubview:selfieButton];
     [self.view addSubview:saveMediaButton];
 
     [self.view addSubview:loadVideoProgressView];
     [self.view addSubview:saveMediaProgressView];
+        [self.view addSubview:titleTextField];
     [self initUI];
     [self showTools];
     [self addConstraintsToButton:self.view withButton:selfieButton withPoint:CGPointMake(0, -64) fromLeft:NO fromTop:YES];
     [self addConstraintsToButton:self.view withButton:saveMediaButton withPoint:CGPointMake(-4, 10) fromLeft:YES fromTop:NO];
     self.onCameraReady();
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -339,10 +399,21 @@
     intMode = [mode intValue];
     if(intMode == 1){
         cameraMode = YES;
+        currentTypeIndex = 0;
+        self.onCameraModeChanged(NO);
+        titleTextField.text = @"";
         self.onCameraOpen();
+        NSLog(@"open");
     }
     else if(intMode == 2){
-        [self takePicture];
+        if(currentTypeIndex == 1 && titleTextField.text.length == 0){
+            [self notifyUser];
+        }else{
+            [self takePicture];
+             NSLog(@"takePicture");
+            titleTextField.hidden = YES;
+        }
+        
     }
     else if(intMode == 0){
         if(imageReadyForUpload){
@@ -356,25 +427,36 @@
 
 -(void)startRecording
 {
-    [cameraHelper startRecording];
-    isRecording = YES;
-    NSLog(@"starting recording");
-    circleIndicatorView = [[CircleIndicatorView alloc] initWithFrame:CGRectMake(0, 0, 80, 80)];
-    [recordingProgressView addSubview:circleIndicatorView];
+    if(currentTypeIndex == 1 && titleTextField.text.length == 0){
+        //Notify user to add a title
+        [self notifyUser];
     
-    [circleIndicatorView setIndicatorWithMaxTime:10];
-    [self hideAllTools];
-    [self hideButton:selfieButton];
-    //Start recording
+    }else {
+        [cameraHelper startRecording];
+        isRecording = YES;
+        NSLog(@"starting recording");
+        circleIndicatorView = [[CircleIndicatorView alloc] initWithFrame:CGRectMake(0, 0, 80, 80)];
+        [recordingProgressView addSubview:circleIndicatorView];
+        
+        [circleIndicatorView setIndicatorWithMaxTime:10];
+        [self hideAllTools];
+        [self hideButton:selfieButton];
+        //Start recording
+        
+        recordTimer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(decrementSpin) userInfo:nil repeats:YES];
+    }
+
     
-    recordTimer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(decrementSpin) userInfo:nil repeats:YES];
-    
+}
+-(void)notifyUser{
+    self.onNotificatonShow(@"Add a title to your bucket");
 }
 
 -(void)stopRecording
 {
     //sjekke her om videoen allerede er stoppet. kan skje hvis tiden går ut å brukeren deretter slipper knappen
     if(isRecording){
+        titleTextField.hidden = YES;
         [loadVideoProgressView startProgress];
        
         [cameraHelper stopRecording];
@@ -401,8 +483,6 @@
 -(void)uploadMedia{
     // self.onPictureUploading();
     
-    
-    
     if(mediaIsVideo){
         [mediaPlayer stopVideo];
     }
@@ -414,33 +494,78 @@
     imageReadyForUpload = NO;
     if(mediaIsVideo){
         if([cameraHelper isCompressed]){
-            self.onVideoTaken([cameraHelper getlastRecordedVideoCompressed], imgTaken);
-            
+            NSLog(@"test");
+            self.onVideoTaken([cameraHelper getlastRecordedVideoCompressed], imgTaken, titleTextField.text);
+            [self uploadMedias:[cameraHelper getlastRecordedVideoCompressed]];
         }else{
-            self.onVideoTaken(lastRecordedVideo, imgTaken);
+            self.onVideoTaken(lastRecordedVideo, imgTaken, titleTextField.text);
         }
-        
     }
     else{
-        self.onImageTaken(imgTaken);
+        self.onImageTaken(imgTaken, titleTextField.text);
+        CGSize size = CGSizeMake([UIHelper getScreenWidth], [UIHelper getScreenHeight]);
+        [self uploadMedias:UIImagePNGRepresentation([GraphicsHelper imageByScalingAndCroppingForSize:size img:imgTaken])];
     }
     
     mediaIsVideo = NO;
     
 }
 
+-(void)uploadMedias:(NSData *) media{
+    if(currentTypeIndex == 1){
+        //Create a new bucket
+        [self createNewBucket:media];
+    }else{
+        //update personal bucket
+    
+    }
+   
+}
+
+-(void)createNewBucket:(NSData *) media{
+    __weak typeof(self) weakSelf = self;
+    [bucketController createNewBucket:media
+                      withBucketTitle:titleTextField.text
+                withBucketDescription:@"My new crazy description"
+                      withDropCaption:@"My crazy new drop!"
+                           onProgress:^(NSNumber *progression)
+     {
+         weakSelf.onProgression([progression intValue]);
+     }
+                         onCompletion:^(ResponseModel *response, BucketModel *bucket)
+     {
+         self.onMediaPosted(bucket);
+     } onError:^(NSError *error){
+         [DataHelper storeData:media];
+         //[weakSelf addErrorMessage];
+         errorView = [GraphicsHelper getErrorView:[error localizedDescription]
+                                       withParent:self
+                                  withButtonTitle:@"Prøv igjen"
+                        withButtonPressedSelector:@selector(uploadAgain)];
+         weakSelf.onNetworkError(errorView);
+     }];
+}
+
+-(void)uploadAgain{
+    [errorView removeFromSuperview];
+    self.onNetworkErrorHide();
+    [self uploadMedias:[DataHelper getData]];
+}
+
 -(void)closeCamera{
+    NSLog(@"CLOSING");
     cameraMode = NO;
     self.onCameraClose();
     [cameraHelper stopCameraSession];
 }
 
 -(void)takePicture{
-    [cameraHelper capImage:self withSuccess:@selector(imageWasTaken:)];
+   [cameraHelper captureNow:self withSuccess:@selector(imageWasTaken:)];
 }
 
 -(void)imageWasTaken:(UIImage *)image{
     imgTaken = image;
+    //[cameraHelper stopCameraSession];
 
     if(frontFacingMode){
         //Flip image
@@ -536,14 +661,6 @@
                      }];
 }
 
--(UIView *)getCameraView{
-    return [cameraHelper getView];
-}
-
--(AVCaptureVideoPreviewLayer *)getLayer{
-    return [cameraHelper getLayer];
-}
-
 -(void)addConstraintsToButton:(UIView *)view withButton:(UIView *) button withPoint:(CGPoint) xy fromLeft:(bool) left{
     button.translatesAutoresizingMaskIntoConstraints = NO;
     if(left)
@@ -612,6 +729,46 @@
      metrics:nil
      views:NSDictionaryOfVariableBindings(button)]];
      */
+}
+
+#pragma Keyboard events
+-(void)keyboardWillHide {
+    if(titleTextField.text.length > 0){
+        self.onCameraModeChanged(YES);
+    }else{
+        self.onCameraModeChanged(NO);
+    }
+    //self.replyFieldConstraint.constant = replyPosition;
+    //self.replyFieldConstraintSimple.constant = replyPosition;
+}
+
+-(void)keyboardWillChange:(NSNotification *)note {
+    
+    
+}
+
+-(void)keyboardWillShow:(NSNotification *)note {
+    NSDictionary* info = [note userInfo];
+    NSValue* aValue = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
+    keyboardSize = [aValue CGRectValue].size;
+    //self.replyFieldConstraintSimple.constant = replyPosition + keyboardSize.height;
+    
+}
+
+-(BOOL)textFieldShouldReturn:(UITextField *)textField{
+    [textField resignFirstResponder];
+//ADD title here
+    return YES;
+}
+
+-(void)hideKeyboard{
+    if([titleTextField isFirstResponder]){
+        titleTextField.text = @"";
+        [titleTextField resignFirstResponder];
+    }else{
+      
+    }
+    
 }
 
 
