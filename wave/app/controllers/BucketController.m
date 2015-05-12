@@ -17,7 +17,7 @@
  withBucketDescription:(NSString *) bucketDescription
        withDropCaption:(NSString *) dropCaption
             onProgress:(void (^)(NSNumber*))progression
-          onCompletion:(void (^)(ResponseModel*))completionCallback
+          onCompletion:(void (^)(ResponseModel*, BucketModel*))completionCallback
                onError:(void(^)(NSError *))errorCallback
 {
     //Generate URL
@@ -51,9 +51,16 @@
                                            json:jsonData
                                    onCompletion:^(NSURLResponse *response,NSData *data,NSError *error)
                            {
+                               NSString *strdata=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+                               NSLog(strdata);
                                NSMutableDictionary *dic = [parserHelper parse:data];
                                ResponseModel *responseModel = [[ResponseModel alloc] init:dic];
-                               completionCallback(responseModel);
+                               BucketModel *bucket = [[BucketModel alloc] init:[[responseModel data] objectForKey:@"bucket"]];
+                               DropModel *drop = [[DropModel alloc] init:[[responseModel data] objectForKey:@"drop"]];
+                               drop.media_tmp = media;
+                               
+                               [bucket addDrop:drop];
+                               completionCallback(responseModel, bucket);
                            } onError:errorCallback];
                       }
                       

@@ -12,6 +12,7 @@
 
 #import "AppDelegate.h"
 #import "UIHelper.h"
+#import "BucketModel.h"
 @interface SlideMenuViewController ()
 
 @end
@@ -172,7 +173,8 @@ static int const DRAWER_SIZE = 280;
 }
 
 
--(void)addBucketAsRoot:(NSString *) storyboardId withBucket:(UIImage *)bucket{
+-(void)addBucketAsRoot:(NSString *) storyboardId withBucket:(BucketModel *)bucket{
+    NSLog(@"ADding buket as root");
     oldRoot = root;
     root = (NavigationControlViewController *)[storyboard instantiateViewControllerWithIdentifier:storyboardId];
     [root setBucket:bucket];

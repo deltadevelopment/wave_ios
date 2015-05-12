@@ -7,13 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "BucketModel.h"
 @interface SlideMenuViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UIView *mainView;
 @property (weak, nonatomic) IBOutlet UIView *menuView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *horizontalSpace;
 -(void)showDrawer;
 -(void)addRootViewController:(NSString *) storyboardId;
--(void)addBucketAsRoot:(NSString *) storyboardId withBucket:(UIImage *)bucket;
+-(void)addBucketAsRoot:(NSString *) storyboardId withBucket:(BucketModel *)bucket;
 -(void)removeBucketAsRoot;
 @end

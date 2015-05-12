@@ -55,9 +55,17 @@
         if(drop.media_img != nil){
              self.bucketImage.image = drop.media_img;
           
-        }else{
+        }
+        else if(drop.media_tmp != nil){
+            [self.bucketImage setImage:[UIImage imageWithData:drop.media_tmp]];
+        }
+    
+    
+        else{
              self.bucketImage.image = [UIImage imageNamed:drop.media];
         }
+    
+   
         
         self.displayNameText.text = bucket.title;
 }

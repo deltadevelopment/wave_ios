@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "SlideMenuViewController.h"
+#import "BucketModel.h"
 @interface NavigationControlViewController : UIViewController
 @property (strong, nonatomic) UIBarButtonItem *menuItem;
 @property (strong, nonatomic) UIView *topView;
@@ -16,5 +17,5 @@
 @property (nonatomic, copy) void (^onDrawerTap)(void);
 -(void)addViewController:(SlideMenuViewController *) viewController;
 -(void)didGainFocus;
--(void)setBucket:(UIImage *) bucket;
+-(void)setBucket:(BucketModel *) inputBucket;
 @end

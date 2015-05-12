@@ -8,9 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "FeedInterface.h"
+#import "BucketModel.h"
 @interface AbstractFeedViewController : UIViewController<FeedInterface>
 //@property (nonatomic, copy) void (^onExpand)(void);
-@property (nonatomic, copy) void (^onExpand)(UIImage*(bucketImage));
+@property (nonatomic, copy) void (^onExpand)(BucketModel*(bucket));
 @property (nonatomic, copy) void (^onProgression)(int(progress));
 @property (nonatomic, copy) void (^onNetworkError)(UIView*(view));
 @property (nonatomic, copy) void (^onNetworkErrorHide)(void);

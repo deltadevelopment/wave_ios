@@ -14,7 +14,7 @@
  withBucketDescription:(NSString *) bucketDescription
        withDropCaption:(NSString *) dropCaption
             onProgress:(void (^)(NSNumber*))progression
-          onCompletion:(void (^)(ResponseModel*))completionCallback
+          onCompletion:(void (^)(ResponseModel*, BucketModel*))completionCallback
                onError:(void(^)(NSError *))errorCallback;
 
 -(void)updateBucket:(BucketModel *) bucket

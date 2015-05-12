@@ -58,15 +58,31 @@ NSArray *unAvailableTexts;
     NSMutableArray * buckets = [[NSMutableArray alloc] init];
     for(int i = 0; i<6;i++){
         BucketModel *bucket = [[BucketModel alloc] init];
-        DropModel *drop = [[DropModel alloc] init];
-        drop.media = @"169.jpg";
+        bucket.drops = [self createDropsWithNumber:10];
         bucket.title = @"My amazing Bucket";
-        bucket.drops = [[NSMutableArray alloc] initWithObjects:drop, nil];
         [buckets addObject:bucket];
-        
     }
    
     return buckets;
+
+}
+
++(NSMutableArray *)createDropsWithNumber:(int)count{
+    NSMutableArray *tempDrops = [[NSMutableArray alloc] init];
+    for (int i = 0; i<count; i++) {
+        DropModel *drop = [[DropModel alloc] init];
+        drop.media = [self getRandomImage];
+        
+        [tempDrops addObject:drop];
+    }
+    return tempDrops;
+}
+
++(NSString *)getRandomImage{
+    NSArray *images = [NSArray arrayWithObjects: @"169.jpg", @"miranda-kerr.jpg",
+                       @"test1.jpg",@"test2.jpg", nil];
+    
+    return [images objectAtIndex:rand()%4];
 
 }
 /*

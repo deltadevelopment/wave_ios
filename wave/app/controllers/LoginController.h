@@ -11,6 +11,9 @@
 @interface LoginController : ApplicationController
 -(void)login:(NSString *) username
         pass:(NSString *) password
-onCompletion:(void (^)(UserModel*,ResponseModel*))callback;
+onCompletion:(void (^)(UserModel*,ResponseModel*))callback
+ onError:(void(^)(NSError *))errorCallback;
+
 -(void)storeCredentials:(NSMutableDictionary *) dic;
+
 @end

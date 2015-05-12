@@ -25,6 +25,10 @@
     return self;
 };
 
+-(void)addDrop:(DropModel *) drop{
+    [self.drops addObject:drop];
+}
+
 -(id)init{
     self =[super init];
     self.drops = [[NSMutableArray alloc] init];

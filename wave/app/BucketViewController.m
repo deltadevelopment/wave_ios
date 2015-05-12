@@ -43,14 +43,14 @@ const int PEEK_Y_START = 300;
     bool lastDropIsAdded;
     bool cameraMode;
     NSMutableArray *dropsView;
-    UIImage *firstBucket;
+    //UIImage *firstBucket;
     UIView *cameraHolder;
     bool isPeeking;
     bool canPeek;
     UIButton *playButton;
     BucketController *bucketController;
     DropController *dropController;
-    
+    BucketModel *bucket;
 }
 
 - (void)viewDidLoad {
@@ -178,7 +178,14 @@ const int PEEK_Y_START = 300;
     chat = (ChatViewController *)[self createViewControllerWithStoryboardId:@"chatView"];
     //[self.view insertSubview:chat.view belowSubview:[self.superButton getButton]];
     [Scroller addSubview:chat.view];
-
+    if([[bucket drops] count] > 0){
+        [self addDropToBucket:[[bucket drops] objectAtIndex:[[bucket drops] count]-1]];
+        for(DropModel *drop in [bucket drops]){
+            [self addDropToBucket:drop];
+        };
+        [self addDropToBucket:[[bucket drops] objectAtIndex:0]];
+    }
+   /*
     DropModel *firstDrop = [[DropModel alloc] initWithTestData:@"169.jpg" withName:@"Chris"];
     firstDrop.image = firstBucket;
     [self addDropToBucket:[[DropModel alloc] initWithTestData:@"miranda-kerr.jpg" withName:@"Miranda Kerr"]];
@@ -186,7 +193,7 @@ const int PEEK_Y_START = 300;
     [self addDropToBucket:[[DropModel alloc] initWithTestData:@"test2.jpg" withName:@"Matika"]];
     [self addDropToBucket:[[DropModel alloc] initWithTestData:@"miranda-kerr.jpg" withName:@"Miranda Kerr"]];
     [self addDropToBucket:firstDrop];
-  
+  */
     [self.view addSubview:Scroller];
     CGPoint bottomOffset = CGPointMake(Scroller.bounds.size.width, 0);
     [Scroller setContentOffset:bottomOffset animated:NO];
@@ -313,7 +320,11 @@ const int PEEK_Y_START = 300;
     dropView.dropTitle.text = [drop username];
     if(drop.image !=nil){
         [dropView setImage:drop.image];
-    }else{
+    }
+    else if(drop.media_tmp != nil){
+        [dropView setImage:[UIImage imageWithData:drop.media_tmp]];
+    }
+    else{
         [dropView setImage:[UIImage imageNamed:[drop media]]];
     }
     [Scroller insertSubview:dropView belowSubview:chat.view];
@@ -374,10 +385,9 @@ const int PEEK_Y_START = 300;
 -(void)despandBucket:(UISwipeGestureRecognizer *)recognizer {
     [self.superController removeBucketAsRoot];
 }
--(void)setBucket:(UIImage *)bucket{
-    firstBucket = bucket;
+-(void)setBucket:(BucketModel *)inputBucket{
+   bucket = inputBucket;
 }
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
@@ -527,10 +537,12 @@ const int PEEK_Y_START = 300;
      
      }];
     */
+    /*
     [dropController addDropToBucket:@"My drop caption"
                           withMedia:media
                        withBucketId:1
                          onProgress:^(NSNumber *progression)
+     
      {
          NSLog(@"LASTET OPP: %@", progression);
          
@@ -539,8 +551,8 @@ const int PEEK_Y_START = 300;
      {
          NSLog(@"ALT ER FERDIG LASTET OPP!");
          
-     }];
-    
+     } onError:<#^(NSError *)errorCallback#>];
+    */
     /*
     [bucketController updateBucket:newBucket
                       onCompletion:^(ResponseModel *response){

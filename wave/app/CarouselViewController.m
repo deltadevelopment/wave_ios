@@ -13,6 +13,7 @@
 #import "Carousel.h"
 #import "FilterViewController.h"
 #import "GraphicsHelper.h"
+#import "BucketModel.h"
 @interface CarouselViewController ()
 
 @end
@@ -95,8 +96,8 @@
     
     AbstractFeedViewController *mainViewController = (AbstractFeedViewController *)[storyboard instantiateViewControllerWithIdentifier:name];
     __weak typeof(self) weakSelf = self;
-    mainViewController.onExpand=^(UIImage*(image)){
-        [weakSelf changeToBucket:image];
+    mainViewController.onExpand=^(BucketModel*(bucket)){
+        [weakSelf changeToBucket:bucket];
     };
     
     mainViewController.onLockScreenToggle = ^{
@@ -129,7 +130,7 @@
     ViewSize = CGRectOffset(ViewSize, Scroller.bounds.size.width, 0);
 }
 
--(void)changeToBucket:(UIImage *) bucket{
+-(void)changeToBucket:(BucketModel *) bucket{
     NSLog(@"changing to bucket");
     [self.superController addBucketAsRoot:@"bucketView" withBucket:bucket];
 }

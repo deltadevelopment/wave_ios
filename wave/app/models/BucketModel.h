@@ -27,5 +27,5 @@
 @property (nonatomic,strong) NSMutableArray *drops;
 
 @property (nonatomic) BOOL isInitalized;
-
+-(void)addDrop:(DropModel *) drop;
 @end

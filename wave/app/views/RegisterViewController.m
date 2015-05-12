@@ -133,14 +133,14 @@
                                              //REDIRECT TO MAINVIEW
                                               response.success ? [self showMainView] : nil;
                                               
-                                          }];
+                                          } onError:nil];
                             }else{
                                 self.registerButton.hidden = YES;
                                 self.registerButton.alpha = 0.0;
                                 [self showError:response];
                             }
                             
-                        }];
+                        } onError:nil];
 }
 
 

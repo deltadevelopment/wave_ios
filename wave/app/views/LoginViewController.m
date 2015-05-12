@@ -143,6 +143,8 @@
             [notificationHelper addNotificationToView:self.navigationController.view];
         }
         
+    } onError:^(NSError * error){
+    
     }];
     
 }

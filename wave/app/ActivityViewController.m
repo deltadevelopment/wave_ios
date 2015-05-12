@@ -108,8 +108,10 @@ const int EXPAND_SIZE = 400;
 }
 
 -(void)expandBucketWithId:(int) Id{
-    ActivityTableViewCell *cell = (ActivityTableViewCell *)[_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:Id inSection:0]];
-    self.onExpand(cell.bucketImage.image);
+   // ActivityTableViewCell *cell = (ActivityTableViewCell *)[_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:Id inSection:0]];
+    BucketModel *bucket = [feed objectAtIndex:Id];
+    NSLog(@"BUCKET NAME: %@", bucket.title);
+    self.onExpand(bucket);
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath*)indexPath
@@ -280,13 +282,16 @@ const int EXPAND_SIZE = 400;
                       withDropCaption:@"My crazy new drop!"
                            onProgress:^(NSNumber *progression)
      {
-        // NSLog(@"LASTET OPP: %@", progression);
+        NSLog(@"LASTET OPP: %@", progression);
          weakSelf.onProgression([progression intValue]);
          
          
      }
-                         onCompletion:^(ResponseModel *response)
+                         onCompletion:^(ResponseModel *response, BucketModel *bucket)
      {
+        // NSString *strdata=[[NSString alloc]initWithData:[[response data] objectForKey:@"bucket"] encoding:NSUTF8StringEncoding];
+        // NSLog(strdata);
+         [feed replaceObjectAtIndex:0 withObject:bucket];
          NSLog(@"ALT ER FERDIG LASTET OPP!");
      } onError:^(NSError *error){
         [DataHelper storeData:media];

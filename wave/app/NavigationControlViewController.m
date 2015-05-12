@@ -144,6 +144,10 @@
     // Dispose of any resources that can be recreated.
 }
 
+-(void)setBucket:(BucketModel *)inputBucket{
+
+}
+
 /*
 #pragma mark - Navigation
 

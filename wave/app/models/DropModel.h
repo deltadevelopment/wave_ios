@@ -11,6 +11,7 @@
 @interface DropModel : NSObject
 
 //Model properties
+@property (nonatomic) int Id;
 @property (nonatomic,strong) NSString * media_key;
 @property (nonatomic,strong) NSString * caption;
 @property (nonatomic) int parent_id;
@@ -33,5 +34,5 @@
 
 //Methods
 -(id)initWithTestData:(NSString *) media withName:(NSString *) username;
-
+-(id)init:(NSMutableDictionary *)dic;
 @end
