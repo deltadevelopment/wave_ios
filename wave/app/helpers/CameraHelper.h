@@ -6,12 +6,16 @@
 //  Copyright (c) 2015 ddev. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 #import <AVFoundation/AVFoundation.h>
 #import <AssetsLibrary/AssetsLibrary.h>
-#import <UIKit/UIKit.h>
+#import <CoreGraphics/CoreGraphics.h>
+#import <CoreImage/CoreImage.h>
+#import <CoreVideo/CoreVideo.h>
+#import <ImageIO/ImageIO.h>
 
-@interface CameraHelper : NSObject<AVCaptureFileOutputRecordingDelegate>
+
+@interface CameraHelper : NSObject<AVCaptureFileOutputRecordingDelegate, AVCaptureVideoDataOutputSampleBufferDelegate>
 
 @property (nonatomic, strong) NSData *lastRecordedVideoCompressed;
 @property (nonatomic) bool isCompressed;
@@ -29,13 +33,15 @@
 
 @property (nonatomic, strong)NSURL *lastRecordedVideoURL;
 @property (nonatomic, retain)AVCaptureVideoPreviewLayer *PreviewLayer;
-@property (nonatomic, retain)AVCaptureSession *CaptureSession;
+
 
 @property (nonatomic, strong)AVCaptureDevice *frontFacingDevice;
 @property (nonatomic, strong)NSDictionary *outputSettings;
 @property (nonatomic) bool square;
 
-@property (nonatomic, strong)AVCaptureStillImageOutput * stillImageOutput;
+@property (nonatomic, strong) AVCaptureSession *CaptureSession2;
+
+@property (nonatomic) bool isInita;
 
 @property (nonatomic, strong)UIImage *imgTaken;
 
@@ -49,21 +55,21 @@
 
 @property (nonatomic, strong) AVCaptureDevice *audioCaptureDevice;
 @property (nonatomic, strong) AVCaptureDeviceInput *audioInput;
-
+@property (retain) AVCaptureStillImageOutput *stillImageOutput;
 
 -(void)stopCameraSession;
 //-(void) capImage:(NSObject *) object withSuccess:(SEL) success;
--(void) captureNow:(NSObject *) object withSuccess:(SEL) success;
+- (void) capImage:(NSObject *) object withSuccess:(SEL) success;
 -(NSData*)getLastRecordedVideo;
 -(void)initaliseVideo:(bool)rearCamera withView:(UIView *) view;
 - (void)CameraToggleButtonPressed:(bool)isFrontCamera;
 -(void)startRecording;
 
 -(void)stopRecording;
-
+-(void)addImageOutput;
 -(NSData*)getlastRecordedVideoCompressed;
 -(void)saveImageToDisk;
 
 -(void)saveVideoToDisk;
-
+- (void)captureStillImage;
 @end

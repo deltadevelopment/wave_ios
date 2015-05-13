@@ -230,9 +230,13 @@
 
 -(void)tapCancelButton{
     imgTaken = nil;
-    [imageView removeFromSuperview];
+    if(imageView != nil){
+       imageView.hidden = YES;
+    }
+    
     if(intMode == 1){
         self.onCameraCancel();
+        cameraHelper = [[CameraHelper alloc] init];
     }
     else if (intMode == 2){
         if(mediaIsVideo){
@@ -370,9 +374,14 @@
     frontFacingMode = !rearCamera;
     self.onCameraModeChanged(YES);
     
-        cameraHelper = [[CameraHelper alloc] init];
-        //[self.cameraHelper setView:self.view withRect:CGRectMake(0, 0, [UIHelper getScreenWidth], [UIHelper getScreenHeight])];
+    //[self.cameraHelper setView:self.view withRect:CGRectMake(0, 0, [UIHelper getScreenWidth], [UIHelper getScreenHeight])];
+    if(![cameraHelper isInita]){
+        NSLog(@"YES");
         [cameraHelper initaliseVideo:rearCamera withView:self.view];
+    }
+    else{
+     
+    }
     
   
     [self addShadow];
@@ -560,7 +569,7 @@
 }
 
 -(void)takePicture{
-   [cameraHelper captureNow:self withSuccess:@selector(imageWasTaken:)];
+   [cameraHelper capImage:self withSuccess:@selector(imageWasTaken:)];
 }
 
 -(void)imageWasTaken:(UIImage *)image{
@@ -573,8 +582,12 @@
         imgTaken = [GraphicsHelper mirrorImageWithImage:imgTaken];
     }
     
-    
-    imageView = [[UIImageView alloc] initWithFrame:self.view.frame];
+    if(imageView == nil){
+        imageView = [[UIImageView alloc] initWithFrame:self.view.frame];
+    }
+    else{
+        imageView.hidden = NO;
+    }
     imageView.image = imgTaken;
     [self.view insertSubview:imageView belowSubview:saveMediaButton];
     imageReadyForUpload = YES;

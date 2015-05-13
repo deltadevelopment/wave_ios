@@ -10,12 +10,13 @@
 #import <UIKit/UIKit.h>
 #import <AudioToolbox/AudioToolbox.h>
 #import <AVFoundation/AVFoundation.h>
+#import <ImageIO/ImageIO.h>
 //#import "VideoController.h"
 @implementation CameraHelper
 @synthesize PreviewLayer;
 @synthesize stillImageOutput;
 @synthesize videoConnection;
-
+AVCaptureSession *CaptureSession;
 
 
 -(id)init{
@@ -66,7 +67,7 @@
     //[self.CaptureSession stopRunning];
     
     NSLog(@"about to request a capture from: %@", stillImageOutput);
-   
+   PreviewLayer.connection.enabled = NO;
     [stillImageOutput
      captureStillImageAsynchronouslyFromConnection:videoConnection2
      completionHandler: ^(CMSampleBufferRef imageSampleBuffer, NSError *error) {
@@ -76,8 +77,10 @@
             [object performSelectorOnMainThread:success withObject:self.imgTaken waitUntilDone:YES];
             //UIImageWriteToSavedPhotosAlbum(imgTaken, nil, nil, nil);
             NSLog(@"done");
-            [self stopCameraSession];
+           // [self stopCameraSession];
             NSLog(@"STOPPING SESSION");
+            PreviewLayer.connection.enabled = YES;
+            imageSampleBuffer = NULL;
         }
         else{
             NSLog(@"test");
@@ -86,16 +89,28 @@
     }];
 }
 
+-(void)test{
+[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(imageCapturedFromCamera) name:@"FTW_imageCaptured" object:nil];
+    
+}
+-(void)imageCapturedFromCamera{
+    NSLog(@"har-______________");
+}
+
+
 -(void) captureNow:(NSObject *) object withSuccess:(SEL) success {
  
     
     NSLog(@"about to request a capture from: %@", self.stillImageOutput);
-    __weak typeof(self) weakSelf = self;
+ 
     [self.stillImageOutput captureStillImageAsynchronouslyFromConnection:[self.stillImageOutput.connections lastObject] completionHandler: ^(CMSampleBufferRef imageSampleBuffer, NSError *error) {
         
         NSData *imageData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageSampleBuffer];
         UIImage *image = [[UIImage alloc] initWithData:imageData];
-        [self stopCameraSession];
+        CMSampleBufferInvalidate(imageSampleBuffer);
+        CFRelease(imageSampleBuffer);
+        imageSampleBuffer = NULL;
+     // [self stopCameraSession];
           [object performSelectorOnMainThread:success withObject:image waitUntilDone:YES];
     }];
 }
@@ -103,18 +118,24 @@
 -(void)stopCameraSession{
     dispatch_queue_t serialQueue = dispatch_queue_create("queue", NULL);
     dispatch_async(serialQueue, ^{
-        [self.CaptureSession stopRunning];
+          [self.movieFileOutput stopRecording];
+        [CaptureSession stopRunning];
+
+        for(AVCaptureInput *input1 in CaptureSession.inputs) {
+            [CaptureSession removeInput:input1];
+              NSLog(@"removing input");
+        }
+        
+        for(AVCaptureOutput *output1 in CaptureSession.outputs) {
+            [CaptureSession removeOutput:output1];
+            NSLog(@"removing output");
+        }
         [PreviewLayer removeFromSuperlayer];
         [self.CameraView removeFromSuperview];
-        for(AVCaptureInput *input1 in self.CaptureSession.inputs) {
-            [self.CaptureSession removeInput:input1];
-        }
+      
+
         
-        for(AVCaptureOutput *output1 in self.CaptureSession.outputs) {
-            [self.CaptureSession removeOutput:output1];
-        }
-        
-        self.CaptureSession=nil;
+        CaptureSession=nil;
         self.outputSettings=nil;
         self.VideoDevice=nil;
         self.VideoInputDevice=nil;
@@ -129,13 +150,13 @@
     });
 
    
-   
 }
 
 -(void)initaliseVideo:(bool)rearCamera withView:(UIView *) view{
-    self.CaptureSession = [[AVCaptureSession alloc] init];
+    CaptureSession = [[AVCaptureSession alloc] init];
+    [self test];
     self.VideoDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
-    
+    self.isInita = YES;
     if (self.VideoDevice)
     {
         NSError *error;
@@ -143,8 +164,8 @@
         self.VideoInputDevice = [AVCaptureDeviceInput deviceInputWithDevice:self.VideoDevice error:&error];
         if (!error)
         {
-            if ([self.CaptureSession canAddInput:self.VideoInputDevice])
-                [self.CaptureSession addInput:self.VideoInputDevice];
+            if ([CaptureSession canAddInput:self.VideoInputDevice])
+                [CaptureSession addInput:self.VideoInputDevice];
             else
                 NSLog(@"Couldn't add video input");
         }
@@ -165,13 +186,14 @@
     self.audioInput = [AVCaptureDeviceInput deviceInputWithDevice:self.audioCaptureDevice error:&error];
     if (self.audioInput)
     {
-        [self.CaptureSession addInput:self.audioInput];
+        [CaptureSession addInput:self.audioInput];
     }
     
+ 
     
     //----- ADD OUTPUTS -----
     NSLog(@"Adding video preview layer");
-    PreviewLayer = [[AVCaptureVideoPreviewLayer alloc]initWithSession:self.CaptureSession];
+    [self setPreviewLayer:[[AVCaptureVideoPreviewLayer alloc]initWithSession:CaptureSession]];
     [PreviewLayer setVideoGravity:AVLayerVideoGravityResizeAspectFill];
     //ADD MOVIE FILE OUTPUT
     NSLog(@"Adding movie file output");
@@ -183,11 +205,14 @@
     self.movieFileOutput.minFreeDiskSpaceLimit = 1024 * 1024;
     
     //<<SET MIN FREE SPACE IN BYTES FOR RECORDING TO CONTINUE ON A VOLUME
+  
+    if ([CaptureSession canAddOutput:self.movieFileOutput]){
+     [CaptureSession addOutput:self.movieFileOutput];
+
+    }
     
-    if ([self.CaptureSession canAddOutput:self.movieFileOutput])
-        [self.CaptureSession addOutput:self.movieFileOutput];
-    
-    [self addImageOutput];
+    //[self addImageOutput];
+    [self addImgOut];
     //(We call a method as it also has to be done after changing camera)
     
     //----- SET THE IMAGE QUALITY / RESOLUTION -----
@@ -199,10 +224,10 @@
     //	AVCaptureSessionPreset1280x720 - 1280x720 720p HD (check its supported before setting it)
     //	AVCaptureSessionPresetPhoto - Full photo resolution (not supported for video output)
     NSLog(@"Setting image quality");
-    [self.CaptureSession setSessionPreset:AVCaptureSessionPresetMedium];
+    [CaptureSession setSessionPreset:AVCaptureSessionPresetMedium];
     
-    if ([self.CaptureSession canSetSessionPreset:AVCaptureSessionPreset640x480])		//Check size based configs are supported before setting them
-        [self.CaptureSession setSessionPreset:AVCaptureSessionPresetiFrame960x540];
+    if ([CaptureSession canSetSessionPreset:AVCaptureSessionPreset640x480])		//Check size based configs are supported before setting them
+        [CaptureSession setSessionPreset:AVCaptureSessionPresetiFrame960x540];
     
     
     
@@ -225,21 +250,18 @@
     //[view sendSubviewToBack:CameraView];
     
     [[self.CameraView layer] addSublayer:PreviewLayer];
-    
+    self.CaptureSession2 = CaptureSession;
     //----- START THE CAPTURE SESSION RUNNING -----
     dispatch_queue_t serialQueue = dispatch_queue_create("queue", NULL);
     dispatch_async(serialQueue, ^{
-        [self.CaptureSession startRunning];
+        [CaptureSession startRunning];
         if(!rearCamera){
             [self CameraToggleButtonPressed:YES];
         }
     });
 }
 
--(void)dealloc{
-    NSLog(@"deallocing");
 
-}
 
 
 - (AVCaptureDevice *)frontCamera {
@@ -258,13 +280,40 @@
 }
 
 -(void)addImageOutput{
-    stillImageOutput = [[AVCaptureStillImageOutput alloc] init];
-    self.outputSettings = [[NSDictionary alloc] initWithObjectsAndKeys: AVVideoCodecJPEG, AVVideoCodecKey, nil];
-    [stillImageOutput setOutputSettings:self.outputSettings];
-    [self.CaptureSession addOutput:stillImageOutput];
+    NSLog(@"HER NÅ");
+        if(stillImageOutput !=nil){
+            [self.CaptureSession2 removeOutput:stillImageOutput];
+        }
+        stillImageOutput = [[AVCaptureStillImageOutput alloc] init];
+        self.outputSettings = [[NSDictionary alloc] initWithObjectsAndKeys: AVVideoCodecJPEG, AVVideoCodecKey, nil];
+        [stillImageOutput setOutputSettings:self.outputSettings];
+
+        [self.CaptureSession2 addOutput:stillImageOutput];
     
 }
 
+-(void)addImgOut{
+
+        [self setStillImageOutput:[[AVCaptureStillImageOutput alloc] init]];
+        NSDictionary *outputSettings = [[NSDictionary alloc] initWithObjectsAndKeys:AVVideoCodecJPEG,AVVideoCodecKey,nil];
+        [[self stillImageOutput] setOutputSettings:outputSettings];
+        
+        AVCaptureConnection *videoConnection = nil;
+        for (AVCaptureConnection *connection in [[self stillImageOutput] connections]) {
+            for (AVCaptureInputPort *port in [connection inputPorts]) {
+                if ([[port mediaType] isEqual:AVMediaTypeVideo] ) {
+                    videoConnection = connection;
+                    break;
+                }
+            }
+            if (videoConnection) {
+                break; 
+            }
+        }
+        
+        [CaptureSession addOutput:[self stillImageOutput]];
+    
+}
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
@@ -355,23 +404,23 @@
         
         if (NewVideoInput != nil)
         {
-            [self.CaptureSession beginConfiguration];		//We can now change the inputs and output configuration.  Use commitConfiguration to end
-            [self.CaptureSession removeInput:self.VideoInputDevice];
-            if ([self.CaptureSession canAddInput:NewVideoInput])
+            [CaptureSession beginConfiguration];		//We can now change the inputs and output configuration.  Use commitConfiguration to end
+            [CaptureSession removeInput:self.VideoInputDevice];
+            if ([CaptureSession canAddInput:NewVideoInput])
             {
-                [self.CaptureSession addInput:NewVideoInput];
+                [CaptureSession addInput:NewVideoInput];
                 self.VideoInputDevice = NewVideoInput;
             }
             else
             {
-                [self.CaptureSession addInput:self.VideoInputDevice];
+                [CaptureSession addInput:self.VideoInputDevice];
             }
             
             //Set the connection properties again
             [weakSelf CameraSetOutputProperties];
             
             
-            [self.CaptureSession commitConfiguration];
+            [CaptureSession commitConfiguration];
         }
     }
 }
@@ -486,7 +535,7 @@ didFinishRecordingToOutputFileAtURL:(NSURL *)outputFileURL
         self.lastRecordedVideoURL = outputFileURL;
         //weakSelf.onVideoRecorded(lastRecordedVideo);
         //[videoController sendVideoToServer:data withSelector:mediaSuccessSelector withObject:mediaSuccessObject withArg:nil];
-       self.CaptureSession = nil;
+       CaptureSession = nil;
         self.movieFileOutput = nil;
         self.VideoInputDevice = nil;
         //[library release];
@@ -612,10 +661,43 @@ didFinishRecordingToOutputFileAtURL:(NSURL *)outputFileURL
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             [self.CameraView removeFromSuperview];
             [self.movieFileOutput stopRecording];
-            [self.CaptureSession stopRunning];
+            [CaptureSession stopRunning];
         });
       
     }
+}
+
+- (void)captureStillImage
+{
+    __weak typeof(self) weakSelf = self;
+    AVCaptureConnection *videoConnection = nil;
+    for (AVCaptureConnection *connection in [[self stillImageOutput] connections]) {
+        for (AVCaptureInputPort *port in [connection inputPorts]) {
+            if ([[port mediaType] isEqual:AVMediaTypeVideo]) {
+                videoConnection = connection;
+                break;
+            }
+        }
+        if (videoConnection) {
+            break;
+        }
+    }
+    
+    NSLog(@"about to request a capture from: %@", [self stillImageOutput]);
+    [[self stillImageOutput] captureStillImageAsynchronouslyFromConnection:videoConnection
+                                                         completionHandler:^(CMSampleBufferRef imageSampleBuffer, NSError *error) {
+                                                             CFDictionaryRef exifAttachments = CMGetAttachment(imageSampleBuffer, kCGImagePropertyExifDictionary, NULL);
+                                                             if (exifAttachments) {
+                                                                 NSLog(@"attachements: %@", exifAttachments);
+                                                             } else {
+                                                                 NSLog(@"no attachments");
+                                                             }
+                                                             //NSData *imageData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageSampleBuffer];
+                                                            // UIImage *image = [[UIImage alloc] initWithData:imageData];
+                                                             NSLog(@"har bilde");
+                                                             //[weakSelf stopCameraSession];
+                                                             //[[NSNotificationCenter defaultCenter] postNotificationName:kImageCapturedSuccessfully object:nil];
+                                                         }];
 }
 
 

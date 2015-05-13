@@ -31,4 +31,5 @@
 -(void)increaseProgress:(int) progress;
 -(void)addErrorMessage:(UIView *) view;
 -(void)hideError;
+-(void)initCameraView;
 @end

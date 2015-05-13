@@ -37,7 +37,7 @@
     infoView.view.alpha = 0.0;
     [self initSuperButton];
     
-    _camera = [[CameraViewController alloc]init];
+     [self initCameraView];
     
     progressIndicator = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 4)];
     progressIndicator.backgroundColor = [ColorHelper blueColor];
@@ -60,6 +60,11 @@
     [self.view addSubview:tickView];
     [self.view addSubview:progressIndicator];
    
+ 
+}
+
+-(void)initCameraView{
+    _camera = [[CameraViewController alloc]init];
     __weak typeof(self) weakSelf = self;
     _camera.onCameraReady = ^{
         [weakSelf showCamera];
@@ -246,6 +251,8 @@
 }
 
 -(void)onCancelTap{
+    NSLog(@"ccanceltap");
+    
     [self.camera closeCamera];
 }
 -(void)onDragY:(NSNumber *) yValue{
