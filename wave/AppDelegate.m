@@ -26,7 +26,7 @@ AuthHelper *authHelper;
      authHelper = [[AuthHelper alloc] init];
    // [authHelper resetCredentials];
     if([authHelper getAuthToken] == nil){
-        //[self setView:[[StartViewController alloc] init] second:@"startNav"];
+        [self setView:[[StartViewController alloc] init] second:@"startNav"];
     }else{
         //[self setView:[[ViewController alloc] init] second:@"mainView"];
 
@@ -35,7 +35,7 @@ AuthHelper *authHelper;
        // [self setView:[[ActivityViewController alloc]init] second:@"activity"];
         
         
-        //   [self setView:[[SlideMenuViewController alloc] init] second:@"slideMenuView"];
+        [self setView:[[SlideMenuViewController alloc] init] second:@"slideMenuView"];
        // [self setView:[[EditImageViewController alloc] init] second:@"editView"];
        // [self setView:[[ChatViewController alloc]init] second:@"chatView"];
         

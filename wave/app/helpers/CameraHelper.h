@@ -64,12 +64,13 @@
 -(void)initaliseVideo:(bool)rearCamera withView:(UIView *) view;
 - (void)CameraToggleButtonPressed:(bool)isFrontCamera;
 -(void)startRecording;
-
+-(void)startPreviewLayer;
 -(void)stopRecording;
 -(void)addImageOutput;
 -(NSData*)getlastRecordedVideoCompressed;
 -(void)saveImageToDisk;
-
+-(void)initRecording;
+-(bool)sessionIsRunning;
 -(void)saveVideoToDisk;
 - (void)captureStillImage;
 @end

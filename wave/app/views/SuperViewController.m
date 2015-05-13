@@ -190,6 +190,7 @@
         [self animateTick];
         
     }
+    
 }
 
 -(void)animateTick{

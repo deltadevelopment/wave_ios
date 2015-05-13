@@ -79,7 +79,7 @@ AVCaptureSession *CaptureSession;
             NSLog(@"done");
            // [self stopCameraSession];
             NSLog(@"STOPPING SESSION");
-            PreviewLayer.connection.enabled = YES;
+            
             imageSampleBuffer = NULL;
         }
         else{
@@ -87,6 +87,10 @@ AVCaptureSession *CaptureSession;
         }
         
     }];
+}
+
+-(void)startPreviewLayer{
+PreviewLayer.connection.enabled = YES;
 }
 
 -(void)test{
@@ -246,7 +250,8 @@ AVCaptureSession *CaptureSession;
    self.CameraView = [[UIView alloc] init];
     //[view addSubview:CameraView];
    // [view.layer insertSublayer:CameraView.layer atIndex:0];
-    [view.layer addSublayer:self.CameraView.layer];
+    //[view.layer addSublayer:self.CameraView.layer];
+    [view.layer insertSublayer:self.CameraView.layer atIndex:0];
     //[view sendSubviewToBack:CameraView];
     
     [[self.CameraView layer] addSublayer:PreviewLayer];
@@ -256,9 +261,26 @@ AVCaptureSession *CaptureSession;
     dispatch_async(serialQueue, ^{
         [CaptureSession startRunning];
         if(!rearCamera){
-            [self CameraToggleButtonPressed:YES];
+           // [self CameraToggleButtonPressed:YES];
         }
     });
+}
+
+-(void)initRecording{
+        [CaptureSession removeOutput:self.movieFileOutput];
+    self.movieFileOutput = [[AVCaptureMovieFileOutput alloc] init];
+    Float64 TotalSeconds = 60;			//Total seconds
+    int32_t preferredTimeScale = 30;	//Frames per second
+    CMTime maxDuration = CMTimeMakeWithSeconds(TotalSeconds, preferredTimeScale);	//<<SET MAX DURATION
+    self.movieFileOutput.maxRecordedDuration = maxDuration;
+    self.movieFileOutput.minFreeDiskSpaceLimit = 1024 * 1024;
+    
+
+    
+    if ([CaptureSession canAddOutput:self.movieFileOutput]){
+        [CaptureSession addOutput:self.movieFileOutput];
+        
+    }
 }
 
 
@@ -382,6 +404,7 @@ AVCaptureSession *CaptureSession;
 //********** CAMERA TOGGLE **********
 - (void)CameraToggleButtonPressed:(bool)isFrontCamera
 {
+    
     __weak typeof(self) weakSelf = self;
     if ([[AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo] count] > 1)		//Only do if device has multiple cameras
     {
@@ -535,9 +558,9 @@ didFinishRecordingToOutputFileAtURL:(NSURL *)outputFileURL
         self.lastRecordedVideoURL = outputFileURL;
         //weakSelf.onVideoRecorded(lastRecordedVideo);
         //[videoController sendVideoToServer:data withSelector:mediaSuccessSelector withObject:mediaSuccessObject withArg:nil];
-       CaptureSession = nil;
-        self.movieFileOutput = nil;
-        self.VideoInputDevice = nil;
+       //CaptureSession = nil;
+        //self.movieFileOutput = nil;
+        //self.VideoInputDevice = nil;
         //[library release];
         NSLog(@"ferdig å recorde film");
         
@@ -631,6 +654,7 @@ didFinishRecordingToOutputFileAtURL:(NSURL *)outputFileURL
 
 #pragma New Camera structure
 -(void)startRecording{
+    NSLog(@"record: %@", self.recording ? @"YES" : @"NO");
     if (!self.recording)
     {
         self.recording = YES;
@@ -658,13 +682,19 @@ didFinishRecordingToOutputFileAtURL:(NSURL *)outputFileURL
     if(self.recording)
     {
         self.recording = NO;
+        
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            [self.CameraView removeFromSuperview];
+           // [self.CameraView removeFromSuperview];
+            PreviewLayer.connection.enabled = NO;
             [self.movieFileOutput stopRecording];
-            [CaptureSession stopRunning];
+            //[CaptureSession stopRunning];
         });
       
     }
+}
+
+-(bool)sessionIsRunning{
+    return CaptureSession.isRunning;
 }
 
 - (void)captureStillImage

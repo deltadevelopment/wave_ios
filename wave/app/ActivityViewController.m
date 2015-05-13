@@ -151,6 +151,7 @@ const int EXPAND_SIZE = 400;
 #pragma Camera methods
 
 -(void)prepareCamera:(UIView *)view{
+    NSLog(@"prepping");
     if(cameraView == nil){
         cameraView = view;
         [cameraHolder addSubview:cameraView];
@@ -334,6 +335,7 @@ const int EXPAND_SIZE = 400;
 
 
 -(void)onCancelTap{
+    NSLog(@"cancelTAP");
     //[cameraView removeFromSuperview];
     cameraHolder.hidden = YES;
     self.onLockScreenToggle();

@@ -48,6 +48,9 @@
     UITextField *titleTextField;
     BucketController *bucketController;
     UIView *errorView;
+    bool cameraIsInitialized;
+    NSData *recordedVideo;
+    NSData *recordedVideoCompressed;
     
 }
 
@@ -56,6 +59,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     mediaPlayer = [[MediaPlayerViewController alloc] init];
+    mediaPlayer.view.frame = CGRectMake(0, 0, [UIHelper getScreenWidth], [UIHelper getScreenHeight]);
+    [self.view addSubview:mediaPlayer.view];
     mediaPlayer.onVideoFinishedPlaying = ^{
         
     };
@@ -73,7 +78,7 @@
     //[selfieButton setTintColor:[UIColor whiteColor]];
    // selfieButton.layer.borderWidth=1.0f;
     //selfieButton.layer.borderColor=[[UIColor whiteColor] CGColor];
-    
+    [self initCameraHelper];
     saveMediaButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [saveMediaButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"download-icon.png"] withSize:150] forState:UIControlStateNormal];
     saveMediaButton.imageEdgeInsets = UIEdgeInsetsMake(11, 11,11, 11);
@@ -82,9 +87,21 @@
     [saveMediaButton addTarget:self action:@selector(saveMediaToDisk:) forControlEvents:UIControlEventTouchDown];
     saveMediaButton.hidden = YES;
     //[selfieButton setBackgroundImage:[UIImage imageNamed:@"bucket.png"] forState:UIControlStateNormal];
+   
+    cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    typeButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    toolTip = [[UILabel alloc]init];
+    
+    [self initBucketTypes];
+    [self initProgressView];
+    [self initTextField];
+    // [self initUI];
+}
+
+-(void)initCameraHelper{
     self.cameraHelper = [[CameraHelper alloc]init];
     __weak typeof(self) weakSelf = self;
-
+    
     cameraHelper.onVideoRecorded = ^(NSData *(video)){
         [weakSelf onVideorecorded:video];
     };
@@ -97,14 +114,6 @@
     cameraHelper.onMediaSavedToDiskError = ^{
         [weakSelf onMediaSavedToDiskError];
     };
-    cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    typeButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    toolTip = [[UILabel alloc]init];
-    
-    [self initBucketTypes];
-    [self initProgressView];
-    [self initTextField];
-    // [self initUI];
 }
 
 -(void)addShadow{
@@ -168,8 +177,7 @@
     mediaIsVideo = YES;
     mediaPlayer.view.hidden = NO;
     imageReadyForUpload = YES;
-    mediaPlayer.view.frame = CGRectMake(0, 0, [UIHelper getScreenWidth], [UIHelper getScreenHeight]);
-    [self.view insertSubview:mediaPlayer.view belowSubview:saveMediaButton];
+    
     [mediaPlayer setVideo:video withId:-1];
     [mediaPlayer playVideo];
     self.onVideoRecorded();
@@ -177,6 +185,7 @@
     [self hideTools];
     imgTaken = [mediaPlayer getVideoThumbnail];
    // [mediaPlayer ]
+
 }
 
 
@@ -211,7 +220,7 @@
     [self applyUIOnButton:typeButton];
     typeButton.backgroundColor = [[UIColor blackColor]colorWithAlphaComponent:0.4];
     [typeButton addTarget:self action:@selector(tapTypeButton) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:typeButton];
+
     [self addConstraintsToButton:self.view withButton:typeButton withPoint:CGPointMake(-4, 10) fromLeft:YES];
     typeButton.hidden = YES;
     typeButton.alpha = 0.0;
@@ -219,10 +228,16 @@
 
 -(void)initToolTip{
     [UIHelper applyThinLayoutOnLabel:toolTip];
-    [self.view addSubview:toolTip];
+
     toolTip.hidden = NO;
     toolTip.alpha = 0.0;
     [self addTooltipConstraint:self.view withLabel:toolTip];
+    BucketTypeModel *bucketModel = [bucketTypes objectAtIndex:currentTypeIndex];
+    [typeButton setImage:[UIHelper iconImage:[UIImage imageNamed:[bucketModel icon_path]] withSize:150] forState:UIControlStateNormal];
+    toolTip.text = [bucketModel type_description];
+}
+
+-(void)initToolTipText{
     BucketTypeModel *bucketModel = [bucketTypes objectAtIndex:currentTypeIndex];
     [typeButton setImage:[UIHelper iconImage:[UIImage imageNamed:[bucketModel icon_path]] withSize:150] forState:UIControlStateNormal];
     toolTip.text = [bucketModel type_description];
@@ -233,12 +248,15 @@
     if(imageView != nil){
        imageView.hidden = YES;
     }
+    NSLog(@"printing: %d", intMode);
     
     if(intMode == 1){
+        imageView.hidden = YES;
         self.onCameraCancel();
-        cameraHelper = [[CameraHelper alloc] init];
+        [self initCameraHelper];
     }
     else if (intMode == 2){
+        [self test];
         if(mediaIsVideo){
             NSLog(@"HERE");
             [mediaPlayer stopVideo];
@@ -247,14 +265,26 @@
             mediaIsVideo = NO;
         }
         if(frontFacingMode){
-            [self prepareCamera:NO];
+            //[self prepareCamera:NO];
         }else{
-            [self prepareCamera:YES];
+          //  [self prepareCamera:YES];
         }
        titleTextField.text = @"";
         intMode = 1;
         self.onPictureDiscard();
     }
+}
+
+-(void)test{
+    [cameraHelper startPreviewLayer];
+    saveMediaButton.hidden = YES;
+    [self showButton:typeButton];
+    [self showLabel:toolTip];
+    if(currentTypeIndex == 1){
+        titleTextField.hidden = NO;
+        self.onCameraModeChanged(NO);
+    }
+    [self showButton:selfieButton];
 }
 
 -(void)tapTypeButton{
@@ -372,30 +402,38 @@
     imgTaken = nil;
     mediaPlayer.view.hidden = YES;
     frontFacingMode = !rearCamera;
-    self.onCameraModeChanged(YES);
+    
     
     //[self.cameraHelper setView:self.view withRect:CGRectMake(0, 0, [UIHelper getScreenWidth], [UIHelper getScreenHeight])];
+    if(!cameraIsInitialized){
+        cameraIsInitialized = YES;
+        [self addShadow];
+        [self.view addSubview:selfieButton];
+        [self.view addSubview:saveMediaButton];
+        [self.view addSubview:typeButton];
+        [self.view addSubview:toolTip];
+        [self.view addSubview:loadVideoProgressView];
+        [self.view addSubview:saveMediaProgressView];
+        [self.view addSubview:titleTextField];
+        [self initUI];
+        [self showTools];
+        [self addConstraintsToButton:self.view withButton:selfieButton withPoint:CGPointMake(0, -64) fromLeft:NO fromTop:YES];
+        [self addConstraintsToButton:self.view withButton:saveMediaButton withPoint:CGPointMake(-4, 10) fromLeft:YES fromTop:NO];
+        self.onCameraReady();
+    }
     if(![cameraHelper isInita]){
         NSLog(@"YES");
+        self.onCameraModeChanged(YES);
         [cameraHelper initaliseVideo:rearCamera withView:self.view];
-    }
-    else{
      
     }
     
+    else{
+        // [cameraHelper initRecording];
+    }
+   
   
-    [self addShadow];
-    [self.view addSubview:selfieButton];
-    [self.view addSubview:saveMediaButton];
-
-    [self.view addSubview:loadVideoProgressView];
-    [self.view addSubview:saveMediaProgressView];
-        [self.view addSubview:titleTextField];
-    [self initUI];
-    [self showTools];
-    [self addConstraintsToButton:self.view withButton:selfieButton withPoint:CGPointMake(0, -64) fromLeft:NO fromTop:YES];
-    [self addConstraintsToButton:self.view withButton:saveMediaButton withPoint:CGPointMake(-4, 10) fromLeft:YES fromTop:NO];
-    self.onCameraReady();
+   
     
 }
 
@@ -409,10 +447,12 @@
     if(intMode == 1){
         cameraMode = YES;
         currentTypeIndex = 0;
+        [self initToolTipText];
+        titleTextField.hidden = YES;
         self.onCameraModeChanged(NO);
         titleTextField.text = @"";
         self.onCameraOpen();
-        NSLog(@"open");
+        NSLog(@"openENIN FIRST TIME___________");
     }
     else if(intMode == 2){
         if(currentTypeIndex == 1 && titleTextField.text.length == 0){
@@ -441,6 +481,7 @@
         [self notifyUser];
     
     }else {
+        [cameraHelper startPreviewLayer];
         [cameraHelper startRecording];
         isRecording = YES;
         NSLog(@"starting recording");
@@ -491,24 +532,46 @@
 
 -(void)uploadMedia{
     // self.onPictureUploading();
-    
+    recordedVideoCompressed = [cameraHelper getlastRecordedVideoCompressed];
     if(mediaIsVideo){
         [mediaPlayer stopVideo];
     }
     
     //LAST OPP HER
+
+        [self test];
+        if(mediaIsVideo){
+            NSLog(@"HERE");
+            [mediaPlayer stopVideo];
+            mediaPlayer.view.hidden = YES;
+            //[mediaPlayer.view removeFromSuperview];
+            
+        }
+        if(frontFacingMode){
+            //[self prepareCamera:NO];
+        }else{
+            //  [self prepareCamera:YES];
+        }
+    
+        intMode = 1;
+      
+        
+       // imageView.hidden = YES;
+    [self closeCamera];
+    [self initCameraHelper];
+    
+    imageView.hidden = YES;
     
     self.onCameraClose();
+
     cameraMode = NO;
     imageReadyForUpload = NO;
     if(mediaIsVideo){
-        if([cameraHelper isCompressed]){
-            NSLog(@"test");
-            self.onVideoTaken([cameraHelper getlastRecordedVideoCompressed], imgTaken, titleTextField.text);
-            [self uploadMedias:[cameraHelper getlastRecordedVideoCompressed]];
-        }else{
-            self.onVideoTaken(lastRecordedVideo, imgTaken, titleTextField.text);
-        }
+        mediaIsVideo = NO;
+       
+            self.onVideoTaken(recordedVideoCompressed, imgTaken, titleTextField.text);
+            [self uploadMedias:recordedVideoCompressed];
+        
     }
     else{
         self.onImageTaken(imgTaken, titleTextField.text);
@@ -517,6 +580,7 @@
     }
     
     mediaIsVideo = NO;
+
     
 }
 
@@ -544,6 +608,7 @@
                          onCompletion:^(ResponseModel *response, BucketModel *bucket)
      {
          self.onMediaPosted(bucket);
+         titleTextField.text = @"";
      } onError:^(NSError *error){
          [DataHelper storeData:media];
          //[weakSelf addErrorMessage];
@@ -635,6 +700,20 @@
                         options: UIViewAnimationOptionCurveLinear
                      animations:^{
                          button.alpha = 0.9;
+                         
+                     }
+                     completion:^(BOOL finished){
+                         
+                     }];
+}
+
+-(void)showLabel:(UILabel *) label{
+    label.hidden = NO;
+    [UIView animateWithDuration:0.3f
+                          delay:0.0f
+                        options: UIViewAnimationOptionCurveLinear
+                     animations:^{
+                         label.alpha = 0.9;
                          
                      }
                      completion:^(BOOL finished){
