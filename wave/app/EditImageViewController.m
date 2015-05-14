@@ -66,8 +66,8 @@
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    UITouch *touched = [[event allTouches] anyObject];
-    CGPoint location = [touched locationInView:touched.view];
+    //UITouch *touched = [[event allTouches] anyObject];
+    //CGPoint location = [touched locationInView:touched.view];
     //NSLog(@"x=%.2f y=%.2f", location.x, location.y);
     //[self isWallPixel:self.colorPicker.image xCoordinate:location.x yCoordinate:location.y];
     //[self GetCurrentPixelColorAtPoint:CGPointMake(location.x, location.y)];
@@ -85,13 +85,13 @@
     
     int pixelInfo = ((image.size.width  * y) + x ) * 4; // The image is png
     
-    UInt8 red = data[pixelInfo];         // If you need this info, enable it
-    UInt8 green = data[(pixelInfo + 1)]; // If you need this info, enable it
-    UInt8 blue = data[pixelInfo + 2];    // If you need this info, enable it
+    //UInt8 red = data[pixelInfo];         // If you need this info, enable it
+    //UInt8 green = data[(pixelInfo + 1)]; // If you need this info, enable it
+   // UInt8 blue = data[pixelInfo + 2];    // If you need this info, enable it
     UInt8 alpha = data[pixelInfo + 3];     // I need only this info for my maze game
     CFRelease(pixelData);
     
-    UIColor* color = [UIColor colorWithRed:red/255.0f green:green/255.0f blue:blue/255.0f alpha:alpha/255.0f]; // The pixel color info
+   // UIColor* color = [UIColor colorWithRed:red/255.0f green:green/255.0f blue:blue/255.0f alpha:alpha/255.0f]; // The pixel color info
 
     if (alpha) return YES;
     else return NO;

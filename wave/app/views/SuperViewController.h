@@ -32,4 +32,5 @@
 -(void)addErrorMessage:(UIView *) view;
 -(void)hideError;
 -(void)initCameraView;
+-(void)setReplyMode:(BOOL) replyMode;
 @end

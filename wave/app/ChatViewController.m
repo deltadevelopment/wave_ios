@@ -73,8 +73,8 @@
     //[self.view addSubview:shadowView];
     //[self.view insertSubview:self.tableView belowSubview:shadowView];
     
-    self.tableView.hidden = YES;
-    
+    //self.tableView.hidden = YES;
+    self.view.hidden = YES;
     UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
     [self.view addGestureRecognizer:gestureRecognizer];
     gestureRecognizer.cancelsTouchesInView = NO;  // this prevents the gesture recognizers to 'block' touches
@@ -98,13 +98,16 @@
 
 -(void)showChat{
     self.tableView.hidden = NO;
+    self.view.hidden = NO;
 }
 -(void)hideChat{
     self.tableView.hidden = YES;
+    self.view.hidden = YES;
 }
 
 -(BOOL)isChatVisible{
-    return !self.tableView.hidden;
+    //return !self.tableView.hidden;
+    return !self.view.hidden;
 }
 
 

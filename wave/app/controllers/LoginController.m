@@ -7,6 +7,7 @@
 //
 
 #import "LoginController.h"
+#import "DataHelper.h"
 @implementation LoginController
 -(void)login:(NSString *) username
         pass:(NSString *) password
@@ -24,6 +25,8 @@ onCompletion:(void (^)(UserModel*,ResponseModel*))callback
         ResponseModel *responseModel = [[ResponseModel alloc] init:dic];
         UserModel *user = [[UserModel alloc] init:[[dic objectForKey:@"data"] objectForKey:@"user"]];
         [self storeCredentials:[responseModel.data objectForKey:@"user_session"]];
+        int bucketId = [[[responseModel.data objectForKey:@"bucket"] objectForKey:@"id"] intValue];
+        [DataHelper storeBucketId:bucketId];
         callback(user, responseModel);
     } onError:errorCallback];
 

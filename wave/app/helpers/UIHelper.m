@@ -31,6 +31,11 @@ static CGFloat screenHeight;
     return screenHeight;
 }
 
++(void)applyUIOnButton:(UIButton *) button{
+    button.layer.cornerRadius = 25;
+    [button setImageEdgeInsets:UIEdgeInsetsMake(11, 11, 11, 11)];
+}
+
 +(void)applyLayoutOnButton:(UIButton *) button{
     [[button titleLabel] setFont:[UIFont fontWithName:@"HelveticaNeue" size:20]];
     [[button titleLabel] setTextColor:[ColorHelper whiteColor]];

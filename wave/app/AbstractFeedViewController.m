@@ -24,8 +24,8 @@
 -(void)onFocusGained{}
 -(void)prepareCamera:(UIView *)view{}
 -(void)oncameraClose{}
--(void)onImageTaken:(UIImage *)image{}
--(void)onVideoTaken:(NSData *) video withImage:(UIImage *)image{}
+-(void)onImageTaken:(UIImage *)image withText:(NSString *)text{};
+-(void)onVideoTaken:(NSData *)video withImage:(UIImage *)image withtext:(NSString *)text{}
 
 -(void)scrollUp{}
 

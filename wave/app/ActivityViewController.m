@@ -87,7 +87,7 @@ const int EXPAND_SIZE = 400;
         
         [CATransaction setCompletionBlock:^{
             if(shouldExpand){
-                [self expandBucketWithId:indexPath.row];
+                [self expandBucketWithId:(int)indexPath.row];
             }
             
         }];

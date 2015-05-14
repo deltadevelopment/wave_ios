@@ -27,7 +27,7 @@
     // Do any additional setup after loading the view.
     loginController = [[LoginController alloc]init];
      self.navigationController.navigationBar.topItem.title = NSLocalizedString(@"login_txt", nil);
-    NSLog([[UIDevice currentDevice] name]);
+    NSLog(@"%@", [[UIDevice currentDevice] name]);
     NSString *name = [[UIDevice currentDevice] name];
     if(![name isEqualToString:@"Simen sin iPhone"]){
         self.usernameTextField.text = @"christiandalsvaag";

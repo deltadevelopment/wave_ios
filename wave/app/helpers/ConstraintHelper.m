@@ -39,5 +39,58 @@
                                                             constant:constant]];
 }
 
++(NSLayoutConstraint *)addConstraintsToButton:(UIView *)view withButton:(UIButton *) button withPoint:(CGPoint) xy fromLeft:(bool) left fromTop:(bool) top{
+    button.translatesAutoresizingMaskIntoConstraints = NO;
+    NSLayoutConstraint *bottom;
+    if(left)
+    {
+        [view addConstraint:[NSLayoutConstraint constraintWithItem:view
+                                                         attribute:NSLayoutAttributeLeadingMargin
+                                                         relatedBy:NSLayoutRelationEqual
+                                                            toItem:button
+                                                         attribute:NSLayoutAttributeLeading
+                                                        multiplier:1.0
+                                                          constant:xy.x]];
+        
+    }else{
+        [view addConstraint:[NSLayoutConstraint constraintWithItem:view
+                                                         attribute:NSLayoutAttributeTrailingMargin
+                                                         relatedBy:NSLayoutRelationEqual
+                                                            toItem:button
+                                                         attribute:NSLayoutAttributeTrailing
+                                                        multiplier:1.0
+                                                          constant:xy.x]];
+    }
+    
+    if(top){
+        [view addConstraint:[NSLayoutConstraint constraintWithItem:view
+                                                         attribute:NSLayoutAttributeTopMargin
+                                                         relatedBy:NSLayoutRelationEqual
+                                                            toItem:button
+                                                         attribute:NSLayoutAttributeTop
+                                                        multiplier:1.0
+                                                          constant:xy.y]];
+    }
+    
+    else{
+       bottom = [NSLayoutConstraint constraintWithItem:view
+                                                                 attribute:NSLayoutAttributeBottomMargin
+                                                                 relatedBy:NSLayoutRelationEqual
+                                                                    toItem:button
+                                                                 attribute:NSLayoutAttributeBottom
+                                                                multiplier:1.0
+                                                                  constant:xy.y];
+        [view addConstraint:bottom];
+    }
+    [button addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[button(==50)]"
+                                                                   options:0
+                                                                   metrics:nil
+                                                                     views:NSDictionaryOfVariableBindings(button)]];
+    [button addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[button(==50)]"
+                                                                   options:0
+                                                                   metrics:nil
+                                                                     views:NSDictionaryOfVariableBindings(button)]];
+    return bottom;
+}
 
 @end

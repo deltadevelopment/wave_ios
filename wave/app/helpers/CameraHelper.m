@@ -160,7 +160,7 @@ PreviewLayer.connection.enabled = YES;
     CaptureSession = [[AVCaptureSession alloc] init];
     [self test];
     self.VideoDevice = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
-    self.isInita = YES;
+    self.isInitialised = YES;
     if (self.VideoDevice)
     {
         NSError *error;
@@ -320,15 +320,15 @@ PreviewLayer.connection.enabled = YES;
         NSDictionary *outputSettings = [[NSDictionary alloc] initWithObjectsAndKeys:AVVideoCodecJPEG,AVVideoCodecKey,nil];
         [[self stillImageOutput] setOutputSettings:outputSettings];
         
-        AVCaptureConnection *videoConnection = nil;
+        AVCaptureConnection *localVideoConnection = nil;
         for (AVCaptureConnection *connection in [[self stillImageOutput] connections]) {
             for (AVCaptureInputPort *port in [connection inputPorts]) {
                 if ([[port mediaType] isEqual:AVMediaTypeVideo] ) {
-                    videoConnection = connection;
+                    localVideoConnection = connection;
                     break;
                 }
             }
-            if (videoConnection) {
+            if (localVideoConnection) {
                 break; 
             }
         }
@@ -356,7 +356,7 @@ PreviewLayer.connection.enabled = YES;
     //Set landscape (if required)
     if ([CaptureConnection isVideoOrientationSupported])
     {
-        AVCaptureVideoOrientation orientation = AVCaptureVideoOrientationLandscapeRight;		//<<<<<SET VIDEO ORIENTATION IF LANDSCAPE
+        //AVCaptureVideoOrientation orientation = AVCaptureVideoOrientationLandscapeRight;		//<<<<<SET VIDEO ORIENTATION IF LANDSCAPE
         //[CaptureConnection setVideoOrientation:orientation];
     }
     
@@ -696,7 +696,7 @@ didFinishRecordingToOutputFileAtURL:(NSURL *)outputFileURL
 -(bool)sessionIsRunning{
     return CaptureSession.isRunning;
 }
-
+/*
 - (void)captureStillImage
 {
     __weak typeof(self) weakSelf = self;
@@ -731,5 +731,5 @@ didFinishRecordingToOutputFileAtURL:(NSURL *)outputFileURL
 }
 
 
-
+*/
 @end

@@ -18,4 +18,6 @@
 
 
 +(void)BottomConstraint:(UIView *)parentView withChild:(UIView *) childView withConstant:(float) constant;
++(NSLayoutConstraint *)addConstraintsToButton:(UIView *)view withButton:(UIButton *) button withPoint:(CGPoint) xy fromLeft:(bool) left fromTop:(bool) top;
+
 @end

@@ -487,6 +487,14 @@
   
 }
 
+-(void)setReplyMode:(BOOL) replyMode{
+    //SETTING MODE TO REPLY
+    if(replyMode){
+        [self.superButton setDefaultIconPath:@"reply-icon.png"];
+        [self.superButton setSuperButtonImage:[self.superButton defaultIconPath]];
+    }
+}
+
 -(void)changeIcon:(UIImage *) img{
     [_superButton changeIcon:img];
 

@@ -29,7 +29,9 @@
 @property (nonatomic, copy) void (^onErrorDismissed)(void);
 @property (nonatomic) bool lockActions;
 @property (nonatomic) bool hasError;
+@property (nonatomic, strong) NSString *defaultIconPath;
 @property (nonatomic) bool shouldChangeMode;
+-(void)setSuperButtonImage:(NSString *) path;
 -(id)init:(UIView *)view;
 
 -(UIButton *)getButton;

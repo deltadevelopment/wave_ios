@@ -52,7 +52,7 @@
                                    onCompletion:^(NSURLResponse *response,NSData *data,NSError *error)
                            {
                                NSString *strdata=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
-                               NSLog(strdata);
+                               NSLog(@"%@", strdata);
                                NSMutableDictionary *dic = [parserHelper parse:data];
                                ResponseModel *responseModel = [[ResponseModel alloc] init:dic];
                                BucketModel *bucket = [[BucketModel alloc] init:[[responseModel data] objectForKey:@"bucket"]];

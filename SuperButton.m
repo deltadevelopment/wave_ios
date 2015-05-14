@@ -56,6 +56,7 @@ typedef enum {
     NSLog(@"INIT");
     self = [super init];
     if (self) {
+        self.defaultIconPath = @"camera-icon.png";
         superView = view;
         superButton = [UIButton buttonWithType:UIButtonTypeCustom];
         pixels = 2;
@@ -68,7 +69,7 @@ typedef enum {
 
 -(void)initsuperButton{
     [self applyUIOnButton:superButton];
-    [superButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"camera-icon.png"] withSize:150] forState:UIControlStateNormal];
+    [self setSuperButtonImage:self.defaultIconPath];
     superButton.backgroundColor = [ColorHelper purpleColor];
     
     [superButton addGestureRecognizer:[[UIPanGestureRecognizer alloc]
@@ -148,13 +149,13 @@ typedef enum {
 -(void)tapCancelButton{
     superButtonMode = NONE;
     [self animateButtonToRight];
-    [superButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"camera-icon.png"] withSize:150] forState:UIControlStateNormal];
+       [self setSuperButtonImage:self.defaultIconPath];
     self.onCancelTap();
 
 }
 -(void)discard{
     superButtonMode = MIDDLE;
-    [superButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"camera-icon.png"] withSize:150] forState:UIControlStateNormal];
+     [self setSuperButtonImage:self.defaultIconPath];
 }
 
 
@@ -167,25 +168,25 @@ typedef enum {
         switch (superButtonMode) {
             case NONE:
                 [self animateButtonToMiddle];
-                [superButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"camera-icon.png"] withSize:150] forState:UIControlStateNormal];
+                [self setSuperButtonImage:self.defaultIconPath];
                 superButtonMode = MIDDLE;
                 self.onTap([NSNumber numberWithInt:1]);
                 break;
             case MIDDLE:
                 if(self.shouldChangeMode){
                     //animateToEdit
-                    [superButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"tick.png"] withSize:150] forState:UIControlStateNormal];
+                    [self setSuperButtonImage:@"tick.png"];
                     
                     self.lockActions = YES;
                     superButtonMode = EDIT;
                 }
                 self.onTap([NSNumber numberWithInt:2]);
-              
+                
                 break;
             case EDIT:
                 if(!self.lockActions){
                     superButtonMode = NONE;
-                    [superButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"camera-icon.png"] withSize:150] forState:UIControlStateNormal];
+                    [self setSuperButtonImage:self.defaultIconPath];
                     self.onTap([NSNumber numberWithInt:0]);
                     [self animateButtonToRight];
                 }
@@ -194,7 +195,11 @@ typedef enum {
                 break;
         }
     }
-  
+    
+}
+
+-(void)setSuperButtonImage:(NSString *) path{
+    [superButton setImage:[UIHelper iconImage:[UIImage imageNamed:path] withSize:150] forState:UIControlStateNormal];
 }
 
 -(void)longPressGesture:(UILongPressGestureRecognizer *) recognizer{
@@ -247,8 +252,8 @@ typedef enum {
         dragMode = NA;
     }
     if(dragMode == NA){
-       
-        [superButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"camera-icon.png"] withSize:150] forState:UIControlStateNormal];
+           [self setSuperButtonImage:self.defaultIconPath];
+        
         //Checking if the X drag is enabled, to force the Y gesture to work properly if set alone
         dragMode = impactPointX > MIN_POS_X && dragXEnabled ? [self startXDrag] : impactPointY > MIN_POS_Y ? [self startYDrag] : [self endXYDrag];
     }

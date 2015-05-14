@@ -127,12 +127,12 @@
                                }
                            }];
 }
-
+/*
 -(void)showNotification:(NSObject *) view withData: (NSData *) data{
     notificationHelper =[[NotificationHelper alloc] initNotification];
     UIViewController *viewController = (UIViewController *) view;
     [notificationHelper setNotificationMessage:data];
     [notificationHelper addNotificationToView:viewController.navigationController.view];
 }
-
+*/
 @end

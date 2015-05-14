@@ -54,7 +54,7 @@
 totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite
 {
     long percentageDownloaded = (totalBytesWritten * 100)/totalBytesExpectedToWrite;
-    mediaStatus([NSNumber numberWithInt:percentageDownloaded]);
+    mediaStatus([NSNumber numberWithInt:(int)percentageDownloaded]);
     if(percentageDownloaded == 100){
         
     }

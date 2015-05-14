@@ -24,7 +24,7 @@ AuthHelper *authHelper;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
      authHelper = [[AuthHelper alloc] init];
-   [authHelper resetCredentials];
+  // [authHelper resetCredentials];
     if([authHelper getAuthToken] == nil){
         [self setView:[[StartViewController alloc] init] second:@"startNav"];
     }else{

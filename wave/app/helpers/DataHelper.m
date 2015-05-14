@@ -28,14 +28,13 @@ static NSData *data;
 
 +(void)storeBucketId:(int)Id{
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setValue:Id forKey:@"bucketId"];
-    
-    
-    
+   [defaults setValue:[NSNumber numberWithInt:Id] forKey:@"bucketId"];
+ 
 }
 
 +(int)getBucketId{
-
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    return [[defaults valueForKey:@"bucketId"] intValue];
 }
 
 @end

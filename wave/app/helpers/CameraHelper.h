@@ -41,7 +41,7 @@
 
 @property (nonatomic, strong) AVCaptureSession *CaptureSession2;
 
-@property (nonatomic) bool isInita;
+@property (nonatomic) bool isInitialised;
 
 @property (nonatomic, strong)UIImage *imgTaken;
 
@@ -72,5 +72,4 @@
 -(void)initRecording;
 -(bool)sessionIsRunning;
 -(void)saveVideoToDisk;
-- (void)captureStillImage;
 @end

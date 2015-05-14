@@ -13,4 +13,8 @@
 +(void)storeData:(NSData*) recievedData;
 
 +(NSData *)getData;
+
+
++(void)storeBucketId:(int)Id;
++(int)getBucketId;
 @end
