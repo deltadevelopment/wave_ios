@@ -56,6 +56,7 @@ const int PEEK_Y_START = 300;
     BucketModel *bucket;
     InfoView *infoView;
     NSLayoutConstraint *infoButtonConstraint;
+    bool infoViewMode;
 }
 
 - (void)viewDidLoad {
@@ -112,7 +113,7 @@ const int PEEK_Y_START = 300;
     infoButton = [UIButton buttonWithType:UIButtonTypeCustom];
     //infoButton.frame = CGRectMake([UIHelper getScreenWidth] - 40,15 , 20, 20);
     [UIHelper applyUIOnButton:infoButton];
-    [infoButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"arrow-down-icon.png"] withSize:150] forState:UIControlStateNormal];
+    [infoButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"arrow-up-icon.png"] withSize:150] forState:UIControlStateNormal];
     [infoButton addTarget:self action:@selector(tapInfoButton) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:infoButton];
     infoButtonConstraint = [ConstraintHelper addConstraintsToButton:self.view withButton:infoButton withPoint:CGPointMake(0, 15) fromLeft:YES fromTop:NO];
@@ -121,42 +122,23 @@ const int PEEK_Y_START = 300;
 
 -(void)tapInfoButton{
     if([infoView viewHidden]){
-        [infoView show];
+        [infoView show:infoButton withConstraint:infoButtonConstraint];
+        infoViewMode = YES;
+        [infoButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"arrow-down-icon.png"] withSize:150] forState:UIControlStateNormal];
         //[self scrollViewUp:Scroller withFudgeFactorY:32];
-        [UIView animateWithDuration:0.3f
-                              delay:0.0f
-                            options: UIViewAnimationOptionCurveLinear
-                         animations:^{
-                            infoButtonConstraint.constant = 125;
-                             [infoButton layoutIfNeeded];
-                         }
-                         completion:nil];
+       
         
     }else{
         [infoView hide];
-       // [self scrollViewDown:Scroller withFudgeFactorY:32];
-        [UIView animateWithDuration:0.3f
-                              delay:0.0f
-                            options: UIViewAnimationOptionCurveLinear
-                         animations:^{
-                                 infoButtonConstraint.constant = 15;
-                              [infoButton layoutIfNeeded];
-                         }
-                         completion:nil];
-
+        
+        
+        
+        [infoButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"arrow-up-icon.png"] withSize:150] forState:UIControlStateNormal];
+        // [self scrollViewDown:Scroller withFudgeFactorY:32];
+       
     }
 }
 
--(void)scrollViewUp:(UIView *) view withFudgeFactorY:(int) fudgefactorY{
-    CGRect frame = view.frame;
-    frame.origin.y -= [UIHelper getScreenHeight]/4 - fudgefactorY;
-    view.frame = frame;
-}
--(void)scrollViewDown:(UIView *) view withFudgeFactorY:(int) fudgefactorY{
-    CGRect frame = view.frame;
-    frame.origin.y += [UIHelper getScreenHeight]/4 - fudgefactorY;
-    view.frame = frame;
-}
 
 -(void)viewDidAppear:(BOOL)animated{
     NSLog(@"VIEW APPEARED");
@@ -164,11 +146,17 @@ const int PEEK_Y_START = 300;
 
 
 -(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch{
+
     if([gestureRecognizer isMemberOfClass:[UITapGestureRecognizer class]]){
         return NO;
     }
     if ([gestureRecognizer isMemberOfClass:[UISwipeGestureRecognizer class]] ) {
-        if([chat isChatVisible] || isPeeking || cameraMode){
+        UISwipeGestureRecognizer *swipe = (UISwipeGestureRecognizer *)gestureRecognizer;
+        if(swipe.direction == UISwipeGestureRecognizerDirectionDown){
+                NSLog(@"HERE");
+            return YES;
+        }
+        if([chat isChatVisible] || isPeeking || cameraMode || infoViewMode){
             return NO;
         }
         return YES;
@@ -188,7 +176,7 @@ const int PEEK_Y_START = 300;
     UITouch *touch = [touches anyObject];
     if (touch.tapCount == 2) {
         //This will cancel the singleTap action
-        [NSObject cancelPreviousPerformRequestsWithTarget:self];
+        //[NSObject cancelPreviousPerformRequestsWithTarget:self];
     }
 }
 
@@ -202,10 +190,12 @@ const int PEEK_Y_START = 300;
 }
 
 -(void)showChat{
-    if([chat isChatVisible]){
-        [chat hideChat];
-    }else{
-        [chat showChat];
+    if(!infoViewMode){
+        if([chat isChatVisible]){
+            [chat hideChat];
+        }else{
+            [chat showChat];
+        }
     }
 }
 
@@ -647,7 +637,7 @@ const int PEEK_Y_START = 300;
 
 - (void)peekViewDrag:(UIPanGestureRecognizer *)gesture
 {
-    if(!cameraMode){
+    if(!cameraMode && !infoViewMode){
         isPeeking = YES;
         UILabel *label = (UILabel *)gesture.view;
         CGPoint translation = [gesture translationInView:label];

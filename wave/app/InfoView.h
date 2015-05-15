@@ -8,8 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface InfoView : UIVisualEffectView
--(void)show;
+@interface InfoView : UIVisualEffectView<UIGestureRecognizerDelegate>
+-(void)show:(UIButton *) button withConstraint:(NSLayoutConstraint *) constraint;
 -(void)hide;
 @property (nonatomic) bool viewHidden;
 @property (nonatomic, strong) UIButton *button;
