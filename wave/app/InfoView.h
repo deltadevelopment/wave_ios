@@ -9,8 +9,11 @@
 #import <UIKit/UIKit.h>
 
 @interface InfoView : UIVisualEffectView<UIGestureRecognizerDelegate>
--(void)show:(UIButton *) button withConstraint:(NSLayoutConstraint *) constraint;
+-(void)show;
 -(void)hide;
+-(id)initWithSuperViewController:(UIViewController *) superViewController
+                      withButton:(UIButton *)infoButtonLocal
+                  withConstraint:(NSLayoutConstraint *) constraint;
 @property (nonatomic) bool viewHidden;
 @property (nonatomic, strong) UIButton *button;
 @end

@@ -101,6 +101,7 @@
     self.view.hidden = NO;
 }
 -(void)hideChat{
+    self.onChatHidden();
     self.tableView.hidden = YES;
     self.view.hidden = YES;
 }

@@ -18,6 +18,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *dropsAmount;
 @property (weak, nonatomic) IBOutlet UIImageView *dropsIcon;
 @property (weak, nonatomic) IBOutlet UILabel *viewsAmount;
+@property (nonatomic)     bool infoViewMode;
 
 @property (weak, nonatomic) IBOutlet UIImageView *viewsIcon;
 

@@ -24,6 +24,7 @@
 @end
 const int PEEK_Y_START = 300;
 @implementation BucketViewController{
+
     UIView *cameraView;
     UIScrollView *Scroller;
     CGRect ViewSize;
@@ -56,14 +57,14 @@ const int PEEK_Y_START = 300;
     BucketModel *bucket;
     InfoView *infoView;
     NSLayoutConstraint *infoButtonConstraint;
-    bool infoViewMode;
 }
+@synthesize infoViewMode;
 
 - (void)viewDidLoad {
     drops = [[NSMutableArray alloc]init];
     bucketController = [[BucketController alloc] init];
     dropController = [[DropController alloc] init];
-    infoView = [[InfoView alloc] init];
+
     [self addImageScroller];
     [super viewDidLoad];
     canPeek = YES;
@@ -106,6 +107,7 @@ const int PEEK_Y_START = 300;
     cameraHolder.hidden = YES;
     [self initPlayButton];
     [self initInfoButton];
+        infoView = [[InfoView alloc] initWithSuperViewController:self withButton:infoButton withConstraint:infoButtonConstraint];
     [self.view addSubview:infoView];
 }
 
@@ -122,20 +124,11 @@ const int PEEK_Y_START = 300;
 
 -(void)tapInfoButton{
     if([infoView viewHidden]){
-        [infoView show:infoButton withConstraint:infoButtonConstraint];
-        infoViewMode = YES;
-        [infoButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"arrow-down-icon.png"] withSize:150] forState:UIControlStateNormal];
-        //[self scrollViewUp:Scroller withFudgeFactorY:32];
-       
-        
+        [infoView show];
+
     }else{
         [infoView hide];
-        
-        
-        
-        [infoButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"arrow-up-icon.png"] withSize:150] forState:UIControlStateNormal];
-        // [self scrollViewDown:Scroller withFudgeFactorY:32];
-       
+
     }
 }
 
@@ -188,13 +181,23 @@ const int PEEK_Y_START = 300;
   
     }
 }
+-(void)chatWasHidden{
+    infoButton.hidden = NO;
+    [self.superButton getButton].hidden = NO;
+}
 
 -(void)showChat{
     if(!infoViewMode){
+        NSLog(@"%@", [chat isChatVisible] ? @"YYES" :@"NOE");
         if([chat isChatVisible]){
             [chat hideChat];
+           
+            infoButton.hidden = NO;
+            [self.superButton getButton].hidden = NO;
         }else{
             [chat showChat];
+            infoButton.hidden = YES;
+            [self.superButton getButton].hidden = YES;
         }
     }
 }
@@ -226,6 +229,10 @@ const int PEEK_Y_START = 300;
     
     ViewSize = Scroller.bounds;
     chat = (ChatViewController *)[self createViewControllerWithStoryboardId:@"chatView"];
+    __weak typeof(self) weakSelf = self;
+    chat.onChatHidden = ^{
+        [weakSelf chatWasHidden];
+    };
     //[self.view insertSubview:chat.view belowSubview:[self.superButton getButton]];
     [Scroller addSubview:chat.view];
     if([[bucket drops] count] > 0){

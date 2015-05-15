@@ -11,6 +11,7 @@
 @interface ChatViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UITextViewDelegate>{
 CGSize keyboardSize;
 }
+@property (nonatomic, copy) void (^onChatHidden)(void);
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @property (weak, nonatomic) IBOutlet UITextView *replyTextField;

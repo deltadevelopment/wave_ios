@@ -8,11 +8,13 @@
 
 #import "InfoView.h"
 #import "UIHelper.h"
+#import "BucketViewController.h"
 @implementation InfoView
 float height;
 @synthesize button;
 UIButton *infoButton;
 NSLayoutConstraint *infoButtonConstraint;
+BucketViewController *bucketViewController;
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
@@ -20,7 +22,13 @@ NSLayoutConstraint *infoButtonConstraint;
     // Drawing code
 }
 */
--(id)init{
+-(id)initWithSuperViewController:(BucketViewController *) superViewController
+                      withButton:(UIButton *)infoButtonLocal
+                  withConstraint:(NSLayoutConstraint *) constraint
+{
+    bucketViewController = superViewController;
+    infoButtonConstraint = constraint;
+    infoButton = infoButtonLocal;
     height = [UIHelper getScreenHeight]/4;
     CGRect frame = CGRectMake(0, [UIHelper getScreenHeight], [UIHelper getScreenWidth], height);
     
@@ -39,7 +47,7 @@ NSLayoutConstraint *infoButtonConstraint;
     self.viewHidden = YES;
     
     //UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(dragInfoView:)];
-    UISwipeGestureRecognizer *swipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeDowns:)];
+    UISwipeGestureRecognizer *swipe = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeDown:)];
     swipe.delegate = self;
     [swipe setDirection:(UISwipeGestureRecognizerDirectionDown)];
     swipe.cancelsTouchesInView = NO;
@@ -66,9 +74,7 @@ NSLayoutConstraint *infoButtonConstraint;
     return self;
 }
 
--(void)show:(UIButton *) infoButtonLocal withConstraint:(NSLayoutConstraint *) constraint{
-    infoButton = infoButtonLocal;
-    infoButtonConstraint = constraint;
+-(void)show{
     CGRect frame = self.frame;
     frame.origin.y = [UIHelper getScreenHeight] - height;
     
@@ -79,13 +85,17 @@ NSLayoutConstraint *infoButtonConstraint;
                         options: UIViewAnimationOptionCurveLinear
                      animations:^{
                          self.frame = frame;
-                         constraint.constant = 115;
+                         infoButtonConstraint.constant = 115;
                          [infoButton layoutIfNeeded];
                      }
                      completion:nil];
+    [bucketViewController setInfoViewMode:NO];
+    [bucketViewController setInfoViewMode:YES];
+    [infoButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"arrow-down-icon.png"] withSize:150] forState:UIControlStateNormal];
 }
 
 -(void)hide{
+    [infoButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"arrow-up-icon.png"] withSize:150] forState:UIControlStateNormal];
     CGRect frame = self.frame;
     frame.origin.y = [UIHelper getScreenHeight];
     [UIView animateWithDuration:0.3f
@@ -96,12 +106,16 @@ NSLayoutConstraint *infoButtonConstraint;
                          infoButtonConstraint.constant = 15;
                          [infoButton layoutIfNeeded];
                      }
-                     completion:nil];
-
+                     completion:^(BOOL finished){
+                         [bucketViewController setInfoViewMode:NO];
+                         
+                     }];
+    
+    
     self.viewHidden = YES;
 }
 
--(void)swipeDowns:(UISwipeGestureRecognizer *)sender {
+-(void)swipeDown:(UISwipeGestureRecognizer *)sender {
     NSLog(@"swiping");
     [self hide];
 }
