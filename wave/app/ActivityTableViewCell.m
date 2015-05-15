@@ -71,22 +71,34 @@
 }
 -(void)update:(BucketModel *) bucket{
         DropModel *drop = [[bucket drops] objectAtIndex:0];
+    /*
         if(drop.media_img != nil){
              self.bucketImage.image = drop.media_img;
           
         }
         else if(drop.media_tmp != nil){
-            [self.bucketImage setImage:[UIImage imageWithData:drop.media_tmp]];
+            
         }
+     */
+   
     
-    
-        else{
+    /*
+        else if(drop){
              self.bucketImage.image = [UIImage imageNamed:drop.media];
         }
+    */
+    [drop requestPhoto:^(NSData *media){
+        [self.bucketImage setImage:[UIImage imageWithData:media]];
+    }];
     
-   
-        
+    NSLog(@"%@", bucket.title);
+    if([bucket.bucket_type isEqualToString:@"user"]){
+        self.displayNameText.text = [NSString stringWithFormat:@"@%@", [[bucket user] username]];
+    }else{
         self.displayNameText.text = bucket.title;
+    }
+        
+        //
 }
 
 -(void)updateDropImage:(UIImage *) image{

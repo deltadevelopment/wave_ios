@@ -30,29 +30,76 @@ const int EXPAND_SIZE = 400;
     BucketController *bucketController;
     UIView *cameraHolder;
     UIView *errorView;
+    UIRefreshControl *refreshControl;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    bucketController = [[BucketController alloc] init];
+    
+    refreshControl = [[UIRefreshControl alloc] init];
+    refreshControl.backgroundColor = [ColorHelper blueColor];
+    refreshControl.tintColor = [UIColor whiteColor];
+    [refreshControl addTarget:self action:@selector(refreshFeed) forControlEvents:UIControlEventValueChanged];
+    [self.tableView addSubview:refreshControl];
+    [self startRefreshing];
+    [self getFeed];
     //feed = [ApplicationHelper bucketTestData];
-    
-    feed = [ApplicationHelper bucketTestData];
-    
-    /*
-         feed = [[NSMutableArray alloc]init];
-    [feed addObject:@"Chris"];
-    [feed addObject:@"Christian"];
-    [feed addObject:@"Olav"];
-    [feed addObject:@"Jakob"];
-    [feed addObject:@"Jens"];
-    [feed addObject:@"Rune"];
-     */
+
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    bucketController = [[BucketController alloc] init];
+    
     cameraHolder = [[UIView alloc]initWithFrame:CGRectMake(0, -64, [UIHelper getScreenWidth],[UIHelper getScreenHeight])];
     cameraHolder.backgroundColor = [UIColor whiteColor];
+}
+
+-(void)startRefreshing{
+    if (self.tableView.contentOffset.y == 0) {
+        [UIView animateWithDuration:0.25 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^(void){
+            self.tableView.contentOffset = CGPointMake(0, -refreshControl.frame.size.height);
+        } completion:^(BOOL finished){
+            
+        }];
+    }
+    [refreshControl beginRefreshing];
+}
+
+-(void)refreshFeed{
+    [self getFeed];
+}
+
+-(void)stopRefreshing{
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"MMM d, h:mm a"];
+    NSString *title = [NSString stringWithFormat:@"Last update: %@", [formatter stringFromDate:[NSDate date]]];
+    NSDictionary *attrsDictionary = [NSDictionary dictionaryWithObject:[UIColor whiteColor]
+                                                                forKey:NSForegroundColorAttributeName];
+    NSAttributedString *attributedTitle = [[NSAttributedString alloc] initWithString:title attributes:attrsDictionary];
+    refreshControl.attributedTitle = attributedTitle;
+    [refreshControl endRefreshing];
+    NSLog(@"feed count %lu", (unsigned long)[feed count]);
+    [self.tableView reloadData];
+}
+
+-(void)getFeed{
+      __weak typeof(self) weakSelf = self;
+    NSMutableArray *feedData = [[NSMutableArray alloc] init];
+    [bucketController
+     getFeed:^(ResponseModel *response){
+     //Feed was returned
+         NSMutableArray *rawFeed = [[response data] objectForKey:@"buckets"];
+         for(NSMutableDictionary *rawBucket in rawFeed){
+            BucketModel *bucket = [[BucketModel alloc] init:rawBucket];
+            [feedData addObject:bucket];
+             
+         }
+       feed = feedData;
+       [weakSelf stopRefreshing];
+     }
+     onError:^(NSError *error){
+         NSLog(@"%@", [error localizedDescription]);
+    }];
 }
 
 -(void)viewDidLayoutSubviews{
@@ -133,7 +180,7 @@ const int EXPAND_SIZE = 400;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-  
+    NSLog(@"cell for");
     static NSString *CellIdentifier = @"activityCell";
     ActivityTableViewCell *cell = (ActivityTableViewCell  *)[tableView  dequeueReusableCellWithIdentifier:CellIdentifier];
     if(cell == nil){
@@ -280,6 +327,15 @@ const int EXPAND_SIZE = 400;
     NSLog(@"POSTEDT");
     ActivityTableViewCell *cell = (ActivityTableViewCell  *)[_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
     [cell stopSpinnerAnimation];
+    [feed replaceObjectAtIndex:0 withObject:bucket];
+}
+
+-(void)onMediaPostedDrop:(DropModel *)drop{
+    NSLog(@"POSTEDT");
+    ActivityTableViewCell *cell = (ActivityTableViewCell  *)[_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+    [cell stopSpinnerAnimation];
+    BucketModel *bucket = [feed objectAtIndex:0];
+    [bucket addDrop:drop];
     [feed replaceObjectAtIndex:0 withObject:bucket];
 }
 

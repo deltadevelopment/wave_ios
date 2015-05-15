@@ -8,10 +8,11 @@
 
 #import <Foundation/Foundation.h>
 #import "DropModel.h"
-@interface BucketModel : NSObject
+#import "UserModel.h"
+#import "SuperModel.h"
+@interface BucketModel : SuperModel
 -(id)init:(NSMutableDictionary *)dic;
 @property (nonatomic) int Id;
-@property (nonatomic) int bucket_type;
 @property (nonatomic) int temperature;
 @property (nonatomic) int visibility;
 @property (nonatomic) BOOL locked;
@@ -21,10 +22,13 @@
 @property (nonatomic,strong) NSDate *when_datetime;
 @property (nonatomic,strong) NSDate *created_at;
 @property (nonatomic,strong) NSDate *updated_at;
+@property (nonatomic, strong) NSString *bucket_type;
+@property (nonatomic) int drops_count;
 
 //Client properties
 @property (nonatomic,strong) DropModel *rootDrop;
 @property (nonatomic,strong) NSMutableArray *drops;
+@property (nonatomic, strong) UserModel *user;
 
 @property (nonatomic) BOOL isInitalized;
 -(void)addDrop:(DropModel *) drop;

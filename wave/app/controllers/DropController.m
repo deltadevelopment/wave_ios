@@ -37,10 +37,12 @@
                                                          }
                                                  };
                           NSString *jsonData = [applicationHelper generateJsonFromDictionary:body];
-                          [self postHttpRequest:[NSString stringWithFormat:@"/bucket/%d/drop", bucket_id]
+                          [self postHttpRequest:[NSString stringWithFormat:@"bucket/%d/drop", bucket_id]
                                            json:jsonData
                                    onCompletion:^(NSURLResponse *response,NSData *data,NSError *error)
                            {
+                               NSString *strdata=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+                               NSLog(strdata);
                                NSMutableDictionary *dic = [parserHelper parse:data];
                                ResponseModel *responseModel = [[ResponseModel alloc] init:dic];
                                completionCallback(responseModel);
@@ -63,6 +65,8 @@
                    completionCallback(responseModel);
                } onError:errorCallback];
 }
+
+
 
 
 

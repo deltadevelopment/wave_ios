@@ -417,7 +417,8 @@
 -(void)uploadMedia:(NSData *) media{
     if(isReply){
         //add a drop
-        NSLog(@"uploading drop here....");
+        NSLog(@"currentBucketId %d", [DataHelper getCurrentBucketId]);
+        [self addNewDrop:media withBucketId:[DataHelper getCurrentBucketId]];
     }else{
         if(currentTypeIndex == 1){
             //Create a new bucket
@@ -463,8 +464,17 @@
                              weakSelf.onProgression([progression intValue]);
                          }
                        onCompletion:^(ResponseModel *response){
+                           DropModel *drop = [[DropModel alloc] init:[[response data] objectForKey:@"drop"]];
+                           drop.media_tmp = media;
+                           weakSelf.onMediaPostedDrop(drop);
+                           
                            
                        } onError:^(NSError *error){
+                           NSMutableDictionary *dic= [[NSMutableDictionary alloc] initWithDictionary:[error userInfo]];
+                           ResponseModel *responseModel = [[ResponseModel alloc] init:dic];
+                           NSLog(@"ERROR: %@", [responseModel message]);
+                           NSLog(@"ERROR: %@", [responseModel message_id]);
+                           self.onNotificatonShow([responseModel message]);
                        }];
 }
 

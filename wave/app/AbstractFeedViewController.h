@@ -27,4 +27,5 @@
 -(void)onCancelTap;
 -(void)increazeProgress:(int)progress;
 -(void)onMediaPosted:(BucketModel *)bucket;
+-(void)onMediaPostedDrop:(DropModel *)drop;
 @end

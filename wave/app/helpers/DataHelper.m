@@ -8,6 +8,7 @@
 
 #import "DataHelper.h"
 static NSData *data;
+static int currentBucketId;
 @implementation DataHelper
 
 /*
@@ -36,5 +37,13 @@ static NSData *data;
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     return [[defaults valueForKey:@"bucketId"] intValue];
 }
+
++(void)setCurrentBucketId:(int)bucketId{
+    currentBucketId = bucketId;
+}
++(int)getCurrentBucketId{
+    return currentBucketId;
+}
+
 
 @end

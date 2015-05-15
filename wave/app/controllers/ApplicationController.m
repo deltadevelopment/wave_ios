@@ -92,15 +92,16 @@
                                if (data != nil && error == nil)
                                {
                                    //Ferdig lastet ned
-                                   callback(response,data,error);
+                                  
                                    NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) response;
                                    NSLog(@"response status code: %ld", (long)[httpResponse statusCode]);
                                    NSInteger statuscode = [httpResponse statusCode];
                                    if(statuscode < 300){
+                                       NSLog(@"success");
+                                        callback(response,data,error);
                                        //[view performSelector:success withObject:data];
                                        
                                    }else{
-                                       
                                        /*
                                         NSString *strdata=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
                                         [applicationHelper alertUser:[NSString stringWithFormat:@"%ld on %@",(long)statuscode, strdata]];
@@ -117,9 +118,16 @@
                                }
                                else
                                {
+                                   //NSString *strdata=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+                                  // NSLog(strdata);
                                    NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) response;
-                                   NSLog(@"response status code: %ld", (long)[httpResponse statusCode]);
-                                   errorCallback(error);
+                                  NSLog(@"response status code: %ld", (long)[httpResponse statusCode]);
+                                  // NSLog([error localizedDescription]);
+                                   
+                                   NSMutableDictionary *errors = [parserHelper parse:data];
+                                   NSError *httpError = [NSError errorWithDomain:@"world" code:200 userInfo:errors];
+                                   
+                                   errorCallback(httpError);
                                    // There was an error, alert the user
                                    //[self showNotification:view withData:data];
                                    //[view performSelector:errorAction withObject:error];

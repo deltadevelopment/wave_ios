@@ -52,7 +52,7 @@
                                    onCompletion:^(NSURLResponse *response,NSData *data,NSError *error)
                            {
                                NSString *strdata=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
-                               NSLog(@"%@", strdata);
+                              // NSLog(@"%@", strdata);
                                NSMutableDictionary *dic = [parserHelper parse:data];
                                ResponseModel *responseModel = [[ResponseModel alloc] init:dic];
                                BucketModel *bucket = [[BucketModel alloc] init:[[responseModel data] objectForKey:@"bucket"]];
@@ -106,6 +106,35 @@
     } onError:errorCallback];
 }
 
+-(void)getFeed:(void (^)(ResponseModel*))completionCallback
+       onError:(void(^)(NSError *))errorCallback
+{
+    [self getHttpRequest:@"feed"
+            onCompletion:^(NSURLResponse *response,NSData *data,NSError *error){
+                NSMutableDictionary *dic = [parserHelper parse:data];
+                ResponseModel *responseModel = [[ResponseModel alloc] init:dic];
+                NSString *strdata=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+                NSLog(@"%@", strdata);
+                completionCallback(responseModel);
+               
+            } onError:errorCallback];
+}
+
+-(void)getBucket:(int)bucketId
+    onCompletion:(void (^)(ResponseModel*))completionCallback
+       onError:(void(^)(NSError *))errorCallback
+{
+    [self getHttpRequest:[NSString stringWithFormat:@"bucket/%d", bucketId]
+            onCompletion:^(NSURLResponse *response,NSData *data,NSError *error){
+                NSMutableDictionary *dic = [parserHelper parse:data];
+                ResponseModel *responseModel = [[ResponseModel alloc] init:dic];
+                NSString *strdata=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+                NSLog(@"%@", strdata);
+                completionCallback(responseModel);
+                
+            } onError:errorCallback];
+}
+       
 #pragma Private methods
 /*
 -(void)uploadImage:(NSData *) imageData

@@ -16,6 +16,8 @@
     NSMutableArray *carouselTitles;
     int space;
     int pages;
+    int imgIndex;
+    UIImageView *imageViewForSearch;
     
 }
 
@@ -32,11 +34,13 @@
     [pageindicator setCenter:CGPointMake(navBar.frame.size.width / 2, navBar.frame.size.height - 10)];
     
     [navBar addSubview:pageindicator];
-    for(int i = 0; i< count; i++){
+    for(int i = 0; i< count -1; i++){
         [self createCircle:space];
         space += 9;
     }
-    
+   [self createCircleWithImage:@"search-icon-white.png" withXPos:space];
+    imgIndex = 2;
+    space += 9;
     return self;
 }
 
@@ -67,9 +71,19 @@
     for(int index = 0;index < pageCount; index++){
         UILabel *label =[carousel objectAtIndex:index];
         if(currentPage == index){
-            label.backgroundColor =[UIColor colorWithRed:0.753 green:0.455 blue:0.808 alpha:1];
+            if(index == imgIndex){
+                [UIHelper colorIcon:imageViewForSearch withColor:[UIColor colorWithRed:0.753 green:0.455 blue:0.808 alpha:1]];
+            }else{
+                label.backgroundColor =[UIColor colorWithRed:0.753 green:0.455 blue:0.808 alpha:1];
+            }
+            
         }else{
+            if(index == imgIndex){
+                [UIHelper colorIcon:imageViewForSearch withColor:[UIColor colorWithRed:0.357 green:0.125 blue:0.459 alpha:1]];
+            }else{
             label.backgroundColor =[UIColor colorWithRed:0.357 green:0.125 blue:0.459 alpha:1];
+            }
+            
         }
         
     }
@@ -94,6 +108,22 @@
     circle.backgroundColor = [UIColor colorWithRed:0.357 green:0.125 blue:0.459 alpha:1];
     circle.layer.cornerRadius = 3;
     circle.clipsToBounds = YES;
+    [carousel addObject:circle];
+    [pageindicator addSubview:circle];
+}
+
+-(void)createCircleWithImage:(NSString *) imgPath withXPos:(float) xPos{
+    UILabel *circle = [[UILabel alloc] initWithFrame:CGRectMake(xPos, 0, 7, 7)];
+    //circle.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:imgPath]];
+   // circle.backgroundColor = [UIColor colorWithRed:0.357 green:0.125 blue:0.459 alpha:1];
+    //circle.layer.cornerRadius = 3;
+    //circle.clipsToBounds = YES;
+    imageViewForSearch =[[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 7, 7)];
+    
+    imageViewForSearch.image= [UIHelper iconImage:[UIImage imageNamed:imgPath] withPoint:CGPointMake(14, 14)];
+    [UIHelper colorIcon:imageViewForSearch withColor:[UIColor colorWithRed:0.357 green:0.125 blue:0.459 alpha:1]];
+    [circle addSubview:imageViewForSearch];
+ 
     [carousel addObject:circle];
     [pageindicator addSubview:circle];
 }

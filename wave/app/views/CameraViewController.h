@@ -29,6 +29,7 @@ CGSize keyboardSize;
 @property (nonatomic, copy) void (^onNetworkErrorHide)(void);
 @property (nonatomic, copy) void (^onProgression)(int(progress));
 @property (nonatomic, copy) void (^onMediaPosted)(BucketModel *(bucket));
+@property (nonatomic, copy) void (^onMediaPostedDrop)(DropModel *(drop));
 @property(nonatomic, strong) CameraHelper *cameraHelper;
 //@property(nonatomic, strong) CameraHelper2 *cameraHelper;
 

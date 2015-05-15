@@ -14,4 +14,7 @@
 
 }
 -(void)putHttpRequestWithImage:(NSData *) imageData token:(NSString *) token onCompletion:(void (^)(NSNumber*))callback;
+-(void)getMedia:(NSString *) urlPath
+   onCompletion:(void (^)(NSData*))completionCallback
+        onError:(void(^)(NSError *))errorCallback;
 @end

@@ -154,7 +154,9 @@
 -(void)onMediaPosted:(BucketModel *)bucket{
     [currentController onMediaPosted:bucket];
 }
-
+-(void)onMediaPostedDrop:(DropModel *)drop{
+    [currentController onMediaPostedDrop:drop];
+}
 -(void)onCameraClose{
     [currentController oncameraClose];
 }

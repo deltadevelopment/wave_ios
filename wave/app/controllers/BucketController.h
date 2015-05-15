@@ -24,4 +24,10 @@
 -(void)deleteBucket:(BucketModel *) bucket
        onCompletion:(void (^)(ResponseModel*))completionCallback
             onError:(void(^)(NSError *))errorCallback;
+
+-(void)getFeed:(void (^)(ResponseModel*))completionCallback
+       onError:(void(^)(NSError *))errorCallback;
+-(void)getBucket:(int)bucketId
+    onCompletion:(void (^)(ResponseModel*))completionCallback
+         onError:(void(^)(NSError *))errorCallback;
 @end

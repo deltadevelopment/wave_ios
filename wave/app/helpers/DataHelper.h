@@ -10,6 +10,7 @@
 
 @interface DataHelper : UIView
 @property (nonatomic, strong) NSData *data;
+
 +(void)storeData:(NSData*) recievedData;
 
 +(NSData *)getData;
@@ -17,4 +18,6 @@
 
 +(void)storeBucketId:(int)Id;
 +(int)getBucketId;
++(void)setCurrentBucketId:(int)bucketId;
++(int)getCurrentBucketId;
 @end

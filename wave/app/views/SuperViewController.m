@@ -114,11 +114,18 @@
     _camera.onMediaPosted=^(BucketModel *(bucket)){
         [weakSelf onMediaPosted:bucket];
     };
+    _camera.onMediaPostedDrop=^(DropModel *(drop)){
+        [weakSelf onMediaPostedDrop:drop];
+    };
 }
 
 
 -(void)onMediaPosted:(BucketModel *) bucket{
 
+}
+
+-(void)onMediaPostedDrop:(DropModel *) drop{
+    
 }
 -(void)onNotification:(NSString *) message{
     notificationHelper =[[NotificationHelper alloc] initNotification];

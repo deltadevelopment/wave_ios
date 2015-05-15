@@ -19,6 +19,7 @@
 #import "DropController.h"
 #import "ConstraintHelper.h"
 #import "InfoView.h"
+#import "DataHelper.h"
 @interface BucketViewController ()
 
 @end
@@ -73,8 +74,8 @@ const int PEEK_Y_START = 300;
     // Do any additional setup after loading the view.
     AvailabilityViewController *viewControllerX = (AvailabilityViewController *)[self createViewControllerWithStoryboardId:@"availability"];
     FilterViewController *viewControllerY = (FilterViewController *)[self createViewControllerWithStoryboardId:@"filterView"];
-   
-
+    self.displayNameText.hidden = YES;
+    self.topBar.hidden = YES;
    // chat.view.hidden = YES;
   
     cameraHolder = [[UIView alloc]initWithFrame:CGRectMake(0, -64, [UIHelper getScreenWidth],[UIHelper getScreenHeight])];
@@ -235,25 +236,57 @@ const int PEEK_Y_START = 300;
     };
     //[self.view insertSubview:chat.view belowSubview:[self.superButton getButton]];
     [Scroller addSubview:chat.view];
-    if([[bucket drops] count] > 0){
-        [self addDropToBucket:[[bucket drops] objectAtIndex:[[bucket drops] count]-1]];
-        for(DropModel *drop in [bucket drops]){
-            [self addDropToBucket:drop];
-        };
-        [self addDropToBucket:[[bucket drops] objectAtIndex:0]];
+    DropModel *tempDrop = [[DropModel alloc] init];
+    [self addDropToBucket:tempDrop];
+    for(int i = 0; i< bucket.drops_count; i++){
+        [self addDropToBucket:tempDrop];
     }
-   /*
-    DropModel *firstDrop = [[DropModel alloc] initWithTestData:@"169.jpg" withName:@"Chris"];
-    firstDrop.image = firstBucket;
-    [self addDropToBucket:[[DropModel alloc] initWithTestData:@"miranda-kerr.jpg" withName:@"Miranda Kerr"]];
-    [self addDropToBucket:firstDrop];
-    [self addDropToBucket:[[DropModel alloc] initWithTestData:@"test2.jpg" withName:@"Matika"]];
-    [self addDropToBucket:[[DropModel alloc] initWithTestData:@"miranda-kerr.jpg" withName:@"Miranda Kerr"]];
-    [self addDropToBucket:firstDrop];
-  */
+    [self addDropToBucket:tempDrop];
+   
+    
+    [bucketController getBucket:[bucket Id]
+                   onCompletion:^(ResponseModel *response){
+                       BucketModel *tempBucket =[[BucketModel alloc] init:[[response data] objectForKey:@"bucket"]];
+                       bucket = tempBucket;
+                       if([bucket.bucket_type isEqualToString:@"user"]){
+                           [self.navigationItem setTitle:[[bucket user] username]];
+                       }else{
+                           [self.navigationItem setTitle:[bucket title]];
+                       }
+                       if([[bucket drops] count] > 0){
+                           DropModel *tempDrop = [[bucket drops] objectAtIndex:[[bucket drops] count]-1];
+                            DropModel *tempDrop2 = [[bucket drops] objectAtIndex:0];
+                           [self updateDrops:tempDrop2 toView:[drops objectAtIndex:[drops count]-1]];
+                           
+                           for(int i = 0; i<[[bucket drops] count];i++){
+                               DropModel *dropt = [[bucket drops] objectAtIndex:i];
+                               [self updateDrops:dropt toView:[drops objectAtIndex:i+1]];
+                           }
+                           
+                          
+                           [self updateDrops:tempDrop toView:[drops objectAtIndex:0]];
+                           
+                       }
+                       
+                   }
+                        onError:^(NSError *error){
+                            
+                            
+                            
+                        }];
+    
+ 
     [self.view addSubview:Scroller];
     CGPoint bottomOffset = CGPointMake(Scroller.bounds.size.width, 0);
     [Scroller setContentOffset:bottomOffset animated:NO];
+}
+
+-(void)updateDrops:(DropModel *) drop toView:(DropView *) dropView{
+    dropView.dropTitle.text = [NSString stringWithFormat:@"@%@",[[drop user] username]];
+    
+    [drop requestPhoto:^(NSData *media){
+        [dropView setImage:[UIImage imageWithData:media]];
+    }];
 }
 
 -(BOOL)shouldGetMoreImages{
@@ -373,11 +406,17 @@ const int PEEK_Y_START = 300;
 
 -(void)addDropToBucket:(DropModel *)drop
 {
+    NSLog(@"DROPPING: %@", [[drop user] username]);
     PageCount +=1;
     self.topBar.hidden = YES;
     Scroller.contentSize = CGSizeMake(PageCount * Scroller.bounds.size.width, Scroller.bounds.size.height);
     DropView *dropView = [[DropView alloc] initWithFrame:ViewSize];
-    dropView.dropTitle.text = [drop username];
+    dropView.dropTitle.text = [NSString stringWithFormat:@"@%@",[[drop user] username]];
+    
+    [drop requestPhoto:^(NSData *media){
+        [dropView setImage:[UIImage imageWithData:media]];
+    }];
+    /*
     if(drop.image !=nil){
         [dropView setImage:drop.image];
     }
@@ -390,6 +429,8 @@ const int PEEK_Y_START = 300;
     else{
         [dropView setImage:[UIImage imageNamed:[drop media]]];
     }
+    */
+    
     [Scroller insertSubview:dropView belowSubview:chat.view];
     [drops addObject:dropView];
     ViewSize = CGRectOffset(ViewSize, Scroller.bounds.size.width, 0);
@@ -421,12 +462,12 @@ const int PEEK_Y_START = 300;
 }
 
 -(void)attachGUI{
-    [UIHelper applyThinLayoutOnLabel:self.displayNameText withSize:18 withColor:[UIColor blackColor]];
+    //[UIHelper applyThinLayoutOnLabel:self.displayNameText withSize:18 withColor:[UIColor blackColor]];
     [UIHelper roundedCorners:self.profilePictureIcon withRadius:15];
     [UIHelper roundedCorners:self.availabilityIcon withRadius:7.5];
     self.topBar.alpha = 0.9;
-    self.displayNameText.text = @"Chris";
-    [self.navigationItem setTitle:@"Chris Aardal"];
+    //self.displayNameText.text = @"Chris";
+   // [self.navigationItem setTitle:@"Chris Aardal"];
     [UIHelper applyThinLayoutOnLabel:self.dropsAmount withSize:14];
     [UIHelper applyThinLayoutOnLabel:self.viewsAmount withSize:14];
     currentPage = 1;
@@ -450,12 +491,12 @@ const int PEEK_Y_START = 300;
 }
 -(void)setBucket:(BucketModel *)inputBucket{
    bucket = inputBucket;
+   
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
 
 # pragma SuperButton callbacks
 -(void)prepareCamera{
@@ -471,8 +512,8 @@ const int PEEK_Y_START = 300;
 
 -(void)onCameraClose{
     cameraMode = NO;
+    infoButton.hidden = NO;
     NSLog(@"CLOSING");
-    
     [super onCameraClose];
 }
 
@@ -491,8 +532,6 @@ const int PEEK_Y_START = 300;
     ViewSize = CGRectOffset(ViewSize, -Scroller.bounds.size.width, 0);
     //[self addDropToBucket:[[DropModel alloc] initWithTestData:@"169.jpg" withName:@"Chris"]];
     [self addDropToBucket:[[bucket drops] objectAtIndex:0]];
-    
-    
     self.dropsAmount.text = [NSString stringWithFormat:@"%ld/%ld", (long)currentPage, [drops count] - 2];
 }
 
@@ -509,7 +548,6 @@ const int PEEK_Y_START = 300;
 -(void)startStopVideo:(id)sender{
     if(currentView !=nil){
         [currentView playMediaWithButton:playButton];
-     
     }
 }
 
@@ -520,7 +558,7 @@ const int PEEK_Y_START = 300;
     [currentView setMedia:video withIndexId:(int)[drops count]];
     [drops addObject:currentView];
     self.dropsAmount.text = [NSString stringWithFormat:@"%ld/%ld", (long)currentPage, [drops count] - 1];
-    [self addDropToBucket:[[DropModel alloc] initWithTestData:@"169.jpg" withName:@"Chris"]];
+[self addDropToBucket:[[bucket drops] objectAtIndex:0]];
     // DropView *firstDrop = [drops objectAtIndex:0];
     //[firstDrop setMedia:video];
     playButton.hidden = NO;
@@ -538,10 +576,10 @@ const int PEEK_Y_START = 300;
     // currentView.image = [GraphicsHelper imageByScalingAndCroppingForSize:size img:image];
     [drops addObject:currentView];
     self.dropsAmount.text = [NSString stringWithFormat:@"%ld/%ld", (long)currentPage, [drops count] - 1];
-    [self addDropToBucket:[[DropModel alloc] initWithTestData:@"169.jpg" withName:@"Chris"]];
+  [self addDropToBucket:[[bucket drops] objectAtIndex:0]];
     UIImageView *firstDrop = [drops objectAtIndex:0];
     firstDrop.image = image;
-    chat.view.hidden = NO;
+    [chat hideChat];
     [self uploadMedia:UIImagePNGRepresentation(image)];
 }
 
@@ -607,7 +645,9 @@ const int PEEK_Y_START = 300;
 
 -(void)onCameraOpen{
     [self.camera prepareCamera:YES withReply:YES];
+    [DataHelper setCurrentBucketId:bucket.Id];
     NSLog(@"");
+    infoButton.hidden = YES;
     cameraMode = YES;
     chat.view.hidden = YES;
     Scroller.userInteractionEnabled = NO;
