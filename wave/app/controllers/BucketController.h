@@ -13,6 +13,7 @@
        withBucketTitle:(NSString *) bucketTitle
  withBucketDescription:(NSString *) bucketDescription
        withDropCaption:(NSString *) dropCaption
+         withMediaType:(int) media_type
             onProgress:(void (^)(NSNumber*))progression
           onCompletion:(void (^)(ResponseModel*, BucketModel*))completionCallback
                onError:(void(^)(NSError *))errorCallback;

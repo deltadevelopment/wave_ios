@@ -12,9 +12,10 @@
 -(void)addDropToBucket:(NSString*) caption
              withMedia:(NSData*) media
           withBucketId:(int)bucket_id
+         withMediaType:(int)media_type
             onProgress:(void (^)(NSNumber*))onProgression
           onCompletion:(void (^)(ResponseModel*))completionCallback
- onError:(void(^)(NSError *))errorCallback;
+               onError:(void(^)(NSError *))errorCallback;
 
 -(void)deleteDrop:(int)drop_id
      onCompletion:(void (^)(ResponseModel*))completionCallback

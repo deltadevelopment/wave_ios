@@ -289,8 +289,17 @@ const int PEEK_Y_START = 300;
     dropView.dropTitle.text = [NSString stringWithFormat:@"@%@",[[drop user] username]];
     [dropView setDrop:drop];
     [drop requestPhoto:^(NSData *media){
-        [dropView setImage:[UIImage imageWithData:media]];
-        [[dropView spinner] stopAnimating];
+        if([drop media_type] == 0){
+            //IMAGE
+           // [dropView setImage:[UIImage imageWithData:media]];
+            [dropView setMedia:[UIImage imageWithData:media] withIndexId:[drop Id]];
+            [[dropView spinner] stopAnimating];
+            
+        }else{
+            //VIDEO
+             [dropView setMedia:media withIndexId:[drop Id]];
+        }
+      
     }];
 }
 
@@ -562,7 +571,7 @@ const int PEEK_Y_START = 300;
     [currentView setMedia:video withIndexId:(int)[drops count]];
     [drops addObject:currentView];
     self.dropsAmount.text = [NSString stringWithFormat:@"%ld/%ld", (long)currentPage, [drops count] - 1];
-[self addDropToBucket:[[bucket drops] objectAtIndex:0]];
+    [self addDropToBucket:[[bucket drops] objectAtIndex:0]];
     // DropView *firstDrop = [drops objectAtIndex:0];
     //[firstDrop setMedia:video];
     playButton.hidden = NO;

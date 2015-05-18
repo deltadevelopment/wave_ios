@@ -34,9 +34,11 @@ AuthHelper *authHelper;
         //[self setView:[[NavigationScrollViewController alloc] init] second:@"navigationScrollNav"];
        // [self setView:[[ActivityViewController alloc]init] second:@"activity"];
         
+        //[self setView:[[CarouselViewController alloc] init] second:@"carousel"];
+       [self setView:[[SlideMenuViewController alloc] init] second:@"slideMenuView"];
+       
         
-        [self setView:[[SlideMenuViewController alloc] init] second:@"slideMenuView"];
-       // [self setView:[[EditImageViewController alloc] init] second:@"editView"];
+        // [self setView:[[EditImageViewController alloc] init] second:@"editView"];
        // [self setView:[[ChatViewController alloc]init] second:@"chatView"];
         
       

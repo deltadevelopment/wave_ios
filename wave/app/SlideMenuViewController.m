@@ -153,10 +153,12 @@ static int const DRAWER_SIZE = 280;
 }
 
 -(void)handleTap:(UITapGestureRecognizer *) sender{
+    /*
     if(drawerIsVisible){
         [root.view setUserInteractionEnabled:YES];
         [self fadeMainViewOut];
     }
+     */
 }
 
 -(void)addRootViewController:(NSString *) storyboardId{
@@ -272,6 +274,7 @@ static int const DRAWER_SIZE = 280;
 
 -(void)showDrawer
 {
+    /*
     if(!drawerIsVisible){
         [self fadeMainViewIn];
        
@@ -281,6 +284,7 @@ static int const DRAWER_SIZE = 280;
         [self fadeMainViewOut];
         [root.view setUserInteractionEnabled:YES];
     }
+     */
   
 }
 

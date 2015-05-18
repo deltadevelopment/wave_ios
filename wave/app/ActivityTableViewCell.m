@@ -88,7 +88,13 @@
         }
     */
     [drop requestPhoto:^(NSData *media){
-        [self.bucketImage setImage:[UIImage imageWithData:media]];
+        if([drop media_type] == 0){
+            //BILDE
+            [self.bucketImage setImage:[UIImage imageWithData:media]];
+        }else{
+            //VIDEO
+        }
+        
     }];
     
     NSLog(@"%@", bucket.title);

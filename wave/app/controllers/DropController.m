@@ -12,6 +12,7 @@
 -(void)addDropToBucket:(NSString*) caption
              withMedia:(NSData*) media
           withBucketId:(int)bucket_id
+         withMediaType:(int)media_type
             onProgress:(void (^)(NSNumber*))onProgression
           onCompletion:(void (^)(ResponseModel*))completionCallback
  onError:(void(^)(NSError *))errorCallback
@@ -35,7 +36,7 @@
                                                  @"drop":@{
                                                          @"media_key" : media_key,
                                                          @"caption" : caption,
-                                                         @"media_type":[NSNumber numberWithInt:1]
+                                                         @"media_type":[NSNumber numberWithInt:media_type]
                                                          }
                                                  };
                           NSString *jsonData = [applicationHelper generateJsonFromDictionary:body];

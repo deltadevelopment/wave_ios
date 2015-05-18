@@ -8,6 +8,7 @@
 
 #import "DataHelper.h"
 static NSData *data;
+static int media_type;
 static int currentBucketId;
 @implementation DataHelper
 
@@ -19,12 +20,17 @@ static int currentBucketId;
 }
 */
 
-+(void)storeData:(NSData*) recievedData{
++(void)storeData:(NSData*) recievedData withMediaType:(int) media_ty{
     data = recievedData;
+    media_type = media_ty;
 }
 
 +(NSData *)getData{
     return data;
+}
+
++(int)getMediaType{
+    return media_type;
 }
 
 +(void)storeBucketId:(int)Id{

@@ -16,6 +16,7 @@
        withBucketTitle:(NSString *) bucketTitle
  withBucketDescription:(NSString *) bucketDescription
        withDropCaption:(NSString *) dropCaption
+         withMediaType:(int) media_type
             onProgress:(void (^)(NSNumber*))progression
           onCompletion:(void (^)(ResponseModel*, BucketModel*))completionCallback
                onError:(void(^)(NSError *))errorCallback
@@ -43,7 +44,8 @@
                                                          },
                                                  @"drop":@{
                                                          @"media_key" : media_key,
-                                                         @"caption" : dropCaption
+                                                         @"caption" : dropCaption,
+                                                         @"media_type" : [NSNumber numberWithInt:media_type]
                                                          }
                                                  };
                           NSString *jsonData = [applicationHelper generateJsonFromDictionary:body];

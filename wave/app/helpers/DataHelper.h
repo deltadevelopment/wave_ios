@@ -11,7 +11,7 @@
 @interface DataHelper : UIView
 @property (nonatomic, strong) NSData *data;
 
-+(void)storeData:(NSData*) recievedData;
++(void)storeData:(NSData*) recievedData withMediaType:(int) media_ty;
 
 +(NSData *)getData;
 
@@ -20,4 +20,6 @@
 +(int)getBucketId;
 +(void)setCurrentBucketId:(int)bucketId;
 +(int)getCurrentBucketId;
++(int)getMediaType;
+
 @end

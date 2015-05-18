@@ -403,39 +403,40 @@
     if(mediaIsVideo){
         mediaIsVideo = NO;
         self.onVideoTaken(recordedVideoCompressed, imgTaken, titleTextField.text);
-        [self uploadMedia:recordedVideoCompressed];
+        [self uploadMedia:recordedVideoCompressed withMediaType:1];
         
     }
     else{
         self.onImageTaken(imgTaken, titleTextField.text);
         CGSize size = CGSizeMake([UIHelper getScreenWidth], [UIHelper getScreenHeight]);
-        [self uploadMedia:UIImagePNGRepresentation([GraphicsHelper imageByScalingAndCroppingForSize:size img:imgTaken])];
+        [self uploadMedia:UIImagePNGRepresentation([GraphicsHelper imageByScalingAndCroppingForSize:size img:imgTaken]) withMediaType:0];
     }
     mediaIsVideo = NO;
 }
 
--(void)uploadMedia:(NSData *) media{
+-(void)uploadMedia:(NSData *) media withMediaType:(int) media_type{
     if(isReply){
         //add a drop
         NSLog(@"currentBucketId %d", [DataHelper getCurrentBucketId]);
-        [self addNewDrop:media withBucketId:[DataHelper getCurrentBucketId]];
+        [self addNewDrop:media withBucketId:[DataHelper getCurrentBucketId] withMediaType:media_type];
     }else{
         if(currentTypeIndex == 1){
             //Create a new bucket
-            [self createNewBucket:media];
+            [self createNewBucket:media withMediaType:media_type];
         }else{
             //update personal bucket - add drop to personal bucket
-            [self addNewDrop:media withBucketId:[DataHelper getBucketId]];
+            [self addNewDrop:media withBucketId:[DataHelper getBucketId] withMediaType:media_type];
         }
     }
 }
 
--(void)createNewBucket:(NSData *) media{
+-(void)createNewBucket:(NSData *) media withMediaType:(int)media_type{
     __weak typeof(self) weakSelf = self;
     [bucketController createNewBucket:media
                       withBucketTitle:titleTextField.text
                 withBucketDescription:@"My new crazy description"
                       withDropCaption:@"My crazy new drop!"
+                        withMediaType:media_type
                            onProgress:^(NSNumber *progression)
      {
          weakSelf.onProgression([progression intValue]);
@@ -445,7 +446,7 @@
          self.onMediaPosted(bucket);
          titleTextField.text = @"";
      } onError:^(NSError *error){
-         [DataHelper storeData:media];
+         [DataHelper storeData:media withMediaType:media_type];
          //[weakSelf addErrorMessage];
          errorView = [GraphicsHelper getErrorView:[error localizedDescription]
                                        withParent:self
@@ -455,11 +456,15 @@
      }];
 }
 
--(void)addNewDrop:(NSData *) media withBucketId:(int) bucketId{
+-(void)addNewDrop:(NSData *) media
+     withBucketId:(int) bucketId
+    withMediaType:(int)media_type
+{
     __weak typeof(self) weakSelf = self;
     [dropController addDropToBucket:@"CaptionTest"
                           withMedia:media
                        withBucketId:bucketId
+                      withMediaType:media_type
                          onProgress:^(NSNumber *progression){
                              weakSelf.onProgression([progression intValue]);
                          }
@@ -475,13 +480,21 @@
                            NSLog(@"ERROR: %@", [responseModel message]);
                            NSLog(@"ERROR: %@", [responseModel message_id]);
                            self.onNotificatonShow([responseModel message]);
+                           
+                           [DataHelper storeData:media withMediaType:media_type];
+                           //[weakSelf addErrorMessage];
+                           errorView = [GraphicsHelper getErrorView:[error localizedDescription]
+                                                         withParent:self
+                                                    withButtonTitle:@"Prøv igjen"
+                                          withButtonPressedSelector:@selector(uploadAgain)];
+                           weakSelf.onNetworkError(errorView);
                        }];
 }
 
 -(void)uploadAgain{
     [errorView removeFromSuperview];
     self.onNetworkErrorHide();
-    [self uploadMedia:[DataHelper getData]];
+    [self uploadMedia:[DataHelper getData] withMediaType:[DataHelper getMediaType]];
 }
 
 -(void)closeCamera{
