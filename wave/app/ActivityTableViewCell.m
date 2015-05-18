@@ -92,6 +92,7 @@
             //BILDE
             [self.bucketImage setImage:[UIImage imageWithData:media]];
         }else{
+            [self.bucketImage setImage:[UIHelper thumbnailFromVideo:media]];
             //VIDEO
         }
         

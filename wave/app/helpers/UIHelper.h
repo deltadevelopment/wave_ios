@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import <AVFoundation/AVAsset.h>
+#import <AVFoundation/AVFoundation.h>
 @interface UIHelper : NSObject
 +(void)initialize;
 +(CGFloat)getScreenWidth;
@@ -30,4 +32,5 @@
 +(UIImage *)iconImage:(UIImage *) image withPoint:(CGPoint) point;
 +(void)applyThinLayoutOnButton:(UIButton *) button;
 +(void)applyUIOnButton:(UIButton *) button;
++(UIImage *)thumbnailFromVideo:(NSData *) video;
 @end

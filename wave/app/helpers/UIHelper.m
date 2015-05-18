@@ -8,6 +8,7 @@
 
 #import "UIHelper.h"
 #import "ColorHelper.h"
+#import "GraphicsHelper.h"
 static CGRect screenBound;
 static CGSize screenSize;
 static CGFloat screenWidth;
@@ -251,4 +252,28 @@ static CGFloat screenHeight;
     
     return newImage;
 }
+
++(UIImage *)thumbnailFromVideo:(NSData *) video{
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+   NSString *appFile = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"MyFile%@.mov", @"thumb"]];
+    [video writeToFile:appFile atomically:YES];
+    NSURL *movieUrl = [NSURL fileURLWithPath:appFile];
+    AVAsset *asset = [AVAsset assetWithURL:movieUrl];
+    
+    //  Get thumbnail at the very start of the video
+    CMTime thumbnailTime = [asset duration];
+    thumbnailTime.value = 0;
+    
+    //  Get image from the video at the given time
+    AVAssetImageGenerator *imageGenerator = [[AVAssetImageGenerator alloc] initWithAsset:asset];
+    imageGenerator.appliesPreferredTrackTransform = YES;
+    
+    CGImageRef imageRef = [imageGenerator copyCGImageAtTime:thumbnailTime actualTime:NULL error:NULL];
+    UIImage *thumbnail = [UIImage imageWithCGImage:imageRef];
+    CGImageRelease(imageRef);
+    return thumbnail;
+}
+
+
 @end

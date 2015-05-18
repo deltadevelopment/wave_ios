@@ -8,15 +8,20 @@
 
 #import "PeekViewController.h"
 #import "UIHelper.h"
+#import "SubscribeController.h"
+#import "AuthHelper.h"
 
 @interface PeekViewController ()
 
 @end
 
 @implementation PeekViewController
-
+SubscribeController *subscribeController;
+AuthHelper *authHelper;
 - (void)viewDidLoad {
     [super viewDidLoad];
+    subscribeController = [[SubscribeController alloc] init];
+    authHelper = [[AuthHelper alloc] init];
     // Do any additional setup after loading the view.
     self.location.text = @"Kristiansand";
    // self.displayName.text = @"Anna Holm";
@@ -35,8 +40,36 @@
     [[self.subscribeButton layer] setBorderColor:[UIColor whiteColor].CGColor];
     self.subscribeButton.layer.cornerRadius = 10;
     self.subscribeButton.clipsToBounds = YES;
-    [self.subscribeButton setTitle:@"Subscribe" forState:UIControlStateNormal];
-    self.subscribeVerticalconstraint.constant += 60;
+    [self.subscribeButton addTarget:self action:@selector(subscribeAction) forControlEvents:UIControlEventTouchUpInside];
+ 
+   //[self.subscribeButton setBackgroundImage:[UIImage imageNamed:@"tick.png"] forState:UIControlStateNormal];
+ 
+       [self.subscribeButton setTitle:@"Subscribe" forState:UIControlStateNormal];
+    //40 150
+    /*
+    self.subscribeButton.imageView.frame = CGRectMake(0, 0, 40, 40);
+   
+       [self.subscribeButton setImage: [UIHelper iconImage:[UIImage imageNamed:@"tick.png"] withSize:40] forState:UIControlStateNormal];
+    [self.subscribeButton setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 110)];
+   [self.subscribeButton setTitleEdgeInsets:UIEdgeInsetsMake(-50, -100, -80, -110)];
+    [self.subscribeButton sizeToFit];
+   // self.subscribeButton.titleEdgeInsets = UIEdgeInsetsMake(0, -self.subscribeButton.imageView.frame.size.width, 0, self.subscribeButton.imageView.frame.size.width);
+    //self.subscribeButton.imageEdgeInsets = UIEdgeInsetsMake(0, self.subscribeButton.titleLabel.frame.size.width, 0, -self.subscribeButton.titleLabel.frame.size.width);
+    */
+}
+
+-(void)subscribeAction{
+    NSLog(@"subscriving");
+    
+    [subscribeController subscribeToUser:[[authHelper getUserId] intValue]
+                        withSubscribeeId:[[self user] Id]
+                            onCompletion:^(ResponseModel *response){
+                                //CHANGE BUTTON HERE
+                                
+                            }
+                                 onError:^(NSError *error){
+                                     
+                                 }];
 }
 
 - (void)didReceiveMemoryWarning {
