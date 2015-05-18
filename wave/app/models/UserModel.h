@@ -7,8 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-
-@interface UserModel : NSObject
+#import "SuperModel.h"
+@interface UserModel : SuperModel
 @property (nonatomic,strong) NSString * username;
 @property (nonatomic,strong) NSString * email;
 @property (nonatomic) int phone_number;
@@ -21,6 +21,7 @@
 @property (nonatomic) BOOL private_profile;
 @property (nonatomic) bool is_followee;
 @property (nonatomic) int Id;
+@property (nonatomic) int subscribers_count;
 
 -(id)init:(NSMutableDictionary *)dic;
 @end

@@ -24,7 +24,7 @@
     if((NSNull*)[self.dictionary objectForKey: stringValue] != [NSNull null]){
         value = [self.dictionary objectForKey:stringValue];
     }else{
-        return @"";
+        return nil;
     }
     return value;
 }

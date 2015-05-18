@@ -10,13 +10,13 @@
 
 @implementation UserModel
 -(id)init:(NSMutableDictionary *)dic{
+    self.dictionary = dic;
     _username  = [dic objectForKey:@"username"];
     _email  = [dic objectForKey:@"email"];
     if((NSNull*)[dic objectForKey: @"phone_number"] != [NSNull null]){
         _phone_number  = [[dic objectForKey:@"phone_number"] intValue];
     }
-    
-    _display_name  = [dic objectForKey:@"display_name"];
+    _display_name  = [self getStringValueFromString:@"display_name"];
     _availability  = [[dic objectForKey:@"availability"] intValue];
     _created_at  = [dic objectForKey:@"created_at"];
     _updated_at  = [dic objectForKey:@"updated_at"];
@@ -24,6 +24,8 @@
     _password_salt  = [dic objectForKey:@"password_salt"];
     _private_profile  = [[dic objectForKey:@"private_profile"] boolValue];
     _Id  = [[dic objectForKey:@"id"] intValue];
+    _subscribers_count = [self getIntValueFromString:@"subscribers_count"];
+   // NSLog(@"Subscribers count = %d", [[dic objectForKey:@"subscribers_count"] intValue]);
     if((NSNull*)[dic objectForKey:@"is_followee"] != [NSNull null]){
         _is_followee = [[dic objectForKey:@"is_followee"] boolValue];
     }

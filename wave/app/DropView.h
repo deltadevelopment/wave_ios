@@ -7,12 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "DropModel.h"
 @interface DropView : UIImageView
 @property (strong, nonatomic) UIImageView *profilePicture;
 @property (strong, nonatomic) UILabel *dropTitle;
 @property (strong, nonatomic) UIView *topBar;
 @property (nonatomic) BOOL hasVideo;
+@property (nonatomic, strong) DropModel *drop;
 @property (nonatomic) BOOL isPlaying;
 @property (nonatomic, strong) UIActivityIndicatorView *spinner;
 -(void)setMedia:(NSObject *) media withIndexId:(int) indexId;

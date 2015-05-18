@@ -9,7 +9,8 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import "UserModel.h"
-@interface DropModel : NSObject
+#import "SuperModel.h"
+@interface DropModel : SuperModel
 
 //Model properties
 @property (nonatomic) int Id;

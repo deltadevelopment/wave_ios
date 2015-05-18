@@ -87,6 +87,7 @@ const int PEEK_Y_START = 300;
     [self setReplyMode:YES];
     [self attachGUI];
     [self.view insertSubview:self.topBar aboveSubview:Scroller];
+    [self initInfoButton];
     [self addPeekView];
     
     UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(peekViewDrag:)];
@@ -102,12 +103,12 @@ const int PEEK_Y_START = 300;
     [gestureRecognizer setDirection:(UISwipeGestureRecognizerDirectionUp)];
     gestureRecognizer.numberOfTouchesRequired = 1;
     gestureRecognizer.cancelsTouchesInView = NO;
-    [self.view addGestureRecognizer:gestureRecognizer];
+    [Scroller addGestureRecognizer:gestureRecognizer];
     
     [self.view insertSubview:cameraHolder belowSubview:[self.superButton getButton ]];
     cameraHolder.hidden = YES;
     [self initPlayButton];
-    [self initInfoButton];
+    
         infoView = [[InfoView alloc] initWithSuperViewController:self withButton:infoButton withConstraint:infoButtonConstraint];
     [self.view addSubview:infoView];
 }
@@ -140,7 +141,6 @@ const int PEEK_Y_START = 300;
 
 
 -(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch{
-
     if([gestureRecognizer isMemberOfClass:[UITapGestureRecognizer class]]){
         return NO;
     }
@@ -287,7 +287,7 @@ const int PEEK_Y_START = 300;
 
 -(void)updateDrop:(DropModel *) drop toView:(DropView *) dropView{
     dropView.dropTitle.text = [NSString stringWithFormat:@"@%@",[[drop user] username]];
-    NSLog(@"MEDIA TYPE: %d", drop.media_type);
+    [dropView setDrop:drop];
     [drop requestPhoto:^(NSData *media){
         [dropView setImage:[UIImage imageWithData:media]];
         [[dropView spinner] stopAnimating];
@@ -316,24 +316,24 @@ const int PEEK_Y_START = 300;
             playButton.hidden = YES;
         }
         if([drops count] > currentPage){
+            DropView *currentDropView = [drops objectAtIndex:currentPage];
+            [peekViewController updatePeekView:[[currentDropView drop] user]];
+        }
+
+        if([drops count] > currentPage){
             currentView = [drops objectAtIndex:currentPage];
             if([currentView hasVideo]){
-            //VIS PLAY KNAPP
+                //VIS PLAY KNAPP
                 playButton.hidden = NO;
             }
         }
-        
-
-        
-        
         if(currentPage == PageCount - 1){
-            
             if(cameraMode){
                 self.dropsAmount.text = [NSString stringWithFormat:@"%ld/%ld", (long)currentPage, [drops count]];
             }else{
-               self.dropsAmount.text = [NSString stringWithFormat:@"%d/%ld", 1, [drops count] - 2];
+                self.dropsAmount.text = [NSString stringWithFormat:@"%d/%ld", 1, [drops count] - 2];
             }
-         
+            
         }else{
             if(currentPage == 0){
                 self.dropsAmount.text = [NSString stringWithFormat:@"%ld/%ld", [drops count] - 2, [drops count] - 2];
@@ -343,7 +343,7 @@ const int PEEK_Y_START = 300;
             }
             
             
-        
+            
         }
         
         if([self shouldGetMoreImages]){
@@ -400,10 +400,12 @@ const int PEEK_Y_START = 300;
 -(void)addPeekView{
     [self addBlur];
     peekViewController = (PeekViewController *)[storyboard instantiateViewControllerWithIdentifier:@"peekView"];
+
     peekViewController.view.frame = CGRectMake(0, -PEEK_Y_START, [UIHelper getScreenWidth], PEEK_Y_START);
     [self.view addSubview:peekViewController.view];
     
     peekViewController.view.backgroundColor = [UIColor clearColor];
+    [peekViewController updatePeekView:[bucket user]];
     //[self addConstraints:peekViewController.view];
 }
 
@@ -416,6 +418,7 @@ const int PEEK_Y_START = 300;
     self.topBar.hidden = YES;
     Scroller.contentSize = CGSizeMake(PageCount * Scroller.bounds.size.width, Scroller.bounds.size.height);
     DropView *dropView = [[DropView alloc] initWithFrame:ViewSize];
+    [dropView setDrop:drop];
     dropView.dropTitle.text = [NSString stringWithFormat:@"@%@",[[drop user] username]];
     
     [drop requestPhoto:^(NSData *media){
@@ -697,7 +700,9 @@ const int PEEK_Y_START = 300;
         
         if(frame.origin.y <= -44 - translation.y){
             peekViewController.view.frame = CGRectMake(0, peekViewController.view.frame.origin.y + (translation.y*1.4), [UIHelper getScreenWidth], PEEK_Y_START - 64);
-            [self calculateAlpha:-44 withTotal:frame.origin.y];
+            float alpha = [self calculateAlpha:-44 withTotal:frame.origin.y];
+            blurEffectView.alpha = alpha;
+            //infoButton.alpha = 1 - alpha;
         }
         
         
@@ -718,14 +723,15 @@ const int PEEK_Y_START = 300;
     
 }
 
--(void)calculateAlpha:(float) number withTotal:(float) total{
+-(float)calculateAlpha:(float) number withTotal:(float) total{
     float alpha = ((number/total) * 100)/100;
     if(!firstTime){
         firstTime = YES;
         initalAlpha = alpha;
     }
     float result = alpha - initalAlpha;
-    blurEffectView.alpha = result*(alpha + 1);
+    
+    return result *(alpha + 1);
 }
 
 

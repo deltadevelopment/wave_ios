@@ -8,6 +8,7 @@
 
 #import "PeekViewController.h"
 #import "UIHelper.h"
+
 @interface PeekViewController ()
 
 @end
@@ -18,13 +19,14 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     self.location.text = @"Kristiansand";
-    self.displayName.text = @"Anna Holm";
+   // self.displayName.text = @"Anna Holm";
     self.profilePicture.layer.cornerRadius = 50;
     self.profilePicture.clipsToBounds = YES;
     self.profilePicture.contentMode = UIViewContentModeScaleAspectFill;
     self.availability.layer.cornerRadius = 5;
     self.view.backgroundColor = [UIColor redColor];
     self.availability.clipsToBounds = YES;
+    self.availability.hidden = YES;
     self.subscribeButton.alpha = 0.0;
     [UIHelper applyThinLayoutOnLabel:self.displayName withSize:24.0];
     [UIHelper applyThinLayoutOnLabel:self.location withSize:17.0];
@@ -40,6 +42,12 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(void)updatePeekView:(UserModel *) user{
+    self.user = user;
+    self.location.text = [NSString stringWithFormat:@"%d", [user subscribers_count]];
+    self.displayName.text = [user display_name] != nil ? [user display_name] : [user username];
 }
 
 /*
