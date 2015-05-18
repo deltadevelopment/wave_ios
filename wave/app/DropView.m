@@ -37,6 +37,15 @@
     [self.dropTitle setMinimumScaleFactor:12.0/17.0];
     self.dropTitle.adjustsFontSizeToFitWidth = YES;
     
+    //Loader
+    self.spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    float center = ([UIHelper getScreenHeight])/2;
+    self.spinner.center = CGPointMake([UIHelper getScreenWidth]/2, center);
+    
+    self.spinner.hidesWhenStopped = YES;
+    [self.spinner startAnimating];
+    self.spinner.hidden = NO;
+    
     //Shadow View
     UIView *shadowView = [[UIView alloc]initWithFrame:CGRectMake(0, 32, [UIHelper getScreenWidth], [UIHelper getScreenHeight]/4)];
     [UIHelper addShadowToView:shadowView];
@@ -47,6 +56,7 @@
     
     [self addSubview:shadowView];
     [self addSubview:self.topBar];
+    [self addSubview:self.spinner];
     __weak typeof(self) weakSelf = self;
     mediaPlayer.onVideoFinishedPlaying = ^{
         [weakSelf onVideoFinished];

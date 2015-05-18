@@ -14,6 +14,7 @@
 @property (strong, nonatomic) UIView *topBar;
 @property (nonatomic) BOOL hasVideo;
 @property (nonatomic) BOOL isPlaying;
+@property (nonatomic, strong) UIActivityIndicatorView *spinner;
 -(void)setMedia:(NSObject *) media withIndexId:(int) indexId;
 -(void)dropWillHide;
 -(void)playVideo;

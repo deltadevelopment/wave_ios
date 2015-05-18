@@ -30,10 +30,12 @@
                   {
                       onProgression(percentage);
                       if([percentage longValue] == 100){
+                          NSLog(@"LASTER OPP:::::");
                           NSDictionary *body = @{
                                                  @"drop":@{
                                                          @"media_key" : media_key,
-                                                         @"caption" : caption
+                                                         @"caption" : caption,
+                                                         @"media_type":[NSNumber numberWithInt:1]
                                                          }
                                                  };
                           NSString *jsonData = [applicationHelper generateJsonFromDictionary:body];
