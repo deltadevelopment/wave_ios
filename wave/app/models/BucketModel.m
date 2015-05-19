@@ -38,7 +38,7 @@
     NSMutableArray *rawDrops = [dic objectForKey:@"drops"];
     for(NSMutableDictionary *rawDrop in rawDrops){
         DropModel *drop = [[DropModel alloc] init:rawDrop];
-        [self addDrop:drop];
+        [self addDropToFirst:drop];
     }
     return self;
 };
@@ -46,6 +46,10 @@
 
 -(void)addDrop:(DropModel *) drop{
     [self.drops addObject:drop];
+}
+
+-(void)addDropToFirst:(DropModel *) drop{
+    [self.drops insertObject:drop atIndex:0];
 }
 
 -(id)init{

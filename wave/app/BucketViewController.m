@@ -249,16 +249,13 @@ const int PEEK_Y_START = 300;
     [self addDropToBucket:tempDrop];
     CGPoint bottomOffset = CGPointMake(Scroller.contentSize.width - (Scroller.bounds.size.width*2), 0);
     [Scroller setContentOffset:bottomOffset animated:NO];
+   // self.dropsAmount.text = [NSString stringWithFormat:@"%d/%ld", 8, [drops count]];
     
     [bucketController getBucket:[bucket Id]
                    onCompletion:^(ResponseModel *response){
                        BucketModel *tempBucket =[[BucketModel alloc] init:[[response data] objectForKey:@"bucket"]];
                        bucket = tempBucket;
-                       if([bucket.bucket_type isEqualToString:@"user"]){
-                           [self.navigationItem setTitle:[[bucket user] username]];
-                       }else{
-                           [self.navigationItem setTitle:[bucket title]];
-                       }
+                      
                        if([[bucket drops] count] > 0){
                            DropModel *tempDrop = [[bucket drops] objectAtIndex:[[bucket drops] count]-1];
                            DropModel *tempDrop2 = [[bucket drops] objectAtIndex:0];
@@ -488,7 +485,7 @@ const int PEEK_Y_START = 300;
     [UIHelper applyThinLayoutOnLabel:self.dropsAmount withSize:14];
     [UIHelper applyThinLayoutOnLabel:self.viewsAmount withSize:14];
     currentPage = 1;
-    self.dropsAmount.text = [NSString stringWithFormat:@"%ld/%ld", (long)currentPage, [drops count] - 2];
+    self.dropsAmount.text = [NSString stringWithFormat:@"%ld/%ld", (long)PageCount - 2, [drops count] - 2];
     self.viewsAmount.text = @"4.5K";
     self.dropsAmount.alpha = 0.0;
     self.viewsAmount.alpha = 0.0;
@@ -508,6 +505,11 @@ const int PEEK_Y_START = 300;
 }
 -(void)setBucket:(BucketModel *)inputBucket{
    bucket = inputBucket;
+    if([bucket.bucket_type isEqualToString:@"user"]){
+        [self.navigationItem setTitle:[[bucket user] username]];
+    }else{
+        [self.navigationItem setTitle:[bucket title]];
+    }
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

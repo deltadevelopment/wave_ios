@@ -37,7 +37,7 @@
      [self.navigationItem setRightBarButtonItem:btnShare];
      */
     [self addRightButton];
-    [self.navigationItem setTitle:@"Feed"];
+    //[self.navigationItem setTitle:@"Feed"];
     
     if (self.navigationItem.hidesBackButton || self.navigationItem.rightBarButtonItem == nil) {
         [self.navigationController.navigationBar setNeedsLayout];
