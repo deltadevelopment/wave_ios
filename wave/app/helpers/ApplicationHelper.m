@@ -22,7 +22,7 @@ NSArray *unAvailableTexts;
     return url;
     //base + relative;
 }
--(NSString*) generateJsonFromDictionary:(NSDictionary *) dictionary{
++(NSString*) generateJsonFromDictionary:(NSDictionary *) dictionary{
     NSError *error;
     NSData *json = [NSJSONSerialization dataWithJSONObject:dictionary
                                                    options:0

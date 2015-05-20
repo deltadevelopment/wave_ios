@@ -27,7 +27,7 @@
                                           @"email": email
                                           }
                                   };
-    NSString *jsonData = [applicationHelper generateJsonFromDictionary:credentials];
+    NSString *jsonData = [ApplicationHelper generateJsonFromDictionary:credentials];
     
     [self postHttpRequest:@"register"
                      json:jsonData
@@ -39,7 +39,7 @@
          //NSInteger statuscode = [httpResponse statusCode];
          NSString *strdata=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
          NSLog(@"%@",strdata);
-         NSMutableDictionary *dic = [parserHelper parse:data];
+         NSMutableDictionary *dic = [ParserHelper parse:data];
          ResponseModel *responseModel = [[ResponseModel alloc] init:dic];
          UserModel *user = [[UserModel alloc] init:[[dic objectForKey:@"data"] objectForKey:@"user"]];
          callback(user, responseModel);

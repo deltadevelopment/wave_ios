@@ -17,6 +17,8 @@
 #import "BucketController.h"
 #import "DataHelper.h"
 #import "DropController.h"
+#import "MediaModel.h"
+#import "ResponseHelper.h"
 
 @interface CameraViewController ()
 
@@ -432,28 +434,59 @@
 
 -(void)createNewBucket:(NSData *) media withMediaType:(int)media_type{
     __weak typeof(self) weakSelf = self;
-    [bucketController createNewBucket:media
-                      withBucketTitle:titleTextField.text
-                withBucketDescription:@"My new crazy description"
-                      withDropCaption:@"My crazy new drop!"
-                        withMediaType:media_type
-                           onProgress:^(NSNumber *progression)
-     {
-         weakSelf.onProgression([progression intValue]);
-     }
-                         onCompletion:^(ResponseModel *response, BucketModel *bucket)
-     {
-         self.onMediaPosted(bucket);
-         titleTextField.text = @"";
-     } onError:^(NSError *error){
-         [DataHelper storeData:media withMediaType:media_type];
-         //[weakSelf addErrorMessage];
-         errorView = [GraphicsHelper getErrorView:[error localizedDescription]
-                                       withParent:self
-                                  withButtonTitle:@"Prøv igjen"
-                        withButtonPressedSelector:@selector(uploadAgain)];
-         weakSelf.onNetworkError(errorView);
-     }];
+    
+    BucketModel *bucket = [[BucketModel alloc] init];
+    [bucket setTitle:titleTextField.text];
+    [bucket setBucket_description:@"my crazy new description"];
+    
+    DropModel *drop = [[DropModel alloc] init];
+    [drop setCaption:@"My crazy caption"];
+    [drop setMedia_type:media_type];
+    
+    [bucket addDrop:drop];
+    
+    MediaModel *mediaModel = [[MediaModel alloc] init:media];
+    
+    
+    [mediaModel uploadMedia:^(NSNumber *progression){
+        weakSelf.onProgression([progression intValue]);
+    }
+               onCompletion:^(MediaModel *mediaModel){
+                   //MEDIA was uploaded
+                   [bucket getDrop:0].media_key = mediaModel.media_key;
+                   [bucket saveChanges:^(ResponseModel *response, BucketModel *bucket){
+                       self.onMediaPosted(bucket);
+                       titleTextField.text = @"";
+                   } onError:^(NSError *error){
+                       [DataHelper storeData:media withMediaType:media_type];
+                       //[weakSelf addErrorMessage];
+                       errorView = [GraphicsHelper getErrorView:[error localizedDescription]
+                                                     withParent:self
+                                                withButtonTitle:@"Prøv igjen"
+                                      withButtonPressedSelector:@selector(uploadAgain)];
+                       weakSelf.onNetworkError(errorView);
+                   }];
+               } onError:nil];
+/*
+    [bucketController createNewBucket:mediaModel
+                           withBucket:bucket
+                           onProgress:^(NSNumber *progression){
+                               weakSelf.onProgression([progression intValue]);
+                           }
+                         onCompletion:^(ResponseModel *response, BucketModel *bucket){
+                             self.onMediaPosted(bucket);
+                             titleTextField.text = @"";
+                         }
+                              onError:^(NSError *error){
+                                  [DataHelper storeData:media withMediaType:media_type];
+                                  //[weakSelf addErrorMessage];
+                                  errorView = [GraphicsHelper getErrorView:[error localizedDescription]
+                                                                withParent:self
+                                                           withButtonTitle:@"Prøv igjen"
+                                                 withButtonPressedSelector:@selector(uploadAgain)];
+                                  weakSelf.onNetworkError(errorView);
+                              }];
+ */
 }
 
 -(void)addNewDrop:(NSData *) media

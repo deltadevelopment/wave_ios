@@ -19,12 +19,12 @@
                                    @"tag_string" : tag
                                    }
                            };
-    NSString *jsonData = [applicationHelper generateJsonFromDictionary:body];
+    NSString *jsonData = [ApplicationHelper generateJsonFromDictionary:body];
     [self postHttpRequest:[NSString stringWithFormat:@"/bucket/%d/tag", bucket_id]
                      json:jsonData
              onCompletion:^(NSURLResponse *response,NSData *data,NSError *error)
      {
-         NSMutableDictionary *dic = [parserHelper parse:data];
+         NSMutableDictionary *dic = [ParserHelper parse:data];
          ResponseModel *responseModel = [[ResponseModel alloc] init:dic];
          completionCallback(responseModel);
      } onError:errorCallback];
@@ -37,7 +37,7 @@
 {
     [self deleteHttpRequest:[NSString stringWithFormat:@"tag/%d", tag_id]
                onCompletion:^(NSURLResponse *response,NSData *data,NSError *error){
-                   NSMutableDictionary *dic = [parserHelper parse:data];
+                   NSMutableDictionary *dic = [ParserHelper parse:data];
                    ResponseModel *responseModel = [[ResponseModel alloc] init:dic];
                    completionCallback(responseModel);
                } onError:errorCallback];

@@ -13,7 +13,11 @@
  NSURLConnection *connection;
 
 }
--(void)putHttpRequestWithImage:(NSData *) imageData token:(NSString *) token onCompletion:(void (^)(NSNumber*))callback;
+
+-(void)putHttpRequestWithImage:(NSData *) imageData
+                         token:(NSString *) token
+                    onProgress:(void (^)(NSNumber*))progression
+                  onCompletion:(void (^)(void))callback;
 -(void)getMedia:(NSString *) urlPath
    onCompletion:(void (^)(NSData*))completionCallback
         onError:(void(^)(NSError *))errorCallback;

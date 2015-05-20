@@ -20,38 +20,38 @@
     [self postHttpRequest:@"drop/generate_upload_url"
                      json:nil
              onCompletion:^(NSURLResponse *response,NSData *data,NSError *error){
-                 NSMutableDictionary *dic = [parserHelper parse:data];
+                 NSMutableDictionary *dic = [ParserHelper parse:data];
                  ResponseModel *responseModel = [[ResponseModel alloc] init:dic];
                  NSString *uploadURL =  [[[responseModel data] objectForKey:@"upload_url"] objectForKey:@"url"];
                  NSString *media_key = [[[responseModel data] objectForKey:@"upload_url"] objectForKey:@"media_key"];
                  
                  [mediaController putHttpRequestWithImage:media
-                                                    token:uploadURL
-                                             onCompletion:^(NSNumber *percentage)
+                                                    token:uploadURL onProgress:^(NSNumber *percentage){
+                                                        onProgression(percentage);
+                                                    }
+                                             onCompletion:^
                   {
-                      onProgression(percentage);
-                      if([percentage longValue] == 100){
-                          NSLog(@"LASTER OPP:::::");
-                          NSDictionary *body = @{
-                                                 @"drop":@{
-                                                         @"media_key" : media_key,
-                                                         @"caption" : caption,
-                                                         @"media_type":[NSNumber numberWithInt:media_type]
-                                                         }
-                                                 };
-                          NSString *jsonData = [applicationHelper generateJsonFromDictionary:body];
-                          [self postHttpRequest:[NSString stringWithFormat:@"bucket/%d/drop", bucket_id]
-                                           json:jsonData
-                                   onCompletion:^(NSURLResponse *response,NSData *data,NSError *error)
-                           {
-                               NSString *strdata=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
-                               NSLog(strdata);
-                               NSMutableDictionary *dic = [parserHelper parse:data];
-                               ResponseModel *responseModel = [[ResponseModel alloc] init:dic];
-                               completionCallback(responseModel);
-                           } onError:errorCallback];
-                          
-                      }
+                      
+                      NSDictionary *body = @{
+                                             @"drop":@{
+                                                     @"media_key" : media_key,
+                                                     @"caption" : caption,
+                                                     @"media_type":[NSNumber numberWithInt:media_type]
+                                                     }
+                                             };
+                      NSString *jsonData = [ApplicationHelper generateJsonFromDictionary:body];
+                      [self postHttpRequest:[NSString stringWithFormat:@"bucket/%d/drop", bucket_id]
+                                       json:jsonData
+                               onCompletion:^(NSURLResponse *response,NSData *data,NSError *error)
+                       {
+                           NSString *strdata=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+                           NSLog(strdata);
+                           NSMutableDictionary *dic = [ParserHelper parse:data];
+                           ResponseModel *responseModel = [[ResponseModel alloc] init:dic];
+                           completionCallback(responseModel);
+                       } onError:errorCallback];
+                      
+                      
                       
                   }];
              } onError:errorCallback];
@@ -63,7 +63,7 @@
 {
     [self deleteHttpRequest:[NSString stringWithFormat:@"bucket/%d", drop_id]
                onCompletion:^(NSURLResponse *response,NSData *data,NSError *error){
-                   NSMutableDictionary *dic = [parserHelper parse:data];
+                   NSMutableDictionary *dic = [ParserHelper parse:data];
                    ResponseModel *responseModel = [[ResponseModel alloc] init:dic];
                    completionCallback(responseModel);
                } onError:errorCallback];

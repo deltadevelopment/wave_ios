@@ -10,7 +10,8 @@
 
 @implementation MediaController
 {
-    void (^mediaStatus)(NSNumber*(xValue));
+    void (^mediaUploadComplete)(void);
+    void (^mediaProgression)(NSNumber*(progress));
 }
 
 
@@ -59,11 +60,15 @@
                            }];
     
 }
-
+-(void)test:(void (^)(void))callback
+{}
 
 -(void)putHttpRequestWithImage:(NSData *) imageData
                          token:(NSString *) token
-                  onCompletion:(void (^)(NSNumber*))callback{
+                    onProgress:(void (^)(NSNumber*))progression
+                  onCompletion:(void (^)(void))callback
+
+{
     //POST/PUT to Amazon
     //STEP 2: Upload image to S3 with generated token from backend
     
@@ -81,7 +86,8 @@
     
     NSLog(@"token is --- %@", token);
     
-    mediaStatus = callback;
+    mediaUploadComplete = callback;
+    mediaProgression = progression;
     NSURLConnection *connection2 = [[NSURLConnection alloc]
                                     initWithRequest:request
                                     delegate:self startImmediately:NO];
@@ -102,9 +108,9 @@
 totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite
 {
     long percentageDownloaded = (totalBytesWritten * 100)/totalBytesExpectedToWrite;
-    mediaStatus([NSNumber numberWithInt:(int)percentageDownloaded]);
+    mediaProgression([NSNumber numberWithInt:(int)percentageDownloaded]);
     if(percentageDownloaded == 100){
-        
+        mediaUploadComplete();
     }
 }
 

@@ -8,12 +8,10 @@
 
 #import "ApplicationController.h"
 #import "BucketModel.h"
+#import "MediaModel.h"
 @interface BucketController : ApplicationController
--(void)createNewBucket:(NSData *)media
-       withBucketTitle:(NSString *) bucketTitle
- withBucketDescription:(NSString *) bucketDescription
-       withDropCaption:(NSString *) dropCaption
-         withMediaType:(int) media_type
+-(void)createNewBucket:(MediaModel *)mediaModel
+            withBucket:(BucketModel *) bucket
             onProgress:(void (^)(NSNumber*))progression
           onCompletion:(void (^)(ResponseModel*, BucketModel*))completionCallback
                onError:(void(^)(NSError *))errorCallback;

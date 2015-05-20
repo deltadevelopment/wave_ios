@@ -87,7 +87,8 @@
     [NSURLConnection sendAsynchronousRequest:request
                                        queue:[NSOperationQueue currentQueue]
                            completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-                               
+                               NSString *strdata=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+                               NSLog(strdata);
                                
                                if (data != nil && error == nil)
                                {
@@ -102,6 +103,8 @@
                                        //[view performSelector:success withObject:data];
                                        
                                    }else{
+                                       NSString *strdata=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+                                       NSLog(strdata);
                                        /*
                                         NSString *strdata=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
                                         [applicationHelper alertUser:[NSString stringWithFormat:@"%ld on %@",(long)statuscode, strdata]];
@@ -118,13 +121,13 @@
                                }
                                else
                                {
-                                   //NSString *strdata=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
-                                  // NSLog(strdata);
+                                   NSString *strdata=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+                                  NSLog(strdata);
                                    NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) response;
                                   NSLog(@"response status code: %ld", (long)[httpResponse statusCode]);
                                   // NSLog([error localizedDescription]);
                                    
-                                   NSMutableDictionary *errors = [parserHelper parse:data];
+                                   NSMutableDictionary *errors = [ParserHelper parse:data];
                                    NSError *httpError = [NSError errorWithDomain:@"world" code:200 userInfo:errors];
                                    
                                    errorCallback(httpError);

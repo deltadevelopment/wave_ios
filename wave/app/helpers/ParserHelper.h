@@ -9,5 +9,5 @@
 #import <Foundation/Foundation.h>
 
 @interface ParserHelper : NSObject
-- (NSMutableDictionary *) parse:(NSData *) response;
++ (NSMutableDictionary *) parse:(NSData *) response;
 @end

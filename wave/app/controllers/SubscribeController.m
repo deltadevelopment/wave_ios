@@ -19,7 +19,7 @@
                      json:nil
              onCompletion:^(NSURLResponse *response,NSData *data,NSError *error)
      {
-         NSMutableDictionary *dic = [parserHelper parse:data];
+         NSMutableDictionary *dic = [ParserHelper parse:data];
          ResponseModel *responseModel = [[ResponseModel alloc] init:dic];
          completionCallback(responseModel);
      } onError:errorCallback];
@@ -34,7 +34,7 @@
 {
     [self deleteHttpRequest:[NSString stringWithFormat:@"user/%d/subscribe/%d", user_id, subscribee_id]
                onCompletion:^(NSURLResponse *response,NSData *data,NSError *error){
-                   NSMutableDictionary *dic = [parserHelper parse:data];
+                   NSMutableDictionary *dic = [ParserHelper parse:data];
                    ResponseModel *responseModel = [[ResponseModel alloc] init:dic];
                    completionCallback(responseModel);
                } onError:errorCallback];

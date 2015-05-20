@@ -9,7 +9,7 @@
 #import "ParserHelper.h"
 
 @implementation ParserHelper
-- (NSMutableDictionary *) parse:(NSData *) response;{
++ (NSMutableDictionary *) parse:(NSData *) response;{
     NSError *error;    
     NSMutableDictionary *dic = [NSJSONSerialization JSONObjectWithData:response options:kNilOptions error:&error];
     return dic;

@@ -25,12 +25,15 @@
 @property (nonatomic) int rgt;
 @property (nonatomic,strong) NSDate * created_at;
 @property (nonatomic,strong) NSDate * updated_at;
+@property (nonatomic, strong) NSString *thumbnail_key;
 
 //Properties for client
 @property (nonatomic,strong) NSData *media_tmp;
 @property (nonatomic,strong) UIImage *media_img;
 @property (nonatomic,strong) UIImage *image;
 @property (nonatomic,strong) UserModel *user;
+
+@property (nonatomic,strong) NSString *upload_url;
 
 //Test properties
 @property (nonatomic,strong) NSString * media;

@@ -111,6 +111,7 @@
 		F1BD62361AF05C0C00BDE1CA /* ChatMessageLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = F1BD62351AF05C0C00BDE1CA /* ChatMessageLabel.m */; };
 		F1D9AB481AF5A048005BFE2C /* EditImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1D9AB471AF5A048005BFE2C /* EditImageViewController.m */; };
 		F1D9AB4A1AF5A3E3005BFE2C /* RGB-colors.png in Resources */ = {isa = PBXBuildFile; fileRef = F1D9AB491AF5A3E3005BFE2C /* RGB-colors.png */; };
+		F1DBB5431B0D38030097F709 /* MediaModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F1DBB5421B0D38030097F709 /* MediaModel.m */; };
 		F1E127AA1AFED2E7000E3F2C /* DropView.m in Sources */ = {isa = PBXBuildFile; fileRef = F1E127A91AFED2E7000E3F2C /* DropView.m */; };
 		F1E127AD1AFEDB5D000E3F2C /* DropController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1E127AC1AFEDB5D000E3F2C /* DropController.m */; };
 		F1E127B01AFEE09F000E3F2C /* TagController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1E127AF1AFEE09F000E3F2C /* TagController.m */; };
@@ -306,6 +307,8 @@
 		F1D9AB461AF5A048005BFE2C /* EditImageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditImageViewController.h; sourceTree = "<group>"; };
 		F1D9AB471AF5A048005BFE2C /* EditImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditImageViewController.m; sourceTree = "<group>"; };
 		F1D9AB491AF5A3E3005BFE2C /* RGB-colors.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RGB-colors.png"; sourceTree = "<group>"; };
+		F1DBB5411B0D38030097F709 /* MediaModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaModel.h; sourceTree = "<group>"; };
+		F1DBB5421B0D38030097F709 /* MediaModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaModel.m; sourceTree = "<group>"; };
 		F1E127A81AFED2E7000E3F2C /* DropView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DropView.h; sourceTree = "<group>"; };
 		F1E127A91AFED2E7000E3F2C /* DropView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DropView.m; sourceTree = "<group>"; };
 		F1E127AB1AFEDB5D000E3F2C /* DropController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DropController.h; sourceTree = "<group>"; };
@@ -437,6 +440,8 @@
 				C5D473AA1AFA4BEB0097E44F /* BucketModel.m */,
 				C5FF1E5A1B06223B0081BEDD /* SuperModel.h */,
 				C5FF1E5B1B06223B0081BEDD /* SuperModel.m */,
+				F1DBB5411B0D38030097F709 /* MediaModel.h */,
+				F1DBB5421B0D38030097F709 /* MediaModel.m */,
 			);
 			path = models;
 			sourceTree = "<group>";
@@ -908,6 +913,7 @@
 				C5A27B881ADD5ADF00968033 /* MainViewController.m in Sources */,
 				C5576B3D1ADBC195009C1D5E /* OverlayViewController.m in Sources */,
 				C5D473A81AFA4A800097E44F /* BucketController.m in Sources */,
+				F1DBB5431B0D38030097F709 /* MediaModel.m in Sources */,
 				F1E127AA1AFED2E7000E3F2C /* DropView.m in Sources */,
 				C5D473BB1AFD05BB0097E44F /* MediaPlayerViewController.m in Sources */,
 				C5A27B601ADD019900968033 /* SSKeychainQuery.m in Sources */,

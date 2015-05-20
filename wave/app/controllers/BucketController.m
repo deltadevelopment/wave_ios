@@ -8,9 +8,20 @@
 
 #import "BucketController.h"
 #import "ResponseModel.h"
-
+#import "MediaModel.h"
 @implementation BucketController
 
+-(void)createNewBucket:(MediaModel *)mediaModel
+ withBucket:(BucketModel *) bucket
+onProgress:(void (^)(NSNumber*))progression
+onCompletion:(void (^)(ResponseModel*, BucketModel*))completionCallback
+onError:(void(^)(NSError *))errorCallback{
+    [mediaModel uploadMedia:progression onCompletion:^(MediaModel *mediaModel){
+        [bucket getDrop:0].media_key = mediaModel.media_key;
+        [bucket saveChanges:completionCallback onError:errorCallback];
+    } onError:errorCallback];
+
+}
 
 -(void)createNewBucket:(NSData *)media
        withBucketTitle:(NSString *) bucketTitle
@@ -25,51 +36,60 @@
     [self postHttpRequest:@"drop/generate_upload_url"
                      json:nil
              onCompletion:^(NSURLResponse *response,NSData *data,NSError *error){
-                 NSMutableDictionary *dic = [parserHelper parse:data];
+                 
+                 //Parsing av data som returneres
+                 NSMutableDictionary *dic = [ParserHelper parse:data];
                  ResponseModel *responseModel = [[ResponseModel alloc] init:dic];
                  NSString *uploadURL =  [[[responseModel data] objectForKey:@"upload_url"] objectForKey:@"url"];
                  NSString *media_key = [[[responseModel data] objectForKey:@"upload_url"] objectForKey:@"media_key"];
                  
+                 //Upload media
                  [mediaController putHttpRequestWithImage:media
-                                                    token:uploadURL
-                                             onCompletion:^(NSNumber *percentage)
+                                                    token:uploadURL onProgress:^(NSNumber *percentage)
                   {
                       progression(percentage);
-                      //NSLog(@"LASTET OPP %ld", [percentage longValue]);
-                      if([percentage longValue] == 100){
-                          NSDictionary *body = @{
-                                                 @"bucket":@{
-                                                         @"title" : bucketTitle,
-                                                         @"description" : bucketDescription
-                                                         },
-                                                 @"drop":@{
-                                                         @"media_key" : media_key,
-                                                         @"caption" : dropCaption,
-                                                         @"media_type" : [NSNumber numberWithInt:media_type]
-                                                         }
-                                                 };
-                          NSString *jsonData = [applicationHelper generateJsonFromDictionary:body];
-                          [self postHttpRequest:@"bucket"
-                                           json:jsonData
-                                   onCompletion:^(NSURLResponse *response,NSData *data,NSError *error)
-                           {
-                               NSString *strdata=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
-                              // NSLog(@"%@", strdata);
-                               NSMutableDictionary *dic = [parserHelper parse:data];
-                               ResponseModel *responseModel = [[ResponseModel alloc] init:dic];
-                               BucketModel *bucket = [[BucketModel alloc] init:[[responseModel data] objectForKey:@"bucket"]];
-                               DropModel *drop = [[DropModel alloc] init:[[responseModel data] objectForKey:@"drop"]];
-                               drop.media_tmp = media;
-                               
-                               [bucket addDrop:drop];
-                               completionCallback(responseModel, bucket);
-                           } onError:errorCallback];
-                      }
+                  }
+                                             onCompletion:^
+                  {
+                      
+                     
+                      
                       
                   }];
              } onError:errorCallback];
 }
+/*
+-(void)test:(NSString *)bucketTitle withDescription:(NSString *)bucketDescription{
+    NSDictionary *body = @{
+                           @"bucket":@{
+                                   @"title" : bucketTitle,
+                                   @"description" : bucketDescription
+                                   },
+                           @"drop":@{
+                                   @"media_key" : media_key,
+                                   @"caption" : dropCaption,
+                                   @"media_type" : [NSNumber numberWithInt:media_type]
+                                   }
+                           };
+    NSString *jsonData = [applicationHelper generateJsonFromDictionary:body];
+    [self postHttpRequest:@"bucket"
+                     json:jsonData
+             onCompletion:^(NSURLResponse *response,NSData *data,NSError *error)
+     {
+         NSString *strdata=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+         // NSLog(@"%@", strdata);
+         NSMutableDictionary *dic = [parserHelper parse:data];
+         ResponseModel *responseModel = [[ResponseModel alloc] init:dic];
+         BucketModel *bucket = [[BucketModel alloc] init:[[responseModel data] objectForKey:@"bucket"]];
+         DropModel *drop = [[DropModel alloc] init:[[responseModel data] objectForKey:@"drop"]];
+         drop.media_tmp = media;
+         
+         [bucket addDrop:drop];
+         completionCallback(responseModel, bucket);
+     } onError:errorCallback];
+}
 
+*/
 -(void)updateBucket:(BucketModel *) bucket
        onCompletion:(void (^)(ResponseModel*))completionCallback
  onError:(void(^)(NSError *))errorCallback
@@ -83,13 +103,13 @@
                                    @"locked" : [NSNumber numberWithInt:bucket.locked]
                                    }
                            };
-    NSString *jsonData = [applicationHelper generateJsonFromDictionary:body];
+    NSString *jsonData = [ApplicationHelper generateJsonFromDictionary:body];
     
     
     [self putHttpRequest:[NSString stringWithFormat:@"bucket/%d", [bucket Id]]
                     json:jsonData
             onCompletion:^(NSURLResponse *response,NSData *data,NSError *error){
-                NSMutableDictionary *dic = [parserHelper parse:data];
+                NSMutableDictionary *dic = [ParserHelper parse:data];
                 ResponseModel *responseModel = [[ResponseModel alloc] init:dic];
                 completionCallback(responseModel);
             } onError:errorCallback];
@@ -102,7 +122,7 @@
 {
     [self deleteHttpRequest:[NSString stringWithFormat:@"bucket/%d", [bucket Id]]
                onCompletion:^(NSURLResponse *response,NSData *data,NSError *error){
-        NSMutableDictionary *dic = [parserHelper parse:data];
+        NSMutableDictionary *dic = [ParserHelper parse:data];
         ResponseModel *responseModel = [[ResponseModel alloc] init:dic];
         completionCallback(responseModel); 
     } onError:errorCallback];
@@ -113,7 +133,7 @@
 {
     [self getHttpRequest:@"feed"
             onCompletion:^(NSURLResponse *response,NSData *data,NSError *error){
-                NSMutableDictionary *dic = [parserHelper parse:data];
+                NSMutableDictionary *dic = [ParserHelper parse:data];
                 ResponseModel *responseModel = [[ResponseModel alloc] init:dic];
                 NSString *strdata=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
                 NSLog(@"%@", strdata);
@@ -128,7 +148,7 @@
 {
     [self getHttpRequest:[NSString stringWithFormat:@"bucket/%d", bucketId]
             onCompletion:^(NSURLResponse *response,NSData *data,NSError *error){
-                NSMutableDictionary *dic = [parserHelper parse:data];
+                NSMutableDictionary *dic = [ParserHelper parse:data];
                 ResponseModel *responseModel = [[ResponseModel alloc] init:dic];
                 NSString *strdata=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
                 NSLog(@"%@", strdata);

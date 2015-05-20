@@ -16,12 +16,12 @@ onCompletion:(void (^)(UserModel*,ResponseModel*))callback
 {
     NSLog(@"Device Id sending: %@", [authHelper getDeviceId]);
     NSDictionary *credentials = [self loginBody:username pass:password];
-    NSString *jsonData = [applicationHelper generateJsonFromDictionary:credentials];
+    NSString *jsonData = [ApplicationHelper generateJsonFromDictionary:credentials];
     [self postHttpRequest:@"login" json:jsonData onCompletion:^(NSURLResponse *response,NSData *data,NSError *error){
 
         NSString *strdata=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
         NSLog(@"%@",strdata);
-        NSMutableDictionary *dic = [parserHelper parse:data];
+        NSMutableDictionary *dic = [ParserHelper parse:data];
         ResponseModel *responseModel = [[ResponseModel alloc] init:dic];
         UserModel *user = [[UserModel alloc] init:[[dic objectForKey:@"data"] objectForKey:@"user"]];
         [self storeCredentials:[responseModel.data objectForKey:@"user_session"]];

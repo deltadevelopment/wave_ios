@@ -10,7 +10,7 @@
 #import "ConfigHelper.h"
 @interface ApplicationHelper : NSObject
 -(NSString*) generateUrl:(NSString*) relativePath;
--(NSString*) generateJsonFromDictionary:(NSDictionary *) dictionary;
++(NSString*) generateJsonFromDictionary:(NSDictionary *) dictionary;
 -(void)setIndex:(NSIndexPath *) path;
 -(NSIndexPath*)getIndex;
 -(NSString*)getAvailableText;

@@ -12,22 +12,28 @@
 @implementation DropModel
 MediaController *mediaController;
 -(id)init:(NSMutableDictionary *)dic{
-    self.dictionary = dic;
-    mediaController = [[MediaController alloc] init];
-    self.media_key = [dic objectForKey:@"media_key"];
-    self.media_url = [dic objectForKey:@"media_url"];
-    self.caption = [dic objectForKey:@"caption"];
-    self.created_at = [dic objectForKey:@"created_at"];
-    self.updated_at = [dic objectForKey:@"updated_at"];
-    self.media_type = [self getIntValueFromString:@"media_type"];
-    self.parent_id = [self getIntValueFromString:@"parent_id"];
-    self.Id = [self getIntValueFromString:@"id"];
-    self.bucket_id = [self getIntValueFromString:@"bucket_id"];
-    self.user_id = [self getIntValueFromString:@"user_id"];
-    self.lft = [self getIntValueFromString:@"lft"];
-    self.rgt = [self getIntValueFromString:@"rgt"];
     
-    self.user = [[UserModel alloc]init:[dic objectForKey:@"user"]];
+    if((NSNull*)dic != [NSNull null]){
+        self =[super init];
+        self.dictionary = dic;
+        mediaController = [[MediaController alloc] init];
+        self.media_key = [dic objectForKey:@"media_key"];
+        self.media_url = [dic objectForKey:@"media_url"];
+        self.caption = [dic objectForKey:@"caption"];
+        self.created_at = [dic objectForKey:@"created_at"];
+        self.updated_at = [dic objectForKey:@"updated_at"];
+        self.media_type = [self getIntValueFromString:@"media_type"];
+        self.parent_id = [self getIntValueFromString:@"parent_id"];
+        self.Id = [self getIntValueFromString:@"id"];
+        self.bucket_id = [self getIntValueFromString:@"bucket_id"];
+        self.user_id = [self getIntValueFromString:@"user_id"];
+        self.lft = [self getIntValueFromString:@"lft"];
+        self.rgt = [self getIntValueFromString:@"rgt"];
+        
+        self.user = [[UserModel alloc]init:[dic objectForKey:@"user"]];
+    }
+
+
     
     return self;
 };
@@ -53,6 +59,8 @@ MediaController *mediaController;
         completionCallback(self.media_tmp);
     }
 }
+
+
 
 
 @end

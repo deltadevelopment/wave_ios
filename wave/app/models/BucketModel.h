@@ -29,7 +29,10 @@
 @property (nonatomic,strong) DropModel *rootDrop;
 @property (nonatomic,strong) NSMutableArray *drops;
 @property (nonatomic, strong) UserModel *user;
+-(DropModel *)getDrop:(int)index;
+-(void)saveChanges:(void (^)(ResponseModel*, BucketModel*))completionCallback onError:(void(^)(NSError *))errorCallback;
 
 @property (nonatomic) BOOL isInitalized;
 -(void)addDrop:(DropModel *) drop;
+-(NSString *)toJSON;
 @end
