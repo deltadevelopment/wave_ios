@@ -66,6 +66,10 @@
     [self.drops insertObject:drop atIndex:0];
 }
 
+-(DropModel *)getLastDrop{
+    return [self.drops objectAtIndex:[self.drops count] -1];
+}
+
 -(NSDictionary *)asDictionary{
     NSDictionary *dictionary = @{
                                  @"title": self.title

@@ -70,7 +70,7 @@
 }
 -(void)update:(BucketModel *) bucket{
    [self.bucketImage setImage:nil];
-    DropModel *drop = [[bucket drops] objectAtIndex:0];
+    DropModel *drop = [bucket getLastDrop];
     if([bucket Id] >0){
         [spinner startAnimating];
         [drop requestPhoto:^(NSData *media){
