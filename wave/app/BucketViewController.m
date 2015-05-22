@@ -88,6 +88,7 @@ const int PEEK_Y_START = 300;
     [self attachGUI];
     [self.view insertSubview:self.topBar aboveSubview:Scroller];
     [self initInfoButton];
+    [self initPlayButton];
     [self addPeekView];
     
     UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(peekViewDrag:)];
@@ -107,7 +108,7 @@ const int PEEK_Y_START = 300;
     
     [self.view insertSubview:cameraHolder belowSubview:[self.superButton getButton ]];
     cameraHolder.hidden = YES;
-    [self initPlayButton];
+    
     
         infoView = [[InfoView alloc] initWithSuperViewController:self withButton:infoButton withConstraint:infoButtonConstraint];
     [self.view addSubview:infoView];
@@ -288,6 +289,7 @@ const int PEEK_Y_START = 300;
         }else{
             //VIDEO
              [dropView setMedia:media withIndexId:[drop Id]];
+            playButton.hidden = NO;
         }
       
     }];

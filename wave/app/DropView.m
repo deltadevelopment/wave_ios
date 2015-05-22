@@ -80,7 +80,8 @@
         self.hasVideo = YES;
         NSData *video =(NSData *)media;
         mediaPlayer.view.frame = CGRectMake(0, 0, [UIHelper getScreenWidth], [UIHelper getScreenHeight]);
-        [self addSubview:mediaPlayer.view];
+        //[self addSubview:mediaPlayer.view];
+        [self insertSubview:mediaPlayer.view belowSubview:self.topBar];
         [mediaPlayer setVideo:video withId:indexId];
         //[mediaPlayer playVideo];
     }
