@@ -43,7 +43,6 @@ static int currentBucketId;
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     return [[defaults valueForKey:@"bucketId"] intValue];
 }
-
 +(void)setCurrentBucketId:(int)bucketId{
     currentBucketId = bucketId;
 }

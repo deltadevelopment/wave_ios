@@ -467,7 +467,38 @@
      withBucketId:(int) bucketId
     withMediaType:(int)media_type
 {
+    
+    DropModel *drop = [[DropModel alloc] init];
+    MediaModel *mediaModel = [[MediaModel alloc] init:media];
+    drop.caption = @"test caption";
+    drop.bucket_id = bucketId;
+    drop.media_type = media_type;
+    drop.mediaModel = mediaModel;
+    
     __weak typeof(self) weakSelf = self;
+    [drop saveChangesToDrop:^(ResponseModel *response, DropModel *drop){
+        drop.media_tmp = media;
+        weakSelf.onMediaPostedDrop(drop);
+    } onProgress:^(NSNumber *progress){
+        weakSelf.onProgression([progress intValue]);
+    }
+                    onError:^(NSError *error){
+                        NSMutableDictionary *dic= [[NSMutableDictionary alloc] initWithDictionary:[error userInfo]];
+                        ResponseModel *responseModel = [[ResponseModel alloc] init:dic];
+                        self.onNotificatonShow([responseModel message]);
+                        
+                        [DataHelper storeData:media withMediaType:media_type];
+                        //[weakSelf addErrorMessage];
+                        errorView = [GraphicsHelper getErrorView:[error localizedDescription]
+                                                      withParent:self
+                                                 withButtonTitle:@"Prøv igjen"
+                                       withButtonPressedSelector:@selector(uploadAgain)];
+                        weakSelf.onNetworkError(errorView);
+                    
+                    }];
+    
+    
+    /*
     [dropController addDropToBucket:@"CaptionTest"
                           withMedia:media
                        withBucketId:bucketId
@@ -494,6 +525,7 @@
                                           withButtonPressedSelector:@selector(uploadAgain)];
                            weakSelf.onNetworkError(errorView);
                        }];
+     */
 }
 
 -(void)uploadAgain{

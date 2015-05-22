@@ -73,17 +73,19 @@
     DropModel *drop = [bucket getLastDrop];
     if([bucket Id] >0){
         [spinner startAnimating];
-        [drop requestPhoto:^(NSData *media){
-            [spinner stopAnimating];
-            if([drop media_type] == 0){
-                //BILDE
+        if([drop media_type] == 0){
+            [drop requestPhoto:^(NSData *media){
+                [spinner stopAnimating];
                 [self.bucketImage setImage:[UIImage imageWithData:media]];
-            }else{
-                [self.bucketImage setImage:[UIHelper thumbnailFromVideo:media]];
-                //VIDEO
-            }
-            
-        }];
+            }];
+        }else{
+            [drop requestThumbnail:^(NSData *media){
+                [spinner stopAnimating];
+               // [self.bucketImage setImage:[UIHelper thumbnailFromVideo:media]];
+                 [self.bucketImage setImage:[UIImage imageWithData:media]];
+            }];
+        }
+        
     }
     if([bucket.bucket_type isEqualToString:@"user"]){
         self.displayNameText.text = [NSString stringWithFormat:@"@%@", [[bucket user] username]];

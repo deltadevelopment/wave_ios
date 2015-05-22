@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "BucketModel.h"
 @interface DataHelper : UIView
 @property (nonatomic, strong) NSData *data;
 

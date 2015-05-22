@@ -28,9 +28,11 @@
 @property (nonatomic,strong) NSDate * created_at;
 @property (nonatomic,strong) NSDate * updated_at;
 @property (nonatomic, strong) NSString *thumbnail_key;
+@property (nonatomic, strong) NSString *thumbnail_url;
 
 //Properties for client
 @property (nonatomic,strong) NSData *media_tmp;
+@property (nonatomic,strong) NSData *thumbnail_tmp;
 @property (nonatomic,strong) UIImage *media_img;
 @property (nonatomic,strong) UIImage *image;
 @property (nonatomic,strong) UserModel *user;
@@ -47,9 +49,13 @@
 //-(id)initWithTestData:(NSString *) media withName:(NSString *) username;
 -(id)init:(NSMutableDictionary *)dic;
 -(void)requestPhoto:(void (^)(NSData*))completionCallback;
+-(void)requestThumbnail:(void (^)(NSData*))completionCallback;
 -(void)saveChanges:(void (^)(void))completionCallback
         onProgress:(void (^)(NSNumber*))progression
            onError:(void(^)(NSError *))errorCallback;
+-(void)saveChangesToDrop:(void (^)(ResponseModel*, DropModel*))completionCallback
+              onProgress:(void (^)(NSNumber*))progression
+                 onError:(void(^)(NSError *))errorCallback;
 -(NSDictionary *)asDictionary;
 
 @end

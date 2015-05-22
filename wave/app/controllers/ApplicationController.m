@@ -86,7 +86,8 @@
     [NSURLConnection sendAsynchronousRequest:request
                                        queue:[NSOperationQueue currentQueue]
                            completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-                               
+                                    NSString *strdata=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+                               NSLog(strdata);
                                if (data != nil && error == nil)
                                {
                                    //Ferdig lastet ned

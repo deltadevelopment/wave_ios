@@ -9,6 +9,8 @@
 #import "DropModel.h"
 #import "MediaController.h"
 #import "MediaModel.h"
+#import "UIHelper.h"
+#import "GraphicsHelper.h"
 
 @implementation DropModel
 MediaController *mediaController;
@@ -31,25 +33,69 @@ MediaController *mediaController;
         self.lft = [self getIntValueFromString:@"lft"];
         self.rgt = [self getIntValueFromString:@"rgt"];
         self.temperature = [self getIntValueFromString:@"temperature"];
-        
+        self.thumbnail_url = [self getStringValueFromString:@"thumbnail_url"];
         self.user = [[UserModel alloc]init:[dic objectForKey:@"user"]];
     }
-
-
-    
     return self;
 };
 
+-(id)init{
+self =[super init];
+    return  self;
+}
 -(void)saveChanges:(void (^)(void))completionCallback
         onProgress:(void (^)(NSNumber*))progression
            onError:(void(^)(NSError *))errorCallback
 {
-    [self.mediaModel uploadMedia:progression
-               onCompletion:^(MediaModel *mediaModel){
-                   self.media_key = mediaModel.media_key;
-                   completionCallback();
-               }
-                    onError:errorCallback];
+    if(self.media_type == 1){
+        UIImage *thumbnail = [UIHelper thumbnailFromVideo:[self.mediaModel media]];
+        CGSize size = CGSizeMake([UIHelper getScreenWidth], [UIHelper getScreenHeight]);
+        NSData *thumbnailData = UIImagePNGRepresentation([GraphicsHelper imageByScalingAndCroppingForSize:size img:thumbnail]);
+        MediaModel *thumbnailModel = [[MediaModel alloc] init:thumbnailData];
+        
+        [thumbnailModel uploadMedia:^(NSNumber *number){}
+                       onCompletion:^(MediaModel *thumbnailModel){
+                           [self.mediaModel uploadMedia:progression
+                                           onCompletion:^(MediaModel *mediaModel){
+                                               self.media_key = mediaModel.media_key;
+                                               self.thumbnail_key = thumbnailModel.media_key;
+                                               completionCallback();
+                                           }
+                                                onError:errorCallback];
+                       }
+                            onError:errorCallback];
+        
+        
+    }else{
+        [self.mediaModel uploadMedia:progression
+                        onCompletion:^(MediaModel *mediaModel){
+                            self.media_key = mediaModel.media_key;
+                            completionCallback();
+                        }
+                             onError:errorCallback];
+    }
+
+}
+
+-(void)saveChangesToDrop:(void (^)(ResponseModel*, DropModel*))completionCallback
+ onProgress:(void (^)(NSNumber*))progression
+    onError:(void(^)(NSError *))errorCallback{
+    [self saveChanges:^{
+        NSDictionary *body = @{
+                               @"drop":[self asDictionary]
+                               };
+        [self.applicationController postHttpRequest:[NSString stringWithFormat:@"bucket/%d/drop", self.bucket_id]
+                                               json:[self asJSON:body]
+                                       onCompletion:^(NSURLResponse *response,NSData *data,NSError *error)
+         {
+             NSMutableDictionary *dic = [ParserHelper parse:data];
+             ResponseModel *responseModel = [[ResponseModel alloc] init:dic];
+             DropModel *drop = [[DropModel alloc] init:[[responseModel data] objectForKey:@"drop"]];
+             completionCallback(responseModel, drop);
+         } onError:errorCallback];
+    
+    } onProgress:progression onError:errorCallback];
+    
 }
 
 -(void)downloadImage:(void (^)(NSData*))completionCallback
@@ -60,19 +106,39 @@ MediaController *mediaController;
                      completionCallback(data);
                  }
                       onError:^(NSError *error){
-                          
-                          
                       }];
-    
+}
+
+-(void)downloadThumbnail:(void (^)(NSData*))completionCallback
+{
+    [mediaController getMedia:self.thumbnail_url
+                 onCompletion:^(NSData *data){
+                     self.thumbnail_tmp = data;
+                     completionCallback(data);
+                 }
+                      onError:^(NSError *error){
+                      }];
 }
 
 -(NSDictionary *)asDictionary
 {
-    NSDictionary *dictionary = @{
-                                 @"media_key" : self.media_key,
-                                 @"caption" : self.caption,
-                                 @"media_type" : [NSNumber numberWithInt:self.media_type]
-                                 };
+    NSDictionary *dictionary = nil;
+    if(self.media_type == 1){
+        dictionary = @{
+                       @"media_key" : self.media_key,
+                       @"caption" : self.caption,
+                       @"media_type" : [NSNumber numberWithInt:self.media_type],
+                       @"thumbnail_key": self.thumbnail_key
+                       };
+    }
+    else{
+        dictionary = @{
+                       @"media_key" : self.media_key,
+                       @"caption" : self.caption,
+                       @"media_type" : [NSNumber numberWithInt:self.media_type]
+                       };
+    }
+    
     return dictionary;
 }
 
@@ -81,6 +147,14 @@ MediaController *mediaController;
         [self downloadImage:completionCallback];
     }else{
         completionCallback(self.media_tmp);
+    }
+}
+
+-(void)requestThumbnail:(void (^)(NSData*))completionCallback{
+    if(self.thumbnail_tmp == nil){
+        [self downloadThumbnail:completionCallback];
+    }else{
+        completionCallback(self.thumbnail_tmp);
     }
 }
 
