@@ -116,14 +116,10 @@ BucketViewController *bucketViewController;
 }
 
 -(void)swipeDown:(UISwipeGestureRecognizer *)sender {
-    NSLog(@"swiping");
     [self hide];
 }
 
 -(void)dragInfoView:(UIPanGestureRecognizer *)gesture{
-
-    
-   
     UILabel *label = (UILabel *)gesture.view;
     CGPoint translation = [gesture translationInView:label];
     CGRect frame = self.frame;
@@ -131,24 +127,13 @@ BucketViewController *bucketViewController;
     if(gesture.state == UIGestureRecognizerStateBegan){
         
     }
-    
-    NSLog(@"%d", frame.origin.y <= -44 - translation.y);
-    
-    
-        self.frame = CGRectMake(0, self.frame.origin.y + (translation.y*1.4), [UIHelper getScreenWidth], self.frame.size.height);
-        
-    
-    
+    self.frame = CGRectMake(0, self.frame.origin.y + (translation.y*1.4), [UIHelper getScreenWidth], self.frame.size.height);
     
     if(gesture.state == UIGestureRecognizerStateEnded || gesture.state == UIGestureRecognizerStateFailed || gesture.state == UIGestureRecognizerStateCancelled)
     {
-      
         
     }
     [gesture setTranslation:CGPointZero inView:label];
-    
-    
-
 }
 
 @end

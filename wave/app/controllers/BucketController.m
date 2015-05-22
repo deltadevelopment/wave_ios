@@ -135,8 +135,6 @@ onError:(void(^)(NSError *))errorCallback{
             onCompletion:^(NSURLResponse *response,NSData *data,NSError *error){
                 NSMutableDictionary *dic = [ParserHelper parse:data];
                 ResponseModel *responseModel = [[ResponseModel alloc] init:dic];
-                NSString *strdata=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
-                NSLog(@"%@", strdata);
                 completionCallback(responseModel);
                
             } onError:errorCallback];
@@ -150,8 +148,6 @@ onError:(void(^)(NSError *))errorCallback{
             onCompletion:^(NSURLResponse *response,NSData *data,NSError *error){
                 NSMutableDictionary *dic = [ParserHelper parse:data];
                 ResponseModel *responseModel = [[ResponseModel alloc] init:dic];
-                NSString *strdata=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
-                NSLog(@"%@", strdata);
                 completionCallback(responseModel);
                 
             } onError:errorCallback];

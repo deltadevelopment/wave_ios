@@ -10,8 +10,26 @@
 #import "ApplicationHelper.h"
 
 @implementation BucketModel
+
+-(id)init{
+    self =[super init];
+    self.drops = [[NSMutableArray alloc] init];
+    self.isInitalized = NO;
+    return self;
+}
+
+-(id)initWithSelf:(BucketModel *)bucket{
+    self = bucket;
+    return self;
+}
+
 -(id)init:(NSMutableDictionary *)dic{
     self =[super init];
+    [self refresh:dic];
+    return self;
+};
+
+-(void)refresh:(NSMutableDictionary *) dic{
     self.dictionary = dic;
     self.Id = [self getIntValueFromString:@"id"];
     self.temperature = [self getIntValueFromString:@"temperature"];
@@ -19,7 +37,7 @@
     self.visibility = [self getBoolValueFromString:@"locked"];
     self.user_id = [self getIntValueFromString:@"user_id"];
     self.drops_count = [self getIntValueFromString:@"drops_count"];
-
+    
     self.title= [self getStringValueFromString:@"title"];
     self.bucket_description= [self getStringValueFromString:@"description"];
     self.when_datetime= [dic objectForKey:@"when_datetime"];
@@ -29,18 +47,16 @@
     self.user = [[UserModel alloc] init:[dic objectForKey:@"user"]];
     self.bucket_type = [dic objectForKey:@"bucket_type"];
     if([dic objectForKey:@"drop"] != nil){
-        NSLog(@"adding drop");
         DropModel *drop = [[DropModel alloc] init:[dic objectForKey:@"drop"]];
         [self addDrop:drop];
     }
-   
+    
     NSMutableArray *rawDrops = [dic objectForKey:@"drops"];
     for(NSMutableDictionary *rawDrop in rawDrops){
         DropModel *drop = [[DropModel alloc] init:rawDrop];
         [self addDropToFirst:drop];
     }
-    return self;
-};
+}
 
 -(void)addDrop:(DropModel *) drop{
     [self.drops addObject:drop];
@@ -50,31 +66,30 @@
     [self.drops insertObject:drop atIndex:0];
 }
 
--(id)init{
-    self =[super init];
-    self.drops = [[NSMutableArray alloc] init];
-    self.isInitalized = NO;
-    return self;
+-(NSDictionary *)asDictionary{
+    NSDictionary *dictionary = @{
+                                 @"title": self.title
+                                 };
+    return dictionary;
 }
 
-
--(NSString *)toJSON{
-    DropModel *drop = [[self drops] objectAtIndex:0];
-    NSDictionary *body = @{
-                           @"bucket":@{
-                                   @"title" : self.title
-                                   },
-                           @"drop":@{
-                                   @"media_key" : drop.media_key,
-                                   @"caption" : drop.caption,
-                                   @"media_type" : [NSNumber numberWithInt:drop.media_type]
-                                   }
-                           };
-    NSString *jsonData = [ApplicationHelper generateJsonFromDictionary:body];
-    return jsonData;
+-(DropModel *)firstDrop{
+   return [self.drops objectAtIndex:0];
 }
 
+#pragma data persistence
 
+-(void)saveChanges:(void (^)(ResponseModel *, BucketModel *))completionCallback
+           onError:(void (^)(NSError *))errorCallback
+        onProgress:(void (^)(NSNumber*))progression
+{
+    [[self firstDrop] saveChanges:^{
+        [self saveChanges:completionCallback
+                  onError:errorCallback];
+    }
+                       onProgress:progression
+                          onError:errorCallback];
+}
 -(void)saveChanges:(void (^)(ResponseModel*, BucketModel*))completionCallback onError:(void(^)(NSError *))errorCallback{
     if(self.Id > 0){
         [self update:completionCallback onError:errorCallback];
@@ -84,41 +99,77 @@
     }
 }
 
+#pragma CRUD operations
+
 -(void)create:(void (^)(ResponseModel*, BucketModel*))completionCallback onError:(void(^)(NSError *))errorCallback{
-    if(self.applicationController == nil){
-    }
-    [self.applicationController postHttpRequest:@"bucket" json:self.toJSON onCompletion:^(NSURLResponse *response,NSData *data,NSError *error)
+    NSDictionary *body = @{
+                           @"bucket":[self asDictionary],
+                           @"drop":[[self firstDrop] asDictionary]
+                           };
+    [self.applicationController postHttpRequest:@"bucket"
+                                           json:[self asJSON:body]
+                                   onCompletion:^(NSURLResponse *response,NSData *data,NSError *error)
      {
-         ResponseModel *responseModel = [self responseModelFromData:data];
-         BucketModel *bucket = [self bucketFromResponseModel:responseModel];
-         completionCallback(responseModel, bucket);
-     } onError:errorCallback];
+           NSString *strdata=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+         NSLog(strdata);
+         [self showResponseFromData:data withCallback:completionCallback];
+     }
+                                        onError:errorCallback];
+}
+
+-(void)find:(int) bucketId
+onCompletion:(void (^)(ResponseModel*, BucketModel*))completionCallback
+    onError:(void(^)(NSError *))errorCallback
+{
+    [self.applicationController getHttpRequest:[NSString stringWithFormat:@"bucket/%d", bucketId]
+            onCompletion:^(NSURLResponse *response,NSData *data,NSError *error){
+                [self showResponseFromData:data withCallback:completionCallback];
+            } onError:errorCallback];
+}
+
+-(void)find:(void (^)(void))completionCallback
+    onError:(void(^)(NSError *))errorCallback
+{
+     __weak typeof(self) weakSelf = self;
+    [self.applicationController getHttpRequest:[NSString stringWithFormat:@"bucket/%d", self.Id]
+                                  onCompletion:^(NSURLResponse *response,NSData *data,NSError *error){
+                                      ResponseModel *responseModel = [self responseModelFromData:data];
+                                      [weakSelf refresh:[[responseModel data] objectForKey:@"bucket"]];
+                                      completionCallback();
+                                  } onError:errorCallback];
+}
+
+-(void)update:(void (^)(ResponseModel*, BucketModel*))completionCallback onError:(void(^)(NSError *))errorCallback{
+    [self.applicationController putHttpRequest:[NSString stringWithFormat:@"bucket/%d", self.Id]
+                                          json:[self asJSON:[self asDictionary]]
+                                  onCompletion:^(NSURLResponse *response,NSData *data,NSError *error){
+                                     [self showResponseFromData:data withCallback:completionCallback];
+                                  } onError:errorCallback];
+}
+
+-(void)delete:(void (^)(ResponseModel*, BucketModel*))completionCallback onError:(void(^)(NSError *))errorCallback{
+    [self.applicationController deleteHttpRequest:[NSString stringWithFormat:@"bucket/%d", self.Id]
+               onCompletion:^(NSURLResponse *response,NSData *data,NSError *error){
+                   [self showResponseFromData:data withCallback:completionCallback];
+               } onError:errorCallback];
 }
 
 -(DropModel *)getDrop:(int)index{
     return [self.drops objectAtIndex:index];
 }
 
--(void)update:(void (^)(ResponseModel*, BucketModel*))completionCallback onError:(void(^)(NSError *))errorCallback{
-    NSDictionary *body = @{
-                           @"bucket":@{
-                                   @"title" : self.title,
-                                   }
-                           };
-    NSString *jsonData = [ApplicationHelper generateJsonFromDictionary:body];
-    
-    [self.applicationController putHttpRequest:[NSString stringWithFormat:@"bucket/%d", self.Id]
-                                     json:jsonData
-                             onCompletion:^(NSURLResponse *response,NSData *data,NSError *error){
-                                 ResponseModel *responseModel = [self responseModelFromData:data];
-                                 BucketModel *bucket = [self bucketFromResponseModel:responseModel];
-                                 completionCallback(responseModel, bucket);
-                             } onError:errorCallback];
-}
-
 #pragma helpers
 
--(BucketModel *)bucketFromResponseModel:(ResponseModel *)responseModel{
+-(void)showResponseFromData:(NSData *) data
+               withCallback:(void (^)(ResponseModel*, BucketModel*))completionCallback
+{
+    ResponseModel *responseModel = [self responseModelFromData:data];
+    BucketModel *bucket = [self bucketFromResponseModel:responseModel];
+    completionCallback(responseModel, bucket);
+}
+
+-(BucketModel *)bucketFromResponseModel:(ResponseModel *)responseModel
+{
     BucketModel *bucket = [[BucketModel alloc] init:[[responseModel data] objectForKey:@"bucket"]];
     DropModel *drop = [[DropModel alloc] init:[[responseModel data] objectForKey:@"drop"]];
     [bucket addDrop:drop];
@@ -127,14 +178,7 @@
 
 #pragma not implemented methods
 
-+(void)delete{
 
-}
-
-+(BucketModel*)find:(int) bucket_id{
-    BucketModel *bucket = [[BucketModel alloc] init];
-    return bucket;
-}
 
 
 @end

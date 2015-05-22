@@ -74,7 +74,6 @@
 }
 
 - (void)pan:(UIPanGestureRecognizer *)gesture {
-    NSLog(@"HERE");
     [self GetCurrentPixelColorAtPoint:[gesture locationInView:self.colorPicker]];
 }
 

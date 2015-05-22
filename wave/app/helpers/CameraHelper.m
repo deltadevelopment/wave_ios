@@ -50,11 +50,9 @@ AVCaptureSession *CaptureSession;
     //method to capture image from AVCaptureSession video feed
   AVCaptureConnection *videoConnection2 = nil;
     for (AVCaptureConnection *connection in [[self stillImageOutput]connections]) {
-        NSLog(@"hit");
         for (AVCaptureInputPort *port in [connection inputPorts]) {
             if ([[port mediaType] isEqual:AVMediaTypeVideo] ) {
                 videoConnection2 = connection;
-                NSLog(@"hit2");
                 break;
             }
         }
@@ -66,7 +64,6 @@ AVCaptureSession *CaptureSession;
     
     //[self.CaptureSession stopRunning];
     
-    NSLog(@"about to request a capture from: %@", stillImageOutput);
    PreviewLayer.connection.enabled = NO;
     [stillImageOutput
      captureStillImageAsynchronouslyFromConnection:videoConnection2
@@ -76,14 +73,11 @@ AVCaptureSession *CaptureSession;
             //[object performSelector:success withObject:imgTaken];
             [object performSelectorOnMainThread:success withObject:self.imgTaken waitUntilDone:YES];
             //UIImageWriteToSavedPhotosAlbum(imgTaken, nil, nil, nil);
-            NSLog(@"done");
            // [self stopCameraSession];
-            NSLog(@"STOPPING SESSION");
             
             imageSampleBuffer = NULL;
         }
         else{
-            NSLog(@"test");
         }
         
     }];
@@ -98,15 +92,11 @@ PreviewLayer.connection.enabled = YES;
     
 }
 -(void)imageCapturedFromCamera{
-    NSLog(@"har-______________");
+  
 }
 
 
 -(void) captureNow:(NSObject *) object withSuccess:(SEL) success {
- 
-    
-    NSLog(@"about to request a capture from: %@", self.stillImageOutput);
- 
     [self.stillImageOutput captureStillImageAsynchronouslyFromConnection:[self.stillImageOutput.connections lastObject] completionHandler: ^(CMSampleBufferRef imageSampleBuffer, NSError *error) {
         
         NSData *imageData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageSampleBuffer];
@@ -127,12 +117,12 @@ PreviewLayer.connection.enabled = YES;
 
         for(AVCaptureInput *input1 in CaptureSession.inputs) {
             [CaptureSession removeInput:input1];
-              NSLog(@"removing input");
+    
         }
         
         for(AVCaptureOutput *output1 in CaptureSession.outputs) {
             [CaptureSession removeOutput:output1];
-            NSLog(@"removing output");
+
         }
         [PreviewLayer removeFromSuperlayer];
         [self.CameraView removeFromSuperview];
@@ -150,7 +140,6 @@ PreviewLayer.connection.enabled = YES;
         self.CameraView=nil;
         self.movieFileOutput = nil;
         self.imgTaken = nil;
-        NSLog(@"stopped");
     });
 
    
@@ -302,7 +291,6 @@ PreviewLayer.connection.enabled = YES;
 }
 
 -(void)addImageOutput{
-    NSLog(@"HER NÅ");
         if(stillImageOutput !=nil){
             [self.CaptureSession2 removeOutput:stillImageOutput];
         }
@@ -339,7 +327,6 @@ PreviewLayer.connection.enabled = YES;
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    NSLog(@"orienting right");
     return (interfaceOrientation == UIDeviceOrientationLandscapeLeft);
 }
 
@@ -347,7 +334,6 @@ PreviewLayer.connection.enabled = YES;
 //********** CAMERA SET OUTPUT PROPERTIES **********
 - (void) CameraSetOutputProperties
 {
-    NSLog(@"setting ot_________");
     //SET THE CONNECTION PROPERTIES (output properties)
     AVCaptureConnection *CaptureConnection = [self.movieFileOutput connectionWithMediaType:AVMediaTypeVideo];
     CaptureConnection.videoMirrored = YES;
@@ -408,7 +394,6 @@ PreviewLayer.connection.enabled = YES;
     __weak typeof(self) weakSelf = self;
     if ([[AVCaptureDevice devicesWithMediaType:AVMediaTypeVideo] count] > 1)		//Only do if device has multiple cameras
     {
-        NSLog(@"Toggle camera");
         NSError *error;
         //AVCaptureDeviceInput *videoInput = [weakSelf videoInput];
         AVCaptureDeviceInput *NewVideoInput;
@@ -539,7 +524,6 @@ didFinishRecordingToOutputFileAtURL:(NSURL *)outputFileURL
              NSURL *outputURL = [[NSURL alloc] initFileURLWithPath:outputPath];
         [weakSelf convertVideoToLowQuailtyWithInputURL:outputFileURL outputURL:outputURL handler:^(AVAssetExportSession *exportSession)
          {
-             NSLog(@"her");
              if (exportSession.status == AVAssetExportSessionStatusCompleted)
              {
                  weakweakSelf.lastRecordedVideoCompressed = [[NSFileManager defaultManager] contentsAtPath:[outputURL path]];
@@ -562,7 +546,6 @@ didFinishRecordingToOutputFileAtURL:(NSURL *)outputFileURL
         //self.movieFileOutput = nil;
         //self.VideoInputDevice = nil;
         //[library release];
-        NSLog(@"ferdig å recorde film");
         
     }
 }

@@ -41,7 +41,6 @@
                                        [mediaController putHttpRequestWithImage:self.media
                                                                           token:self.upload_url onProgress:^(NSNumber *percentage)
                                         {
-                                            NSLog(@"HER:::_________PROG");
                                             progression(percentage);
                                         }
                                                                    onCompletion:^

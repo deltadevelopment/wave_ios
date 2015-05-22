@@ -31,8 +31,16 @@
 @property (nonatomic, strong) UserModel *user;
 -(DropModel *)getDrop:(int)index;
 -(void)saveChanges:(void (^)(ResponseModel*, BucketModel*))completionCallback onError:(void(^)(NSError *))errorCallback;
+-(void)saveChanges:(void (^)(ResponseModel *, BucketModel *))completionCallback
+           onError:(void (^)(NSError *))errorCallback
+        onProgress:(void (^)(NSNumber*))progression;
+-(void)find:(int) bucketId
+onCompletion:(void (^)(ResponseModel*, BucketModel*))completionCallback
+    onError:(void(^)(NSError *))errorCallback;
+-(void)find:(void (^)(void))completionCallback
+    onError:(void(^)(NSError *))errorCallback;
 
 @property (nonatomic) BOOL isInitalized;
+-(void)addDropToFirst:(DropModel *) drop;
 -(void)addDrop:(DropModel *) drop;
--(NSString *)toJSON;
 @end

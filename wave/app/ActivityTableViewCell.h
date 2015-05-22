@@ -16,6 +16,7 @@
 @property (weak, nonatomic) IBOutlet UIView *bottomBar;
 @property (weak, nonatomic) IBOutlet UIImageView *profilePictureIcon;
 @property (nonatomic) bool isInitialized;
+@property (weak, nonatomic) IBOutlet UILabel *usernameText;
 -(void)initialize;
 -(void)update:(NSString *)name;
 -(void)updateDropImage:(UIImage *) image;

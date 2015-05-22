@@ -132,7 +132,6 @@
 }
 
 -(void)changeToBucket:(BucketModel *) bucket{
-    NSLog(@"changing to bucket");
     [self.superController addBucketAsRoot:@"bucketView" withBucket:bucket];
 }
 

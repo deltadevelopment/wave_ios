@@ -7,9 +7,24 @@
 //
 
 #import "UserModel.h"
-
-@implementation UserModel
+#import "AuthHelper.h"
+@implementation UserModel{
+    AuthHelper *authHelper;
+}
 -(id)init:(NSMutableDictionary *)dic{
+    [self refresh:dic];
+    return self;
+};
+
+-(id)initWithDeviceUser{
+    self = [super init];
+    authHelper = [[AuthHelper alloc] init];
+    self.Id = [[authHelper getUserId] intValue];
+    [self find:^{} onError:^(NSError *error){}];
+    return self;
+}
+
+-(void)refresh:(NSMutableDictionary *)dic{
     self.dictionary = dic;
     _username  = [dic objectForKey:@"username"];
     _email  = [dic objectForKey:@"email"];
@@ -25,12 +40,22 @@
     _private_profile  = [[dic objectForKey:@"private_profile"] boolValue];
     _Id  = [[dic objectForKey:@"id"] intValue];
     _subscribers_count = [self getIntValueFromString:@"subscribers_count"];
-   // NSLog(@"Subscribers count = %d", [[dic objectForKey:@"subscribers_count"] intValue]);
+    // NSLog(@"Subscribers count = %d", [[dic objectForKey:@"subscribers_count"] intValue]);
     if((NSNull*)[dic objectForKey:@"is_followee"] != [NSNull null]){
         _is_followee = [[dic objectForKey:@"is_followee"] boolValue];
     }
-    //User
-   // NSLog(@"The username is %@", _username);
-    return self;
-};
+    _usernameFormatted =[NSString stringWithFormat:@"@%@", _username];
+}
+
+-(void)find:(void (^)(void))completionCallback
+    onError:(void(^)(NSError *))errorCallback{
+    __weak typeof(self) weakSelf = self;
+    [self.applicationController getHttpRequest:[NSString stringWithFormat:@"user/%d", self.Id]
+                                  onCompletion:^(NSURLResponse *response,NSData *data,NSError *error){
+                                      ResponseModel *responseModel = [self responseModelFromData:data];
+                                      [weakSelf refresh:[[responseModel data] objectForKey:@"user"]];
+                                      NSLog(@"NOT NULL NOW?");
+                                      completionCallback();
+                                  } onError:errorCallback];
+}
 @end

@@ -13,7 +13,6 @@
 -(id)init{
     self = [super init];
     self.applicationController = [[ApplicationController alloc] init];
-    NSLog(@"INITING");
     return self;
 }
 -(int)getIntValueFromString:(NSString *) stringValue{
@@ -50,6 +49,16 @@
     NSMutableDictionary *dic = [ParserHelper parse:data];
     ResponseModel *responseModel = [[ResponseModel alloc] init:dic];
     return responseModel;
+}
+
+-(NSDictionary *)asDictionary{
+    [NSException raise:@"Invalid foo value" format:@"foo of %d is invalid", 1];
+    return nil;
+}
+
+-(NSString *)asJSON:(NSDictionary *) dictionary{
+    NSString *jsonData = [ApplicationHelper generateJsonFromDictionary:dictionary];
+    return jsonData;
 }
 
 @end

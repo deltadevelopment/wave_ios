@@ -10,6 +10,7 @@
 #import <UIKit/UIKit.h>
 #import "UserModel.h"
 #import "SuperModel.h"
+#import "MediaModel.h"
 @interface DropModel : SuperModel
 
 //Model properties
@@ -20,6 +21,7 @@
 @property (nonatomic) int media_type;
 @property (nonatomic) int parent_id;
 @property (nonatomic) int bucket_id;
+@property (nonatomic) int temperature;
 @property (nonatomic) int user_id;
 @property (nonatomic) int lft;
 @property (nonatomic) int rgt;
@@ -32,6 +34,7 @@
 @property (nonatomic,strong) UIImage *media_img;
 @property (nonatomic,strong) UIImage *image;
 @property (nonatomic,strong) UserModel *user;
+@property (nonatomic,strong) MediaModel *mediaModel;
 
 @property (nonatomic,strong) NSString *upload_url;
 
@@ -44,4 +47,9 @@
 //-(id)initWithTestData:(NSString *) media withName:(NSString *) username;
 -(id)init:(NSMutableDictionary *)dic;
 -(void)requestPhoto:(void (^)(NSData*))completionCallback;
+-(void)saveChanges:(void (^)(void))completionCallback
+        onProgress:(void (^)(NSNumber*))progression
+           onError:(void(^)(NSError *))errorCallback;
+-(NSDictionary *)asDictionary;
+
 @end

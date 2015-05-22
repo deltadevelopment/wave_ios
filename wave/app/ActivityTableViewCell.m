@@ -35,8 +35,6 @@
     spinner.hidesWhenStopped = YES;
     spinner.hidden = YES;
     
-    
-    
     self.bucketImage.contentMode = UIViewContentModeScaleAspectFill;
     self.bucketImage.clipsToBounds = YES;
     [self insertSubview:self.topBar aboveSubview:self.bucketImage];
@@ -46,7 +44,8 @@
     
     [self.bucketImage setUserInteractionEnabled:YES];
     [self setUserInteractionEnabled:YES];
-    [UIHelper applyThinLayoutOnLabel:self.displayNameText withSize:18 withColor:[UIColor whiteColor]];
+    [UIHelper applyThinLayoutOnLabel:self.displayNameText withSize:19 withColor:[UIColor whiteColor]];
+        [UIHelper applyThinLayoutOnLabel:self.usernameText withSize:15 withColor:[UIColor whiteColor]];
     [UIHelper roundedCorners:self.profilePictureIcon withRadius:15];
     [UIHelper roundedCorners:self.availabilityIcon withRadius:7.5];
     self.availabilityIcon.hidden = YES;
@@ -70,42 +69,30 @@
     [spinner stopAnimating];
 }
 -(void)update:(BucketModel *) bucket{
-        DropModel *drop = [[bucket drops] objectAtIndex:0];
-    /*
-        if(drop.media_img != nil){
-             self.bucketImage.image = drop.media_img;
-          
-        }
-        else if(drop.media_tmp != nil){
+   [self.bucketImage setImage:nil];
+    DropModel *drop = [[bucket drops] objectAtIndex:0];
+    if([bucket Id] >0){
+        [spinner startAnimating];
+        [drop requestPhoto:^(NSData *media){
+            [spinner stopAnimating];
+            if([drop media_type] == 0){
+                //BILDE
+                [self.bucketImage setImage:[UIImage imageWithData:media]];
+            }else{
+                [self.bucketImage setImage:[UIHelper thumbnailFromVideo:media]];
+                //VIDEO
+            }
             
-        }
-     */
-   
-    
-    /*
-        else if(drop){
-             self.bucketImage.image = [UIImage imageNamed:drop.media];
-        }
-    */
-    [drop requestPhoto:^(NSData *media){
-        if([drop media_type] == 0){
-            //BILDE
-            [self.bucketImage setImage:[UIImage imageWithData:media]];
-        }else{
-            [self.bucketImage setImage:[UIHelper thumbnailFromVideo:media]];
-            //VIDEO
-        }
-        
-    }];
-    
-    NSLog(@"%@", bucket.title);
+        }];
+    }
     if([bucket.bucket_type isEqualToString:@"user"]){
         self.displayNameText.text = [NSString stringWithFormat:@"@%@", [[bucket user] username]];
+        self.usernameText.hidden = YES;
     }else{
         self.displayNameText.text = bucket.title;
+        self.usernameText.hidden = NO;
+        self.usernameText.text = [NSString stringWithFormat:@"%@ %@",NSLocalizedString(@"by_txt", nil), [[bucket user] username]];
     }
-        
-        //
 }
 
 -(void)updateDropImage:(UIImage *) image{

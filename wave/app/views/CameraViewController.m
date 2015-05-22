@@ -18,7 +18,6 @@
 #import "DataHelper.h"
 #import "DropController.h"
 #import "MediaModel.h"
-#import "ResponseHelper.h"
 
 @interface CameraViewController ()
 
@@ -419,7 +418,6 @@
 -(void)uploadMedia:(NSData *) media withMediaType:(int) media_type{
     if(isReply){
         //add a drop
-        NSLog(@"currentBucketId %d", [DataHelper getCurrentBucketId]);
         [self addNewDrop:media withBucketId:[DataHelper getCurrentBucketId] withMediaType:media_type];
     }else{
         if(currentTypeIndex == 1){
@@ -434,59 +432,35 @@
 
 -(void)createNewBucket:(NSData *) media withMediaType:(int)media_type{
     __weak typeof(self) weakSelf = self;
-    
+    //Creating a new bucket
     BucketModel *bucket = [[BucketModel alloc] init];
     [bucket setTitle:titleTextField.text];
     [bucket setBucket_description:@"my crazy new description"];
     
+    //Creating a new Media Model
+    MediaModel *mediaModel = [[MediaModel alloc] init:media];
+    
+    //Creating a new drop
     DropModel *drop = [[DropModel alloc] init];
     [drop setCaption:@"My crazy caption"];
     [drop setMedia_type:media_type];
-    
+    [drop setMediaModel:mediaModel];
     [bucket addDrop:drop];
     
-    MediaModel *mediaModel = [[MediaModel alloc] init:media];
+    [bucket saveChanges:^(ResponseModel *response, BucketModel *bucket){
+        self.onMediaPosted(bucket);
+        titleTextField.text = @"";
+    } onError:^(NSError *error){
+        [DataHelper storeData:media withMediaType:media_type];
+        errorView = [GraphicsHelper getErrorView:[error localizedDescription]
+                                      withParent:self
+                                 withButtonTitle:@"Prøv igjen"
+                       withButtonPressedSelector:@selector(uploadAgain)];
+        weakSelf.onNetworkError(errorView);
     
-    
-    [mediaModel uploadMedia:^(NSNumber *progression){
+    } onProgress:^(NSNumber *progression){
         weakSelf.onProgression([progression intValue]);
-    }
-               onCompletion:^(MediaModel *mediaModel){
-                   //MEDIA was uploaded
-                   [bucket getDrop:0].media_key = mediaModel.media_key;
-                   [bucket saveChanges:^(ResponseModel *response, BucketModel *bucket){
-                       self.onMediaPosted(bucket);
-                       titleTextField.text = @"";
-                   } onError:^(NSError *error){
-                       [DataHelper storeData:media withMediaType:media_type];
-                       //[weakSelf addErrorMessage];
-                       errorView = [GraphicsHelper getErrorView:[error localizedDescription]
-                                                     withParent:self
-                                                withButtonTitle:@"Prøv igjen"
-                                      withButtonPressedSelector:@selector(uploadAgain)];
-                       weakSelf.onNetworkError(errorView);
-                   }];
-               } onError:nil];
-/*
-    [bucketController createNewBucket:mediaModel
-                           withBucket:bucket
-                           onProgress:^(NSNumber *progression){
-                               weakSelf.onProgression([progression intValue]);
-                           }
-                         onCompletion:^(ResponseModel *response, BucketModel *bucket){
-                             self.onMediaPosted(bucket);
-                             titleTextField.text = @"";
-                         }
-                              onError:^(NSError *error){
-                                  [DataHelper storeData:media withMediaType:media_type];
-                                  //[weakSelf addErrorMessage];
-                                  errorView = [GraphicsHelper getErrorView:[error localizedDescription]
-                                                                withParent:self
-                                                           withButtonTitle:@"Prøv igjen"
-                                                 withButtonPressedSelector:@selector(uploadAgain)];
-                                  weakSelf.onNetworkError(errorView);
-                              }];
- */
+    }];
 }
 
 -(void)addNewDrop:(NSData *) media
@@ -510,8 +484,6 @@
                        } onError:^(NSError *error){
                            NSMutableDictionary *dic= [[NSMutableDictionary alloc] initWithDictionary:[error userInfo]];
                            ResponseModel *responseModel = [[ResponseModel alloc] init:dic];
-                           NSLog(@"ERROR: %@", [responseModel message]);
-                           NSLog(@"ERROR: %@", [responseModel message_id]);
                            self.onNotificatonShow([responseModel message]);
                            
                            [DataHelper storeData:media withMediaType:media_type];

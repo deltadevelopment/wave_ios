@@ -43,7 +43,6 @@
                                    NSCachedURLResponse *cachedURLResponse = [[NSCachedURLResponse alloc] initWithResponse:response data:data userInfo:nil storagePolicy:NSURLCacheStorageAllowed];
                                    [[NSURLCache sharedURLCache] storeCachedResponse:cachedURLResponse forRequest:request];
                                    
-                                   NSLog(@"status code for image : %ld", (long)statuscode);
                                    if(statuscode < 300){
                                        //SUKSESS
                                        completionCallback(data);
@@ -84,7 +83,6 @@
     [request setHTTPBody:imageData];
     //[request addData:audioData withFileName:videoName andContentType:@"video/mov" forKey:@"videoFile"];
     
-    NSLog(@"token is --- %@", token);
     
     mediaUploadComplete = callback;
     mediaProgression = progression;
@@ -97,7 +95,6 @@
     
     [connection2 start];
     if (connection2) {
-        NSLog(@"connection---");
     };
     
 }

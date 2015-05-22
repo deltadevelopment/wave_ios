@@ -8,6 +8,7 @@
 
 #import "DropModel.h"
 #import "MediaController.h"
+#import "MediaModel.h"
 
 @implementation DropModel
 MediaController *mediaController;
@@ -29,6 +30,7 @@ MediaController *mediaController;
         self.user_id = [self getIntValueFromString:@"user_id"];
         self.lft = [self getIntValueFromString:@"lft"];
         self.rgt = [self getIntValueFromString:@"rgt"];
+        self.temperature = [self getIntValueFromString:@"temperature"];
         
         self.user = [[UserModel alloc]init:[dic objectForKey:@"user"]];
     }
@@ -37,6 +39,18 @@ MediaController *mediaController;
     
     return self;
 };
+
+-(void)saveChanges:(void (^)(void))completionCallback
+        onProgress:(void (^)(NSNumber*))progression
+           onError:(void(^)(NSError *))errorCallback
+{
+    [self.mediaModel uploadMedia:progression
+               onCompletion:^(MediaModel *mediaModel){
+                   self.media_key = mediaModel.media_key;
+                   completionCallback();
+               }
+                    onError:errorCallback];
+}
 
 -(void)downloadImage:(void (^)(NSData*))completionCallback
 {
@@ -50,6 +64,16 @@ MediaController *mediaController;
                           
                       }];
     
+}
+
+-(NSDictionary *)asDictionary
+{
+    NSDictionary *dictionary = @{
+                                 @"media_key" : self.media_key,
+                                 @"caption" : self.caption,
+                                 @"media_type" : [NSNumber numberWithInt:self.media_type]
+                                 };
+    return dictionary;
 }
 
 -(void)requestPhoto:(void (^)(NSData*))completionCallback{

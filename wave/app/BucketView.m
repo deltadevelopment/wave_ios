@@ -24,7 +24,6 @@
  
     // If the hitView is THIS view, return the view that you want to receive the touch instead:
     if(self.lockArea){
-           NSLog(@"HER_______");
         return self.dropView;
     }
     if (hitView == self) {

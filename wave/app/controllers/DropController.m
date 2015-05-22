@@ -44,8 +44,6 @@
                                        json:jsonData
                                onCompletion:^(NSURLResponse *response,NSData *data,NSError *error)
                        {
-                           NSString *strdata=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
-                           NSLog(strdata);
                            NSMutableDictionary *dic = [ParserHelper parse:data];
                            ResponseModel *responseModel = [[ResponseModel alloc] init:dic];
                            completionCallback(responseModel);

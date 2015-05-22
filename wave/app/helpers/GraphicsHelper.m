@@ -66,7 +66,6 @@ withButtonPressedSelector:(SEL) buttonSelector
 
 + (UIImage*)imageByScalingAndCroppingForSize:(CGSize)targetSize img:(UIImage *) sourceImage
 {
-    NSLog(@"----SCALING IMAGE");
     // NSLog(@"THE size is width: %f height: %f", targetSize.width, targetSize.height);
     UIImage *newImage = nil;
     CGSize imageSize = sourceImage.size;

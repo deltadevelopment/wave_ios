@@ -10,5 +10,6 @@
 #import "AbstractFeedViewController.h"
 @interface ActivityViewController : AbstractFeedViewController<UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (nonatomic, strong) UIRefreshControl *refreshControl;
 
 @end

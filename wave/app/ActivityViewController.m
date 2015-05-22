@@ -16,12 +16,16 @@
 #import "SuperViewController.h"
 #import "DataHelper.h"
 #import "GraphicsHelper.h"
+#import "FeedModel.h"
+#import "UserModel.h"
 @interface ActivityViewController ()
 
 @end
 const int EXPAND_SIZE = 400;
 @implementation ActivityViewController{
-    NSMutableArray *feed;
+   // NSMutableArray *feed;
+    FeedModel *feedModel;
+    UserModel *userModel;
     bool shouldExpand;
     NSIndexPath *indexCurrent;
     UIView *cameraView;
@@ -30,43 +34,51 @@ const int EXPAND_SIZE = 400;
     BucketController *bucketController;
     UIView *cameraHolder;
     UIView *errorView;
-    UIRefreshControl *refreshControl;
+    
+    int indexValue;
+    
 }
 
 - (void)viewDidLoad {
+    NSLog(@"<ActivityViewController STARTED>");
     [super viewDidLoad];
     bucketController = [[BucketController alloc] init];
-    
-    refreshControl = [[UIRefreshControl alloc] init];
-    refreshControl.backgroundColor = [ColorHelper blueColor];
-    refreshControl.tintColor = [UIColor whiteColor];
-    [refreshControl addTarget:self action:@selector(refreshFeed) forControlEvents:UIControlEventValueChanged];
-    [self.tableView addSubview:refreshControl];
-    [self startRefreshing];
-    [self getFeed];
-    //feed = [ApplicationHelper bucketTestData];
+    feedModel = [[FeedModel alloc] init];
+    userModel = [[UserModel alloc] initWithDeviceUser];
 
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-    
+  
     cameraHolder = [[UIView alloc]initWithFrame:CGRectMake(0, -64, [UIHelper getScreenWidth],[UIHelper getScreenHeight])];
     cameraHolder.backgroundColor = [UIColor whiteColor];
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    self.refreshControl.backgroundColor = [ColorHelper blueColor];
+    self.refreshControl.tintColor = [UIColor whiteColor];
+    [self.refreshControl addTarget:self action:@selector(refreshFeed) forControlEvents:UIControlEventValueChanged];
+    [self.tableView addSubview:self.refreshControl];
+    [self startRefreshing];
 }
 
 -(void)startRefreshing{
-    if (self.tableView.contentOffset.y == 0) {
-        [UIView animateWithDuration:0.25 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^(void){
-            self.tableView.contentOffset = CGPointMake(0, -refreshControl.frame.size.height);
-        } completion:^(BOOL finished){
-            
-        }];
-    }
-    [refreshControl beginRefreshing];
+    [UIView animateWithDuration:0.25 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^(void){
+        self.tableView.contentOffset = CGPointMake(0, -self.refreshControl.frame.size.height);
+    } completion:^(BOOL finished) {
+       
+        
+    }];
+     [self.refreshControl beginRefreshing];
+    [self refreshFeed];
 }
 
 -(void)refreshFeed{
-    [self getFeed];
+    __weak typeof(self) weakSelf = self;
+    [feedModel getFeed:^{
+        [weakSelf stopRefreshing];
+    } onError:^(NSError *error){
+        //NSLog(@"%@", [error localizedDescription]);
+        
+    }];
 }
 
 -(void)stopRefreshing{
@@ -76,33 +88,15 @@ const int EXPAND_SIZE = 400;
     NSDictionary *attrsDictionary = [NSDictionary dictionaryWithObject:[UIColor whiteColor]
                                                                 forKey:NSForegroundColorAttributeName];
     NSAttributedString *attributedTitle = [[NSAttributedString alloc] initWithString:title attributes:attrsDictionary];
-    refreshControl.attributedTitle = attributedTitle;
-    [refreshControl endRefreshing];
-    NSLog(@"feed count %lu", (unsigned long)[feed count]);
+    self.refreshControl.attributedTitle = attributedTitle;
+    [self.refreshControl endRefreshing];
     [self.tableView reloadData];
 }
 
--(void)getFeed{
-      __weak typeof(self) weakSelf = self;
-    NSMutableArray *feedData = [[NSMutableArray alloc] init];
-    [bucketController
-     getFeed:^(ResponseModel *response){
-     //Feed was returned
-         NSMutableArray *rawFeed = [[response data] objectForKey:@"buckets"];
-         for(NSMutableDictionary *rawBucket in rawFeed){
-            BucketModel *bucket = [[BucketModel alloc] init:rawBucket];
-            [feedData addObject:bucket];
-             
-         }
-       feed = feedData;
-       [weakSelf stopRefreshing];
-     }
-     onError:^(NSError *error){
-         NSLog(@"%@", [error localizedDescription]);
-    }];
-}
+
 
 -(void)viewDidLayoutSubviews{
+    [super viewDidLayoutSubviews];
     [self.view addSubview:cameraHolder];
     cameraHolder.hidden = YES;
     [self.view insertSubview:self.tableView belowSubview:cameraHolder];
@@ -156,8 +150,7 @@ const int EXPAND_SIZE = 400;
 
 -(void)expandBucketWithId:(int) Id{
    // ActivityTableViewCell *cell = (ActivityTableViewCell *)[_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:Id inSection:0]];
-    BucketModel *bucket = [feed objectAtIndex:Id];
-    NSLog(@"BUCKET NAME: %@", bucket.title);
+    BucketModel *bucket = [[feedModel feed] objectAtIndex:Id];
     self.onExpand(bucket);
 }
 
@@ -176,11 +169,10 @@ const int EXPAND_SIZE = 400;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return [feed count];
+    return [[feedModel feed] count];
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    NSLog(@"cell for");
     static NSString *CellIdentifier = @"activityCell";
     ActivityTableViewCell *cell = (ActivityTableViewCell  *)[tableView  dequeueReusableCellWithIdentifier:CellIdentifier];
     if(cell == nil){
@@ -191,14 +183,13 @@ const int EXPAND_SIZE = 400;
         [cell initialize];
     }
     //Updating cell from changes in bucket
-    [cell update:[feed objectAtIndex:indexPath.row]];
+    [cell update:[[feedModel feed] objectAtIndex:indexPath.row]];
     return cell;
 }
 
 #pragma Camera methods
 
 -(void)prepareCamera:(UIView *)view{
-    NSLog(@"prepping");
     if(cameraView == nil){
         cameraView = view;
         [cameraHolder addSubview:cameraView];
@@ -206,25 +197,36 @@ const int EXPAND_SIZE = 400;
 }
 
 -(void)onCameraOpen{
+    /*
     _tableView.scrollEnabled = NO;
     self.onLockScreenToggle();
-    [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+
+    if([feedModel isYourBucketInFeed]){
+        indexValue = [feedModel personalBucketIndex];
+    }
     
+    [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:indexValue inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+    NSLog(@"test %d", indexValue);
     cameraMode = YES;
-    NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+    NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:indexValue inSection:0];
     shouldExpand = true;
     indexCurrent = newIndexPath;
-    BucketModel *firstBucket = [feed objectAtIndex:0];
+    BucketModel *firstBucket = [[feedModel feed] objectAtIndex:indexValue];
     
-    if(![firstBucket.title isEqualToString:@"Simen"]){
+    NSString *value = firstBucket.title;
+    if([[firstBucket bucket_type] isEqualToString:@"user"]){
+        value = [[firstBucket user] usernameFormatted];
+    }
+    
+    if(![value isEqualToString:[userModel usernameFormatted]]){
  
         BucketModel *bucket = [[BucketModel alloc] init];
         DropModel *drop = [[DropModel alloc] init];
         //drop.media = @"169.jpg";
         bucket.drops = [[NSMutableArray alloc] initWithObjects:drop, nil];
-        bucket.title = @"Simen";
+        bucket.title = [userModel usernameFormatted];
         
-        [feed insertObject:bucket atIndex:0];
+        [[feedModel feed] insertObject:bucket atIndex:0];
         [CATransaction begin];
         [CATransaction setCompletionBlock:^{
             cameraHolder.hidden = NO;
@@ -235,6 +237,7 @@ const int EXPAND_SIZE = 400;
         [CATransaction commit];
     }
     else{
+        NSLog(@"er samme");
         [CATransaction begin];
         [CATransaction setCompletionBlock:^{
             cameraHolder.hidden = NO;
@@ -244,7 +247,38 @@ const int EXPAND_SIZE = 400;
         [CATransaction commit];
         
     }
+     */
+    
+    [self test];
 }
+
+-(void)test{
+    _tableView.scrollEnabled = NO;
+    self.onLockScreenToggle();
+    
+    [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+    cameraMode = YES;
+    NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:indexValue inSection:0];
+    shouldExpand = true;
+    indexCurrent = newIndexPath;
+
+    BucketModel *bucket = [[BucketModel alloc] init];
+    DropModel *drop = [[DropModel alloc] init];
+    //drop.media = @"169.jpg";
+    [bucket addDrop:drop];
+    bucket.title = [userModel usernameFormatted];
+    
+    [[feedModel feed] insertObject:bucket atIndex:0];
+    [CATransaction begin];
+    [CATransaction setCompletionBlock:^{
+        cameraHolder.hidden = NO;
+    }];
+    [self.tableView beginUpdates];
+    [_tableView insertRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationTop];
+    [self.tableView endUpdates];
+    [CATransaction commit];
+}
+
 
 -(void)animationIsDone{
     
@@ -262,45 +296,47 @@ const int EXPAND_SIZE = 400;
 }
 
 -(void)mediaTaken:(UIImage *) image withText:(NSString *) text{
-    /*
-     BucketModel *newBucket = [[BucketModel alloc] init];
-     newBucket.Id = 3;
-     newBucket.title = @"My new Crazy bucket";
-     newBucket.bucket_description = @"My new crazy description";
-     DropModel *newDrop = [[DropModel alloc] init];
-     newDrop.caption = @"My crazy new drop!";
-     newDrop.media_tmp = UIImagePNGRepresentation(image);
-     newBucket.rootDrop = newDrop;
-     
-     [bucketController createNewBucket:newBucket
-     onProgress:^(NSNumber *progression){
-     NSLog(@"LASTET OPP: %@", progression);
-     
-     }
-     onCompletion:^(BucketModel *bucket, ResponseModel *response){
-     NSLog(@"ALT ER FERDIG LASTET OPP!");
-     
-     }];
-     
-     [bucketController updateBucket:newBucket
-     onCompletion:^(ResponseModel *response){
-     NSLog(@"BUCKET ENDRET");
-     
-     }];
-     
-     */
     cameraHolder.hidden = YES;
     imgTaken = image;
+    if([text isEqualToString:@""]){
+        //personal bucket
+        if([feedModel isYourBucketInFeed]){
+            indexValue = [feedModel personalBucketIndex];
+        }
+        [[feedModel feed] removeObjectAtIndex:0];
+        NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+        
+        [CATransaction begin];
+        [CATransaction setCompletionBlock:^{
+            [self updat:text];
+        }];
+        [self.tableView beginUpdates];
+        [_tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationTop];
+        [self.tableView endUpdates];
+        [CATransaction commit];
+        
+    }else{
+        indexValue = 0;
+        [self updat:text];
+    }
+
+   
+}
+-(void)updat:(NSString *) text{
     //[cameraView removeFromSuperview];
-    ActivityTableViewCell *cell = (ActivityTableViewCell  *)[_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+    [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:indexValue inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
+
+    NSLog(@"index value: %d", indexValue);
+    ActivityTableViewCell *cell = (ActivityTableViewCell  *)[_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:indexValue inSection:0]];
     cell.bucketImage.image = imgTaken;
-    cell.displayNameText.text = [text isEqualToString:@""] ? @"Simen Lie" : text;
+    cell.displayNameText.text = [text isEqualToString:@""] ? [userModel usernameFormatted] : text;
     [cell startSpinnerAnimtation];
     //cameraCell.bucketImage.image = imgTaken;
-    BucketModel *bucket = [feed objectAtIndex:0];
+    BucketModel *bucket = [[feedModel feed] objectAtIndex:indexValue];
     
     DropModel *drop = [bucket.drops objectAtIndex:0];
     drop.media_img = imgTaken;
+    
     //bucket.isInitalized = NO;
     
     //cell.bottomBar.alpha = 1.0;
@@ -311,6 +347,7 @@ const int EXPAND_SIZE = 400;
     self.onLockScreenToggle();
     [self.tableView beginUpdates];
     [self.tableView endUpdates];
+    
 }
 
 -(void)onImageTaken:(UIImage *)image withText:(NSString *)text{
@@ -320,23 +357,24 @@ const int EXPAND_SIZE = 400;
 -(void)onVideoTaken:(NSData *)video withImage:(UIImage *)image withtext:(NSString *)text{
     [self mediaTaken:image withText:text];
    // [self uploadMedia:video];
-    NSLog(@"File size is : %.2f MB",(float)video.length/1024.0f/1024.0f);
+  //  NSLog(@"File size is : %.2f MB",(float)video.length/1024.0f/1024.0f);
 }
 
 -(void)onMediaPosted:(BucketModel *)bucket{
-    NSLog(@"POSTEDT");
     ActivityTableViewCell *cell = (ActivityTableViewCell  *)[_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
     [cell stopSpinnerAnimation];
-    [feed replaceObjectAtIndex:0 withObject:bucket];
+    NSLog(@"DROPCOUTN %lu",  (unsigned long)[[bucket drops] count]);
+    [[feedModel feed] replaceObjectAtIndex:0 withObject:bucket];
+     [cell update:[[feedModel feed] objectAtIndex:indexValue]];
 }
 
 -(void)onMediaPostedDrop:(DropModel *)drop{
-    NSLog(@"POSTEDT");
-    ActivityTableViewCell *cell = (ActivityTableViewCell  *)[_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+    ActivityTableViewCell *cell = (ActivityTableViewCell  *)[_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:indexValue inSection:0]];
     [cell stopSpinnerAnimation];
-    BucketModel *bucket = [feed objectAtIndex:0];
-    [bucket addDrop:drop];
-    [feed replaceObjectAtIndex:0 withObject:bucket];
+    BucketModel *bucket = [[feedModel feed] objectAtIndex:indexValue];
+    [bucket addDropToFirst:drop];
+    [[feedModel feed] replaceObjectAtIndex:indexValue withObject:bucket];
+     [cell update:[[feedModel feed] objectAtIndex:indexValue]];
 }
 
 -(void)uploadMedia:(NSData *) media{
@@ -391,7 +429,6 @@ const int EXPAND_SIZE = 400;
 
 
 -(void)onCancelTap{
-    NSLog(@"cancelTAP");
     //[cameraView removeFromSuperview];
     cameraHolder.hidden = YES;
     self.onLockScreenToggle();
@@ -400,7 +437,7 @@ const int EXPAND_SIZE = 400;
     cameraMode = NO;
     shouldExpand = NO;
     indexCurrent = nil;
-    [feed removeObjectAtIndex:0];
+    [[feedModel feed] removeObjectAtIndex:0];
     [self.tableView beginUpdates];
     
     [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationTop];

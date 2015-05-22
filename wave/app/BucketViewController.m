@@ -136,7 +136,7 @@ const int PEEK_Y_START = 300;
 
 
 -(void)viewDidAppear:(BOOL)animated{
-    NSLog(@"VIEW APPEARED");
+  
 }
 
 
@@ -147,7 +147,6 @@ const int PEEK_Y_START = 300;
     if ([gestureRecognizer isMemberOfClass:[UISwipeGestureRecognizer class]] ) {
         UISwipeGestureRecognizer *swipe = (UISwipeGestureRecognizer *)gestureRecognizer;
         if(swipe.direction == UISwipeGestureRecognizerDirectionDown){
-                NSLog(@"HERE");
             return YES;
         }
         if([chat isChatVisible] || isPeeking || cameraMode || infoViewMode){
@@ -166,7 +165,6 @@ const int PEEK_Y_START = 300;
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
-    NSLog(@"touches BEGAN");
     UITouch *touch = [touches anyObject];
     if (touch.tapCount == 2) {
         //This will cancel the singleTap action
@@ -189,7 +187,6 @@ const int PEEK_Y_START = 300;
 
 -(void)showChat{
     if(!infoViewMode){
-        NSLog(@"%@", [chat isChatVisible] ? @"YYES" :@"NOE");
         if([chat isChatVisible]){
             [chat hideChat];
            
@@ -211,7 +208,7 @@ const int PEEK_Y_START = 300;
                      animations:^{
                          self.dropsAmount.alpha = 0.9;
                          self.viewsAmount.alpha = 0.9;
-                         self.dropsIcon.alpha = 0.6;
+                         //self.dropsIcon.alpha = 0.6;
                          self.viewsIcon.alpha = 0.6;
                      }
                      completion:nil];
@@ -250,33 +247,29 @@ const int PEEK_Y_START = 300;
     CGPoint bottomOffset = CGPointMake(Scroller.contentSize.width - (Scroller.bounds.size.width*2), 0);
     [Scroller setContentOffset:bottomOffset animated:NO];
    // self.dropsAmount.text = [NSString stringWithFormat:@"%d/%ld", 8, [drops count]];
+    [bucket find:^{
+        if([[bucket drops] count] > 0){
+            DropModel *tempDrop = [[bucket drops] objectAtIndex:[[bucket drops] count]-1];
+            DropModel *tempDrop2 = [[bucket drops] objectAtIndex:0];
+            [self updateDrop:tempDrop2 toView:[drops objectAtIndex:[drops count]-1]];
+            
+            for(int i = 0; i<[[bucket drops] count];i++){
+                DropModel *dropt = [[bucket drops] objectAtIndex:i];
+                [self updateDrop:dropt toView:[drops objectAtIndex:i+1]];
+            }
+            
+            
+            [self updateDrop:tempDrop toView:[drops objectAtIndex:0]];
+            DropView *currentDropView = [drops objectAtIndex:[drops count]-2];
+            [peekViewController updatePeekView:[[currentDropView drop] user]];
+            self.viewsAmount.text = [NSString stringWithFormat:@"%d", [[currentDropView drop] temperature]];
+        }
+    } onError:^(NSError *error){
+       
+        
+    }];
     
-    [bucketController getBucket:[bucket Id]
-                   onCompletion:^(ResponseModel *response){
-                       BucketModel *tempBucket =[[BucketModel alloc] init:[[response data] objectForKey:@"bucket"]];
-                       bucket = tempBucket;
-                      
-                       if([[bucket drops] count] > 0){
-                           DropModel *tempDrop = [[bucket drops] objectAtIndex:[[bucket drops] count]-1];
-                           DropModel *tempDrop2 = [[bucket drops] objectAtIndex:0];
-                           [self updateDrop:tempDrop2 toView:[drops objectAtIndex:[drops count]-1]];
-                           
-                           for(int i = 0; i<[[bucket drops] count];i++){
-                               DropModel *dropt = [[bucket drops] objectAtIndex:i];
-                               [self updateDrop:dropt toView:[drops objectAtIndex:i+1]];
-                           }
-                           
-                           
-                           [self updateDrop:tempDrop toView:[drops objectAtIndex:0]];
-                           
-                       }
-                       
-                   }
-                        onError:^(NSError *error){
-                            
-                            
-                            
-                        }];
+
     [self.view addSubview:Scroller];
     //CGPoint bottomOffset = CGPointMake(Scroller.bounds.size.width, 0);
     //[Scroller setContentOffset:bottomOffset animated:NO];
@@ -324,6 +317,7 @@ const int PEEK_Y_START = 300;
         if([drops count] > currentPage){
             DropView *currentDropView = [drops objectAtIndex:currentPage];
             [peekViewController updatePeekView:[[currentDropView drop] user]];
+            self.viewsAmount.text = [NSString stringWithFormat:@"%d", [[currentDropView drop] temperature]];
         }
 
         if([drops count] > currentPage){
@@ -419,7 +413,6 @@ const int PEEK_Y_START = 300;
 
 -(void)addDropToBucket:(DropModel *)drop
 {
-    NSLog(@"DROPPING: %@", [[drop user] username]);
     PageCount +=1;
     self.topBar.hidden = YES;
     Scroller.contentSize = CGSizeMake(PageCount * Scroller.bounds.size.width, Scroller.bounds.size.height);
@@ -528,7 +521,6 @@ const int PEEK_Y_START = 300;
 -(void)onCameraClose{
     cameraMode = NO;
     infoButton.hidden = NO;
-    NSLog(@"CLOSING");
     [super onCameraClose];
 }
 
@@ -567,7 +559,6 @@ const int PEEK_Y_START = 300;
 }
 
 -(void)onVideoTaken:(NSData *)video withImage:(UIImage *)image withtext:(NSString *)text{
-    NSLog(@"video taken");
     cameraHolder.hidden = YES;
     Scroller.userInteractionEnabled = YES;
     [currentView setMedia:video withIndexId:(int)[drops count]];
@@ -581,7 +572,6 @@ const int PEEK_Y_START = 300;
     [self uploadMedia:video];
 }
 -(void)onImageTaken:(UIImage *)image withText:(NSString *)text{
-    NSLog(@"IMAGE TAKEN");
     cameraHolder.hidden = YES;
     Scroller.userInteractionEnabled = YES;
     
@@ -661,12 +651,10 @@ const int PEEK_Y_START = 300;
 -(void)onCameraOpen{
     [self.camera prepareCamera:YES withReply:YES];
     [DataHelper setCurrentBucketId:bucket.Id];
-    NSLog(@"");
     infoButton.hidden = YES;
     cameraMode = YES;
     chat.view.hidden = YES;
     Scroller.userInteractionEnabled = NO;
-    NSLog(@"SHOWING CAMERA");
     [self removeLastDrop];
     //DropView *plcCamera = ;
     //[plcCamera addSubview:cameraView];

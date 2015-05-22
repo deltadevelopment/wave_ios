@@ -172,7 +172,6 @@
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-    NSLog(@"HEY");
     UITouch *touch = [[event allTouches] anyObject];
     if ([self.replyTextFieldSimple isFirstResponder] && [touch view] != self.replyTextFieldSimple) {
         [self.replyTextFieldSimple resignFirstResponder];

@@ -112,6 +112,8 @@
 		F1D9AB481AF5A048005BFE2C /* EditImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1D9AB471AF5A048005BFE2C /* EditImageViewController.m */; };
 		F1D9AB4A1AF5A3E3005BFE2C /* RGB-colors.png in Resources */ = {isa = PBXBuildFile; fileRef = F1D9AB491AF5A3E3005BFE2C /* RGB-colors.png */; };
 		F1DBB5431B0D38030097F709 /* MediaModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F1DBB5421B0D38030097F709 /* MediaModel.m */; };
+		F1DBB5491B0E3E130097F709 /* FeedModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F1DBB5481B0E3E130097F709 /* FeedModel.m */; };
+		F1DBB54B1B0E4A080097F709 /* manatee.png in Resources */ = {isa = PBXBuildFile; fileRef = F1DBB54A1B0E4A080097F709 /* manatee.png */; };
 		F1E127AA1AFED2E7000E3F2C /* DropView.m in Sources */ = {isa = PBXBuildFile; fileRef = F1E127A91AFED2E7000E3F2C /* DropView.m */; };
 		F1E127AD1AFEDB5D000E3F2C /* DropController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1E127AC1AFEDB5D000E3F2C /* DropController.m */; };
 		F1E127B01AFEE09F000E3F2C /* TagController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1E127AF1AFEE09F000E3F2C /* TagController.m */; };
@@ -309,6 +311,9 @@
 		F1D9AB491AF5A3E3005BFE2C /* RGB-colors.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "RGB-colors.png"; sourceTree = "<group>"; };
 		F1DBB5411B0D38030097F709 /* MediaModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaModel.h; sourceTree = "<group>"; };
 		F1DBB5421B0D38030097F709 /* MediaModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaModel.m; sourceTree = "<group>"; };
+		F1DBB5471B0E3E130097F709 /* FeedModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedModel.h; sourceTree = "<group>"; };
+		F1DBB5481B0E3E130097F709 /* FeedModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedModel.m; sourceTree = "<group>"; };
+		F1DBB54A1B0E4A080097F709 /* manatee.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = manatee.png; sourceTree = "<group>"; };
 		F1E127A81AFED2E7000E3F2C /* DropView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DropView.h; sourceTree = "<group>"; };
 		F1E127A91AFED2E7000E3F2C /* DropView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DropView.m; sourceTree = "<group>"; };
 		F1E127AB1AFEDB5D000E3F2C /* DropController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DropController.h; sourceTree = "<group>"; };
@@ -442,6 +447,8 @@
 				C5FF1E5B1B06223B0081BEDD /* SuperModel.m */,
 				F1DBB5411B0D38030097F709 /* MediaModel.h */,
 				F1DBB5421B0D38030097F709 /* MediaModel.m */,
+				F1DBB5471B0E3E130097F709 /* FeedModel.h */,
+				F1DBB5481B0E3E130097F709 /* FeedModel.m */,
 			);
 			path = models;
 			sourceTree = "<group>";
@@ -449,6 +456,7 @@
 		C5576B271ADBC195009C1D5E /* res */ = {
 			isa = PBXGroup;
 			children = (
+				F1DBB54A1B0E4A080097F709 /* manatee.png */,
 				C5FF1E4F1B04D7D00081BEDD /* reply-icon.png */,
 				C5D473C31B0120F90097E44F /* refresh.png */,
 				F1E127BE1B0023C0000E3F2C /* media-pause.png */,
@@ -817,6 +825,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C5FF1E501B04D7D00081BEDD /* reply-icon.png in Resources */,
+				F1DBB54B1B0E4A080097F709 /* manatee.png in Resources */,
 				F1BD62231AEC7FA300BDE1CA /* cross.png in Resources */,
 				C5D473C41B0120F90097E44F /* refresh.png in Resources */,
 				C5D473781AE69D500097E44F /* the-bar-x-v2.png in Resources */,
@@ -926,6 +935,7 @@
 				C5D473A51AFA0E0E0097E44F /* ChatTableView.m in Sources */,
 				C5A27B821ADD594600968033 /* SlideMenuViewController.m in Sources */,
 				F1BD622D1AEDBC8C00BDE1CA /* PeekViewController.m in Sources */,
+				F1DBB5491B0E3E130097F709 /* FeedModel.m in Sources */,
 				F1BD622A1AED9EDB00BDE1CA /* BucketViewController.m in Sources */,
 				C5576B3B1ADBC195009C1D5E /* CameraViewController.m in Sources */,
 				C5A27BAA1ADE78BF00968033 /* SlideMenuNavigationViewController.m in Sources */,

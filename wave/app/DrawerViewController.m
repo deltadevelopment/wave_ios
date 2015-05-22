@@ -168,7 +168,6 @@
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    NSLog(@"selecting");
     //second
     if(indexPath.section == 0){
         if(indexPath.row == 0){

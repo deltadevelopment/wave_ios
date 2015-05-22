@@ -14,13 +14,11 @@
 onCompletion:(void (^)(UserModel*,ResponseModel*))callback
  onError:(void(^)(NSError *))errorCallback;
 {
-    NSLog(@"Device Id sending: %@", [authHelper getDeviceId]);
     NSDictionary *credentials = [self loginBody:username pass:password];
     NSString *jsonData = [ApplicationHelper generateJsonFromDictionary:credentials];
     [self postHttpRequest:@"login" json:jsonData onCompletion:^(NSURLResponse *response,NSData *data,NSError *error){
 
         NSString *strdata=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
-        NSLog(@"%@",strdata);
         NSMutableDictionary *dic = [ParserHelper parse:data];
         ResponseModel *responseModel = [[ResponseModel alloc] init:dic];
         UserModel *user = [[UserModel alloc] init:[[dic objectForKey:@"data"] objectForKey:@"user"]];
@@ -44,7 +42,6 @@ onCompletion:(void (^)(UserModel*,ResponseModel*))callback
                          }
                  };
     }else{
-        NSLog(@"test");
         body= @{
                 @"user" :@{
                         @"username" : username,

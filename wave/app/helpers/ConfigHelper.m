@@ -15,7 +15,6 @@
     if (self) {
         if([[NSUserDefaults standardUserDefaults] objectForKey:@"currentServer"] != nil) {
             NSString *storedBaseUrl = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentServer"];
-            // NSLog(@"imgPath: %@", theImagePath);
             _baseUrl = storedBaseUrl;
             
         }else{

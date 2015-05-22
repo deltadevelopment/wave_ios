@@ -179,7 +179,6 @@
 }
 
 -(void)addfilter:(float) xPos isLast:(bool)last{
-    NSLog(@"ADDING FILTER");
     UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(xPos, 7.5, 15, 15)];
   
   //  NSLog(@"CENTER %f", label.center.x);

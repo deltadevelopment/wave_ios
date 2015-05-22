@@ -78,7 +78,6 @@
     }else if([media isKindOfClass:[NSData class]]){
     //VIDEO
         self.hasVideo = YES;
-        NSLog(@"SPILLER AV VIDEO");
         NSData *video =(NSData *)media;
         mediaPlayer.view.frame = CGRectMake(0, 0, [UIHelper getScreenWidth], [UIHelper getScreenHeight]);
         [self addSubview:mediaPlayer.view];

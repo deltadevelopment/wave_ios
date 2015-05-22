@@ -41,7 +41,6 @@
     NSURL *movieUrl = [NSURL fileURLWithPath:appFile];
     
     //NSString *dataString = [[NSString alloc] initWithData:[status getMedia] encoding:NSUTF8StringEncoding];
-    NSLog(@"video: %@",@"mdia is downloaded");
     //NSURL *url = [NSURL URLWithString:dataString];
     player = [[MPMoviePlayerController alloc] initWithContentURL:movieUrl];
     player.view.frame = CGRectMake(0, 0, [UIHelper getScreenWidth], [UIHelper getScreenHeight]);
@@ -82,7 +81,6 @@
 }
 
 -(void)startStopVideo:(id)sender{
-    NSLog(@"PLAYIGN NOW");
     if(self.isPlaying){
         [player stop];
     }else{
@@ -123,7 +121,6 @@
      removeObserver:self
      name:MPMoviePlayerPlaybackDidFinishNotification
      object:thePlayer];
-    NSLog(@"DONE PLAYING VIDEO");
     if(![player repeatMode]){
         [self stopVideo];
         

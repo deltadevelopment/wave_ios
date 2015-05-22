@@ -141,9 +141,7 @@
     errorView.hidden = NO;
     self.superButton.hasError = YES;
     if([view superview] == errorView){
-        NSLog(@"SKJEDDE");
-    
-        
+
     }else{
      [errorView addSubview:view];
         [errorView insertSubview:crossButton aboveSubview:view];
@@ -163,7 +161,6 @@
    
 }
 -(void)dismissError{
-    NSLog(@"here");
     self.superButton.hasError = NO;
     [UIView animateWithDuration:0.3f
                           delay:0.0f
@@ -193,7 +190,6 @@
     progressIndicator.frame = CGRectMake(0, 0, percentageOfMax, 4);
     if(progress == 100){
         progressIndicator.hidden = YES;
-        NSLog(@"HIDING PROGRESS");
         [self animateTick];
         
     }
@@ -248,7 +244,6 @@
 }
 
 -(void)showCamera{
-    NSLog(@"Sow");
 }
 
 -(void)onDragX:(NSNumber *) xValue{
@@ -259,7 +254,6 @@
 }
 
 -(void)onCancelTap{
-    NSLog(@"ccanceltap");
     
     [self.camera closeCamera];
 }

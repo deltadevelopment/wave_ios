@@ -24,7 +24,7 @@ AuthHelper *authHelper;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
      authHelper = [[AuthHelper alloc] init];
-  [authHelper resetCredentials];
+  //[authHelper resetCredentials];
     if([authHelper getAuthToken] == nil){
         [self setView:[[StartViewController alloc] init] second:@"startNav"];
     }else{
@@ -35,7 +35,7 @@ AuthHelper *authHelper;
        // [self setView:[[ActivityViewController alloc]init] second:@"activity"];
         
         //[self setView:[[CarouselViewController alloc] init] second:@"carousel"];
-       [self setView:[[SlideMenuViewController alloc] init] second:@"slideMenuView"];
+       //[self setView:[[SlideMenuViewController alloc] init] second:@"slideMenuView"];
        
         
         // [self setView:[[EditImageViewController alloc] init] second:@"editView"];

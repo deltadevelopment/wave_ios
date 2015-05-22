@@ -10,6 +10,7 @@
 #import "BucketModel.h"
 #import "MediaModel.h"
 @interface BucketController : ApplicationController
+/*
 -(void)createNewBucket:(MediaModel *)mediaModel
             withBucket:(BucketModel *) bucket
             onProgress:(void (^)(NSNumber*))progression
@@ -29,4 +30,5 @@
 -(void)getBucket:(int)bucketId
     onCompletion:(void (^)(ResponseModel*))completionCallback
          onError:(void(^)(NSError *))errorCallback;
+ */
 @end
