@@ -12,16 +12,25 @@
 
 @implementation FeedModel{
     AuthHelper *authHelper;
+    NSString *url;
 }
 -(id)init{
     self =[super init];
     authHelper = [[AuthHelper alloc] init];
+    url = @"feed";
+    return self;
+}
+
+-(id)initWithURL:(NSString *) URL{
+    self =[super init];
+    authHelper = [[AuthHelper alloc] init];
+    url = URL;
     return self;
 }
 
 -(void)getFeed:(void (^)(void))completionCallback onError:(void(^)(NSError *))errorCallback{
     self.feed = [[NSMutableArray alloc] init];
-    [self.applicationController getHttpRequest:@"feed"
+    [self.applicationController getHttpRequest:url
                                   onCompletion:^(NSURLResponse *response,NSData *data,NSError *error){
                                       NSMutableDictionary *dic = [ParserHelper parse:data];
                                       ResponseModel *responseModel = [[ResponseModel alloc] init:dic];

@@ -18,6 +18,8 @@
 @property (nonatomic,strong) NSDate * created_at;
 @property (nonatomic,strong) NSDate * updated_at;
 @property (nonatomic,strong) NSString * password_hash;
+@property (nonatomic,strong) NSString * profile_picture_key;
+@property (nonatomic,strong) NSString * password;
 @property (nonatomic,strong) NSString * password_salt;
 @property (nonatomic) BOOL private_profile;
 @property (nonatomic) bool is_followee;
@@ -28,4 +30,8 @@
 -(void)find:(void (^)(void))completionCallback
     onError:(void(^)(NSError *))errorCallback;
 -(id)initWithDeviceUser;
+-(id)initWithDeviceUser:(void (^)(void))completionCallback
+                onError:(void(^)(NSError *))errorCallback;
+-(void)saveChanges:(void (^)(ResponseModel *,UserModel *))completionCallback
+           onError:(void(^)(NSError *))errorCallback;
 @end

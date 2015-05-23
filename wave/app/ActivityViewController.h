@@ -8,8 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "AbstractFeedViewController.h"
+#import "FeedModel.h"
 @interface ActivityViewController : AbstractFeedViewController<UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
+@property (nonatomic, strong) FeedModel *feedModel;
+-(void)initialize;
 
 @end

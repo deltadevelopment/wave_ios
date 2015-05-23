@@ -10,6 +10,8 @@
 static NSData *data;
 static int media_type;
 static int currentBucketId;
+static UIWindow *currentWindow;
+static StartViewController *start;
 @implementation DataHelper
 
 /*
@@ -23,6 +25,19 @@ static int currentBucketId;
 +(void)storeData:(NSData*) recievedData withMediaType:(int) media_ty{
     data = recievedData;
     media_type = media_ty;
+}
+
++(void)setStart:(StartViewController *) startViewController{
+    start = startViewController;
+}
++(StartViewController *) getStartViewController{
+    return start;
+}
++(void)setWindow:(UIWindow *) window{
+    currentWindow = window;
+}
++(UIWindow *)getCurrentWindow{
+    return currentWindow;
 }
 
 +(NSData *)getData{

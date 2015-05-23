@@ -33,4 +33,5 @@
 +(void)applyThinLayoutOnButton:(UIButton *) button;
 +(void)applyUIOnButton:(UIButton *) button;
 +(UIImage *)thumbnailFromVideo:(NSData *) video;
++(CGRect)fullScreenRect;
 @end

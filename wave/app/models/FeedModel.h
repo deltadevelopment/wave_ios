@@ -15,4 +15,5 @@
 
 -(id)init;
 -(void)getFeed:(void (^)(void))completionCallback onError:(void(^)(NSError *))errorCallback;
+-(id)initWithURL:(NSString *) URL;
 @end

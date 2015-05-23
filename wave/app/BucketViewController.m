@@ -282,13 +282,13 @@ const int PEEK_Y_START = 300;
     [drop requestPhoto:^(NSData *media){
         if([drop media_type] == 0){
             //IMAGE
-           // [dropView setImage:[UIImage imageWithData:media]];
+            // [dropView setImage:[UIImage imageWithData:media]];
             [dropView setMedia:[UIImage imageWithData:media] withIndexId:[drop Id]];
             [[dropView spinner] stopAnimating];
             
         }else{
             //VIDEO
-             [dropView setMedia:media withIndexId:[drop Id]];
+            [dropView setMedia:media withIndexId:[drop Id]];
             playButton.hidden = NO;
         }
       

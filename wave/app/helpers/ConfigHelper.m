@@ -13,6 +13,7 @@
 {
     self = [super init];
     if (self) {
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"currentServer"];
         if([[NSUserDefaults standardUserDefaults] objectForKey:@"currentServer"] != nil) {
             NSString *storedBaseUrl = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentServer"];
             _baseUrl = storedBaseUrl;

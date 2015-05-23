@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "BucketModel.h"
+#import "StartViewController.h"
 @interface DataHelper : UIView
 @property (nonatomic, strong) NSData *data;
 
@@ -21,5 +22,10 @@
 +(void)setCurrentBucketId:(int)bucketId;
 +(int)getCurrentBucketId;
 +(int)getMediaType;
++(void)setWindow:(UIWindow *) window;
++(UIWindow *)getCurrentWindow;
+
++(void)setStart:(StartViewController *) startViewController;
++(StartViewController *) getStartViewController;
 
 @end

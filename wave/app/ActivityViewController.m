@@ -24,7 +24,6 @@
 const int EXPAND_SIZE = 400;
 @implementation ActivityViewController{
    // NSMutableArray *feed;
-    FeedModel *feedModel;
     UserModel *userModel;
     bool shouldExpand;
     NSIndexPath *indexCurrent;
@@ -34,16 +33,14 @@ const int EXPAND_SIZE = 400;
     BucketController *bucketController;
     UIView *cameraHolder;
     UIView *errorView;
-    
     int indexValue;
-    
 }
 
 - (void)viewDidLoad {
     NSLog(@"<ActivityViewController STARTED>");
     [super viewDidLoad];
     bucketController = [[BucketController alloc] init];
-    feedModel = [[FeedModel alloc] init];
+    [self initialize];
     userModel = [[UserModel alloc] initWithDeviceUser];
 
     self.tableView.delegate = self;
@@ -60,6 +57,10 @@ const int EXPAND_SIZE = 400;
     [self startRefreshing];
 }
 
+-(void)initialize{
+  self.feedModel = [[FeedModel alloc] init];
+}
+
 -(void)startRefreshing{
     [UIView animateWithDuration:0.25 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^(void){
         self.tableView.contentOffset = CGPointMake(0, -self.refreshControl.frame.size.height);
@@ -73,7 +74,7 @@ const int EXPAND_SIZE = 400;
 
 -(void)refreshFeed{
     __weak typeof(self) weakSelf = self;
-    [feedModel getFeed:^{
+    [self.feedModel getFeed:^{
         [weakSelf stopRefreshing];
     } onError:^(NSError *error){
         //NSLog(@"%@", [error localizedDescription]);
@@ -150,7 +151,7 @@ const int EXPAND_SIZE = 400;
 
 -(void)expandBucketWithId:(int) Id{
    // ActivityTableViewCell *cell = (ActivityTableViewCell *)[_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:Id inSection:0]];
-    BucketModel *bucket = [[feedModel feed] objectAtIndex:Id];
+    BucketModel *bucket = [[self.feedModel feed] objectAtIndex:Id];
     self.onExpand(bucket);
 }
 
@@ -169,7 +170,7 @@ const int EXPAND_SIZE = 400;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return [[feedModel feed] count];
+    return [[self.feedModel feed] count];
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -183,7 +184,7 @@ const int EXPAND_SIZE = 400;
         [cell initialize];
     }
     //Updating cell from changes in bucket
-    [cell update:[[feedModel feed] objectAtIndex:indexPath.row]];
+    [cell update:[[self.feedModel feed] objectAtIndex:indexPath.row]];
     return cell;
 }
 
@@ -268,7 +269,7 @@ const int EXPAND_SIZE = 400;
     [bucket addDrop:drop];
     bucket.title = [userModel usernameFormatted];
     
-    [[feedModel feed] insertObject:bucket atIndex:0];
+    [[self.feedModel feed] insertObject:bucket atIndex:0];
     [CATransaction begin];
     [CATransaction setCompletionBlock:^{
         cameraHolder.hidden = NO;
@@ -300,10 +301,10 @@ const int EXPAND_SIZE = 400;
     imgTaken = image;
     if([text isEqualToString:@""]){
         //personal bucket
-        if([feedModel isYourBucketInFeed]){
-            indexValue = [feedModel personalBucketIndex];
+        if([self.feedModel isYourBucketInFeed]){
+            indexValue = [self.feedModel personalBucketIndex];
         }
-        [[feedModel feed] removeObjectAtIndex:0];
+        [[self.feedModel feed] removeObjectAtIndex:0];
         NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
         
         [CATransaction begin];
@@ -332,7 +333,7 @@ const int EXPAND_SIZE = 400;
     cell.displayNameText.text = [text isEqualToString:@""] ? [userModel usernameFormatted] : text;
     [cell startSpinnerAnimtation];
     //cameraCell.bucketImage.image = imgTaken;
-    BucketModel *bucket = [[feedModel feed] objectAtIndex:indexValue];
+    BucketModel *bucket = [[self.feedModel feed] objectAtIndex:indexValue];
     
     DropModel *drop = [bucket.drops objectAtIndex:0];
     drop.media_img = imgTaken;
@@ -364,17 +365,17 @@ const int EXPAND_SIZE = 400;
     ActivityTableViewCell *cell = (ActivityTableViewCell  *)[_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
     [cell stopSpinnerAnimation];
     NSLog(@"DROPCOUTN %lu",  (unsigned long)[[bucket drops] count]);
-    [[feedModel feed] replaceObjectAtIndex:0 withObject:bucket];
-     [cell update:[[feedModel feed] objectAtIndex:indexValue]];
+    [[self.feedModel feed] replaceObjectAtIndex:0 withObject:bucket];
+     [cell update:[[self.feedModel feed] objectAtIndex:indexValue]];
 }
 
 -(void)onMediaPostedDrop:(DropModel *)drop{
     ActivityTableViewCell *cell = (ActivityTableViewCell  *)[_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:indexValue inSection:0]];
     [cell stopSpinnerAnimation];
-    BucketModel *bucket = [[feedModel feed] objectAtIndex:indexValue];
+    BucketModel *bucket = [[self.feedModel feed] objectAtIndex:indexValue];
     [bucket addDropToFirst:drop];
-    [[feedModel feed] replaceObjectAtIndex:indexValue withObject:bucket];
-     [cell update:[[feedModel feed] objectAtIndex:indexValue]];
+    [[self.feedModel feed] replaceObjectAtIndex:indexValue withObject:bucket];
+     [cell update:[[self.feedModel feed] objectAtIndex:indexValue]];
 }
 
 -(void)uploadMedia:(NSData *) media{
@@ -437,7 +438,7 @@ const int EXPAND_SIZE = 400;
     cameraMode = NO;
     shouldExpand = NO;
     indexCurrent = nil;
-    [[feedModel feed] removeObjectAtIndex:0];
+    [[self.feedModel feed] removeObjectAtIndex:0];
     [self.tableView beginUpdates];
     
     [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationTop];

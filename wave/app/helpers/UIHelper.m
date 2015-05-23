@@ -274,5 +274,8 @@ static CGFloat screenHeight;
     return thumbnail;
 }
 
++(CGRect)fullScreenRect{
+    return CGRectMake(0, 0, [UIHelper getScreenWidth], [UIHelper getScreenHeight]);
+}
 
 @end

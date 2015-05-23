@@ -1,45 +1,34 @@
 //
-//  AbstractFeedViewController.m
+//  ProfileViewController.m
 //  wave
 //
-//  Created by Simen Lie on 17/04/15.
+//  Created by Simen Lie on 22.05.15.
 //  Copyright (c) 2015 ddev. All rights reserved.
 //
 
-#import "AbstractFeedViewController.h"
+#import "ProfileViewController.h"
 
-@interface AbstractFeedViewController ()
+@interface ProfileViewController ()
 
 @end
 
-@implementation AbstractFeedViewController
+@implementation ProfileViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    // self.tableView = [[UITableView alloc] initWithFrame:CGRECtma]
     // Do any additional setup after loading the view.
 }
--(void)onCancelTap{}
--(void)onCameraOpen{}
--(void)onCameraReady{}
--(void)onFocusGained{}
--(void)prepareCamera:(UIView *)view{}
--(void)oncameraClose{}
--(void)onImageTaken:(UIImage *)image withText:(NSString *)text{};
--(void)onVideoTaken:(NSData *)video withImage:(UIImage *)image withtext:(NSString *)text{}
 
--(void)scrollUp{}
+-(void)initialize{
+    self.feedModel = [[FeedModel alloc] initWithURL:@""];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
--(void)increazeProgress:(int)progress
-{
 
-}
-
--(void)onMediaPosted:(BucketModel *)bucket{}
--(void)onMediaPostedDrop:(DropModel *)drop{}
 /*
 #pragma mark - Navigation
 

@@ -9,6 +9,7 @@
 #import "NavigationControlViewController.h"
 #import "ColorHelper.h"
 #import "UIHelper.h"
+#import "SettingsTableViewController.h"
 @interface NavigationControlViewController ()
 
 @end
@@ -47,6 +48,7 @@
 }
 -(void)showNotifications{
     NSLog(@"Notificatiion will appear");
+    [self showSettings:nil];
 
 }
 -(void)addLeftButton{
@@ -62,6 +64,11 @@
     
 
 
+}
+
+-(void)showSettings:(UITapGestureRecognizer *) sender{
+    SettingsTableViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"settings"];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 -(void)addRightButton{

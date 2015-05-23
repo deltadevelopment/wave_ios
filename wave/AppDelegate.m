@@ -14,6 +14,7 @@
 #import "ActivityViewController.h"
 #import "BucketViewController.h"
 #import "ChatViewController.h"
+#import "DataHelper.h"
 #import "EditImageViewController.h"
 @interface AppDelegate ()
 
@@ -23,16 +24,19 @@
 AuthHelper *authHelper;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-     authHelper = [[AuthHelper alloc] init];
-  [authHelper resetCredentials];
+    authHelper = [[AuthHelper alloc] init];
+    //[authHelper resetCredentials];
+    
     if([authHelper getAuthToken] == nil){
-        [self setView:[[StartViewController alloc] init] second:@"startNav"];
+        UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
+        UINavigationController *navigation =[mainStoryboard instantiateViewControllerWithIdentifier:@"startNav"];
+        self.window.rootViewController = navigation;
     }else{
         //[self setView:[[ViewController alloc] init] second:@"mainView"];
-
-       // [self setView:[[BucketViewController alloc] init] second:@"bucketView"];
+        
+        // [self setView:[[BucketViewController alloc] init] second:@"bucketView"];
         //[self setView:[[NavigationScrollViewController alloc] init] second:@"navigationScrollNav"];
-       // [self setView:[[ActivityViewController alloc]init] second:@"activity"];
+        // [self setView:[[ActivityViewController alloc]init] second:@"activity"];
         
         //[self setView:[[CarouselViewController alloc] init] second:@"carousel"];
        //[self setView:[[SlideMenuViewController alloc] init] second:@"slideMenuView"];

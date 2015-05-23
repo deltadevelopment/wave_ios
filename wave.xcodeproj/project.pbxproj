@@ -114,6 +114,15 @@
 		F1DBB5431B0D38030097F709 /* MediaModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F1DBB5421B0D38030097F709 /* MediaModel.m */; };
 		F1DBB5491B0E3E130097F709 /* FeedModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F1DBB5481B0E3E130097F709 /* FeedModel.m */; };
 		F1DBB54B1B0E4A080097F709 /* manatee.png in Resources */ = {isa = PBXBuildFile; fileRef = F1DBB54A1B0E4A080097F709 /* manatee.png */; };
+		F1DBB54F1B0FCC0C0097F709 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1DBB54E1B0FCC0C0097F709 /* ProfileViewController.m */; };
+		F1DBB55F1B0FD46F0097F709 /* ServerTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1DBB5521B0FD46F0097F709 /* ServerTableViewController.m */; };
+		F1DBB5601B0FD46F0097F709 /* SettingsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F1DBB5541B0FD46F0097F709 /* SettingsTableViewCell.m */; };
+		F1DBB5611B0FD46F0097F709 /* SettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1DBB5561B0FD46F0097F709 /* SettingsTableViewController.m */; };
+		F1DBB5621B0FD46F0097F709 /* SuperSettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1DBB5581B0FD46F0097F709 /* SuperSettingsTableViewController.m */; };
+		F1DBB5631B0FD46F0097F709 /* ChangePasswordTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1DBB55A1B0FD46F0097F709 /* ChangePasswordTableViewController.m */; };
+		F1DBB5641B0FD46F0097F709 /* EditProfileTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1DBB55C1B0FD46F0097F709 /* EditProfileTableViewController.m */; };
+		F1DBB5651B0FD46F0097F709 /* ProfilePictureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1DBB55E1B0FD46F0097F709 /* ProfilePictureViewController.m */; };
+		F1DBB5691B0FED430097F709 /* NavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1DBB5671B0FED430097F709 /* NavigationViewController.m */; };
 		F1E127AA1AFED2E7000E3F2C /* DropView.m in Sources */ = {isa = PBXBuildFile; fileRef = F1E127A91AFED2E7000E3F2C /* DropView.m */; };
 		F1E127AD1AFEDB5D000E3F2C /* DropController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1E127AC1AFEDB5D000E3F2C /* DropController.m */; };
 		F1E127B01AFEE09F000E3F2C /* TagController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1E127AF1AFEE09F000E3F2C /* TagController.m */; };
@@ -249,7 +258,6 @@
 		C5D473811AE7992E0097E44F /* people-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "people-icon.png"; sourceTree = "<group>"; };
 		C5D473831AE799610097E44F /* people-icon-white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "people-icon-white.png"; sourceTree = "<group>"; };
 		C5D473851AE79BC80097E44F /* the-bar-y-v2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "the-bar-y-v2.png"; sourceTree = "<group>"; };
-		C5D473871AE79C590097E44F /* InfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = InfoViewController.h; path = views/InfoViewController.h; sourceTree = "<group>"; };
 		C5D473881AE79C590097E44F /* InfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InfoViewController.m; path = views/InfoViewController.m; sourceTree = "<group>"; };
 		C5D4738C1AF2BA8D0097E44F /* wave-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wave-logo.png"; sourceTree = "<group>"; };
 		C5D4738E1AF371E10097E44F /* ripples.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ripples.png; sourceTree = "<group>"; };
@@ -314,6 +322,24 @@
 		F1DBB5471B0E3E130097F709 /* FeedModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedModel.h; sourceTree = "<group>"; };
 		F1DBB5481B0E3E130097F709 /* FeedModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedModel.m; sourceTree = "<group>"; };
 		F1DBB54A1B0E4A080097F709 /* manatee.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = manatee.png; sourceTree = "<group>"; };
+		F1DBB54D1B0FCC0C0097F709 /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
+		F1DBB54E1B0FCC0C0097F709 /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
+		F1DBB5511B0FD46F0097F709 /* ServerTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerTableViewController.h; sourceTree = "<group>"; };
+		F1DBB5521B0FD46F0097F709 /* ServerTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerTableViewController.m; sourceTree = "<group>"; };
+		F1DBB5531B0FD46F0097F709 /* SettingsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsTableViewCell.h; sourceTree = "<group>"; };
+		F1DBB5541B0FD46F0097F709 /* SettingsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsTableViewCell.m; sourceTree = "<group>"; };
+		F1DBB5551B0FD46F0097F709 /* SettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsTableViewController.h; sourceTree = "<group>"; };
+		F1DBB5561B0FD46F0097F709 /* SettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsTableViewController.m; sourceTree = "<group>"; };
+		F1DBB5571B0FD46F0097F709 /* SuperSettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SuperSettingsTableViewController.h; sourceTree = "<group>"; };
+		F1DBB5581B0FD46F0097F709 /* SuperSettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SuperSettingsTableViewController.m; sourceTree = "<group>"; };
+		F1DBB5591B0FD46F0097F709 /* ChangePasswordTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChangePasswordTableViewController.h; sourceTree = "<group>"; };
+		F1DBB55A1B0FD46F0097F709 /* ChangePasswordTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChangePasswordTableViewController.m; sourceTree = "<group>"; };
+		F1DBB55B1B0FD46F0097F709 /* EditProfileTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditProfileTableViewController.h; sourceTree = "<group>"; };
+		F1DBB55C1B0FD46F0097F709 /* EditProfileTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditProfileTableViewController.m; sourceTree = "<group>"; };
+		F1DBB55D1B0FD46F0097F709 /* ProfilePictureViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfilePictureViewController.h; sourceTree = "<group>"; };
+		F1DBB55E1B0FD46F0097F709 /* ProfilePictureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfilePictureViewController.m; sourceTree = "<group>"; };
+		F1DBB5671B0FED430097F709 /* NavigationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NavigationViewController.m; sourceTree = "<group>"; };
+		F1DBB5681B0FED430097F709 /* NavigationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavigationViewController.h; sourceTree = "<group>"; };
 		F1E127A81AFED2E7000E3F2C /* DropView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DropView.h; sourceTree = "<group>"; };
 		F1E127A91AFED2E7000E3F2C /* DropView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DropView.m; sourceTree = "<group>"; };
 		F1E127AB1AFEDB5D000E3F2C /* DropController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DropController.h; sourceTree = "<group>"; };
@@ -502,6 +528,7 @@
 		C5576B281ADBC195009C1D5E /* views */ = {
 			isa = PBXGroup;
 			children = (
+				F1DBB5501B0FD39B0097F709 /* settings */,
 				C5A27B7F1ADD592E00968033 /* SlideMenu */,
 				F1BD62271AED9EBC00BDE1CA /* bucket */,
 				F1E127A31AFE8915000E3F2C /* carousel */,
@@ -650,6 +677,38 @@
 			name = "pictureEdit (temporary)";
 			sourceTree = "<group>";
 		};
+		F1DBB54C1B0FCB7E0097F709 /* profile */ = {
+			isa = PBXGroup;
+			children = (
+				F1DBB54D1B0FCC0C0097F709 /* ProfileViewController.h */,
+				F1DBB54E1B0FCC0C0097F709 /* ProfileViewController.m */,
+			);
+			name = profile;
+			sourceTree = "<group>";
+		};
+		F1DBB5501B0FD39B0097F709 /* settings */ = {
+			isa = PBXGroup;
+			children = (
+				F1DBB5671B0FED430097F709 /* NavigationViewController.m */,
+				F1DBB5681B0FED430097F709 /* NavigationViewController.h */,
+				F1DBB5511B0FD46F0097F709 /* ServerTableViewController.h */,
+				F1DBB5521B0FD46F0097F709 /* ServerTableViewController.m */,
+				F1DBB5531B0FD46F0097F709 /* SettingsTableViewCell.h */,
+				F1DBB5541B0FD46F0097F709 /* SettingsTableViewCell.m */,
+				F1DBB5551B0FD46F0097F709 /* SettingsTableViewController.h */,
+				F1DBB5561B0FD46F0097F709 /* SettingsTableViewController.m */,
+				F1DBB5571B0FD46F0097F709 /* SuperSettingsTableViewController.h */,
+				F1DBB5581B0FD46F0097F709 /* SuperSettingsTableViewController.m */,
+				F1DBB5591B0FD46F0097F709 /* ChangePasswordTableViewController.h */,
+				F1DBB55A1B0FD46F0097F709 /* ChangePasswordTableViewController.m */,
+				F1DBB55B1B0FD46F0097F709 /* EditProfileTableViewController.h */,
+				F1DBB55C1B0FD46F0097F709 /* EditProfileTableViewController.m */,
+				F1DBB55D1B0FD46F0097F709 /* ProfilePictureViewController.h */,
+				F1DBB55E1B0FD46F0097F709 /* ProfilePictureViewController.m */,
+			);
+			name = settings;
+			sourceTree = "<group>";
+		};
 		F1E127A11AFE7FD0000E3F2C /* overlay */ = {
 			isa = PBXGroup;
 			children = (
@@ -674,7 +733,6 @@
 				C5576B591ADBE77E009C1D5E /* Navigationbar.m */,
 				C5D4736F1AE66D820097E44F /* PartialTransparentView.h */,
 				C5D473701AE66D820097E44F /* PartialTransparentView.m */,
-				C5D473871AE79C590097E44F /* InfoViewController.h */,
 				C5D473881AE79C590097E44F /* InfoViewController.m */,
 				F1BD621A1AE460D400BDE1CA /* Carousel.h */,
 				F1BD621B1AE460D400BDE1CA /* Carousel.m */,
@@ -689,6 +747,7 @@
 		F1E127A31AFE8915000E3F2C /* carousel */ = {
 			isa = PBXGroup;
 			children = (
+				F1DBB54C1B0FCB7E0097F709 /* profile */,
 				C5A27B9F1ADE626800968033 /* CarouselViewController.h */,
 				C5A27BA01ADE626800968033 /* CarouselViewController.m */,
 				C5896A6A1AE133FC00EFCE2D /* feed */,
@@ -898,6 +957,7 @@
 				C5576B3A1ADBC195009C1D5E /* AvailabilityViewController.m in Sources */,
 				F1BD62261AEC871F00BDE1CA /* BucketTypeModel.m in Sources */,
 				C5576B4B1ADBDA22009C1D5E /* StartViewController.m in Sources */,
+				F1DBB5601B0FD46F0097F709 /* SettingsTableViewCell.m in Sources */,
 				F1BD62331AF0588000BDE1CA /* ChatTableViewCell.m in Sources */,
 				C5A27B6C1ADD01F200968033 /* ApplicationHelper.m in Sources */,
 				C5A27B661ADD01C100968033 /* ParserHelper.m in Sources */,
@@ -910,6 +970,7 @@
 				C5576B381ADBC195009C1D5E /* ColorHelper.m in Sources */,
 				C5D473891AE79C590097E44F /* InfoViewController.m in Sources */,
 				C5A27B6F1ADD083300968033 /* ConfigHelper.m in Sources */,
+				F1DBB54F1B0FCC0C0097F709 /* ProfileViewController.m in Sources */,
 				F1BD62361AF05C0C00BDE1CA /* ChatMessageLabel.m in Sources */,
 				C5D4736C1AE63F610097E44F /* FilterViewController.m in Sources */,
 				C5576B541ADBE2C1009C1D5E /* RegisterViewController.m in Sources */,
@@ -917,9 +978,12 @@
 				C5A27B851ADD5AC700968033 /* DrawerViewController.m in Sources */,
 				C5896A771AE15F3700EFCE2D /* AbstractFeedViewController.m in Sources */,
 				F1BD621F1AE46EFC00BDE1CA /* ActivityTableViewCell.m in Sources */,
+				F1DBB5691B0FED430097F709 /* NavigationViewController.m in Sources */,
 				C5576B3E1ADBC195009C1D5E /* SuperViewController.m in Sources */,
 				C5D473981AF920080097E44F /* ConstraintHelper.m in Sources */,
 				C5A27B881ADD5ADF00968033 /* MainViewController.m in Sources */,
+				F1DBB5641B0FD46F0097F709 /* EditProfileTableViewController.m in Sources */,
+				F1DBB5621B0FD46F0097F709 /* SuperSettingsTableViewController.m in Sources */,
 				C5576B3D1ADBC195009C1D5E /* OverlayViewController.m in Sources */,
 				C5D473A81AFA4A800097E44F /* BucketController.m in Sources */,
 				F1DBB5431B0D38030097F709 /* MediaModel.m in Sources */,
@@ -939,20 +1003,24 @@
 				F1BD622A1AED9EDB00BDE1CA /* BucketViewController.m in Sources */,
 				C5576B3B1ADBC195009C1D5E /* CameraViewController.m in Sources */,
 				C5A27BAA1ADE78BF00968033 /* SlideMenuNavigationViewController.m in Sources */,
+				F1DBB5631B0FD46F0097F709 /* ChangePasswordTableViewController.m in Sources */,
 				C5D473AE1AFA5BB30097E44F /* MediaController.m in Sources */,
 				C5FF1E551B04F1510081BEDD /* InfoView.m in Sources */,
+				F1DBB55F1B0FD46F0097F709 /* ServerTableViewController.m in Sources */,
 				C5A27B8B1ADD6DD500968033 /* NavigationControlViewController.m in Sources */,
 				F1E127B81AFFD191000E3F2C /* ProgressView.m in Sources */,
 				C5A27B5A1ADD002A00968033 /* ApplicationController.m in Sources */,
 				C5576B4E1ADBDB14009C1D5E /* NavigationController.m in Sources */,
 				C5576B571ADBE31A009C1D5E /* SuperLoginViewController.m in Sources */,
 				C5D473921AF3B5310097E44F /* PinnedViewController.m in Sources */,
+				F1DBB5651B0FD46F0097F709 /* ProfilePictureViewController.m in Sources */,
 				C5A27B541ADC060000968033 /* TextFieldWrapper.m in Sources */,
 				C5A27BA11ADE626800968033 /* CarouselViewController.m in Sources */,
 				C5D473C21B010A440097E44F /* DataHelper.m in Sources */,
 				F1BD62301AF057D100BDE1CA /* ChatViewController.m in Sources */,
 				C5A27B781ADD128100968033 /* UserModel.m in Sources */,
 				C55FE90A1AD81F45007663FB /* SuperButton.m in Sources */,
+				F1DBB5611B0FD46F0097F709 /* SettingsTableViewController.m in Sources */,
 				C5D473711AE66D820097E44F /* PartialTransparentView.m in Sources */,
 				C5A27B631ADD01AE00968033 /* AuthHelper.m in Sources */,
 				C5A27B7B1ADD1DEB00968033 /* LoginViewController.m in Sources */,
