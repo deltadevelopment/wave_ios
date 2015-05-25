@@ -17,10 +17,12 @@
 @property (weak, nonatomic) IBOutlet UIImageView *profilePictureIcon;
 @property (nonatomic) bool isInitialized;
 @property (weak, nonatomic) IBOutlet UILabel *usernameText;
--(void)initialize;
+-(void)initializeWithMode:(int) mode withSuperController:(UIViewController *) controller;
 -(void)update:(NSString *)name;
 -(void)updateDropImage:(UIImage *) image;
 -(void)startSpinnerAnimtation;
 -(void)stopSpinnerAnimation;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bucketNameConstraintLeft;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bucketConstraint;
 
 @end

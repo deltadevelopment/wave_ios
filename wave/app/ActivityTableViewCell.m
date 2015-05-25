@@ -13,6 +13,8 @@
 @implementation ActivityTableViewCell{
     UIView *shadowView;
     UIActivityIndicatorView *spinner;
+    int viewMode;
+    UIViewController *superController;
 }
 
 - (void)awakeFromNib {
@@ -25,15 +27,26 @@
     // Configure the view for the selected state
 }
 
--(void)initialize{
+-(void)initializeWithMode:(int) mode withSuperController:(UIViewController *) controller{
     self.isInitialized = YES;
-    
+    superController = controller;
+    viewMode = mode;
     spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
     float center = ([UIHelper getScreenHeight] - 64)/2;
     spinner.center = CGPointMake([UIHelper getScreenWidth]/2-10, center/2-10);
     
     spinner.hidesWhenStopped = YES;
     spinner.hidden = YES;
+    
+    if(mode == 1){
+        UIButton *settings = [UIButton buttonWithType:UIButtonTypeCustom];
+        settings.frame = CGRectMake([UIHelper getScreenWidth] - 30, 20, 20, 20);
+        [settings addTarget:self action:@selector(showActions) forControlEvents:UIControlEventTouchUpInside];
+        [settings setImage:[UIImage imageNamed:@"dots-icon"] forState:UIControlStateNormal];
+        [self addSubview:settings];
+    }
+ 
+    
     
     self.bucketImage.contentMode = UIViewContentModeScaleAspectFill;
     self.bucketImage.clipsToBounds = YES;
@@ -62,6 +75,45 @@
     [self addSubview:spinner];
 }
 
+-(void)showActions{
+    UIAlertController * view=   [UIAlertController
+                                 alertControllerWithTitle:nil
+                                 message:nil
+                                 preferredStyle:UIAlertControllerStyleActionSheet];
+    UIAlertAction* delete = [UIAlertAction
+                         actionWithTitle:@"Delete bucket"
+                         style:UIAlertActionStyleDestructive
+                         handler:^(UIAlertAction * action)
+                         {
+                             //Do some thing here
+                             [view dismissViewControllerAnimated:YES completion:nil];
+                             
+                         }];
+    UIAlertAction* tag = [UIAlertAction
+                         actionWithTitle:@"Tag people"
+                         style:UIAlertActionStyleDefault
+                         handler:^(UIAlertAction * action)
+                         {
+                             //Do some thing here
+                             [view dismissViewControllerAnimated:YES completion:nil];
+                             
+                         }];
+    UIAlertAction* cancel = [UIAlertAction
+                             actionWithTitle:@"Cancel"
+                             style:UIAlertActionStyleCancel
+                             handler:^(UIAlertAction * action)
+                             {
+                                 [view dismissViewControllerAnimated:YES completion:nil];
+                                 
+                             }];
+    
+    [view addAction:tag];
+    [view addAction:delete];
+    
+    [view addAction:cancel];
+    [superController presentViewController:view animated:YES completion:nil];
+}
+
 -(void)startSpinnerAnimtation{
     [spinner startAnimating];
 }
@@ -88,7 +140,13 @@
         
     }
     if([bucket.bucket_type isEqualToString:@"user"]){
-        self.displayNameText.text = [NSString stringWithFormat:@"@%@", [[bucket user] username]];
+        if(viewMode == 1){
+            self.displayNameText.text = @"My drops";
+            self.profilePictureIcon.hidden = YES;
+        }else{
+            self.displayNameText.text = [NSString stringWithFormat:@"@%@", [[bucket user] username]];
+            self.profilePictureIcon.hidden = NO;
+        }
         self.usernameText.hidden = YES;
     }else{
         self.displayNameText.text = bucket.title;

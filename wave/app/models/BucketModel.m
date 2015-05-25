@@ -67,7 +67,10 @@
 }
 
 -(DropModel *)getLastDrop{
+    if([self.drops count] > 0){
     return [self.drops objectAtIndex:[self.drops count] -1];
+    }
+    return nil;
 }
 
 -(NSDictionary *)asDictionary{

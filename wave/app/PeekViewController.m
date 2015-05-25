@@ -33,6 +33,7 @@ AuthHelper *authHelper;
     self.availability.clipsToBounds = YES;
     self.availability.hidden = YES;
     self.subscribeButton.alpha = 0.0;
+    self.view.userInteractionEnabled = YES;
     [UIHelper applyThinLayoutOnLabel:self.displayName withSize:24.0];
     [UIHelper applyThinLayoutOnLabel:self.location withSize:17.0];
     
@@ -58,6 +59,8 @@ AuthHelper *authHelper;
     */
 }
 
+
+
 -(void)subscribeAction{
     NSLog(@"subscriving");
     
@@ -81,6 +84,10 @@ AuthHelper *authHelper;
     self.user = user;
     self.location.text = [NSString stringWithFormat:@"%d", [user subscribers_count]];
     self.displayName.text = [user display_name] != nil ? [user display_name] : [user username];
+}
+
+-(void)showAllDetails{
+    self.subscribeButton.alpha = 1.0;
 }
 
 /*

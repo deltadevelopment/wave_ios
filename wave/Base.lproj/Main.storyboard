@@ -1479,7 +1479,9 @@
                                         <connections>
                                             <outlet property="availabilityIcon" destination="xNv-EX-VSc" id="ZDG-eQ-VyP"/>
                                             <outlet property="bottomBar" destination="QNj-Lz-gx6" id="REN-cL-4gH"/>
+                                            <outlet property="bucketConstraint" destination="UPV-9n-nYA" id="rPC-jn-SjM"/>
                                             <outlet property="bucketImage" destination="OUG-26-TiW" id="Y1A-w4-iQL"/>
+                                            <outlet property="bucketNameConstraintLeft" destination="UPV-9n-nYA" id="yMv-3U-Bsd"/>
                                             <outlet property="displayNameText" destination="iYY-4V-hmL" id="4pg-Qd-641"/>
                                             <outlet property="profilePictureIcon" destination="XRJ-zZ-nYs" id="bGL-Dz-hhc"/>
                                             <outlet property="topBar" destination="AEy-iX-yTb" id="cPV-AI-nJO"/>

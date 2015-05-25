@@ -40,6 +40,7 @@
 
 -(void)onMediaPosted:(BucketModel *)bucket{}
 -(void)onMediaPostedDrop:(DropModel *)drop{}
+-(void)setViewMode:(int)mode{}
 /*
 #pragma mark - Navigation
 

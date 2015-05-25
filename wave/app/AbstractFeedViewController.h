@@ -28,4 +28,5 @@
 -(void)increazeProgress:(int)progress;
 -(void)onMediaPosted:(BucketModel *)bucket;
 -(void)onMediaPostedDrop:(DropModel *)drop;
+-(void)setViewMode:(int)mode;
 @end

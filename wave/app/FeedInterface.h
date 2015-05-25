@@ -22,4 +22,5 @@
 -(void)onFocusGained;
 -(void)onCancelTap;
 -(void)increazeProgress:(int)progress;
+-(void)setViewMode:(int)mode;
 @end

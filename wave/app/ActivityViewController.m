@@ -18,6 +18,8 @@
 #import "GraphicsHelper.h"
 #import "FeedModel.h"
 #import "UserModel.h"
+#import "PeekViewController.h"
+#import "PeekViewModule.h"
 @interface ActivityViewController ()
 
 @end
@@ -25,6 +27,7 @@ const int EXPAND_SIZE = 400;
 @implementation ActivityViewController{
    // NSMutableArray *feed;
     UserModel *userModel;
+    AuthHelper *authHelper;
     bool shouldExpand;
     NSIndexPath *indexCurrent;
     UIView *cameraView;
@@ -34,6 +37,10 @@ const int EXPAND_SIZE = 400;
     UIView *cameraHolder;
     UIView *errorView;
     int indexValue;
+    int viewMode;
+    UIStoryboard *storyboard;
+    PeekViewController *peekViewController;
+    PeekViewModule *peekViewModule;
 }
 
 - (void)viewDidLoad {
@@ -42,7 +49,7 @@ const int EXPAND_SIZE = 400;
     bucketController = [[BucketController alloc] init];
     [self initialize];
     userModel = [[UserModel alloc] initWithDeviceUser];
-
+  storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
@@ -55,10 +62,33 @@ const int EXPAND_SIZE = 400;
     [self.refreshControl addTarget:self action:@selector(refreshFeed) forControlEvents:UIControlEventValueChanged];
     [self.tableView addSubview:self.refreshControl];
     [self startRefreshing];
+    
+    self.tableView.backgroundColor = [ColorHelper blueColor];
+}
+
+-(void)setViewMode:(int)mode{
+    viewMode = mode;
 }
 
 -(void)initialize{
-  self.feedModel = [[FeedModel alloc] init];
+    
+    if(viewMode == 0){
+        self.feedModel = [[FeedModel alloc] init];
+    }else{
+        authHelper = [[AuthHelper alloc] init];
+        NSString *url = [NSString stringWithFormat:@"user/%@/buckets", [authHelper getUserId]];
+        self.feedModel = [[FeedModel alloc] initWithURL:url];
+    }
+}
+
+
+-(void)addPeekView{
+    peekViewModule = [[PeekViewModule alloc] initWithView:self.view withSubview:cameraHolder withController:self.navigationController];
+    [peekViewModule updateText:userModel];
+}
+
+-(void)subscribeAction{
+    NSLog(@"here");
 }
 
 -(void)startRefreshing{
@@ -70,6 +100,26 @@ const int EXPAND_SIZE = 400;
     }];
      [self.refreshControl beginRefreshing];
     [self refreshFeed];
+}
+
+-(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
+    if(viewMode == 1){
+    [peekViewModule fadeOut];
+    }
+}
+
+-(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
+    if(viewMode == 1){
+        [peekViewModule fadeIn];
+    }
+}
+
+-(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
+    if(!decelerate){
+        if(viewMode == 1){
+            [peekViewModule fadeIn];
+        }
+    }
 }
 
 -(void)refreshFeed{
@@ -101,6 +151,10 @@ const int EXPAND_SIZE = 400;
     [self.view addSubview:cameraHolder];
     cameraHolder.hidden = YES;
     [self.view insertSubview:self.tableView belowSubview:cameraHolder];
+    if(viewMode == 1){
+        [self addPeekView];
+    }
+
 }
 
 - (void)didReceiveMemoryWarning {
@@ -181,7 +235,7 @@ const int EXPAND_SIZE = 400;
     }
     if(!cell.isInitialized){
         //Applying GUI to cell first time
-        [cell initialize];
+        [cell initializeWithMode:viewMode withSuperController:self];
     }
     //Updating cell from changes in bucket
     [cell update:[[self.feedModel feed] objectAtIndex:indexPath.row]];

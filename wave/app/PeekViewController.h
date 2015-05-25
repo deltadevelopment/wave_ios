@@ -17,5 +17,5 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *subscribeVerticalconstraint;
 @property (strong, nonatomic) UserModel *user;
 -(void)updatePeekView:(UserModel *) user;
-
+-(void)showAllDetails;
 @end

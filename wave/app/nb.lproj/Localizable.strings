@@ -30,5 +30,6 @@
 "activity_title" = "Aktivitet";
 "discover_title" = "Utforsk";
 "pinned_title" = "Pinned";
+"profile_title" = "Profil";
 "not_authorized" = "Du er ikke autorisert til å aksessere denne ressursen";
 "by_txt" = "av";

@@ -123,6 +123,9 @@
 		F1DBB5641B0FD46F0097F709 /* EditProfileTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1DBB55C1B0FD46F0097F709 /* EditProfileTableViewController.m */; };
 		F1DBB5651B0FD46F0097F709 /* ProfilePictureViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1DBB55E1B0FD46F0097F709 /* ProfilePictureViewController.m */; };
 		F1DBB5691B0FED430097F709 /* NavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1DBB5671B0FED430097F709 /* NavigationViewController.m */; };
+		F1DBB56C1B12ABBF0097F709 /* PeekViewModule.m in Sources */ = {isa = PBXBuildFile; fileRef = F1DBB56B1B12ABBF0097F709 /* PeekViewModule.m */; };
+		F1DBB56E1B12B6930097F709 /* dots-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = F1DBB56D1B12B6930097F709 /* dots-icon.png */; };
+		F1DBB5701B12BAC50097F709 /* settings-icon-white.png in Resources */ = {isa = PBXBuildFile; fileRef = F1DBB56F1B12BAC50097F709 /* settings-icon-white.png */; };
 		F1E127AA1AFED2E7000E3F2C /* DropView.m in Sources */ = {isa = PBXBuildFile; fileRef = F1E127A91AFED2E7000E3F2C /* DropView.m */; };
 		F1E127AD1AFEDB5D000E3F2C /* DropController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1E127AC1AFEDB5D000E3F2C /* DropController.m */; };
 		F1E127B01AFEE09F000E3F2C /* TagController.m in Sources */ = {isa = PBXBuildFile; fileRef = F1E127AF1AFEE09F000E3F2C /* TagController.m */; };
@@ -340,6 +343,10 @@
 		F1DBB55E1B0FD46F0097F709 /* ProfilePictureViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfilePictureViewController.m; sourceTree = "<group>"; };
 		F1DBB5671B0FED430097F709 /* NavigationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NavigationViewController.m; sourceTree = "<group>"; };
 		F1DBB5681B0FED430097F709 /* NavigationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NavigationViewController.h; sourceTree = "<group>"; };
+		F1DBB56A1B12ABBF0097F709 /* PeekViewModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PeekViewModule.h; sourceTree = "<group>"; };
+		F1DBB56B1B12ABBF0097F709 /* PeekViewModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PeekViewModule.m; sourceTree = "<group>"; };
+		F1DBB56D1B12B6930097F709 /* dots-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dots-icon.png"; sourceTree = "<group>"; };
+		F1DBB56F1B12BAC50097F709 /* settings-icon-white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "settings-icon-white.png"; path = "../../../../../../Downloads/settings-icon-white.png"; sourceTree = "<group>"; };
 		F1E127A81AFED2E7000E3F2C /* DropView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DropView.h; sourceTree = "<group>"; };
 		F1E127A91AFED2E7000E3F2C /* DropView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DropView.m; sourceTree = "<group>"; };
 		F1E127AB1AFEDB5D000E3F2C /* DropController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DropController.h; sourceTree = "<group>"; };
@@ -482,6 +489,7 @@
 		C5576B271ADBC195009C1D5E /* res */ = {
 			isa = PBXGroup;
 			children = (
+				F1DBB56D1B12B6930097F709 /* dots-icon.png */,
 				F1DBB54A1B0E4A080097F709 /* manatee.png */,
 				C5FF1E4F1B04D7D00081BEDD /* reply-icon.png */,
 				C5D473C31B0120F90097E44F /* refresh.png */,
@@ -505,6 +513,7 @@
 				F1BD62221AEC7FA300BDE1CA /* cross.png */,
 				C5D4738C1AF2BA8D0097E44F /* wave-logo.png */,
 				F1E127B91B00141E000E3F2C /* play.png */,
+				F1DBB56F1B12BAC50097F709 /* settings-icon-white.png */,
 				C5A27BA21ADE779500968033 /* events-icon.png */,
 				C5D473651AE56B540097E44F /* settings-icon.png */,
 				C5D4737F1AE795890097E44F /* bucket-white.png */,
@@ -740,6 +749,8 @@
 				F1E127B71AFFD191000E3F2C /* ProgressView.m */,
 				C5FF1E531B04F1510081BEDD /* InfoView.h */,
 				C5FF1E541B04F1510081BEDD /* InfoView.m */,
+				F1DBB56A1B12ABBF0097F709 /* PeekViewModule.h */,
+				F1DBB56B1B12ABBF0097F709 /* PeekViewModule.m */,
 			);
 			name = modules;
 			sourceTree = "<group>";
@@ -887,6 +898,7 @@
 				F1DBB54B1B0E4A080097F709 /* manatee.png in Resources */,
 				F1BD62231AEC7FA300BDE1CA /* cross.png in Resources */,
 				C5D473C41B0120F90097E44F /* refresh.png in Resources */,
+				F1DBB56E1B12B6930097F709 /* dots-icon.png in Resources */,
 				C5D473781AE69D500097E44F /* the-bar-x-v2.png in Resources */,
 				C5FF1E591B05EB870081BEDD /* search-icon-white.png in Resources */,
 				F1E127BF1B0023C0000E3F2C /* media-pause.png in Resources */,
@@ -915,6 +927,7 @@
 				C57AD0B21AD7EDB800B6042A /* Images.xcassets in Resources */,
 				C5D473841AE799610097E44F /* people-icon-white.png in Resources */,
 				C5FF1E521B04EECB0081BEDD /* arrow-down-icon.png in Resources */,
+				F1DBB5701B12BAC50097F709 /* settings-icon-white.png in Resources */,
 				C5D4736E1AE640260097E44F /* bucket.png in Resources */,
 				C5D473B21AFBB7600097E44F /* triangle.png in Resources */,
 				C5A27B511ADC014E00968033 /* cross-white.png in Resources */,
@@ -984,6 +997,7 @@
 				C5A27B881ADD5ADF00968033 /* MainViewController.m in Sources */,
 				F1DBB5641B0FD46F0097F709 /* EditProfileTableViewController.m in Sources */,
 				F1DBB5621B0FD46F0097F709 /* SuperSettingsTableViewController.m in Sources */,
+				F1DBB56C1B12ABBF0097F709 /* PeekViewModule.m in Sources */,
 				C5576B3D1ADBC195009C1D5E /* OverlayViewController.m in Sources */,
 				C5D473A81AFA4A800097E44F /* BucketController.m in Sources */,
 				F1DBB5431B0D38030097F709 /* MediaModel.m in Sources */,

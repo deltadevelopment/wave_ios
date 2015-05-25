@@ -43,9 +43,9 @@
 
     carousel = [[Carousel alloc]initWithPages:3];
     
-    [self addView:@"activity" withTitle:NSLocalizedString(@"activity_title", nil)];
-    [self addView:@"pinnedView" withTitle:NSLocalizedString(@"discover_title", nil)];
-    [self addView:@"pinnedView" withTitle:NSLocalizedString(@"pinned_title", nil)];
+    [self addView:@"activity" withTitle:NSLocalizedString(@"activity_title", nil) withMode:0];
+    [self addView:@"pinnedView" withTitle:NSLocalizedString(@"discover_title", nil) withMode:-1];
+    [self addView:@"activity" withTitle:NSLocalizedString(@"profile_title", nil) withMode:1];
     self.navigationItem.titleView = [carousel getNavBar];
     
     currentController = [controllers objectAtIndex:0];
@@ -88,13 +88,14 @@
     }
 }
 
--(void)addView:(NSString *) name withTitle:(NSString *) title
+-(void)addView:(NSString *) name withTitle:(NSString *) title withMode:(int)mode
 {
     [carousel addNavigationTitle:title withPageCount:PageCount];
     PageCount +=1;
     Scroller.contentSize = CGSizeMake(PageCount * Scroller.bounds.size.width, Scroller.bounds.size.height);
     
     AbstractFeedViewController *mainViewController = (AbstractFeedViewController *)[storyboard instantiateViewControllerWithIdentifier:name];
+    [mainViewController setViewMode:mode];
     __weak typeof(self) weakSelf = self;
     mainViewController.onExpand=^(BucketModel*(bucket)){
         [weakSelf changeToBucket:bucket];

@@ -7,12 +7,14 @@
 //
 
 #import "ProfileViewController.h"
-
+#import "AuthHelper.h"
 @interface ProfileViewController ()
 
 @end
 
-@implementation ProfileViewController
+@implementation ProfileViewController{
+    AuthHelper *authHelper;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -21,7 +23,10 @@
 }
 
 -(void)initialize{
-    self.feedModel = [[FeedModel alloc] initWithURL:@""];
+   // http://w4ve.herokuapp.com/user/2/buckets
+    authHelper = [[AuthHelper alloc] init];
+    NSString *url = [NSString stringWithFormat:@"user/%@/buckets", [authHelper getUserId]];
+    self.feedModel = [[FeedModel alloc] initWithURL:url];
 }
 
 - (void)didReceiveMemoryWarning {
