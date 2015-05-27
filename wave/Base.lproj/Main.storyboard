@@ -2416,7 +2416,24 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RAi-CG-SaX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5163" y="1593"/>
+            <point key="canvasLocation" x="5098.5" y="1556.25"/>
+        </scene>
+        <!--Test Box View Controller-->
+        <scene sceneID="Txx-FG-8Fn">
+            <objects>
+                <viewController storyboardIdentifier="testBox" id="FfU-Th-SOo" customClass="TestBoxViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="oFa-2x-lCx"/>
+                        <viewControllerLayoutGuide type="bottom" id="x1E-Cu-pOT"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="txc-IL-kbS">
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5Vn-mn-KXx" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5728.5" y="1551"/>
         </scene>
         <!--Slide Menu View Controller-->
         <scene sceneID="UKq-po-EX5">

@@ -38,11 +38,11 @@
     textField.delegate = self;
     [textField addGestureRecognizer:pinchGestureRecognizer];
     UIRotationGestureRecognizer *rotationRecognizer = [[UIRotationGestureRecognizer alloc] initWithTarget:self action:@selector(rotate:)];
-   [rotationRecognizer setDelegate:self];
-   // [textField addGestureRecognizer:rotationRecognizer];
+    [rotationRecognizer setDelegate:self];
+    // [textField addGestureRecognizer:rotationRecognizer];
     textField.text = @"Simen";
     textField.adjustsFontSizeToFitWidth = YES;
-
+    
     textField.backgroundColor = [UIColor redColor];
     [self.view addSubview:textField];
     
@@ -119,6 +119,8 @@
         self.colorTracker.backgroundColor = color;
     return color;
 }
+
+
 
 - (void)pinchGesture:(UIPinchGestureRecognizer *)gestureRecognizer
 {

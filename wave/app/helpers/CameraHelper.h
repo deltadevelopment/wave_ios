@@ -56,6 +56,7 @@
 @property (nonatomic, strong) AVCaptureDevice *audioCaptureDevice;
 @property (nonatomic, strong) AVCaptureDeviceInput *audioInput;
 @property (retain) AVCaptureStillImageOutput *stillImageOutput;
+@property(nonatomic, strong) AVAsset *videoAsset;
 
 -(void)stopCameraSession;
 //-(void) capImage:(NSObject *) object withSuccess:(SEL) success;
@@ -69,7 +70,10 @@
 -(void)addImageOutput;
 -(NSData*)getlastRecordedVideoCompressed;
 -(void)saveImageToDisk;
+-(void)saveImageToDisk:(UIImage *) image;
 -(void)initRecording;
 -(bool)sessionIsRunning;
 -(void)saveVideoToDisk;
+- (void)addAnimation;
+-(void)startD:(UIView *) view;
 @end

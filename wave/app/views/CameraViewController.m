@@ -18,6 +18,7 @@
 #import "DataHelper.h"
 #import "DropController.h"
 #import "MediaModel.h"
+#import "CaptionTextField.h"
 
 @interface CameraViewController ()
 
@@ -35,6 +36,8 @@
     UIImage *imgTaken;
     UIButton *cancelButton;
     UIButton *typeButton;
+    UIButton *captionButton;
+    
     int currentTypeIndex;
      NSMutableArray *bucketTypes;
     UILabel *toolTip;
@@ -54,7 +57,10 @@
     bool cameraIsInitialized;
     NSData *recordedVideo;
     NSData *recordedVideoCompressed;
-    
+    CaptionTextField *captionElement;
+    UIView *captionsView;
+    bool hasCaption;
+    NSMutableArray *captions;
 }
 
 @synthesize cameraHelper;
@@ -70,6 +76,7 @@
     bucketController = [[BucketController alloc] init];
     dropController = [[DropController alloc] init];
     bucketTypes = [[NSMutableArray alloc]init];
+    captions = [[NSMutableArray alloc] init];
     selfieButton = [UIButton buttonWithType:UIButtonTypeCustom];
     // [selfieButton setTitle:@"Selfie" forState:UIControlStateNormal];
     [selfieButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"profile-icon.png"] withSize:150] forState:UIControlStateNormal];
@@ -95,11 +102,21 @@
     cancelButton = [UIButton buttonWithType:UIButtonTypeCustom];
     typeButton = [UIButton buttonWithType:UIButtonTypeCustom];
     toolTip = [[UILabel alloc]init];
-    
+    captionButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [self initBucketTypes];
     [self initProgressView];
     [self initTextField];
     // [self initUI];
+   
+    //[self initCaptionsView];
+}
+
+-(void)initCaptionsView{
+    if(captionsView != nil){
+        [captionsView removeFromSuperview];
+    }
+    captionsView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [UIHelper getScreenWidth], [UIHelper getScreenHeight])];
+    captionsView.backgroundColor = [UIColor clearColor];
 }
 
 -(void)viewDidAppear:(BOOL)animated{
@@ -191,6 +208,7 @@
 -(void)initUI{
     [self initCancelButton];
     [self initTypeButton];
+    [self initCaptionButton];
     [self initToolTip];
     recordingProgressView = [[UIView alloc] initWithFrame:CGRectMake(([UIHelper getScreenWidth]/2) -40, [UIHelper getScreenHeight] - 85, 80, 80)];
     recordingProgressView.backgroundColor = [UIColor clearColor];
@@ -209,6 +227,24 @@
     cancelButton.alpha = 1.0;
     
 }
+
+-(void)initCaptionButton{
+    [UIHelper applyUIOnButton:captionButton];
+    [captionButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"plus-simple.png"] withSize:150] forState:UIControlStateNormal];
+    [captionButton addTarget:self action:@selector(tapCaptionButton) forControlEvents:UIControlEventTouchUpInside];
+    [self addConstraintsToButton:self.view withButton:captionButton withPoint:CGPointMake(-4, -64) fromLeft:YES fromTop:YES];
+    captionButton.hidden = YES;
+    captionButton.alpha = 0.0;
+}
+
+-(void)tapCaptionButton{
+    CaptionTextField *element = [[CaptionTextField alloc] init];
+    [imageView addSubview:element];
+    [captions addObject:element];
+    captionElement = element;
+    hasCaption = YES;
+}
+
 -(void)initTypeButton{
     [UIHelper applyUIOnButton:typeButton];
     typeButton.backgroundColor = [[UIColor blackColor]colorWithAlphaComponent:0.4];
@@ -283,6 +319,10 @@
     }
     else if (intMode == 2){
         [self startCamera];
+        for(CaptionTextField *cap in captions){
+            [cap removeFromSuperview];
+        }
+       // [self initCaptionsView];
         if(mediaIsVideo){
             [mediaPlayer stopVideo];
             mediaPlayer.view.hidden = YES;
@@ -332,8 +372,11 @@
         cameraIsInitialized = YES;
         [self addShadow];
         [self.view addSubview:selfieButton];
+      
         [self.view addSubview:saveMediaButton];
+          [self.view addSubview:captionButton];
         [self.view addSubview:typeButton];
+        
         [self.view addSubview:toolTip];
         [self.view addSubview:loadVideoProgressView];
         [self.view addSubview:saveMediaProgressView];
@@ -360,6 +403,7 @@
 -(void)startCamera{
     [cameraHelper startPreviewLayer];
     saveMediaButton.hidden = YES;
+    captionButton.hidden = YES;
     [self showButton:typeButton];
     [self showLabel:toolTip];
     if(currentTypeIndex == 1){
@@ -410,7 +454,13 @@
     else{
         self.onImageTaken(imgTaken, titleTextField.text);
         CGSize size = CGSizeMake([UIHelper getScreenWidth], [UIHelper getScreenHeight]);
-        [self uploadMedia:UIImagePNGRepresentation([GraphicsHelper imageByScalingAndCroppingForSize:size img:imgTaken]) withMediaType:0];
+        if(hasCaption){
+            UIImage *image =[self screenshot:UIDeviceOrientationPortrait isOpaque:NO usePresentationLayer:YES];
+            [self uploadMedia:UIImagePNGRepresentation(image) withMediaType:0];
+
+        }else{
+            [self uploadMedia:UIImagePNGRepresentation([GraphicsHelper imageByScalingAndCroppingForSize:size img:imgTaken]) withMediaType:0];
+        }
     }
     mediaIsVideo = NO;
 }
@@ -428,6 +478,9 @@
             [self addNewDrop:media withBucketId:[DataHelper getBucketId] withMediaType:media_type];
         }
     }
+    for(CaptionTextField *cap in captions){
+        [cap removeFromSuperview];
+    }
 }
 
 -(void)createNewBucket:(NSData *) media withMediaType:(int)media_type{
@@ -443,6 +496,10 @@
     //Creating a new drop
     DropModel *drop = [[DropModel alloc] init];
     [drop setCaption:@"My crazy caption"];
+    if(captionElement != nil){
+        [drop setCaption:[captionElement getCaptionText]];
+    }
+    
     [drop setMedia_type:media_type];
     [drop setMediaModel:mediaModel];
     [bucket addDrop:drop];
@@ -471,6 +528,9 @@
     DropModel *drop = [[DropModel alloc] init];
     MediaModel *mediaModel = [[MediaModel alloc] init:media];
     drop.caption = @"test caption";
+    if(captionElement != nil){
+        [drop setCaption:[captionElement getCaptionText]];
+    }
     drop.bucket_id = bucketId;
     drop.media_type = media_type;
     drop.mediaModel = mediaModel;
@@ -557,15 +617,22 @@
     
     if(imageView == nil){
         imageView = [[UIImageView alloc] initWithFrame:self.view.frame];
+        imageView.userInteractionEnabled = YES;
     }
     else{
         imageView.hidden = NO;
     }
     imageView.image = imgTaken;
     [self.view insertSubview:imageView belowSubview:saveMediaButton];
+    //[self.view insertSubview:captionsView aboveSubview:imageView];
     imageReadyForUpload = YES;
     self.onImageReady();
     [self hideTools];
+    //[self showEditTools];
+}
+
+-(void)showEditTools{
+ 
 }
 
 #pragma Record methods
@@ -634,6 +701,7 @@
     [self showButton:cancelButton];
     [self hideTools];
     imgTaken = [mediaPlayer getVideoThumbnail];
+
     // [mediaPlayer ]
     
 }
@@ -645,12 +713,50 @@
     [saveMediaProgressView startProgress];
     if(mediaIsVideo){
         [cameraHelper saveVideoToDisk];
-        
+       // [cameraHelper addAnimation];
+        //[cameraHelper startD:captionsView];
     }
     else{
-        [cameraHelper saveImageToDisk];
+        /*
+        UIGraphicsBeginImageContextWithOptions(CGSizeMake([UIHelper getScreenWidth], [UIHelper getScreenHeight]), NO, 0.0);  //retina res
+        [imageView.layer renderInContext:UIGraphicsGetCurrentContext()];
+        [captionElement.layer.presentationLayer renderInContext:UIGraphicsGetCurrentContext()];
+        UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
+        //
+         */
+        //[cameraHelper saveImageToDisk];
+        [cameraHelper saveImageToDisk:[self screenshot:UIDeviceOrientationPortrait isOpaque:NO usePresentationLayer:NO]];
+    
+        
     }
     
+}
+
+- (UIImage *)screenshot:(UIDeviceOrientation)orientation isOpaque:(BOOL)isOpaque usePresentationLayer:(BOOL)usePresentationLayer
+{
+    CGSize size;
+    
+    if (orientation == UIDeviceOrientationPortrait || orientation == UIDeviceOrientationPortraitUpsideDown) {
+        size = CGSizeMake(imageView.frame.size.width, imageView.frame.size.height);
+    } else {
+        size = CGSizeMake(imageView.frame.size.height, imageView.frame.size.width);
+    }
+    
+    UIGraphicsBeginImageContextWithOptions(size, isOpaque, 0.0);
+    
+    if (usePresentationLayer) {
+        [imageView.layer.presentationLayer renderInContext:UIGraphicsGetCurrentContext()];
+    } else {
+        [imageView.layer renderInContext:UIGraphicsGetCurrentContext()];
+    }
+    
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    
+    UIGraphicsEndImageContext();
+    
+    return image;
 }
 
 
@@ -677,14 +783,18 @@
                          toolTip.alpha = 0.9;
                          selfieButton.alpha = 0.9;
                          saveMediaButton.alpha = 0.0;
+                            captionButton.alpha = 0.0;
                      }
                      completion:^(BOOL finished){
                          saveMediaButton.hidden = YES;
+                         captionButton.hidden = YES;
+
                      }];
 }
 
 -(void)hideTools{
     saveMediaButton.hidden = NO;
+    captionButton.hidden = NO;
     [UIView animateWithDuration:0.3f
                           delay:0.0f
                         options: UIViewAnimationOptionCurveLinear
@@ -692,6 +802,7 @@
                          typeButton.alpha = 0.0;
                          toolTip.alpha = 0.0;
                          saveMediaButton.alpha = 0.9;
+                         captionButton.alpha = 0.9;
                          
                      }
                      completion:^(BOOL finished){

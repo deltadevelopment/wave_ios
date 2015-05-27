@@ -19,6 +19,7 @@
 +(void)applyThinLayoutOnLabel:(UILabel *) label;
 +(void)applyThinLayoutOnLabelH2:(UILabel *) label;
 +(void)applyThinLayoutOnLabelH4:(UILabel *) label;
++(void)applyThinLayoutOnTextField:(UITextField *) label withSize:(float) size;
 +(UIImage*)imageByScalingAndCroppingForSize:(CGSize)targetSize img:(UIImage *) sourceImage;
 +(UIImage *)iconImage:(UIImage *) image;
 +(UIImage *)iconImage:(UIImage *) image withSize:(float) size;

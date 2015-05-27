@@ -16,6 +16,7 @@
 #import "ChatViewController.h"
 #import "DataHelper.h"
 #import "EditImageViewController.h"
+#import "TestBoxViewController.h"
 @interface AppDelegate ()
 
 @end
@@ -42,7 +43,8 @@ AuthHelper *authHelper;
        //[self setView:[[SlideMenuViewController alloc] init] second:@"slideMenuView"];
        
         
-        // [self setView:[[EditImageViewController alloc] init] second:@"editView"];
+        //[self setView:[[EditImageViewController alloc] init] second:@"editView"];
+        //[self setView:[[TestBoxViewController alloc] init] second:@"testBox"];
        // [self setView:[[ChatViewController alloc]init] second:@"chatView"];
         
       

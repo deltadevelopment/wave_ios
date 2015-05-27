@@ -79,6 +79,12 @@ static CGFloat screenHeight;
     [label setTintColor:[ColorHelper whiteColor]];
 }
 
++(void)applyThinLayoutOnTextField:(UITextField *) label withSize:(float) size{
+    [label setFont:[UIFont fontWithName:@"HelveticaNeue" size:size]];
+    [label setTextColor:[ColorHelper whiteColor]];
+    [label setTintColor:[ColorHelper whiteColor]];
+}
+
 +(void)applyThinLayoutOnLabel:(UILabel *) label withSize:(float) size withColor:(UIColor *) color{
     [label setFont:[UIFont fontWithName:@"HelveticaNeue-Thin" size:size]];
     [label setTextColor:color];

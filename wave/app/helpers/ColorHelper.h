@@ -16,5 +16,6 @@
 +(UIColor*)whiteColor;
 +(UIColor*)blueColor;
 +(UIColor*)darkBlueColor;
++(UIColor *)magenta;
 
 @end
