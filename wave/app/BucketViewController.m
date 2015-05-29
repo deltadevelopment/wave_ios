@@ -108,7 +108,8 @@ const int PEEK_Y_START = 300;
     
     [self.view insertSubview:cameraHolder belowSubview:[self.superButton getButton ]];
     cameraHolder.hidden = YES;
-    
+    [self.superButton getButton].hidden = YES;
+    infoButton.hidden = YES;
     
         infoView = [[InfoView alloc] initWithSuperViewController:self withButton:infoButton withConstraint:infoButtonConstraint];
     [self.view addSubview:infoView];
@@ -150,7 +151,7 @@ const int PEEK_Y_START = 300;
         if(swipe.direction == UISwipeGestureRecognizerDirectionDown){
             return YES;
         }
-        if([chat isChatVisible] || isPeeking || cameraMode || infoViewMode){
+        if(isPeeking || cameraMode || infoViewMode){
             return NO;
         }
         return YES;
@@ -280,20 +281,50 @@ const int PEEK_Y_START = 300;
 -(void)updateDrop:(DropModel *) drop toView:(DropView *) dropView{
     dropView.dropTitle.text = [NSString stringWithFormat:@"@%@",[[drop user] username]];
     [dropView setDrop:drop];
-    [drop requestPhoto:^(NSData *media){
-        if([drop media_type] == 0){
-            //IMAGE
-            // [dropView setImage:[UIImage imageWithData:media]];
-            [dropView setMedia:[UIImage imageWithData:media] withIndexId:[drop Id]];
-            [[dropView spinner] stopAnimating];
+    if(drop == [[bucket drops] objectAtIndex:[[bucket drops] count] -1]){
+        NSLog(@"first bucket");
+        [drop requestPhoto:^(NSData *media){
+            if([drop media_type] == 0){
+                //IMAGE
+                // [dropView setImage:[UIImage imageWithData:media]];
+                [dropView setMedia:[UIImage imageWithData:media] withIndexId:[drop Id]];
+                [[dropView spinner] stopAnimating];
+                
+            }else{
+                //VIDEO
+                [dropView setMedia:media withIndexId:[drop Id]];
+                 [[dropView spinner] stopAnimating];
+                [self startStopVideo:nil];
+                // playButton.hidden = NO;
+                //  [dropView playMediaWithButton:playButton];
+            }
             
-        }else{
-            //VIDEO
-            [dropView setMedia:media withIndexId:[drop Id]];
-            playButton.hidden = NO;
-        }
-      
-    }];
+        }];
+    }
+    else{
+        [self updateDrop2:drop toView:dropView];
+    }
+}
+
+-(void)updateDrop2:(DropModel *) drop toView:(DropView *) dropView{
+    dropView.dropTitle.text = [NSString stringWithFormat:@"@%@",[[drop user] username]];
+    [dropView setDrop:drop];
+        [drop requestPhoto:^(NSData *media){
+            if([drop media_type] == 0){
+                //IMAGE
+                // [dropView setImage:[UIImage imageWithData:media]];
+                [dropView setMedia:[UIImage imageWithData:media] withIndexId:[drop Id]];
+                [[dropView spinner] stopAnimating];
+                
+            }else{
+                //VIDEO
+                [dropView setMedia:media withIndexId:[drop Id]];
+                [[dropView spinner] stopAnimating];
+                [self startStopVideo:nil];
+            }
+            
+        }];
+    
 }
 
 -(BOOL)shouldGetMoreImages{
@@ -325,9 +356,11 @@ const int PEEK_Y_START = 300;
 
         if([drops count] > currentPage){
             currentView = [drops objectAtIndex:currentPage];
+         
             if([currentView hasVideo]){
                 //VIS PLAY KNAPP
-                playButton.hidden = NO;
+              //  playButton.hidden = NO;
+                
             }
         }
         if(currentPage == PageCount - 1){
@@ -344,9 +377,6 @@ const int PEEK_Y_START = 300;
             else{
                 self.dropsAmount.text = [NSString stringWithFormat:@"%ld/%ld", (long)currentPage, [drops count] - 2];
             }
-            
-            
-            
         }
         
         if([self shouldGetMoreImages]){
@@ -386,15 +416,28 @@ const int PEEK_Y_START = 300;
     CGFloat pageWidth = scrollView.frame.size.width;
     float fractionalPage = scrollView.contentOffset.x / pageWidth;
     NSInteger page = lround(fractionalPage);
+    NSLog(@"PAGE: %ld", (long)page);
     if(page == PageCount - 1){
         CGPoint bottomOffset = CGPointMake(Scroller.bounds.size.width, 0);
         [Scroller setContentOffset:bottomOffset animated:NO];
         //[Scroller scrollRectToVisible:CGRectMake([UIHelper getScreenWidth],0,[UIHelper getScreenHeight],HEIGHT_OF_IMAGE) animated:NO];
         
+        currentView = [drops objectAtIndex:1];
+    
+        
+        if([currentView hasVideo]){
+            [self startStopVideo:nil];
+        }
+        
     }
     if(page == 0){
         CGPoint bottomOffset = CGPointMake(Scroller.contentSize.width - (Scroller.bounds.size.width *2), 0);
         [Scroller setContentOffset:bottomOffset animated:NO];
+        if([currentView hasVideo]){
+            [self startStopVideo:nil];
+        }
+    }else{
+    
     }
 }
 

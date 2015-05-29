@@ -78,6 +78,7 @@
     
     //[self.view setBackgroundColor:[UIColor colorWithPatternImage:thumbnail]];
     //[self.statusImage ];
+
 }
 
 -(void)startStopVideo:(id)sender{

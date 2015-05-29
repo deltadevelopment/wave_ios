@@ -38,7 +38,7 @@
     self.replyTextFieldSimple.clipsToBounds = YES;
     
     self.replyTextFieldSimple.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"Say something..." attributes:@{                                                                                                                                 NSForegroundColorAttributeName: [[UIColor whiteColor]colorWithAlphaComponent:0.4]                                                              }];
-    
+    self.tableView.scrollEnabled = NO;
     self.replyTextField.hidden = YES;
     self.replyTextField.textContainerInset = UIEdgeInsetsMake(10, 10, 10, 10);
     self.replyTextField.text = @"Say something...";
@@ -74,7 +74,7 @@
     //[self.view insertSubview:self.tableView belowSubview:shadowView];
     
     //self.tableView.hidden = YES;
-    self.view.hidden = YES;
+    //self.view.hidden = YES;
     UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
     [self.view addGestureRecognizer:gestureRecognizer];
     gestureRecognizer.cancelsTouchesInView = NO;  // this prevents the gesture recognizers to 'block' touches

@@ -524,7 +524,7 @@ didFinishRecordingToOutputFileAtURL:(NSURL *)outputFileURL
         NSString *path = [outputFileURL path];
         NSData *data = [[NSFileManager defaultManager] contentsAtPath:path];
      
-         NSString *outputPath = [[NSString alloc] initWithFormat:@"%@%@", NSTemporaryDirectory(), @"outpute.mov"];
+         NSString *outputPath = [[NSString alloc] initWithFormat:@"%@%@", NSTemporaryDirectory(), @"outpute.mp4"];
              NSURL *outputURL = [[NSURL alloc] initFileURLWithPath:outputPath];
         [weakSelf convertVideoToLowQuailtyWithInputURL:outputFileURL outputURL:outputURL handler:^(AVAssetExportSession *exportSession)
          {
@@ -659,7 +659,7 @@ didFinishRecordingToOutputFileAtURL:(NSURL *)outputFileURL
         self.recording = YES;
         __weak typeof(self) weakSelf = self;
         //Create temporary URL to record to
-        NSString *outputPath = [[NSString alloc] initWithFormat:@"%@%@", NSTemporaryDirectory(), @"output.mov"];
+        NSString *outputPath = [[NSString alloc] initWithFormat:@"%@%@", NSTemporaryDirectory(), @"output.mp4"];
         NSURL *outputURL = [[NSURL alloc] initFileURLWithPath:outputPath];
         NSFileManager *fileManager = [NSFileManager defaultManager];
         if ([fileManager fileExistsAtPath:outputPath])
@@ -922,7 +922,7 @@ didFinishRecordingToOutputFileAtURL:(NSURL *)outputFileURL
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
     NSString *myPathDocs =  [documentsDirectory stringByAppendingPathComponent:
-                             [NSString stringWithFormat:@"FinalVideo-%d.mov",arc4random() % 1000]];
+                             [NSString stringWithFormat:@"FinalVideo-%d.mp4",arc4random() % 1000]];
     NSURL *url = [NSURL fileURLWithPath:myPathDocs];
     
     // 5 - Create exporter
