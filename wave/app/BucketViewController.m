@@ -187,7 +187,8 @@ const int PEEK_Y_START = 300;
 }
 
 -(void)showChat{
-    if(!infoViewMode){
+    
+    if(!infoViewMode && !isPeeking){
         if([chat isChatVisible]){
             [chat hideChat];
            
@@ -696,7 +697,7 @@ const int PEEK_Y_START = 300;
         CGRect frame = peekViewController.view.frame;
         
         if(gesture.state == UIGestureRecognizerStateBegan){
-            [self hideSubscribeButton];
+            [peekViewController hideSubscribeButton];
         }
         
         if(frame.origin.y <= -44 - translation.y){
@@ -736,21 +737,7 @@ const int PEEK_Y_START = 300;
 }
 
 
--(void)hideSubscribeButton{
-    if(peekViewController.subscribeButton.alpha == 1.0){
-        [UIView animateWithDuration:0.3f
-                              delay:0.0f
-                            options: UIViewAnimationOptionCurveLinear
-                         animations:^{
-                             peekViewController.subscribeButton.alpha = 0.0;
-                             peekViewController.subscribeVerticalconstraint.constant += 60;
-                             [peekViewController.view layoutIfNeeded];
-                             [peekViewController.view updateConstraintsIfNeeded];
-                         }
-                         completion:nil];
-    }
 
-}
 
 
 -(void)animatePeekViewIn{
@@ -760,27 +747,12 @@ const int PEEK_Y_START = 300;
                           delay:0.0f
                         options: UIViewAnimationOptionCurveLinear
                      animations:^{
-                         CGRect frame = peekViewController.view.frame;
-                         frame.origin.y = -44;
-                         frame.size.height = [UIHelper getScreenHeight];
-                         peekViewController.view.frame = frame;
-                         //  blurEffectView.frame = frame;
                          blurEffectView.alpha = 1;
-                         peekViewController.subscribeButton.alpha = 1.0;
-                         peekViewController.subscribeVerticalconstraint.constant -= 60;
-                         [peekViewController.view layoutIfNeeded];
-                         [peekViewController.view updateConstraintsIfNeeded];
                      }
                      completion:^(BOOL finished){
-                         
-                         [UIView animateWithDuration:0.3f
-                                               delay:0.0f
-                                             options: UIViewAnimationOptionCurveLinear
-                                          animations:^{
-                                             
-                                          }
-                                          completion:nil];
+
                      }];
+    [peekViewController animatePeekViewIn];
     
 }
 -(void)animatePeekViewOut{

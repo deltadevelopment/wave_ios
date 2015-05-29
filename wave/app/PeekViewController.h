@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "UserModel.h"
+#import "SubscribeModel.h"
 @interface PeekViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UIImageView *profilePicture;
 @property (weak, nonatomic) IBOutlet UILabel *displayName;
@@ -16,6 +17,12 @@
 @property (weak, nonatomic) IBOutlet UIButton *subscribeButton;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *subscribeVerticalconstraint;
 @property (strong, nonatomic) UserModel *user;
+@property (strong, nonatomic) SubscribeModel *subscribeModel;
+
 -(void)updatePeekView:(UserModel *) user;
 -(void)showAllDetails;
+
+-(void)hideSubscribeButton;
+
+-(void)animatePeekViewIn;
 @end

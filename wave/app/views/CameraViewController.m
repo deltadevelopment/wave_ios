@@ -230,7 +230,7 @@
 
 -(void)initCaptionButton{
     [UIHelper applyUIOnButton:captionButton];
-    [captionButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"plus-simple.png"] withSize:150] forState:UIControlStateNormal];
+    [captionButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"plus-icon-simple.png"] withSize:150] forState:UIControlStateNormal];
     [captionButton addTarget:self action:@selector(tapCaptionButton) forControlEvents:UIControlEventTouchUpInside];
     [self addConstraintsToButton:self.view withButton:captionButton withPoint:CGPointMake(-4, -64) fromLeft:YES fromTop:YES];
     captionButton.hidden = YES;
