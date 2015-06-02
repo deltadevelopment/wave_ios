@@ -92,10 +92,6 @@
     
 }
 
--(void)addViewController:(SlideMenuViewController *) viewController{
-    self.superController = viewController;
-}
-
 -(UIButton *)createButton:(NSString *) img x:(int) xPos{
     UIButton *navButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     UIImage *buttonImage = [UIImage imageNamed:img];
@@ -136,12 +132,7 @@
 
 -(void)menuItemSelected
 {
-    /*
-    CGRect frame = self.view.frame;
-    frame.origin.y = 200;
-    self.view.frame = frame;
-    */
-     [self.superController showDrawer];
+   
 }
 
 - (void)didReceiveMemoryWarning {

@@ -9,15 +9,12 @@
 #import "AppDelegate.h"
 #import "AuthHelper.h"
 #import "StartViewController.h"
-#import "SlideMenuViewController.h"
-#import "CarouselViewController.h"
 #import "ActivityViewController.h"
-#import "BucketViewController.h"
 #import "ChatViewController.h"
 #import "DataHelper.h"
 #import "EditImageViewController.h"
 #import "TestBoxViewController.h"
-#import "ScrollController.h"
+#import "BucketController.h"
 @interface AppDelegate ()
 
 @end

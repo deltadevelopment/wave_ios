@@ -1,27 +1,22 @@
 //
-//  SlideMenuNavigationViewController.m
+//  TemperatureController.m
 //  wave
 //
-//  Created by Simen Lie on 15/04/15.
+//  Created by Simen Lie on 02.06.15.
 //  Copyright (c) 2015 ddev. All rights reserved.
 //
 
-#import "SlideMenuNavigationViewController.h"
+#import "TemperatureController.h"
 
-@interface SlideMenuNavigationViewController ()
+@interface TemperatureController ()
 
 @end
 
-@implementation SlideMenuNavigationViewController
+@implementation TemperatureController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    if ([self respondsToSelector:@selector(setEdgesForExtendedLayout:)])
-    {
-        self.edgesForExtendedLayout = UIRectEdgeNone;
-    }
-    
 }
 
 - (void)didReceiveMemoryWarning {

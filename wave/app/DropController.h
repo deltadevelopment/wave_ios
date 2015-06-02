@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "DropModel.h"
-@interface PageContentViewController : UIViewController
+@interface DropController : UIViewController
 @property NSUInteger pageIndex;
 @property NSString *titleText;
 @property NSString *imageFile;

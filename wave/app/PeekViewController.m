@@ -8,7 +8,6 @@
 
 #import "PeekViewController.h"
 #import "UIHelper.h"
-#import "SubscribeController.h"
 #import "AuthHelper.h"
 
 @interface PeekViewController ()
@@ -20,11 +19,9 @@
     bool isSubscriber;
     UIActivityIndicatorView *activityIndicator;
 }
-SubscribeController *subscribeController;
 AuthHelper *authHelper;
 - (void)viewDidLoad {
     [super viewDidLoad];
-    subscribeController = [[SubscribeController alloc] init];
     authHelper = [[AuthHelper alloc] init];
     // Do any additional setup after loading the view.
     self.location.text = @"Kristiansand";

@@ -7,7 +7,7 @@
 //
 
 #import "CarouselController.h"
-#import "ScrollController.h"
+#import "BucketController.h"
 @interface CarouselController ()
 
 @end
@@ -191,9 +191,9 @@
      */
     NSLog(@"ADding buket as root");
     oldRoot = root;
-    root = [[ScrollController alloc] init];
+    root = [[BucketController alloc] init];
     [root setBucket:bucket];
-    [((ScrollController *)root) setSuperCarousel:self];
+    [((BucketController *)root) setSuperCarousel:self];
        __weak typeof(self) weakSelf = self;
     root.onDespand = ^{
         [weakSelf removeBucketAsRoot];

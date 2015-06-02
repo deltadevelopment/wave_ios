@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 ddev. All rights reserved.
 //
 
-#import "ScrollController.h"
+#import "BucketController.h"
 #import "BucketModel.h"
 #import "FilterViewController.h"
 #import "AvailabilityViewController.h"
@@ -15,11 +15,11 @@
 #import "DataHelper.h"
 #import "InfoView.h"
 #import "ConstraintHelper.h"
-@interface ScrollController ()
+@interface BucketController ()
 
 @end
 const int PEEK_Y_START = 300;
-@implementation ScrollController
+@implementation BucketController
 {
     NSArray *array;
     BucketModel *bucket;
@@ -37,7 +37,7 @@ const int PEEK_Y_START = 300;
     UIView *cameraView;
     UIScrollView *scrollView;
     bool isFirst;
-    PageContentViewController *currentDropPage;
+    DropController *currentDropPage;
     UserModel *user;
     InfoView *infoView;
     UIButton *infoButton;
@@ -341,7 +341,7 @@ const int PEEK_Y_START = 300;
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController
 {
-    NSUInteger index = ((PageContentViewController*) viewController).pageIndex;
+    NSUInteger index = ((DropController*) viewController).pageIndex;
   
     if (index == NSNotFound) {
         return nil;
@@ -360,7 +360,7 @@ const int PEEK_Y_START = 300;
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController
 {
   //  [[self getScrollView]bringSubviewToFront:self.chat.view];
-    NSUInteger index = ((PageContentViewController*) viewController).pageIndex;
+    NSUInteger index = ((DropController*) viewController).pageIndex;
     
     if (index == NSNotFound) {
         return nil;
@@ -378,23 +378,23 @@ const int PEEK_Y_START = 300;
 
 -(void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed
 {
-    PageContentViewController *currentPage = [pageViewController.viewControllers lastObject];
+    DropController *currentPage = [pageViewController.viewControllers lastObject];
     [peekViewController updatePeekView:[[currentPage drop] user]];
     [self updatePageIndicator:currentPage.pageIndex];
-    PageContentViewController *previousPage = [previousViewControllers objectAtIndex:0];
+    DropController *previousPage = [previousViewControllers objectAtIndex:0];
     [currentPage startVideo];
     [previousPage stopVideo];
 }
 
 
-- (PageContentViewController *)viewControllerAtIndex:(NSUInteger)index replacingObject:(PageContentViewController *) pageToReplace
+- (DropController *)viewControllerAtIndex:(NSUInteger)index replacingObject:(DropController *) pageToReplace
 {
     if (([[bucket drops] count] == 0) || (index >= [[bucket drops]  count])) {
         return nil;
     }
     
     // Create a new view controller and pass suitable data.
-    PageContentViewController *pageContentViewController = [[PageContentViewController alloc] init];
+    DropController *pageContentViewController = [[DropController alloc] init];
     DropModel *dropModel = [[bucket drops] objectAtIndex:index];
     if(pageToReplace != nil){
         dropModel.thumbnail_tmp = [[pageToReplace drop] thumbnail_tmp];

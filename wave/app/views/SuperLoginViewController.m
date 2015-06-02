@@ -7,7 +7,8 @@
 //
 
 #import "SuperLoginViewController.h"
-#import "SlideMenuViewController.h"
+#import "NavigationController.h"
+#import "AppDelegate.h"
 @interface SuperLoginViewController ()
 
 @end
@@ -39,9 +40,10 @@
 }
 
 -(void)showMainView{
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    SlideMenuViewController *viewController = (SlideMenuViewController *)[storyboard instantiateViewControllerWithIdentifier:@"slideMenuView"];
-    [self presentViewController:viewController animated:YES completion:nil];
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
+    NavigationController *navigation =[mainStoryboard instantiateViewControllerWithIdentifier:@"carouselStart"];
+    AppDelegate *appDelegateTemp = [[UIApplication sharedApplication]delegate];
+    appDelegateTemp.window.rootViewController = navigation;
 }
 
 -(void)keyboardWillHide {

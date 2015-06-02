@@ -7,11 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "PageContentViewController.h"
+#import "DropController.h"
 #import "SuperViewController.h"
 #import "ChatViewController.h"
 #import "CarouselController.h"
-@interface ScrollController : SuperViewController<UIPageViewControllerDataSource, UIGestureRecognizerDelegate, UIPageViewControllerDelegate>
+@interface BucketController : SuperViewController<UIPageViewControllerDataSource, UIGestureRecognizerDelegate, UIPageViewControllerDelegate>
 @property (strong, nonatomic) UIPageViewController *pageViewController;
 @property (strong, nonatomic) NSMutableArray *drops;
 @property (nonatomic) NSInteger count;

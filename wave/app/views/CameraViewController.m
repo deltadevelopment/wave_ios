@@ -14,9 +14,7 @@
 #import "CircleIndicatorView.h"
 #import "MediaPlayerViewController.h"
 #import "ProgressView.h"
-#import "BucketController.h"
 #import "DataHelper.h"
-#import "DropController.h"
 #import "MediaModel.h"
 #import "CaptionTextField.h"
 
@@ -51,8 +49,6 @@
     NSData *lastRecordedVideo;
     bool isReply;
     UITextField *titleTextField;
-    BucketController *bucketController;
-    DropController *dropController;
     UIView *errorView;
     bool cameraIsInitialized;
     NSData *recordedVideo;
@@ -73,8 +69,6 @@
     mediaPlayer.onVideoFinishedPlaying = ^{
         
     };
-    bucketController = [[BucketController alloc] init];
-    dropController = [[DropController alloc] init];
     bucketTypes = [[NSMutableArray alloc]init];
     captions = [[NSMutableArray alloc] init];
     selfieButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -556,36 +550,6 @@
                         weakSelf.onNetworkError(errorView);
                     
                     }];
-    
-    
-    /*
-    [dropController addDropToBucket:@"CaptionTest"
-                          withMedia:media
-                       withBucketId:bucketId
-                      withMediaType:media_type
-                         onProgress:^(NSNumber *progression){
-                             weakSelf.onProgression([progression intValue]);
-                         }
-                       onCompletion:^(ResponseModel *response){
-                           DropModel *drop = [[DropModel alloc] init:[[response data] objectForKey:@"drop"]];
-                           drop.media_tmp = media;
-                           weakSelf.onMediaPostedDrop(drop);
-                           
-                           
-                       } onError:^(NSError *error){
-                           NSMutableDictionary *dic= [[NSMutableDictionary alloc] initWithDictionary:[error userInfo]];
-                           ResponseModel *responseModel = [[ResponseModel alloc] init:dic];
-                           self.onNotificatonShow([responseModel message]);
-                           
-                           [DataHelper storeData:media withMediaType:media_type];
-                           //[weakSelf addErrorMessage];
-                           errorView = [GraphicsHelper getErrorView:[error localizedDescription]
-                                                         withParent:self
-                                                    withButtonTitle:@"Prøv igjen"
-                                          withButtonPressedSelector:@selector(uploadAgain)];
-                           weakSelf.onNetworkError(errorView);
-                       }];
-     */
 }
 
 -(void)uploadAgain{

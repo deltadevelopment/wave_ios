@@ -9,7 +9,6 @@
 #import "ActivityViewController.h"
 #import "ActivityTableViewCell.h"
 #import "UIHelper.h"
-#import "BucketController.h"
 #import "DropModel.h"
 #import "BucketModel.h"
 #import "ApplicationHelper.h"
@@ -33,7 +32,6 @@ const int EXPAND_SIZE = 400;
     UIView *cameraView;
     bool cameraMode;
     UIImage *imgTaken;
-    BucketController *bucketController;
     UIView *cameraHolder;
     UIView *errorView;
     int indexValue;
@@ -46,7 +44,6 @@ const int EXPAND_SIZE = 400;
 - (void)viewDidLoad {
     NSLog(@"<ActivityViewController STARTED>");
     [super viewDidLoad];
-    bucketController = [[BucketController alloc] init];
     [self initialize];
     userModel = [[UserModel alloc] initWithDeviceUser];
   storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];

@@ -6,14 +6,14 @@
 //  Copyright (c) 2015 ddev. All rights reserved.
 //
 
-#import "PageContentViewController.h"
+#import "DropController.h"
 #import "DropView.h"
 #import "DataHelper.h"
-@interface PageContentViewController ()
+@interface DropController ()
 
 @end
 
-@implementation PageContentViewController
+@implementation DropController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
