@@ -9,7 +9,7 @@
 #import "BucketController.h"
 #import "BucketModel.h"
 #import "FilterViewController.h"
-#import "AvailabilityViewController.h"
+#import "TemperatureController.h"
 #import "BucketView.h"
 #import "PeekViewController.h"
 #import "DataHelper.h"
@@ -52,7 +52,7 @@ const int PEEK_Y_START = 300;
     [self initUISetup];
     [self attachSubviews];
     [self setupCallbacks];
-    AvailabilityViewController *viewControllerX = (AvailabilityViewController *)[self createViewControllerWithStoryboardId:@"availability"];
+    TemperatureController *viewControllerX = [[TemperatureController alloc] init];
    // FilterViewController *viewControllerY = (FilterViewController *)[self createViewControllerWithStoryboardId:@"filterView"];
     
     cameraHolder = [[UIView alloc]initWithFrame:CGRectMake(0, -64, [UIHelper getScreenWidth],[UIHelper getScreenHeight])];

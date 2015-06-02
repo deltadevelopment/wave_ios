@@ -35,4 +35,5 @@
 +(void)applyUIOnButton:(UIButton *) button;
 +(UIImage *)thumbnailFromVideo:(NSData *) video;
 +(CGRect)fullScreenRect;
++(void)applyLayoutOnLabel:(UILabel *) label withSize:(float) size;
 @end

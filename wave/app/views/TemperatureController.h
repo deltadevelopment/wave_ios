@@ -9,5 +9,7 @@
 #import "OverlayViewController.h"
 
 @interface TemperatureController : OverlayViewController
+@property (weak, nonatomic) IBOutlet UILabel *temperatureLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *temperatureImageView;
 
 @end
