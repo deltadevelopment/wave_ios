@@ -8,8 +8,7 @@
 
 #import "SlideMenuViewController.h"
 #import "DrawerViewController.h"
-#import "MainViewController.h"
-
+#import "NavigationControlViewController.h"
 #import "AppDelegate.h"
 #import "UIHelper.h"
 #import "BucketModel.h"

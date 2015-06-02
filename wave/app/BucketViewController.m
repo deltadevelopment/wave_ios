@@ -14,7 +14,7 @@
 #import "ConstraintHelper.h"
 #import "DropModel.h"
 #import "GraphicsHelper.h"
-#import "BucketView.h"
+
 #import "BucketController.h"
 #import "DropController.h"
 #import "ConstraintHelper.h"
@@ -99,6 +99,7 @@ const int PEEK_Y_START = 300;
     UITapGestureRecognizer *chatGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showChat)];
     
     [self.view addGestureRecognizer:chatGesture];
+    
     UISwipeGestureRecognizer *gestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(despandBucket:)];
     gestureRecognizer.delegate = self;
     [gestureRecognizer setDirection:(UISwipeGestureRecognizerDirectionUp)];

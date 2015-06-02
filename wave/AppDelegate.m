@@ -17,6 +17,7 @@
 #import "DataHelper.h"
 #import "EditImageViewController.h"
 #import "TestBoxViewController.h"
+#import "ScrollController.h"
 @interface AppDelegate ()
 
 @end
@@ -47,6 +48,7 @@ AuthHelper *authHelper;
         //[self setView:[[TestBoxViewController alloc] init] second:@"testBox"];
        // [self setView:[[ChatViewController alloc]init] second:@"chatView"];
         
+     //   [self setView:[[BucketViewController2 alloc] init] second:@"bucketController2"];
       
         
     }

@@ -112,6 +112,7 @@
 }
 
 
+
 - (BOOL) textViewShouldBeginEditing:(UITextView *)textView
 {
     self.replyTextField.text = @"";
@@ -158,9 +159,14 @@
  
 
 }
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer
+{
+    return YES;
+}
 
 
 -(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch{
+    NSLog(@"touching chat");
     if ([gestureRecognizer isMemberOfClass:[UITapGestureRecognizer class]] ) {
         if(![self isChatVisible]){
             return NO;

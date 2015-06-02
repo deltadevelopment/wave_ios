@@ -14,20 +14,23 @@
     UIView *pageindicator;
     NSMutableArray *carousel;
     NSMutableArray *carouselTitles;
+    NSMutableArray *carouselTitles2;
     int space;
     int pages;
     int searchIndex;
     int profileIndex;
     UIImageView *imageViewForSearch;
     UIImageView *imageViewForProfile;
-    
+    bool canUpdate;
+    NSInteger currentPageNumber;
 }
 
 -(id)initWithPages:(int) count{
-    pages = count;
+       pages = count;
     carousel = [[NSMutableArray alloc]init];
     carouselTitles = [[NSMutableArray alloc]init];
-    
+    carouselTitles2 = [[NSMutableArray alloc]init];
+    canUpdate = YES;
     navBar = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 250, 44)];
     navBar.backgroundColor = [ColorHelper purpleColor];
     navBar.clipsToBounds = YES;
@@ -62,9 +65,56 @@
 }
 
 -(void)animateTitles:(float)scrollOffset{
+    NSLog(@"offsett");
     for(int i = 0; i <[carouselTitles count];i++){
         [self slideNavTitle:scrollOffset withTitleLabel:[carouselTitles objectAtIndex:i] withDefaultFloat:[UIHelper getScreenWidth] * i];
     }
+}
+
+-(void)forward:(NSInteger) index{
+    if(index != currentPageNumber){
+        currentPageNumber = index;
+        [self shiftIndex:YES];
+    }
+}
+
+-(void)backward:(NSInteger) index{
+    if(index != currentPageNumber){
+        currentPageNumber = index;
+        [self shiftIndex:NO];
+    }
+}
+
+-(void)shiftIndex:(BOOL) forward{
+    NSLog(@"TALL COUNT _______ %ld", (long)currentPageNumber);
+    
+    // aktivitet discover profile __ VIEWS
+      //profile aktivitet discover  __ TEXTS
+    NSInteger localNumber = currentPageNumber +1;
+    
+    if(localNumber > 2){
+        localNumber = 0;
+    }
+    if(forward){
+        UILabel *lbl = [carouselTitles objectAtIndex:0];
+        [carouselTitles removeObjectAtIndex:0];
+        [carouselTitles addObject:lbl];
+        
+    
+    }else{
+        UILabel *lbl = [carouselTitles objectAtIndex:[carouselTitles count]-1];
+        [carouselTitles removeObjectAtIndex:[carouselTitles count]-1];
+        [carouselTitles insertObject:lbl atIndex:0];
+    
+    }
+    [self updateCarousel:3 withCurrentPage:currentPageNumber];
+    
+    
+
+    
+    
+  
+   
 }
 
 -(void)slideNavTitle:(float)value withTitleLabel:(UILabel *) label withDefaultFloat:(float)fval
@@ -77,45 +127,49 @@
 
 
 -(void)updateCarousel:(int) pageCount withCurrentPage:(NSInteger) currentPage{
-    for(int index = 0;index < pageCount; index++){
-        UILabel *label =[carousel objectAtIndex:index];
-        if(currentPage == index){
-   
-            if(index == searchIndex){
-                         NSLog(@"color here");
-                [UIHelper colorIcon:imageViewForSearch withColor:[UIColor colorWithRed:0.753 green:0.455 blue:0.808 alpha:1]];
-            }
-            else if(index == profileIndex){
-                [UIHelper colorIcon:imageViewForProfile withColor:[UIColor colorWithRed:0.753 green:0.455 blue:0.808 alpha:1]];
-            }
-            
-            else{
-                label.backgroundColor =[UIColor colorWithRed:0.753 green:0.455 blue:0.808 alpha:1];
-            }
-            
-        }else{
-            if(index == searchIndex){
-                [UIHelper colorIcon:imageViewForSearch withColor:[UIColor colorWithRed:0.357 green:0.125 blue:0.459 alpha:1]];
-            }
-            else if(index == profileIndex){
-                [UIHelper colorIcon:imageViewForProfile withColor:[UIColor colorWithRed:0.357 green:0.125 blue:0.459 alpha:1]];
-            }
-            else{
-                label.backgroundColor =[UIColor colorWithRed:0.357 green:0.125 blue:0.459 alpha:1];
+    
+        for(int index = 0;index < pageCount; index++){
+            UILabel *label =[carousel objectAtIndex:index];
+            if(currentPage == index){
+                
+                if(index == searchIndex){
+                    [UIHelper colorIcon:imageViewForSearch withColor:[UIColor colorWithRed:0.753 green:0.455 blue:0.808 alpha:1]];
+                }
+                else if(index == profileIndex){
+                    [UIHelper colorIcon:imageViewForProfile withColor:[UIColor colorWithRed:0.753 green:0.455 blue:0.808 alpha:1]];
+                }
+                
+                else{
+                    label.backgroundColor =[UIColor colorWithRed:0.753 green:0.455 blue:0.808 alpha:1];
+                }
+                
+            }else{
+                if(index == searchIndex){
+                    [UIHelper colorIcon:imageViewForSearch withColor:[UIColor colorWithRed:0.357 green:0.125 blue:0.459 alpha:1]];
+                }
+                else if(index == profileIndex){
+                    [UIHelper colorIcon:imageViewForProfile withColor:[UIColor colorWithRed:0.357 green:0.125 blue:0.459 alpha:1]];
+                }
+                else{
+                    label.backgroundColor =[UIColor colorWithRed:0.357 green:0.125 blue:0.459 alpha:1];
+                }
+                
             }
             
         }
-        
-    }
+    
+    
+  
 }
 
 -(void)addNavigationTitle:(NSString *) title withPageCount:(int)pageCount{
-    UILabel *navTitle = [[UILabel alloc] initWithFrame:CGRectMake([UIHelper getScreenWidth] * pageCount, 0, 250, 34)];
+    UILabel *navTitle = [[UILabel alloc] initWithFrame:CGRectMake(([UIHelper getScreenWidth] * pageCount) -375, 0, 250, 34)];
     [navTitle  setTextAlignment:NSTextAlignmentCenter];
     [UIHelper applyThinLayoutOnLabel:navTitle];
     navTitle.text = title;
     
     [carouselTitles addObject:navTitle];
+    [carouselTitles2 addObject:navTitle];
     [navBar addSubview:navTitle];
     if([carouselTitles count] == pages){
         [self addFeatheredEdgesToNavBar];

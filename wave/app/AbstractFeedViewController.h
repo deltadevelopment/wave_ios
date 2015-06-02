@@ -16,6 +16,7 @@
 @property (nonatomic, copy) void (^onNetworkError)(UIView*(view));
 @property (nonatomic, copy) void (^onNetworkErrorHide)(void);
 @property (nonatomic, copy) void (^onLockScreenToggle)(void);
+@property NSUInteger pageIndex;
 -(void)scrollUp;
 -(void)prepareCamera:(UIView *)view;
 -(void)onCameraOpen;

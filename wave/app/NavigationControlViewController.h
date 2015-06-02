@@ -18,4 +18,5 @@
 -(void)addViewController:(SlideMenuViewController *) viewController;
 -(void)didGainFocus;
 -(void)setBucket:(BucketModel *) inputBucket;
+@property (nonatomic, copy) void (^onDespand)(void);
 @end

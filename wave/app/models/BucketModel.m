@@ -47,6 +47,7 @@
     self.user = [[UserModel alloc] init:[dic objectForKey:@"user"]];
     self.bucket_type = [dic objectForKey:@"bucket_type"];
     if([dic objectForKey:@"drop"] != nil){
+        NSLog(@"FEIL HER JAAJAJAJ");
         DropModel *drop = [[DropModel alloc] init:[dic objectForKey:@"drop"]];
         [self addDrop:drop];
     }
@@ -55,6 +56,8 @@
     for(NSMutableDictionary *rawDrop in rawDrops){
         DropModel *drop = [[DropModel alloc] init:rawDrop];
         [self addDropToFirst:drop];
+        NSLog(@"adding drop");
+       // [self addDrop:drop];
     }
 }
 
@@ -71,6 +74,10 @@
     return [self.drops objectAtIndex:[self.drops count] -1];
     }
     return nil;
+}
+
+-(void)removeLastDrop{
+    [self.drops removeLastObject];
 }
 
 -(NSDictionary *)asDictionary{
@@ -178,8 +185,10 @@ onCompletion:(void (^)(ResponseModel*, BucketModel*))completionCallback
 -(BucketModel *)bucketFromResponseModel:(ResponseModel *)responseModel
 {
     BucketModel *bucket = [[BucketModel alloc] init:[[responseModel data] objectForKey:@"bucket"]];
-    DropModel *drop = [[DropModel alloc] init:[[responseModel data] objectForKey:@"drop"]];
-    [bucket addDrop:drop];
+    if([[responseModel data] objectForKey:@"drop"] != nil){
+        DropModel *drop = [[DropModel alloc] init:[[responseModel data] objectForKey:@"drop"]];
+        [bucket addDrop:drop];
+    }
     return bucket;
 }
 

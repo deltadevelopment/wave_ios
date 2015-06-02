@@ -11,14 +11,18 @@
 @interface DropView : UIImageView
 @property (strong, nonatomic) UIImageView *profilePicture;
 @property (strong, nonatomic) UILabel *dropTitle;
+@property (strong, nonatomic) UILabel *dropTemperature;
 @property (strong, nonatomic) UIView *topBar;
 @property (nonatomic) BOOL hasVideo;
 @property (nonatomic, strong) DropModel *drop;
 @property (nonatomic) BOOL isPlaying;
 @property (nonatomic, strong) UIActivityIndicatorView *spinner;
+@property (nonatomic) bool isPlaceholderView;
 -(void)setMedia:(NSObject *) media withIndexId:(int) indexId;
 -(void)dropWillHide;
 -(void)playVideo;
 -(void)stopVideo;
 -(void)playMediaWithButton:(UIButton *) button;
+-(void)updateUI;
+-(void)setDropUI:(DropModel *) drop;
 @end

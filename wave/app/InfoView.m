@@ -9,12 +9,13 @@
 #import "InfoView.h"
 #import "UIHelper.h"
 #import "BucketViewController.h"
+#import "ScrollController.h"
 @implementation InfoView
 float height;
 @synthesize button;
 UIButton *infoButton;
 NSLayoutConstraint *infoButtonConstraint;
-BucketViewController *bucketViewController;
+ScrollController *bucketViewController;
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
@@ -22,7 +23,7 @@ BucketViewController *bucketViewController;
     // Drawing code
 }
 */
--(id)initWithSuperViewController:(BucketViewController *) superViewController
+-(id)initWithSuperViewController:(ScrollController *) superViewController
                       withButton:(UIButton *)infoButtonLocal
                   withConstraint:(NSLayoutConstraint *) constraint
 {

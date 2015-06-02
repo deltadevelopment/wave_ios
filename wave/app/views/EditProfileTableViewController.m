@@ -29,7 +29,7 @@
     applicationHelper = [[ApplicationHelper alloc]init];
     authHelper = [[AuthHelper alloc]init];
     //Requesting user
-    user = [[UserModel alloc] initWithDeviceUser:^{
+    user = [[UserModel alloc] initWithDeviceUser:^(UserModel *returningUser){
       [self userWasReturned];
     
     } onError:^(NSError *error){}];

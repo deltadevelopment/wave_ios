@@ -21,7 +21,7 @@
     self = [super initWithFrame:frame];
     mediaPlayer = [[MediaPlayerViewController alloc] init];
     //Drop topBar
-    self.topBar = [[UIView alloc]initWithFrame:CGRectMake(0, 32, [UIHelper getScreenWidth], 50)];
+    self.topBar = [[UIView alloc]initWithFrame:CGRectMake(0, 0, [UIHelper getScreenWidth], 50)];
     
     //Drop profilePicture
     self.profilePicture = [[UIImageView alloc] initWithFrame:CGRectMake(10, 8, 30, 30)];
@@ -33,9 +33,16 @@
     //Drop Name Label
     self.dropTitle = [[UILabel alloc] initWithFrame:CGRectMake(50, -2, [UIHelper getScreenWidth] - 52, 50)];
     //nameLabel.text = [drop username];
-    [UIHelper applyThinLayoutOnLabel:self.dropTitle withSize:18 withColor:[UIColor whiteColor]];
+    [UIHelper applyThinLayoutOnLabel:self.dropTitle withSize:19 withColor:[UIColor whiteColor]];
     [self.dropTitle setMinimumScaleFactor:12.0/17.0];
     self.dropTitle.adjustsFontSizeToFitWidth = YES;
+    
+    //Drop Temperature Label
+    self.dropTemperature = [[UILabel alloc] initWithFrame:CGRectMake([UIHelper getScreenWidth] - 100, 8, 50, 30)];
+    //nameLabel.text = [drop username];
+    [UIHelper applyThinLayoutOnLabel:self.dropTemperature withSize:15 withColor:[UIColor whiteColor]];
+    [self.dropTemperature setMinimumScaleFactor:12.0/17.0];
+    self.dropTemperature.adjustsFontSizeToFitWidth = YES;
     
     //Loader
     self.spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
@@ -47,11 +54,12 @@
     self.spinner.hidden = NO;
     
     //Shadow View
-    UIView *shadowView = [[UIView alloc]initWithFrame:CGRectMake(0, 32, [UIHelper getScreenWidth], [UIHelper getScreenHeight]/4)];
+    UIView *shadowView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, [UIHelper getScreenWidth], [UIHelper getScreenHeight]/4)];
     [UIHelper addShadowToView:shadowView];
     
     //Attach elements
     [self.topBar addSubview:self.dropTitle];
+    [self.topBar addSubview:self.dropTemperature];
     [self.topBar addSubview:self.profilePicture];
     
     [self addSubview:shadowView];
@@ -66,6 +74,16 @@
 
 }
 
+-(void)setDropUI:(DropModel *) drop{
+    self.dropTemperature.text =[NSString stringWithFormat:@"%d", drop.temperature];
+    self.dropTitle.text = [[drop user] usernameFormatted];
+    //self.dropTitle.text = [NSString stringWithFormat:@"Drop #%d",drop.Id];
+}
+
+-(void)updateUI{
+
+}
+
 -(void)onVideoFinished{
     [playButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"play.png"] withSize:150] forState:UIControlStateNormal];
 }
@@ -75,6 +93,7 @@
     //BILDE
         self.hasVideo = NO;
         self.image = (UIImage*)media;
+        self.contentMode =UIViewContentModeScaleAspectFill;
     }else if([media isKindOfClass:[NSData class]]){
     //VIDEO
         self.hasVideo = YES;
@@ -83,7 +102,7 @@
         //[self addSubview:mediaPlayer.view];
         [self insertSubview:mediaPlayer.view belowSubview:self.topBar];
         [mediaPlayer setVideo:video withId:indexId];
-        //[mediaPlayer playVideo];
+      //  [mediaPlayer playVideo];
     }
 }
 
@@ -104,7 +123,8 @@
     self.isPlaying = YES;
     [playButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"media-pause.png"] withSize:150] forState:UIControlStateNormal];
 
-    [mediaPlayer playVideoOnce];
+    //[mediaPlayer playVideoOnce];
+    [mediaPlayer playVideo];
 }
 
 -(void)stopVideo{

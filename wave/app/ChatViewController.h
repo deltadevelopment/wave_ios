@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface ChatViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UITextViewDelegate>{
+@interface ChatViewController : UIViewController<UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, UITextViewDelegate, UIGestureRecognizerDelegate, UIPageViewControllerDelegate>{
 CGSize keyboardSize;
 }
 @property (nonatomic, copy) void (^onChatHidden)(void);

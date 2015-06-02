@@ -14,4 +14,6 @@
 -(void)updateCarousel:(int) pageCount withCurrentPage:(NSInteger) currentPage;
 -(void)addNavigationTitle:(NSString *) title withPageCount:(int)pageCount;
 -(void)animateTitles:(float)scrollOffset;
+-(void)forward:(NSInteger) index;
+-(void)backward:(NSInteger) index;
 @end

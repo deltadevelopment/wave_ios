@@ -2,12 +2,12 @@
 //  BucketView.m
 //  wave
 //
-//  Created by Simen Lie on 11.05.15.
+//  Created by Simen Lie on 31.05.15.
 //  Copyright (c) 2015 ddev. All rights reserved.
 //
 
 #import "BucketView.h"
-
+#import "UIHelper.h"
 @implementation BucketView
 
 /*
@@ -18,19 +18,19 @@
 }
 */
 
-- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
-{
-    UIView *hitView = [super hitTest:point withEvent:event];
- 
-    // If the hitView is THIS view, return the view that you want to receive the touch instead:
-    if(self.lockArea){
-        return self.dropView;
-    }
-    if (hitView == self) {
-        return hitView;
-    }
-    // Else return the hitView (as it could be one of this view's buttons):
-    return hitView;
+-(id)initWithFrame:(CGRect)frame{
+    self = [super initWithFrame:frame];
+    //Init all views here
+    NSLog(@"LOADING view");
+    self.uiPageIndicator = [[UILabel alloc] initWithFrame:CGRectMake([UIHelper getScreenWidth] - 40, 8, 60, 30)];
+    self.uiPageIndicator.text = @"-/-";
+    [UIHelper applyThinLayoutOnLabel:self.uiPageIndicator withSize:15.0];
+    [self addSubview:self.uiPageIndicator];
+    return self;
+}
+
+-(void)setPageIndicatorText:(NSString *) page{
+    self.uiPageIndicator.text = page;
 }
 
 @end

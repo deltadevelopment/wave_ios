@@ -87,18 +87,18 @@
                                        queue:[NSOperationQueue currentQueue]
                            completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
                                     NSString *strdata=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
-                               NSLog(strdata);
+                               //NSLog(strdata);
                                NSURL *URLER = [response URL];
-                               NSLog([URLER path]);
+                               //NSLog([URLER path]);
                                if (data != nil && error == nil)
                                {
                                    //Ferdig lastet ned
                                   
                                    NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) response;
-                                   NSLog(@"response status code: %ld", (long)[httpResponse statusCode]);
+                                   //NSLog(@"response status code: %ld", (long)[httpResponse statusCode]);
                                    NSInteger statuscode = [httpResponse statusCode];
                                    if(statuscode < 300){
-                                       NSLog(@"success");
+                                       //NSLog(@"success");
                                         callback(response,data,error);
                                        //[view performSelector:success withObject:data];
                                        

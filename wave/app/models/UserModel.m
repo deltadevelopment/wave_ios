@@ -20,13 +20,13 @@
     self = [super init];
     authHelper = [[AuthHelper alloc] init];
     self.Id = [[authHelper getUserId] intValue];
-    [self find:^{} onError:^(NSError *error){}];
+    //[self find:^{} onError:^(NSError *error){}];
     return self;
 }
 
 
 
--(id)initWithDeviceUser:(void (^)(void))completionCallback
+-(id)initWithDeviceUser:(void (^)(UserModel*))completionCallback
                 onError:(void(^)(NSError *))errorCallback{
     self = [super init];
     authHelper = [[AuthHelper alloc] init];
@@ -58,15 +58,16 @@
     _usernameFormatted =[NSString stringWithFormat:@"@%@", _username];
 }
 
--(void)find:(void (^)(void))completionCallback
+-(void)find:(void (^)(UserModel *))completionCallback
     onError:(void(^)(NSError *))errorCallback{
     __weak typeof(self) weakSelf = self;
     [self.applicationController getHttpRequest:[NSString stringWithFormat:@"user/%d", self.Id]
                                   onCompletion:^(NSURLResponse *response,NSData *data,NSError *error){
                                       ResponseModel *responseModel = [self responseModelFromData:data];
                                       [weakSelf refresh:[[responseModel data] objectForKey:@"user"]];
+                                      UserModel *returningUser = [[UserModel alloc] init:[[responseModel data] objectForKey:@"user"]];
                                       NSLog(@"NOT NULL NOW?");
-                                      completionCallback();
+                                      completionCallback(returningUser);
                                   } onError:errorCallback];
 }
 

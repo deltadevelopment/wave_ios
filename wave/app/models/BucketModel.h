@@ -43,5 +43,6 @@ onCompletion:(void (^)(ResponseModel*, BucketModel*))completionCallback
 @property (nonatomic) BOOL isInitalized;
 -(void)addDropToFirst:(DropModel *) drop;
 -(void)addDrop:(DropModel *) drop;
+-(void)removeLastDrop;
 -(DropModel *)getLastDrop;
 @end

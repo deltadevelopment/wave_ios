@@ -33,7 +33,7 @@ AuthHelper *authHelper;
     self.profilePicture.clipsToBounds = YES;
     self.profilePicture.contentMode = UIViewContentModeScaleAspectFill;
     self.availability.layer.cornerRadius = 5;
-    self.view.backgroundColor = [UIColor redColor];
+    self.view.backgroundColor = [UIColor clearColor];
     self.availability.clipsToBounds = YES;
     self.availability.hidden = YES;
     self.subscribeButton.alpha = 0.0;
@@ -58,6 +58,8 @@ AuthHelper *authHelper;
      
    
 }
+
+
 
 -(void)initActivityIndicator{
     activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
@@ -137,7 +139,8 @@ AuthHelper *authHelper;
                         options: UIViewAnimationOptionCurveLinear
                      animations:^{
                          CGRect frame = self.view.frame;
-                         frame.origin.y = -44;
+                         frame.origin.y = 0;
+                         frame.size.height -=64;
                          frame.size.height = [UIHelper getScreenHeight];
                          self.view.frame = frame;
                          self.subscribeButton.alpha = 1.0;
@@ -162,6 +165,12 @@ AuthHelper *authHelper;
     self.user = user;
     self.location.text = [NSString stringWithFormat:@"%d others already do", [user subscribers_count]];
     self.displayName.text = [user display_name] != nil ? [user display_name] : [user username];
+    if(user.Id == [[authHelper getUserId] intValue]){
+        self.subscribeButton.hidden = YES;
+        self.location.hidden = YES;
+    }else{
+        self.location.hidden = NO;
+    }
 }
 
 

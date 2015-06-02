@@ -27,10 +27,10 @@
 @property (nonatomic) int subscribers_count;
 @property (nonatomic, strong) NSString *profile_picture_url;
 -(id)init:(NSMutableDictionary *)dic;
--(void)find:(void (^)(void))completionCallback
+-(void)find:(void (^)(UserModel *))completionCallback
     onError:(void(^)(NSError *))errorCallback;
 -(id)initWithDeviceUser;
--(id)initWithDeviceUser:(void (^)(void))completionCallback
+-(id)initWithDeviceUser:(void (^)(UserModel*))completionCallback
                 onError:(void(^)(NSError *))errorCallback;
 -(void)saveChanges:(void (^)(ResponseModel *,UserModel *))completionCallback
            onError:(void(^)(NSError *))errorCallback;

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7531" systemVersion="14D131" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="pen-uR-Nvs">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7531" systemVersion="14D131" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="WdW-xv-bIt">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
@@ -788,6 +788,61 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="49F-G0-2Li" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-900" y="-38.25"/>
+        </scene>
+        <!--Scroll Controller-->
+        <scene sceneID="EXI-j7-rAu">
+            <objects>
+                <viewController storyboardIdentifier="bucketController2" id="oZC-GI-Dje" customClass="ScrollController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="By0-7r-JwZ"/>
+                        <viewControllerLayoutGuide type="bottom" id="Z6I-LU-hTI"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="aJn-zk-Slo">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.050980392159999999" green="0.87450980389999999" blue="0.84313725490000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cOM-b2-YVE" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="177" y="35.25"/>
+        </scene>
+        <!--Page Content View Controller-->
+        <scene sceneID="hqv-RA-WlR">
+            <objects>
+                <viewController storyboardIdentifier="PageContenController" id="HHn-IJ-0kQ" customClass="PageContentViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="SXx-KY-d8O"/>
+                        <viewControllerLayoutGuide type="bottom" id="c40-tE-R0p"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="vS6-Ab-Y2K">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="i8Y-ZG-Pk8" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="897" y="36.75"/>
+        </scene>
+        <!--Carousel Controller-->
+        <scene sceneID="7Oc-oR-8ae">
+            <objects>
+                <viewController extendedLayoutIncludesOpaqueBars="YES" id="lbi-p6-nYQ" customClass="CarouselController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="65F-ez-d1i"/>
+                        <viewControllerLayoutGuide type="bottom" id="YkQ-DP-Ckj"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Yhg-hP-AYl">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.050980392159999999" green="0.87450980389999999" blue="0.84313725490000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="bLR-Ab-VZ9"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Hsv-1I-InS" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2697" y="26.25"/>
         </scene>
         <!--Info View Controller-->
         <scene sceneID="dg2-Wk-WgK">
@@ -1948,7 +2003,7 @@
                                 <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
                             </constraint>
                             <constraint firstItem="lsR-uQ-pGV" firstAttribute="top" secondItem="moT-Sh-Yji" secondAttribute="bottom" constant="33" id="fN2-Vx-lAt">
-                                <variation key="heightClass=regular-widthClass=compact" constant="100"/>
+                                <variation key="heightClass=regular-widthClass=compact" constant="80"/>
                             </constraint>
                             <constraint firstItem="vFP-Na-ueK" firstAttribute="centerX" secondItem="hIA-Th-I7h" secondAttribute="centerX" id="h1C-XU-sqU"/>
                             <constraint firstAttribute="centerX" secondItem="2wJ-NQ-Mia" secondAttribute="centerX" id="jUI-GV-nab"/>
@@ -1965,22 +2020,22 @@
                                 <exclude reference="hIA-Th-I7h"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="8eM-zN-N0U"/>
-                                <exclude reference="Aa8-jf-Gnu"/>
-                                <exclude reference="OfH-Xm-nrF"/>
-                                <exclude reference="fN2-Vx-lAt"/>
+                                <exclude reference="3tK-DJ-NX8"/>
+                                <exclude reference="Vfb-oT-U5q"/>
+                                <exclude reference="T8M-s8-AD6"/>
+                                <exclude reference="Gfe-ep-qTW"/>
+                                <exclude reference="PJx-rP-lkg"/>
                                 <exclude reference="aJ3-w5-uHn"/>
                                 <exclude reference="h1C-XU-sqU"/>
                                 <exclude reference="uI8-jg-Aex"/>
-                                <exclude reference="3tK-DJ-NX8"/>
-                                <exclude reference="Vfb-oT-U5q"/>
                                 <exclude reference="9rk-Lu-dHk"/>
                                 <exclude reference="Fl7-cM-oLn"/>
                                 <exclude reference="GyG-8a-Hsz"/>
                                 <exclude reference="jUI-GV-nab"/>
-                                <exclude reference="Gfe-ep-qTW"/>
-                                <exclude reference="PJx-rP-lkg"/>
-                                <exclude reference="T8M-s8-AD6"/>
+                                <exclude reference="8eM-zN-N0U"/>
+                                <exclude reference="Aa8-jf-Gnu"/>
+                                <exclude reference="OfH-Xm-nrF"/>
+                                <exclude reference="fN2-Vx-lAt"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -1992,22 +2047,22 @@
                                 <include reference="hIA-Th-I7h"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="8eM-zN-N0U"/>
-                                <exclude reference="Aa8-jf-Gnu"/>
-                                <include reference="OfH-Xm-nrF"/>
-                                <include reference="fN2-Vx-lAt"/>
+                                <include reference="3tK-DJ-NX8"/>
+                                <include reference="Vfb-oT-U5q"/>
+                                <exclude reference="T8M-s8-AD6"/>
+                                <exclude reference="Gfe-ep-qTW"/>
+                                <include reference="PJx-rP-lkg"/>
                                 <include reference="aJ3-w5-uHn"/>
                                 <exclude reference="h1C-XU-sqU"/>
                                 <include reference="uI8-jg-Aex"/>
-                                <include reference="3tK-DJ-NX8"/>
-                                <include reference="Vfb-oT-U5q"/>
                                 <include reference="9rk-Lu-dHk"/>
                                 <exclude reference="Fl7-cM-oLn"/>
                                 <include reference="GyG-8a-Hsz"/>
                                 <include reference="jUI-GV-nab"/>
-                                <exclude reference="Gfe-ep-qTW"/>
-                                <include reference="PJx-rP-lkg"/>
-                                <exclude reference="T8M-s8-AD6"/>
+                                <exclude reference="8eM-zN-N0U"/>
+                                <exclude reference="Aa8-jf-Gnu"/>
+                                <include reference="OfH-Xm-nrF"/>
+                                <include reference="fN2-Vx-lAt"/>
                             </mask>
                         </variation>
                     </view>
@@ -2869,7 +2924,7 @@
                     </connections>
                 </containerView>
             </objects>
-            <point key="canvasLocation" x="6423" y="390.75"/>
+            <point key="canvasLocation" x="7341" y="390.75"/>
         </scene>
         <!--Settings-->
         <scene sceneID="Z7L-Ae-CKS">
@@ -4030,7 +4085,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="m6h-ST-d87" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7132.5" y="390.75"/>
+            <point key="canvasLocation" x="8050.5" y="390.75"/>
         </scene>
         <!--Navigation View Controller-->
         <scene sceneID="57N-gk-JCf">
@@ -4122,6 +4177,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="awt-eT-PhB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="7297.5" y="2454.75"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="yNf-KF-pg1">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bhn-pV-npp" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <navigationController extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" id="WdW-xv-bIt" customClass="NavigationController" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="E2g-jZ-HpM">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="lbi-p6-nYQ" kind="relationship" relationship="rootViewController" id="k0x-XN-2yb"/>
+                    </connections>
+                </navigationController>
+            </objects>
+            <point key="canvasLocation" x="1944" y="26.25"/>
         </scene>
     </scenes>
     <resources>
