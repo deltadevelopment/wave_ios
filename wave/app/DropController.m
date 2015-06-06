@@ -83,7 +83,7 @@
     
 }
 -(void)stopVideo{
-        DropView *dropView = (DropView *)self.view;
+    DropView *dropView = (DropView *)self.view;
     if([dropView hasVideo]){
         [dropView stopVideo];
     }
@@ -94,6 +94,11 @@
     if([dropView hasVideo]){
         [dropView playVideo];
     }
+}
+
+-(void)bindTemperatureChanges{
+    DropView *dropView = (DropView *)self.view;
+    [dropView temperatureAnimation];
 }
 
 

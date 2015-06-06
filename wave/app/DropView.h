@@ -25,4 +25,5 @@
 -(void)playMediaWithButton:(UIButton *) button;
 -(void)updateUI;
 -(void)setDropUI:(DropModel *) drop;
+-(void)temperatureAnimation;
 @end

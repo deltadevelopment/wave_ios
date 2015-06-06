@@ -43,6 +43,7 @@
     //nameLabel.text = [drop username];
     [UIHelper applyThinLayoutOnLabel:self.dropTemperature withSize:15 withColor:[UIColor whiteColor]];
     [self.dropTemperature setMinimumScaleFactor:12.0/17.0];
+    self.dropTemperature.textAlignment = NSTextAlignmentCenter;
     self.dropTemperature.adjustsFontSizeToFitWidth = YES;
     
     //Loader
@@ -76,7 +77,8 @@
 }
 
 -(void)setDropUI:(DropModel *) drop{
-    self.dropTemperature.text =[NSString stringWithFormat:@"%d", drop.temperature];
+    self.drop = drop;
+    self.dropTemperature.text =[NSString stringWithFormat:@"%d°", drop.temperature];
     self.dropTitle.text = [[drop user] usernameFormatted];
     //self.dropTitle.text = [NSString stringWithFormat:@"Drop #%d",drop.Id];
 }
@@ -136,6 +138,32 @@
     [playButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"play.png"] withSize:150] forState:UIControlStateNormal];
 
     self.isPlaying = NO;
+}
+
+-(void)temperatureAnimation{
+    [UIView animateWithDuration:0.3f
+                          delay:0.0f
+                        options: UIViewAnimationOptionCurveLinear
+                     animations:^{
+                         //[self.dropTemperature setFont:[UIFont fontWithName:@"HelveticaNeue-Thin" size:20]];
+                         self.dropTemperature.transform = CGAffineTransformMakeScale(1.5,1.5);
+                       
+                     }
+                     completion:^(BOOL finished){
+                         //Temporary hard coded to show that temperature changes when voting
+                         self.dropTemperature.text =[NSString stringWithFormat:@"%d°", self.drop.temperature + 1];
+                         [UIView animateWithDuration:0.3f
+                                               delay:0.1f
+                                             options: UIViewAnimationOptionCurveLinear
+                                          animations:^{
+                                              //[self.dropTemperature setFont:[UIFont fontWithName:@"HelveticaNeue-Thin" size:20]];
+                                              self.dropTemperature.transform = CGAffineTransformMakeScale(1.0,1.0);
+                                          }
+                                          completion:^(BOOL finished){
+                                              
+                                          }];
+                     
+                     }];
 }
 
 

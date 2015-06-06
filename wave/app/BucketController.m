@@ -15,6 +15,7 @@
 #import "DataHelper.h"
 #import "InfoView.h"
 #import "ConstraintHelper.h"
+#import "TemperatureModel.h"
 @interface BucketController ()
 
 @end
@@ -42,6 +43,7 @@ const int PEEK_Y_START = 300;
     InfoView *infoView;
     UIButton *infoButton;
     NSLayoutConstraint *infoButtonConstraint;
+    bool shouldAnimateTemperatureChanges;
 }
 @synthesize infoViewMode;
 - (void)viewDidLoad {
@@ -53,6 +55,30 @@ const int PEEK_Y_START = 300;
     [self attachSubviews];
     [self setupCallbacks];
     TemperatureController *viewControllerX = [[TemperatureController alloc] init];
+    viewControllerX.onAction = ^(NSNumber *temperature){
+        TemperatureModel *temperatureModel = [[TemperatureModel alloc] initWithDrop:[[currentDropPage drop] Id]];
+        [temperatureModel setTemperature:[temperature intValue]];
+        [temperatureModel saveChanges:^(ResponseModel *response, TemperatureModel *temperatureModel){
+            NSLog(@"temperature was saved to bucket");
+            if(shouldAnimateTemperatureChanges){
+                [currentDropPage bindTemperatureChanges];
+                shouldAnimateTemperatureChanges = NO;
+            }else{
+                shouldAnimateTemperatureChanges = YES;
+            }
+        } onError:^(NSError *error){}];
+        
+    };
+    viewControllerX.onAnimationEnded =^{
+        if(shouldAnimateTemperatureChanges){
+            [currentDropPage bindTemperatureChanges];
+            shouldAnimateTemperatureChanges = NO;
+        }else{
+            shouldAnimateTemperatureChanges = YES;
+        }
+        
+    
+    };
    // FilterViewController *viewControllerY = (FilterViewController *)[self createViewControllerWithStoryboardId:@"filterView"];
     
     cameraHolder = [[UIView alloc]initWithFrame:CGRectMake(0, -64, [UIHelper getScreenWidth],[UIHelper getScreenHeight])];
@@ -399,6 +425,7 @@ const int PEEK_Y_START = 300;
     DropController *pageContentViewController = [[DropController alloc] init];
     DropModel *dropModel = [[bucket drops] objectAtIndex:index];
     if(pageToReplace != nil){
+        //Uses the prefetched thumbnail or image from the feed, instead of downloading it again
         if(dropModel.media_type == 0){
             dropModel.media_tmp = [[pageToReplace drop] media_tmp];
         }else{

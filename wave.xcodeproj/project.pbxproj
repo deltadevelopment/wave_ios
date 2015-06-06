@@ -96,6 +96,7 @@
 		F18A20EB1B1D33E3003294BE /* TemperatureController.m in Sources */ = {isa = PBXBuildFile; fileRef = F18A20EA1B1D33E3003294BE /* TemperatureController.m */; };
 		F18A20EE1B1D34F0003294BE /* TemperatureView.m in Sources */ = {isa = PBXBuildFile; fileRef = F18A20ED1B1D34F0003294BE /* TemperatureView.m */; };
 		F18A20F11B1D46BA003294BE /* manatee-white.png in Resources */ = {isa = PBXBuildFile; fileRef = F18A20F01B1D46BA003294BE /* manatee-white.png */; };
+		F18A20F41B227793003294BE /* TemperatureModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F18A20F31B227793003294BE /* TemperatureModel.m */; };
 		F1BD621C1AE460D400BDE1CA /* Carousel.m in Sources */ = {isa = PBXBuildFile; fileRef = F1BD621B1AE460D400BDE1CA /* Carousel.m */; };
 		F1BD621F1AE46EFC00BDE1CA /* ActivityTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F1BD621E1AE46EFC00BDE1CA /* ActivityTableViewCell.m */; };
 		F1BD62211AEBB46F00BDE1CA /* 169.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F1BD62201AEBB46F00BDE1CA /* 169.jpg */; };
@@ -291,6 +292,8 @@
 		F18A20EC1B1D34F0003294BE /* TemperatureView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TemperatureView.h; sourceTree = "<group>"; };
 		F18A20ED1B1D34F0003294BE /* TemperatureView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TemperatureView.m; sourceTree = "<group>"; };
 		F18A20F01B1D46BA003294BE /* manatee-white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "manatee-white.png"; path = "../../../../../../Downloads/manatee-white.png"; sourceTree = "<group>"; };
+		F18A20F21B227793003294BE /* TemperatureModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TemperatureModel.h; sourceTree = "<group>"; };
+		F18A20F31B227793003294BE /* TemperatureModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TemperatureModel.m; sourceTree = "<group>"; };
 		F1BD621A1AE460D400BDE1CA /* Carousel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Carousel.h; sourceTree = "<group>"; };
 		F1BD621B1AE460D400BDE1CA /* Carousel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Carousel.m; sourceTree = "<group>"; };
 		F1BD621D1AE46EFC00BDE1CA /* ActivityTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityTableViewCell.h; sourceTree = "<group>"; };
@@ -482,6 +485,8 @@
 				F1DBB5481B0E3E130097F709 /* FeedModel.m */,
 				C5E2FC0E1B1884D9007E71BE /* SubscribeModel.h */,
 				C5E2FC0F1B1884D9007E71BE /* SubscribeModel.m */,
+				F18A20F21B227793003294BE /* TemperatureModel.h */,
+				F18A20F31B227793003294BE /* TemperatureModel.m */,
 			);
 			path = models;
 			sourceTree = "<group>";
@@ -1024,6 +1029,7 @@
 				C5576B3B1ADBC195009C1D5E /* CameraViewController.m in Sources */,
 				F1DBB5631B0FD46F0097F709 /* ChangePasswordTableViewController.m in Sources */,
 				C5D473AE1AFA5BB30097E44F /* MediaController.m in Sources */,
+				F18A20F41B227793003294BE /* TemperatureModel.m in Sources */,
 				C5FF1E551B04F1510081BEDD /* InfoView.m in Sources */,
 				F1DBB55F1B0FD46F0097F709 /* ServerTableViewController.m in Sources */,
 				C5A27B8B1ADD6DD500968033 /* NavigationControlViewController.m in Sources */,

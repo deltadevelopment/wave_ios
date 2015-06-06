@@ -13,7 +13,9 @@
 
 @end
 
-@implementation TemperatureController
+@implementation TemperatureController{
+    int temperature;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -53,8 +55,8 @@
     float yVal =[yPos floatValue]-20;
     float result = (yVal/limit)*100;
     float roundedResult = roundf(result);
-    int resultInt = (int)roundedResult;
-    [((TemperatureView *)self.view) setTemperature:[NSString stringWithFormat:@"%d°", resultInt]];
+    temperature = (int)roundedResult;
+    [((TemperatureView *)self.view) setTemperature:[NSString stringWithFormat:@"%d°", temperature]];
     [((TemperatureView *)self.view) setBackgroundColorWithPercentage:result];
 }
 -(void)dragX:(NSNumber *) xPos{
@@ -73,6 +75,7 @@
 }
 
 -(void)onDragEnded{
+    self.onAction([NSNumber numberWithInt:temperature]);
     [UIView animateWithDuration:0.2f
                           delay:0.0f
                         options: UIViewAnimationOptionCurveLinear
@@ -89,6 +92,7 @@
                                           }
                                           completion:^(BOOL finished){
                                               self.view.hidden = YES;
+                                              self.onAnimationEnded();
                                           }];
                      }];
 }

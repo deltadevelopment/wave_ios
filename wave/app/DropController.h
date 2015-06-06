@@ -19,4 +19,5 @@
 -(void)bindToModel;
 -(void)stopVideo;
 -(void)startVideo;
+-(void)bindTemperatureChanges;
 @end

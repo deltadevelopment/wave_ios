@@ -11,5 +11,7 @@
 @interface TemperatureController : OverlayViewController
 @property (weak, nonatomic) IBOutlet UILabel *temperatureLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *temperatureImageView;
+@property (nonatomic, copy) void (^onAction)(NSNumber*(percentage));
+@property (nonatomic, copy) void (^onAnimationEnded)(void);
 
 @end
