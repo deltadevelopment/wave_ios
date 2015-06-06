@@ -14,6 +14,7 @@
 {
     MediaPlayerViewController *mediaPlayer;
     UIButton *playButton;
+    UIView *shadowView;
     
 }
 
@@ -54,7 +55,7 @@
     self.spinner.hidden = NO;
     
     //Shadow View
-    UIView *shadowView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, [UIHelper getScreenWidth], [UIHelper getScreenHeight]/4)];
+    shadowView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, [UIHelper getScreenWidth], [UIHelper getScreenHeight]/4)];
     [UIHelper addShadowToView:shadowView];
     
     //Attach elements
@@ -92,7 +93,10 @@
     if([media isKindOfClass:[UIImage class]]){
     //BILDE
         self.hasVideo = NO;
-        self.image = (UIImage*)media;
+        CGSize size = CGSizeMake([UIHelper getScreenWidth], [UIHelper getScreenHeight]);
+        
+        //self.image = (UIImage*)media;
+        self.image = [GraphicsHelper imageByScalingAndCroppingForSize:size img:(UIImage*)media];
         self.contentMode =UIViewContentModeScaleAspectFill;
     }else if([media isKindOfClass:[NSData class]]){
     //VIDEO
@@ -100,7 +104,7 @@
         NSData *video =(NSData *)media;
         mediaPlayer.view.frame = CGRectMake(0, 0, [UIHelper getScreenWidth], [UIHelper getScreenHeight]);
         //[self addSubview:mediaPlayer.view];
-        [self insertSubview:mediaPlayer.view belowSubview:self.topBar];
+        [self insertSubview:mediaPlayer.view belowSubview:shadowView];
         [mediaPlayer setVideo:video withId:indexId];
       //  [mediaPlayer playVideo];
     }

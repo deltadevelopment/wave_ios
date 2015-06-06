@@ -166,7 +166,6 @@
 
 
 -(BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch{
-    NSLog(@"touching chat");
     if ([gestureRecognizer isMemberOfClass:[UITapGestureRecognizer class]] ) {
         if(![self isChatVisible]){
             return NO;

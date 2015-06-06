@@ -117,11 +117,8 @@ const int MIN_WIDTH = 100;
 
 - (void)handlePinch:(UIPinchGestureRecognizer *)recognizer{
     if(!editTextMode){
-        //recognizer.scale=1;
-        NSLog(@"FONT SIZE: %f", self.font.pointSize);
         CGFloat pinchScale = recognizer.scale;
         pinchScale = round(pinchScale * 1000) / 1000.0;
-        NSLog(@"%lf",pinchScale);
         
         if (pinchScale < 1)
             

@@ -65,7 +65,6 @@
 }
 
 -(void)animateTitles:(float)scrollOffset{
-    NSLog(@"offsett");
     for(int i = 0; i <[carouselTitles count];i++){
         [self slideNavTitle:scrollOffset withTitleLabel:[carouselTitles objectAtIndex:i] withDefaultFloat:[UIHelper getScreenWidth] * i];
     }
@@ -85,9 +84,7 @@
     }
 }
 
--(void)shiftIndex:(BOOL) forward{
-    NSLog(@"TALL COUNT _______ %ld", (long)currentPageNumber);
-    
+-(void)shiftIndex:(BOOL) forward{    
     // aktivitet discover profile __ VIEWS
       //profile aktivitet discover  __ TEXTS
     NSInteger localNumber = currentPageNumber +1;

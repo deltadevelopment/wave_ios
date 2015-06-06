@@ -53,7 +53,6 @@ typedef enum {
 
 - (id)init:(UIView *)view
 {
-    NSLog(@"INIT");
     self = [super init];
     if (self) {
         self.defaultIconPath = @"camera-icon.png";

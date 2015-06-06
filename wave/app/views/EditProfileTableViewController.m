@@ -45,10 +45,8 @@
 shouldChangeCharactersInRange:(NSRange)range
 replacementString:(NSString *)string
 {
-    NSLog(@"the string; %@ andfield: %@", string, textField.text);
     if(textField == self.phoneNumberTextField){
         if ([string isEqualToString:@""]) {
-            NSLog(@"Backspace");
             int length = textField.text.length;
             if([[textField.text substringFromIndex:length - 1] isEqualToString:@" "]){
                 textField.text = [textField.text substringToIndex:textField.text.length-1];
@@ -158,7 +156,6 @@ NSString *finalString = [NSString stringWithFormat:@"%@ %@ %@", [text substringW
     [user setDisplay_name:self.displayNameTextField.text];
     [user setPhone_number:[phoneNumber intValue]];
     [user setEmail:self.emailTextField.text];
-    NSLog(@"%@", user.email);
     [user saveChanges:^(ResponseModel *response, UserModel *user){
         
         [self userWasSaved:nil];

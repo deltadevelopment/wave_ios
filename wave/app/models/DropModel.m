@@ -144,8 +144,10 @@ self =[super init];
 
 -(void)requestPhoto:(void (^)(NSData*))completionCallback{
     if(self.media_tmp == nil){
+        NSLog(@"image is not here already");
         [self downloadImage:completionCallback];
     }else{
+        NSLog(@"image is here already");
         completionCallback(self.media_tmp);
     }
 }

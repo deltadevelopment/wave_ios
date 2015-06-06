@@ -54,7 +54,6 @@
 
 }
 -(void)userWasReturned{
-    NSLog(@"user was returned %@", user.username);
     [self.privateToggleSwitch setOn:[user private_profile] animated:YES];
     self.usernameLabel.text = [user username];
 }

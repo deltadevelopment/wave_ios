@@ -20,9 +20,8 @@
 
 -(id)initWithFrame:(CGRect)frame{
     self = [super initWithFrame:frame];
-    //Init all views here
-    NSLog(@"LOADING view");
-    self.uiPageIndicator = [[UILabel alloc] initWithFrame:CGRectMake([UIHelper getScreenWidth] - 40, 8, 60, 30)];
+    self.uiPageIndicator = [[UILabel alloc] initWithFrame:CGRectMake([UIHelper getScreenWidth] - 70, 8, 60, 30)];
+    self.uiPageIndicator.textAlignment = NSTextAlignmentRight;
     self.uiPageIndicator.text = @"-/-";
     [UIHelper applyThinLayoutOnLabel:self.uiPageIndicator withSize:15.0];
     [self addSubview:self.uiPageIndicator];

@@ -62,7 +62,6 @@ const int PEEK_Y_START = 300;
     cameraHolder.hidden = YES;
     user = [[UserModel alloc] initWithDeviceUser];
     [user find:^(UserModel *returningUser){
-        NSLog(@"USRR_ %@", returningUser.username);
         user = returningUser;
     } onError:^(NSError *error){}];
     [self initInfoButton];
@@ -244,7 +243,9 @@ const int PEEK_Y_START = 300;
 
 -(void)despandBucket:(UISwipeGestureRecognizer *)recognizer {
     //[self.superController removeBucketAsRoot];
+    [currentDropPage stopVideo];
     self.onDespand();
+    
     
    // [self.superCarousel removeBucketAsRoot];
     //[self dismissViewControllerAnimated:NO completion:nil];
@@ -379,10 +380,12 @@ const int PEEK_Y_START = 300;
 -(void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed
 {
     DropController *currentPage = [pageViewController.viewControllers lastObject];
+    currentDropPage = currentPage;
     [peekViewController updatePeekView:[[currentPage drop] user]];
     [self updatePageIndicator:currentPage.pageIndex];
     DropController *previousPage = [previousViewControllers objectAtIndex:0];
     [currentPage startVideo];
+    currentPage.isDisplaying = YES;
     [previousPage stopVideo];
 }
 
@@ -392,12 +395,15 @@ const int PEEK_Y_START = 300;
     if (([[bucket drops] count] == 0) || (index >= [[bucket drops]  count])) {
         return nil;
     }
-    
-    // Create a new view controller and pass suitable data.
+
     DropController *pageContentViewController = [[DropController alloc] init];
     DropModel *dropModel = [[bucket drops] objectAtIndex:index];
     if(pageToReplace != nil){
-        dropModel.thumbnail_tmp = [[pageToReplace drop] thumbnail_tmp];
+        if(dropModel.media_type == 0){
+            dropModel.media_tmp = [[pageToReplace drop] media_tmp];
+        }else{
+            dropModel.thumbnail_tmp = [[pageToReplace drop] thumbnail_tmp];
+        }
     }
     [pageContentViewController setDrop:dropModel];
     if(isFirst){

@@ -47,7 +47,6 @@
     self.user = [[UserModel alloc] init:[dic objectForKey:@"user"]];
     self.bucket_type = [dic objectForKey:@"bucket_type"];
     if([dic objectForKey:@"drop"] != nil){
-        NSLog(@"FEIL HER JAAJAJAJ");
         DropModel *drop = [[DropModel alloc] init:[dic objectForKey:@"drop"]];
         [self addDrop:drop];
     }
@@ -56,7 +55,6 @@
     for(NSMutableDictionary *rawDrop in rawDrops){
         DropModel *drop = [[DropModel alloc] init:rawDrop];
         [self addDropToFirst:drop];
-        NSLog(@"adding drop");
        // [self addDrop:drop];
     }
 }
@@ -124,8 +122,6 @@
                                            json:[self asJSON:body]
                                    onCompletion:^(NSURLResponse *response,NSData *data,NSError *error)
      {
-           NSString *strdata=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
-         NSLog(strdata);
          [self showResponseFromData:data withCallback:completionCallback];
      }
                                         onError:errorCallback];

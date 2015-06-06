@@ -40,11 +40,8 @@
     //Bind all ui text etc and images
     DropView *dropView = (DropView *)self.view;
     [dropView setDropUI:self.drop];
-    NSLog(@"binding");
-    NSLog(@"drop BIND: %d", [self.drop media_type]);
     if([self.drop media_type] == 1 && self.isPlaceholderView){
         //IS video, should get thumbnail
-        NSLog(@"getting thumbnail");
         [self.drop requestThumbnail:^(NSData *media){
             
          [dropView setMedia:[UIImage imageWithData:media] withIndexId:[self.drop Id]];
@@ -72,7 +69,8 @@
                 [dropView setMedia:media withIndexId:[self.drop Id]];
                 [[dropView spinner] stopAnimating];
                 if([self isStartingView]){
-                    NSLog(@"Playing video");
+                    [dropView playVideo];
+                }else if(self.isDisplaying){
                     [dropView playVideo];
                 }
                 //[self startStopVideo:nil];

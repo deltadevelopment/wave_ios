@@ -42,7 +42,6 @@ const int EXPAND_SIZE = 400;
 }
 
 - (void)viewDidLoad {
-    NSLog(@"<ActivityViewController STARTED>");
     [super viewDidLoad];
     [self initialize];
     userModel = [[UserModel alloc] initWithDeviceUser];
@@ -85,7 +84,7 @@ const int EXPAND_SIZE = 400;
 }
 
 -(void)subscribeAction{
-    NSLog(@"here");
+  
 }
 
 -(void)startRefreshing{
@@ -378,7 +377,6 @@ const int EXPAND_SIZE = 400;
     //[cameraView removeFromSuperview];
     [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:indexValue inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
 
-    NSLog(@"index value: %d", indexValue);
     ActivityTableViewCell *cell = (ActivityTableViewCell  *)[_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:indexValue inSection:0]];
     cell.bucketImage.image = imgTaken;
     cell.displayNameText.text = [text isEqualToString:@""] ? [userModel usernameFormatted] : text;
@@ -415,7 +413,6 @@ const int EXPAND_SIZE = 400;
 -(void)onMediaPosted:(BucketModel *)bucket{
     ActivityTableViewCell *cell = (ActivityTableViewCell  *)[_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
     [cell stopSpinnerAnimation];
-    NSLog(@"DROPCOUTN %lu",  (unsigned long)[[bucket drops] count]);
     [[self.feedModel feed] replaceObjectAtIndex:0 withObject:bucket];
      [cell update:[[self.feedModel feed] objectAtIndex:indexValue]];
 }

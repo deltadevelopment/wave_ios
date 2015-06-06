@@ -175,7 +175,6 @@ AuthHelper *authHelper;
     UserModel *deviceUser =[[UserModel alloc] initWithDeviceUser];
     self.subscribeModel = [[SubscribeModel alloc] initWithSubscriber:deviceUser withSubscribee:self.user];
     [self.subscribeModel isSubscriber:^(ResponseModel *response){
-        NSLog(@"HERE");
         if(response.success){
             isSubscriber = YES;
             [self changeSubscribeUI];
@@ -184,7 +183,7 @@ AuthHelper *authHelper;
             [self changeSubscribeUI];
         }
     } onError:^(NSError *error){
-        NSLog(@"ERRORR");
+        
     }];
 }
 

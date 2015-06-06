@@ -24,7 +24,6 @@
     [self.signupButton setTitle:NSLocalizedString(@"signup_btn_cap", nil) forState:UIControlStateNormal];
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain
                                                                             target:nil action:nil];
-    NSLog(@"init");
 }
 
 - (void)didReceiveMemoryWarning {

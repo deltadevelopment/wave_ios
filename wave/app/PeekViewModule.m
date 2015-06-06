@@ -61,9 +61,7 @@
     [view insertSubview:self.usernameLabel belowSubview:subview];
     [view insertSubview:self.subscribeButton belowSubview:subview];
     [view insertSubview:self.subscribersCountLabel belowSubview:subview];
-     [view insertSubview:self.settingsButton belowSubview:subview];
-    
-    NSLog(@"ADDDING");
+    [view insertSubview:self.settingsButton belowSubview:subview];
     
     return self;
 }

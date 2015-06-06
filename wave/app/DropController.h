@@ -15,6 +15,7 @@
 @property (strong, nonatomic) DropModel *drop;
 @property (nonatomic) bool isStartingView;
 @property (nonatomic) bool isPlaceholderView;
+@property (nonatomic) bool isDisplaying;
 -(void)bindToModel;
 -(void)stopVideo;
 -(void)startVideo;

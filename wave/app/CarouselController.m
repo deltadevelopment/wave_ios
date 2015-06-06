@@ -189,7 +189,6 @@
       [root setBucket:bucket];
     [self.view addSubview:root.view];
      */
-    NSLog(@"ADding buket as root");
     oldRoot = root;
     root = [[BucketController alloc] init];
     [root setBucket:bucket];

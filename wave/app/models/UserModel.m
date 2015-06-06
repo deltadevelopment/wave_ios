@@ -66,14 +66,12 @@
                                       ResponseModel *responseModel = [self responseModelFromData:data];
                                       [weakSelf refresh:[[responseModel data] objectForKey:@"user"]];
                                       UserModel *returningUser = [[UserModel alloc] init:[[responseModel data] objectForKey:@"user"]];
-                                      NSLog(@"NOT NULL NOW?");
                                       completionCallback(returningUser);
                                   } onError:errorCallback];
 }
 
 -(NSDictionary *)asDictionary{
     NSDictionary *dictionary = nil;
-        NSLog(@"email er %@", self.email);
     NSMutableDictionary *updatesDictionary = [[NSMutableDictionary alloc] init];
     dictionary = @{
                    @"email": [self nilChecker:self.email],
@@ -107,7 +105,6 @@
     NSDictionary *body = @{
                            @"user":[self asDictionary]
                            };
-    NSLog([self asJSON:body]);
         [self.applicationController putHttpRequest:[NSString stringWithFormat:@"user/%d", self.Id]
                                               json:[self asJSON:body]
                                       onCompletion:^(NSURLResponse *response,NSData *data,NSError *error){
