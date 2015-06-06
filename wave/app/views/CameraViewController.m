@@ -17,6 +17,7 @@
 #import "DataHelper.h"
 #import "MediaModel.h"
 #import "CaptionTextField.h"
+#import "ColorPickerView.h"
 
 @interface CameraViewController ()
 
@@ -35,7 +36,8 @@
     UIButton *cancelButton;
     UIButton *typeButton;
     UIButton *captionButton;
-    
+    UIButton *boxPickerButton;
+    ColorPickerView *colorPickerView;
     int currentTypeIndex;
      NSMutableArray *bucketTypes;
     UILabel *toolTip;
@@ -97,6 +99,8 @@
     typeButton = [UIButton buttonWithType:UIButtonTypeCustom];
     toolTip = [[UILabel alloc]init];
     captionButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    boxPickerButton = [UIButton buttonWithType:UIButtonTypeCustom];
+
     [self initBucketTypes];
     [self initProgressView];
     [self initTextField];
@@ -203,6 +207,7 @@
     [self initCancelButton];
     [self initTypeButton];
     [self initCaptionButton];
+    [self initBoxPickerButton];
     [self initToolTip];
     recordingProgressView = [[UIView alloc] initWithFrame:CGRectMake(([UIHelper getScreenWidth]/2) -40, [UIHelper getScreenHeight] - 85, 80, 80)];
     recordingProgressView.backgroundColor = [UIColor clearColor];
@@ -231,12 +236,57 @@
     captionButton.alpha = 0.0;
 }
 
+-(void)initBoxPickerButton{
+    [UIHelper applyUIOnButton:boxPickerButton];
+    [boxPickerButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"rect-icon.png"] withSize:150] forState:UIControlStateNormal];
+    [boxPickerButton addTarget:self action:@selector(tapBoxPicker) forControlEvents:UIControlEventTouchUpInside];
+    [self addConstraintsToButton:self.view withButton:boxPickerButton withPoint:CGPointMake(-4, -64) fromLeft:YES fromTop:YES];
+    boxPickerButton.hidden = YES;
+    boxPickerButton.alpha = 0.0;
+}
+
+-(void)tapBoxPicker{
+    [captionElement toggleBox];
+}
+
 -(void)tapCaptionButton{
     CaptionTextField *element = [[CaptionTextField alloc] init];
+       __weak typeof(self) weakSelf = self;
+    element.onKeyboardShow = ^(CaptionTextField *field){
+        [weakSelf showEditOptionsForCaptionTextField:field];
+    };
+    element.onKeyboardHide = ^(CaptionTextField *field){
+        [weakSelf hideEditOptionsForCaptionTextField:field];
+    };
+    
     [imageView addSubview:element];
     [captions addObject:element];
     captionElement = element;
     hasCaption = YES;
+}
+
+-(void)showEditOptionsForCaptionTextField:(CaptionTextField *) captionField{
+    if(colorPickerView == nil){
+        colorPickerView = [[ColorPickerView alloc] initWithCaptionField:captionElement];
+        [self.view addSubview:colorPickerView];
+    }else{
+        [colorPickerView setCaptionField:captionField];
+        colorPickerView.hidden = NO;
+    }
+    
+    
+    boxPickerButton.hidden = NO;
+    boxPickerButton.alpha = 1.0;
+    captionButton.hidden = YES;
+    
+}
+
+-(void)hideEditOptionsForCaptionTextField:(CaptionTextField *) captionField{
+ 
+    colorPickerView.hidden = YES;
+    boxPickerButton.hidden = YES;
+     captionButton.hidden = NO;
+    boxPickerButton.alpha = 0.0;
 }
 
 -(void)initTypeButton{
@@ -369,6 +419,7 @@
       
         [self.view addSubview:saveMediaButton];
           [self.view addSubview:captionButton];
+        [self.view addSubview:boxPickerButton];
         [self.view addSubview:typeButton];
         
         [self.view addSubview:toolTip];

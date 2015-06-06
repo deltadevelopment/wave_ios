@@ -37,9 +37,10 @@ const int MIN_WIDTH = 100;
     
     self.layer.cornerRadius = 5;
     self.clipsToBounds = YES;
-    self.backgroundColor  =[ColorHelper magenta];
+    self.currentColor = [ColorHelper magenta];
+    self.backgroundColor = self.currentColor;
     self.delegate = self;
-    
+    self.hasBox = YES;
     //[UIHelper applyThinLayoutOnLabel:self.captionLabel withSize:30];
     [UIHelper applyThinLayoutOnTextField:self withSize:30];
     
@@ -67,7 +68,15 @@ const int MIN_WIDTH = 100;
                                        action:@selector(labelDragged:)];
     [self addGestureRecognizer:gesture];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillShow:)
+                                                 name:UIKeyboardWillShowNotification
+                                               object:nil];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(keyboardWillHide)
+                                                 name:UIKeyboardWillHideNotification
+                                               object:nil];
     
     
     [self sizeToFit];
@@ -88,6 +97,25 @@ const int MIN_WIDTH = 100;
      context:nil]
     .size.width;
     return widthIs;
+}
+
+-(void)keyboardWillShow:(NSNotification *)note {
+    self.onKeyboardShow(self);
+}
+
+-(void)keyboardWillHide {
+    self.onKeyboardHide(self);
+}
+
+-(void)toggleBox{
+    self.hasBox = self.hasBox ? NO : YES;
+    if(self.hasBox){
+        self.backgroundColor = self.currentColor;
+        self.textColor = [UIColor whiteColor];
+    }else{
+        self.textColor = self.currentColor;
+        self.backgroundColor = [UIColor clearColor];
+    }
 }
 
 - (CGRect)textRectForBounds:(CGRect)bounds {
@@ -112,6 +140,7 @@ const int MIN_WIDTH = 100;
 }
 
 - (void)textFieldDidChange:(NSNotification *)notification {
+    self.placeholder = @"";
     [self sizeToFit];
 }
 
