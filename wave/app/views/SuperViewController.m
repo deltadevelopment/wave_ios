@@ -456,6 +456,17 @@
     [self addConstraintsToCamera:view];
 }
 
+-(void)disableReply{
+    [self.superButton setDisabled:YES];
+    [self.superButton setDefaultIconPath:@"temperature-icon.png"];
+    [self.superButton setSuperButtonImage:[self.superButton defaultIconPath]];
+    
+}
+
+-(void)enableReply{
+    [self.superButton setDisabled:NO];
+}
+
 -(void)attachViews:(OverlayViewController *) x withY:(OverlayViewController *) y
 {
     [self addBlur];

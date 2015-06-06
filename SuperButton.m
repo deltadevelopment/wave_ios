@@ -164,35 +164,38 @@ typedef enum {
     if(self.hasError){
         [self showErrorAlert];
     }else{
-        switch (superButtonMode) {
-            case NONE:
-                [self animateButtonToMiddle];
-                [self setSuperButtonImage:self.defaultIconPath];
-                superButtonMode = MIDDLE;
-                self.onTap([NSNumber numberWithInt:1]);
-                break;
-            case MIDDLE:
-                if(self.shouldChangeMode){
-                    //animateToEdit
-                    [self setSuperButtonImage:@"tick.png"];
-                    
-                    self.lockActions = YES;
-                    superButtonMode = EDIT;
-                }
-                self.onTap([NSNumber numberWithInt:2]);
-                
-                break;
-            case EDIT:
-                if(!self.lockActions){
-                    superButtonMode = NONE;
+        if(!self.disabled){
+            switch (superButtonMode) {
+                case NONE:
+                    [self animateButtonToMiddle];
                     [self setSuperButtonImage:self.defaultIconPath];
-                    self.onTap([NSNumber numberWithInt:0]);
-                    [self animateButtonToRight];
-                }
-                break;
-            default:
-                break;
+                    superButtonMode = MIDDLE;
+                    self.onTap([NSNumber numberWithInt:1]);
+                    break;
+                case MIDDLE:
+                    if(self.shouldChangeMode){
+                        //animateToEdit
+                        [self setSuperButtonImage:@"tick.png"];
+                        
+                        self.lockActions = YES;
+                        superButtonMode = EDIT;
+                    }
+                    self.onTap([NSNumber numberWithInt:2]);
+                    
+                    break;
+                case EDIT:
+                    if(!self.lockActions){
+                        superButtonMode = NONE;
+                        [self setSuperButtonImage:self.defaultIconPath];
+                        self.onTap([NSNumber numberWithInt:0]);
+                        [self animateButtonToRight];
+                    }
+                    break;
+                default:
+                    break;
+            }
         }
+       
     }
     
 }
@@ -388,7 +391,7 @@ typedef enum {
                         superButton.alpha = 0.0;
                      }
                      completion:^(BOOL finished){
-                         [superButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"camera-icon.png"] withSize:150] forState:UIControlStateNormal];
+                         [superButton setImage:[UIHelper iconImage:[UIImage imageNamed:self.defaultIconPath] withSize:150] forState:UIControlStateNormal];
                          buttonXConstraint.constant = buttonXConstraintDefault;
                          buttonYConstraint.constant = buttonYConstraintDefault;
                          

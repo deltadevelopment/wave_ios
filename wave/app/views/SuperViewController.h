@@ -33,4 +33,6 @@
 -(void)hideError;
 -(void)initCameraView;
 -(void)setReplyMode:(BOOL) replyMode;
+-(void)disableReply;
+-(void)enableReply;
 @end

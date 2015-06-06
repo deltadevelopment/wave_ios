@@ -32,7 +32,7 @@ const int PEEK_Y_START = 300;
     bool peekExpanded;
     float initalAlpha;
     bool cameraMode;
-     bool isPeeking;
+    bool isPeeking;
     UIStoryboard *storyboard;
     UIImageView *cameraPlaceHolder;
     UIView *cameraView;
@@ -44,6 +44,7 @@ const int PEEK_Y_START = 300;
     UIButton *infoButton;
     NSLayoutConstraint *infoButtonConstraint;
     bool shouldAnimateTemperatureChanges;
+    bool superButtonDisabled;
 }
 @synthesize infoViewMode;
 - (void)viewDidLoad {
@@ -54,6 +55,12 @@ const int PEEK_Y_START = 300;
     [self initUISetup];
     [self attachSubviews];
     [self setupCallbacks];
+    if(superButtonDisabled){
+        [self disableReply];        
+    }else{
+    [self enableReply];
+    }
+    
     TemperatureController *viewControllerX = [[TemperatureController alloc] init];
     viewControllerX.onAction = ^(NSNumber *temperature){
         TemperatureModel *temperatureModel = [[TemperatureModel alloc] initWithDrop:[[currentDropPage drop] Id]];
@@ -77,9 +84,9 @@ const int PEEK_Y_START = 300;
             shouldAnimateTemperatureChanges = YES;
         }
         
-    
+        
     };
-   // FilterViewController *viewControllerY = (FilterViewController *)[self createViewControllerWithStoryboardId:@"filterView"];
+    // FilterViewController *viewControllerY = (FilterViewController *)[self createViewControllerWithStoryboardId:@"filterView"];
     
     cameraHolder = [[UIView alloc]initWithFrame:CGRectMake(0, -64, [UIHelper getScreenWidth],[UIHelper getScreenHeight])];
     cameraHolder.backgroundColor = [UIColor whiteColor];
@@ -119,23 +126,23 @@ const int PEEK_Y_START = 300;
 }
 
 -(void)initUISetup{
-//All visible and not visible elements
+    //All visible and not visible elements
     [self.superButton getButton].hidden = YES;
 }
 
 -(void)attachSubviews{
     
-   
-
+    
+    
 }
 
 -(void)loadBucket{
     [bucket find:[bucket Id] onCompletion:^(ResponseModel *response, BucketModel *returningBucket){
         bucket = returningBucket;
         currentDropPage = [self viewControllerAtIndex:[bucket.drops count]-1 replacingObject:currentDropPage];
-       NSArray *viewControllers = @[currentDropPage];
-       [currentDropPage setIsStartingView:YES];
-       [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
+        NSArray *viewControllers = @[currentDropPage];
+        [currentDropPage setIsStartingView:YES];
+        [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
         [self updatePageIndicator:[bucket.drops count]-1];
         
         for(DropModel *drop in bucket.drops){
@@ -144,38 +151,38 @@ const int PEEK_Y_START = 300;
         
         
     } onError:^(NSError *error){
-    
+        
     }];
     /*
-    [bucket find:^{
-        if([[bucket drops] count] > 0){
-            [self updatePageIndicator:[[bucket drops] count]-1];
-        }
-    } onError:^(NSError *error){
-        
-        
-    }];
+     [bucket find:^{
+     if([[bucket drops] count] > 0){
+     [self updatePageIndicator:[[bucket drops] count]-1];
+     }
+     } onError:^(NSError *error){
+     
+     
+     }];
      */
 }
 
 -(void)setUpObjects{
     storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     _drops = [[NSMutableArray alloc] init];
-  
+    
     self.pageViewController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
     self.pageViewController.dataSource = self;
     self.pageViewController.delegate = self;
-     isFirst = YES;
+    isFirst = YES;
     currentDropPage = [self viewControllerAtIndex:0 replacingObject:nil];
-   
+    
     NSArray *viewControllers = @[currentDropPage];
     [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
     
-       self.pageViewController.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
+    self.pageViewController.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
     [self addChildViewController:_pageViewController];
     [self.view insertSubview:_pageViewController.view atIndex:0];
     [self.pageViewController didMoveToParentViewController:self];
-
+    
     
     for (UIView *v in self.pageViewController.view.subviews) {
         if ([v isKindOfClass:[UIScrollView class]]) {
@@ -185,8 +192,8 @@ const int PEEK_Y_START = 300;
     _chat = (ChatViewController *)[storyboard instantiateViewControllerWithIdentifier:@"chatView"];
     
     [scrollView addSubview:self.chat.view];
-   [self addConstraintsChat:self.chat.view];
-   // _chat.view.frame = CGRectMake(0, 0, [UIHelper getScreenWidth], [UIHelper getScreenHeight]);
+    [self addConstraintsChat:self.chat.view];
+    // _chat.view.frame = CGRectMake(0, 0, [UIHelper getScreenWidth], [UIHelper getScreenHeight]);
     
 }
 
@@ -235,6 +242,8 @@ const int PEEK_Y_START = 300;
 -(void)chatWasHidden{
     infoButton.hidden = NO;
     [self.superButton getButton].hidden = NO;
+    
+    
 }
 
 
@@ -257,8 +266,10 @@ const int PEEK_Y_START = 300;
         if([self.chat isChatVisible]){
             [self.chat hideChat];
             
-           infoButton.hidden = NO;
+            infoButton.hidden = NO;
             [self.superButton getButton].hidden = NO;
+            
+            
         }else{
             [self.chat showChat];
             infoButton.hidden = YES;
@@ -273,27 +284,27 @@ const int PEEK_Y_START = 300;
     self.onDespand();
     
     
-   // [self.superCarousel removeBucketAsRoot];
+    // [self.superCarousel removeBucketAsRoot];
     //[self dismissViewControllerAnimated:NO completion:nil];
-   // NSLog(@"dismissing");
+    // NSLog(@"dismissing");
 }
 
 
 -(void)addPeekView{
     [self addBlur];
-      //peekViewController = [[PeekViewController alloc] init];
+    //peekViewController = [[PeekViewController alloc] init];
     peekViewController = (PeekViewController *)[storyboard instantiateViewControllerWithIdentifier:@"peekView"];
     peekViewController.view.frame = CGRectMake(0, -PEEK_Y_START, [UIHelper getScreenWidth], PEEK_Y_START);
     //[self.view addSubview:peekViewController.view];
     [self.view insertSubview:peekViewController.view aboveSubview:blurEffectView];
-   // peekViewController.view.backgroundColor = [UIColor clearColor];
+    // peekViewController.view.backgroundColor = [UIColor clearColor];
     [peekViewController updatePeekView:[bucket user]];
     //[self addConstraints:peekViewController.view];
     
     
-   // [self.view addSubview:self.chat.view];
-
-
+    // [self.view addSubview:self.chat.view];
+    
+    
     
 }
 
@@ -331,7 +342,7 @@ const int PEEK_Y_START = 300;
 
 
 -(void)initUI{
-   // self.uiPageIndicator = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
+    // self.uiPageIndicator = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
     //MER HER
 }
 
@@ -353,6 +364,12 @@ const int PEEK_Y_START = 300;
     }else{
         [self.navigationItem setTitle:[bucket title]];
     }
+    if([bucket.bucket_type isEqualToString:@"user"]){
+        superButtonDisabled = YES;
+   
+    }else{
+        superButtonDisabled = NO;
+    }
 }
 
 -(void)updatePageIndicator:(NSUInteger)index{
@@ -369,24 +386,24 @@ const int PEEK_Y_START = 300;
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController
 {
     NSUInteger index = ((DropController*) viewController).pageIndex;
-  
+    
     if (index == NSNotFound) {
         return nil;
     }
     if(index == 0){
-         NSLog(@"RETURNING LAST DROP");
+        NSLog(@"RETURNING LAST DROP");
         return [self viewControllerAtIndex:[[bucket drops] count]-1 replacingObject:nil];
     }
     
     index--;
-
+    
     
     return [self viewControllerAtIndex:index replacingObject:nil];
 }
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController
 {
-  //  [[self getScrollView]bringSubviewToFront:self.chat.view];
+    //  [[self getScrollView]bringSubviewToFront:self.chat.view];
     NSUInteger index = ((DropController*) viewController).pageIndex;
     
     if (index == NSNotFound) {
@@ -421,7 +438,7 @@ const int PEEK_Y_START = 300;
     if (([[bucket drops] count] == 0) || (index >= [[bucket drops]  count])) {
         return nil;
     }
-
+    
     DropController *pageContentViewController = [[DropController alloc] init];
     DropModel *dropModel = [[bucket drops] objectAtIndex:index];
     if(pageToReplace != nil){
@@ -441,7 +458,7 @@ const int PEEK_Y_START = 300;
         [pageContentViewController setIsPlaceholderView:NO];
     }
     [pageContentViewController bindToModel];
-   // pageContentViewController.imageFile = self.pageImages[index];
+    // pageContentViewController.imageFile = self.pageImages[index];
     //pageContentViewController.titleText = self.pageTitles[index];
     pageContentViewController.pageIndex = index;
     
@@ -557,9 +574,9 @@ const int PEEK_Y_START = 300;
                                       direction:UIPageViewControllerNavigationDirectionForward
                                        animated:YES
                                      completion:^(BOOL finished){
-        cameraHolder.hidden = NO;
-        canPeek = NO;
-    }];
+                                         cameraHolder.hidden = NO;
+                                         canPeek = NO;
+                                     }];
     
     
     //Animate to last drop and add new drop
@@ -585,7 +602,7 @@ const int PEEK_Y_START = 300;
                              //[Scroller setContentOffset:bottomOffset animated:NO];
                          }
                          completion:^(BOOL finished){
-                            
+                             
                              //[self showToolButtons];
                              
                              
@@ -612,7 +629,7 @@ const int PEEK_Y_START = 300;
 -(void)onCancelTap{
     [super onCancelTap];
     cameraHolder.hidden = YES;
-   
+    
     NSArray *viewControllers = @[[self viewControllerAtIndex:[bucket.drops count]-2 replacingObject:nil]];
     [self.pageViewController setViewControllers:viewControllers
                                       direction:UIPageViewControllerNavigationDirectionReverse
@@ -625,13 +642,13 @@ const int PEEK_Y_START = 300;
     
     
     NSLog(@"cancel");
-   // Scroller.userInteractionEnabled = YES;
+    // Scroller.userInteractionEnabled = YES;
     //PageCount -=1;
     //[currentView removeFromSuperview];
     //Scroller.contentSize = CGSizeMake(PageCount * Scroller.bounds.size.width, Scroller.bounds.size.height);
     //ViewSize = CGRectOffset(ViewSize, -Scroller.bounds.size.width, 0);
     //[self addDropToBucket:[[DropModel alloc] initWithTestData:@"169.jpg" withName:@"Chris"]];
-   // [self addDropToBucket:[[bucket drops] objectAtIndex:0]];
+    // [self addDropToBucket:[[bucket drops] objectAtIndex:0]];
     //self.dropsAmount.text = [NSString stringWithFormat:@"%ld/%ld", (long)currentPage, [drops count] - 2];
 }
 
@@ -641,16 +658,16 @@ const int PEEK_Y_START = 300;
     [currentDropPage drop].media_tmp = video;
     [currentDropPage setIsStartingView:YES];
     [currentDropPage bindToModel];
-   // Scroller.userInteractionEnabled = YES;
-  //  [currentView setMedia:video withIndexId:(int)[drops count]];
-   // [drops addObject:currentView];
-   // self.dropsAmount.text = [NSString stringWithFormat:@"%ld/%ld", (long)currentPage, [drops count] - 1];
-   // [self addDropToBucket:[[bucket drops] objectAtIndex:0]];
+    // Scroller.userInteractionEnabled = YES;
+    //  [currentView setMedia:video withIndexId:(int)[drops count]];
+    // [drops addObject:currentView];
+    // self.dropsAmount.text = [NSString stringWithFormat:@"%ld/%ld", (long)currentPage, [drops count] - 1];
+    // [self addDropToBucket:[[bucket drops] objectAtIndex:0]];
     // DropView *firstDrop = [drops objectAtIndex:0];
     //[firstDrop setMedia:video];
     //playButton.hidden = NO;
-   // chat.view.hidden = NO;
-   
+    // chat.view.hidden = NO;
+    
 }
 -(void)onImageTaken:(UIImage *)image withText:(NSString *)text{
     cameraHolder.hidden = YES;
@@ -659,7 +676,7 @@ const int PEEK_Y_START = 300;
     [currentDropPage drop].media_tmp = UIImagePNGRepresentation([GraphicsHelper imageByScalingAndCroppingForSize:size img:image]);
     [currentDropPage bindToModel];
     
-   // Scroller.userInteractionEnabled = YES;
+    // Scroller.userInteractionEnabled = YES;
     
     //[self.camera.view removeFromSuperview];
     //[currentView setMedia:[GraphicsHelper imageByScalingAndCroppingForSize:size img:image] withIndexId:(int)[drops count]];
@@ -667,10 +684,10 @@ const int PEEK_Y_START = 300;
     //[drops addObject:currentView];
     //self.dropsAmount.text = [NSString stringWithFormat:@"%ld/%ld", (long)currentPage, [drops count] - 1];
     //[self addDropToBucket:[[bucket drops] objectAtIndex:0]];
-   // UIImageView *firstDrop = [drops objectAtIndex:0];
+    // UIImageView *firstDrop = [drops objectAtIndex:0];
     //firstDrop.image = image;
     //[chat hideChat];
-   
+    
 }
 
 

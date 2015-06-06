@@ -31,6 +31,7 @@
 @property (nonatomic) bool hasError;
 @property (nonatomic, strong) NSString *defaultIconPath;
 @property (nonatomic) bool shouldChangeMode;
+@property (nonatomic) bool disabled;
 -(void)setSuperButtonImage:(NSString *) path;
 -(id)init:(UIView *)view;
 
