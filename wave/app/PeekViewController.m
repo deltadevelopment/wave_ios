@@ -9,6 +9,7 @@
 #import "PeekViewController.h"
 #import "UIHelper.h"
 #import "AuthHelper.h"
+#import "AbstractFeedViewController.h"
 
 @interface PeekViewController ()
 
@@ -29,20 +30,22 @@ AuthHelper *authHelper;
     self.profilePicture.layer.cornerRadius = 50;
     self.profilePicture.clipsToBounds = YES;
     self.profilePicture.contentMode = UIViewContentModeScaleAspectFill;
+    self.profilePicture.userInteractionEnabled = YES;
+    UITapGestureRecognizer *showProfileGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showProfile)];
+    [self.profilePicture addGestureRecognizer:showProfileGesture];
     self.availability.layer.cornerRadius = 5;
     self.view.backgroundColor = [UIColor clearColor];
     self.availability.clipsToBounds = YES;
     self.availability.hidden = YES;
     self.subscribeButton.alpha = 0.0;
     self.view.userInteractionEnabled = YES;
-    [UIHelper applyThinLayoutOnLabel:self.displayName withSize:24.0];
+    [UIHelper applyThinLayoutOnLabel:self.displayName withSize:20.0];
     [UIHelper applyThinLayoutOnLabel:self.location withSize:17.0];
     [[self.subscribeButton layer] setBorderWidth:1.0f];
     [[self.subscribeButton layer] setBorderColor:[UIColor whiteColor].CGColor];
     self.subscribeButton.layer.cornerRadius = 10;
     self.subscribeButton.clipsToBounds = YES;
     [self.subscribeButton addTarget:self action:@selector(subscribeAction) forControlEvents:UIControlEventTouchUpInside];
-    
     //[self.subscribeButton setBackgroundImage:[UIImage imageNamed:@"tick.png"] forState:UIControlStateNormal];
     
     [self.subscribeButton setTitle:@"Subscribe" forState:UIControlStateNormal];
@@ -52,7 +55,7 @@ AuthHelper *authHelper;
     
      // self.subscribeButton.titleEdgeInsets = UIEdgeInsetsMake(0, -self.subscribeButton.imageView.frame.size.width, 0, self.subscribeButton.imageView.frame.size.width);
      //self.subscribeButton.imageEdgeInsets = UIEdgeInsetsMake(0, self.subscribeButton.titleLabel.frame.size.width, 0, -self.subscribeButton.titleLabel.frame.size.width);
-     
+   
    
 }
 
@@ -153,6 +156,7 @@ AuthHelper *authHelper;
     
 }
 
+
 -(void)resetToSubscription{
     [self.subscribeButton setTitle:@"Subscribe" forState:UIControlStateNormal];
     [self removeInsetsFromButton];
@@ -161,7 +165,7 @@ AuthHelper *authHelper;
 -(void)updatePeekView:(UserModel *) user{
     self.user = user;
     self.location.text = [NSString stringWithFormat:@"%d others already do", [user subscribers_count]];
-    self.displayName.text = [user display_name] != nil ? [user display_name] : [user username];
+    self.displayName.text = [user display_name] != nil ? [user display_name] : [user usernameFormatted];
     if(user.Id == [[authHelper getUserId] intValue]){
         self.subscribeButton.hidden = YES;
         self.location.hidden = YES;
@@ -185,6 +189,43 @@ AuthHelper *authHelper;
     } onError:^(NSError *error){
         
     }];
+}
+
+-(void)showProfile{
+    NSLog(@"showing profile");
+    //UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
+    AbstractFeedViewController *profileController = [self.storyboard instantiateViewControllerWithIdentifier:@"activity"];
+    [profileController setViewMode:1];
+    [profileController setIsDeviceUser:NO];
+    [profileController setAnotherUser:self.user];
+    [profileController hidePeekFirst];
+    [self.view insertSubview:profileController.view atIndex:0];
+    [self addChildViewController:profileController];
+    CGRect frame = profileController.view.frame;
+    frame.origin.y = -[UIHelper getScreenHeight];
+    profileController.view.frame = frame;
+    [UIView animateWithDuration:0.5f
+                          delay:0.0f
+                        options: UIViewAnimationOptionCurveLinear
+                     animations:^{
+                         CGRect frame = profileController.view.frame;
+                         frame.origin.y = 0;
+                         profileController.view.frame = frame;
+                         CGRect frame2 = self.pageViewController.view.frame;
+                         frame2.origin.y = [UIHelper getScreenHeight];
+                         self.pageViewController.view.frame = frame2;
+                     }
+                     completion:^(BOOL finished){
+                         CGRect frame2 = self.pageViewController.view.frame;
+                         frame2.origin.y = 0;
+                         self.pageViewController.view.frame = frame2;
+                         [profileController.view removeFromSuperview];
+                         [profileController layOutPeek];
+                         [[ApplicationHelper getMainNavigationController] pushViewController:profileController animated:NO];
+                     }];
+    
+ 
+
 }
 
 -(void)changeSubscribeUI{

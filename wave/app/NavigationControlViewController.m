@@ -9,6 +9,7 @@
 #import "NavigationControlViewController.h"
 #import "ColorHelper.h"
 #import "UIHelper.h"
+#import "ApplicationHelper.h"
 #import "SettingsTableViewController.h"
 @interface NavigationControlViewController ()
 
@@ -18,7 +19,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+
+    if([ApplicationHelper getMainNavigationController] == nil){
+        [ApplicationHelper setMainNavigationController:self.navigationController];
+    }
     /*
      UIImage *image = [self resizeImage:[UIHelper iconImage:[UIImage imageNamed:@"menu.png"] withSize:20 ] newSize:CGSizeMake(10,10)];
      self.menuItem = [[UIBarButtonItem alloc] initWithImage:image style:UIBarButtonItemStylePlain target:self action:@selector(menuItemSelected)];

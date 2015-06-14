@@ -8,6 +8,6 @@
 
 #import "ActivityViewController.h"
 
-@interface ProfileViewController : ActivityViewController
+@interface ProfileViewController : AbstractFeedViewController
 
 @end

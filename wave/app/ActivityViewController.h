@@ -13,6 +13,9 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
 @property (nonatomic, strong) FeedModel *feedModel;
+@property (nonatomic) bool shouldHidePeek;
 -(void)initialize;
+-(UIView *)getCameraHolder;
+
 
 @end

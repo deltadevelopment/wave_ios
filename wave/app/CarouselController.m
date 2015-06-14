@@ -84,6 +84,7 @@
         [pageContentViewController setViewMode:0];
     }else {
         [pageContentViewController setViewMode:1];
+        [pageContentViewController setIsDeviceUser:YES];
     }
     [pages addObject:pageContentViewController];
 }

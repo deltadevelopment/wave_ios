@@ -1178,6 +1178,7 @@
                         <viewControllerLayoutGuide type="bottom" id="WoZ-NG-Hnb"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="V40-O0-4ZT">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="prf-87-tFJ">
@@ -2073,7 +2074,9 @@
                             <constraint firstAttribute="centerX" secondItem="lsR-uQ-pGV" secondAttribute="centerX" constant="-16" id="OfH-Xm-nrF">
                                 <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
                             </constraint>
-                            <constraint firstItem="hIA-Th-I7h" firstAttribute="top" secondItem="2wJ-NQ-Mia" secondAttribute="bottom" constant="26" id="PJx-rP-lkg"/>
+                            <constraint firstItem="hIA-Th-I7h" firstAttribute="top" secondItem="2wJ-NQ-Mia" secondAttribute="bottom" constant="26" id="PJx-rP-lkg">
+                                <variation key="heightClass=regular-widthClass=compact" constant="19"/>
+                            </constraint>
                             <constraint firstItem="Dx8-BH-UeK" firstAttribute="top" secondItem="2wJ-NQ-Mia" secondAttribute="bottom" constant="307" id="T8M-s8-AD6">
                                 <variation key="heightClass=regular-widthClass=compact" constant="200"/>
                             </constraint>
@@ -2084,12 +2087,12 @@
                                 <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
                             </constraint>
                             <constraint firstItem="lsR-uQ-pGV" firstAttribute="top" secondItem="moT-Sh-Yji" secondAttribute="bottom" constant="33" id="fN2-Vx-lAt">
-                                <variation key="heightClass=regular-widthClass=compact" constant="80"/>
+                                <variation key="heightClass=regular-widthClass=compact" constant="50"/>
                             </constraint>
                             <constraint firstItem="vFP-Na-ueK" firstAttribute="centerX" secondItem="hIA-Th-I7h" secondAttribute="centerX" id="h1C-XU-sqU"/>
                             <constraint firstAttribute="centerX" secondItem="2wJ-NQ-Mia" secondAttribute="centerX" id="jUI-GV-nab"/>
                             <constraint firstItem="vFP-Na-ueK" firstAttribute="top" secondItem="lsR-uQ-pGV" secondAttribute="bottom" constant="45" id="uI8-jg-Aex">
-                                <variation key="heightClass=regular-widthClass=compact" constant="20"/>
+                                <variation key="heightClass=regular-widthClass=compact" constant="19"/>
                             </constraint>
                         </constraints>
                         <variation key="default">
@@ -2972,6 +2975,23 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aoD-CV-dqq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-2023.5" y="1369.5"/>
+        </scene>
+        <!--Profile View Controller-->
+        <scene sceneID="L11-os-bO3">
+            <objects>
+                <viewController storyboardIdentifier="profileView" id="bN6-wl-39h" customClass="ProfileViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="jWa-hH-Uez"/>
+                        <viewControllerLayoutGuide type="bottom" id="tIF-Na-p5W"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Ky8-cL-ROO">
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bDG-sq-R6f" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="6522" y="371.25"/>
         </scene>
         <!--Feed Table View Controller-->
         <scene sceneID="3N6-aa-xeY">
@@ -4130,6 +4150,9 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Eal-13-HT7">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <color key="backgroundColor" red="0.18039215689999999" green="0.80000000000000004" blue="0.4431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="49" y="49" width="480" height="240"/>
+                                </variation>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

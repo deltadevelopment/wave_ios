@@ -39,11 +39,11 @@
     spinner.hidden = YES;
     
     if(mode == 1){
-        UIButton *settings = [UIButton buttonWithType:UIButtonTypeCustom];
-        settings.frame = CGRectMake([UIHelper getScreenWidth] - 30, 20, 20, 20);
-        [settings addTarget:self action:@selector(showActions) forControlEvents:UIControlEventTouchUpInside];
-        [settings setImage:[UIImage imageNamed:@"dots-icon"] forState:UIControlStateNormal];
-        [self addSubview:settings];
+        //UIButton *settings = [UIButton buttonWithType:UIButtonTypeCustom];
+       // settings.frame = CGRectMake([UIHelper getScreenWidth] - 30, 20, 20, 20);
+       // [settings addTarget:self action:@selector(showActions) forControlEvents:UIControlEventTouchUpInside];
+        //[settings setImage:[UIImage imageNamed:@"dots-icon"] forState:UIControlStateNormal];
+        //[self addSubview:settings];
     }
  
     

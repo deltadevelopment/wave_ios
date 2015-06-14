@@ -45,6 +45,7 @@ const int EXPAND_SIZE = 400;
     [super viewDidLoad];
     [self initialize];
     userModel = [[UserModel alloc] initWithDeviceUser];
+  
   storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
@@ -60,6 +61,9 @@ const int EXPAND_SIZE = 400;
     [self startRefreshing];
     
     self.tableView.backgroundColor = [ColorHelper blueColor];
+    if(viewMode == 1){
+        [self addPeekView];
+    }
 }
 
 -(void)setViewMode:(int)mode{
@@ -71,16 +75,32 @@ const int EXPAND_SIZE = 400;
     if(viewMode == 0){
         self.feedModel = [[FeedModel alloc] init];
     }else{
-        authHelper = [[AuthHelper alloc] init];
-        NSString *url = [NSString stringWithFormat:@"user/%@/buckets", [authHelper getUserId]];
-        self.feedModel = [[FeedModel alloc] initWithURL:url];
+        if(self.isDeviceUser){
+            authHelper = [[AuthHelper alloc] init];
+            NSString *url = [NSString stringWithFormat:@"user/%@/buckets", [authHelper getUserId]];
+            self.feedModel = [[FeedModel alloc] initWithURL:url];
+        }else{
+            [self.navigationItem setTitle:self.anotherUser.username];
+            NSString *url = [NSString stringWithFormat:@"user/%d/buckets", self.anotherUser.Id];
+            NSLog(url);
+            self.feedModel = [[FeedModel alloc] initWithURL:url];
+        }
+       
     }
 }
 
 
 -(void)addPeekView{
     peekViewModule = [[PeekViewModule alloc] initWithView:self.view withSubview:cameraHolder withController:self.navigationController];
-    [peekViewModule updateText:userModel];
+     NSLog(@"hiding2");
+    if(self.isDeviceUser){
+        userModel =[[UserModel alloc] initWithDeviceUser:^(UserModel *user){
+            [peekViewModule updateText:user];
+        } onError:^(NSError *error){}];
+    }else{
+        [peekViewModule updateText:self.anotherUser];
+    }
+    
 }
 
 -(void)subscribeAction{
@@ -143,12 +163,18 @@ const int EXPAND_SIZE = 400;
 
 
 -(void)viewDidLayoutSubviews{
+    
     [super viewDidLayoutSubviews];
     [self.view addSubview:cameraHolder];
     cameraHolder.hidden = YES;
     [self.view insertSubview:self.tableView belowSubview:cameraHolder];
     if(viewMode == 1){
-        [self addPeekView];
+        if(!self.shouldHidePeek){
+            [peekViewModule layoutElementsWithSubview:cameraHolder];
+        }else{
+            [peekViewModule layoutBackgroundWithSubview:cameraHolder];
+        }
+        
     }
 
 }
@@ -245,6 +271,11 @@ const int EXPAND_SIZE = 400;
         cameraView = view;
         [cameraHolder addSubview:cameraView];
     }
+}
+
+-(void)layOutPeek{
+    self.shouldHidePeek = NO;
+    [peekViewModule layoutElementsWithSubview:cameraHolder];
 }
 
 -(void)onCameraOpen{
@@ -426,6 +457,11 @@ const int EXPAND_SIZE = 400;
      [cell update:[[self.feedModel feed] objectAtIndex:indexValue]];
 }
 
+-(void)hidePeekFirst{
+    self.shouldHidePeek = YES;
+    NSLog(@"hiding");
+}
+
 -(void)uploadMedia:(NSData *) media{
 /*
      __weak typeof(self) weakSelf = self;
@@ -459,6 +495,10 @@ const int EXPAND_SIZE = 400;
       
      }];
  */
+}
+
+-(void)viewDidAppear:(BOOL)animated{
+//animate the view down
 }
 
 

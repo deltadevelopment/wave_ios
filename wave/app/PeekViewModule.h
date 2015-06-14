@@ -20,4 +20,7 @@
 -(void)updateText:(UserModel *) user;
 -(void)fadeOut;
 -(void)fadeIn;
+-(void)layoutElementsWithSubview:(UIView *) subview;
+-(void)hide;
+-(void)layoutBackgroundWithSubview:(UIView *)subview;
 @end

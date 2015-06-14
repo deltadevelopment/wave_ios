@@ -141,6 +141,7 @@
 		F1E3BB8D1B2DFFA600B55F2B /* pencil-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = F1E3BB8C1B2DFFA600B55F2B /* pencil-icon.png */; };
 		F1E3BB8F1B2DFFB100B55F2B /* color-picker-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = F1E3BB8E1B2DFFB100B55F2B /* color-picker-icon.png */; };
 		F1E3BB911B2DFFB900B55F2B /* rect-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = F1E3BB901B2DFFB900B55F2B /* rect-icon.png */; };
+		F1E3BB931B2E0BD700B55F2B /* settings-icon-white.png in Resources */ = {isa = PBXBuildFile; fileRef = F1E3BB921B2E0BD700B55F2B /* settings-icon-white.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -375,6 +376,7 @@
 		F1E3BB8C1B2DFFA600B55F2B /* pencil-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pencil-icon.png"; sourceTree = "<group>"; };
 		F1E3BB8E1B2DFFB100B55F2B /* color-picker-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "color-picker-icon.png"; sourceTree = "<group>"; };
 		F1E3BB901B2DFFB900B55F2B /* rect-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "rect-icon.png"; sourceTree = "<group>"; };
+		F1E3BB921B2E0BD700B55F2B /* settings-icon-white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "settings-icon-white.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -535,6 +537,7 @@
 				F1BD62221AEC7FA300BDE1CA /* cross.png */,
 				C5D4738C1AF2BA8D0097E44F /* wave-logo.png */,
 				F1E127B91B00141E000E3F2C /* play.png */,
+				F1E3BB921B2E0BD700B55F2B /* settings-icon-white.png */,
 				C5A27BA21ADE779500968033 /* events-icon.png */,
 				C5D473651AE56B540097E44F /* settings-icon.png */,
 				C5D4737F1AE795890097E44F /* bucket-white.png */,
@@ -966,6 +969,7 @@
 				C5D4739E1AF93A660097E44F /* drop.png in Resources */,
 				F1E127BA1B00141E000E3F2C /* play.png in Resources */,
 				C5D4737A1AE6C29F0097E44F /* cross-simple.png in Resources */,
+				F1E3BB931B2E0BD700B55F2B /* settings-icon-white.png in Resources */,
 				C5D473761AE699DE0097E44F /* the-bar.png in Resources */,
 				C5A27BA61ADE779500968033 /* profile-icon.png in Resources */,
 				C5D4739F1AF93A660097E44F /* eye.png in Resources */,

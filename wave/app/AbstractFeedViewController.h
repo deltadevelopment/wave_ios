@@ -16,6 +16,8 @@
 @property (nonatomic, copy) void (^onNetworkError)(UIView*(view));
 @property (nonatomic, copy) void (^onNetworkErrorHide)(void);
 @property (nonatomic, copy) void (^onLockScreenToggle)(void);
+@property (nonatomic) bool isDeviceUser;
+@property (nonatomic, strong) UserModel *anotherUser;
 @property NSUInteger pageIndex;
 -(void)scrollUp;
 -(void)prepareCamera:(UIView *)view;
@@ -30,4 +32,7 @@
 -(void)onMediaPosted:(BucketModel *)bucket;
 -(void)onMediaPostedDrop:(DropModel *)drop;
 -(void)setViewMode:(int)mode;
+-(void)hidePeekFirst;
+-(void)layOutPeek;
+
 @end

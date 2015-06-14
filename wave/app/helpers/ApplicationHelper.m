@@ -10,6 +10,7 @@
 #import "BucketModel.h"
 #import "DropModel.h"
 static NSIndexPath *currrentIndex = 0;
+static UINavigationController *mainNavigationController;
 NSArray *availableTexts;
 NSArray *unAvailableTexts;
 @implementation ApplicationHelper
@@ -85,6 +86,16 @@ NSArray *unAvailableTexts;
     return [images objectAtIndex:rand()%4];
 
 }
+
++(UINavigationController *)getMainNavigationController{
+    return mainNavigationController;
+}
+
++(void)setMainNavigationController:(UINavigationController *) naivgationController{
+    mainNavigationController = naivgationController;
+}
+
+
 /*
 -(void)alertUser:(NSString *) text{
     if([[NSUserDefaults standardUserDefaults] objectForKey:@"debugMode"] != nil) {

@@ -104,6 +104,13 @@ const int PEEK_Y_START = 300;
     [self addPeekView];
 }
 
+
+-(void)ShowProfile{
+    
+    
+
+}
+
 -(void)initInfoButton{
     infoButton = [UIButton buttonWithType:UIButtonTypeCustom];
     //infoButton.frame = CGRectMake([UIHelper getScreenWidth] - 40,15 , 20, 20);
@@ -295,6 +302,7 @@ const int PEEK_Y_START = 300;
     [self addBlur];
     //peekViewController = [[PeekViewController alloc] init];
     peekViewController = (PeekViewController *)[storyboard instantiateViewControllerWithIdentifier:@"peekView"];
+    [peekViewController setPageViewController:self.pageViewController];
     peekViewController.view.frame = CGRectMake(0, -PEEK_Y_START, [UIHelper getScreenWidth], PEEK_Y_START);
     //[self.view addSubview:peekViewController.view];
     [self.view insertSubview:peekViewController.view aboveSubview:blurEffectView];
