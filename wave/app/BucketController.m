@@ -45,6 +45,7 @@ const int PEEK_Y_START = 300;
     NSLayoutConstraint *infoButtonConstraint;
     bool shouldAnimateTemperatureChanges;
     bool superButtonDisabled;
+    AuthHelper *authHelper;
 }
 @synthesize infoViewMode;
 - (void)viewDidLoad {
@@ -60,7 +61,7 @@ const int PEEK_Y_START = 300;
     }else{
     [self enableReply];
     }
-    
+ 
     TemperatureController *viewControllerX = [[TemperatureController alloc] init];
     viewControllerX.onAction = ^(NSNumber *temperature){
         TemperatureModel *temperatureModel = [[TemperatureModel alloc] initWithDrop:[[currentDropPage drop] Id]];
@@ -359,16 +360,20 @@ const int PEEK_Y_START = 300;
 
 -(void)setBucket:(BucketModel *)inputBucket{
     bucket = inputBucket;
+    authHelper = [[AuthHelper alloc] init];
     if([bucket.bucket_type isEqualToString:@"user"]){
-        [self.navigationItem setTitle:[[bucket user] username]];
-    }else{
-        [self.navigationItem setTitle:[bucket title]];
-    }
-    if([bucket.bucket_type isEqualToString:@"user"]){
-        superButtonDisabled = YES;
-   
+                [self.navigationItem setTitle:[[bucket user] username]];
+        // NSLog(@"Bucket user id: %d %d", [bucket user].Id, [[authHelper getUserId] intValue]);
+        if([bucket user].Id == [[authHelper getUserId] intValue]){
+            superButtonDisabled = NO;
+        }
+        else{
+            superButtonDisabled = YES;
+        }
+        
     }else{
         superButtonDisabled = NO;
+        [self.navigationItem setTitle:[bucket title]];
     }
 }
 
@@ -559,9 +564,10 @@ const int PEEK_Y_START = 300;
 
 -(void)onCameraOpen{
     NSLog(@"CAMERA OPEN");
+    [currentDropPage stopVideo];
     [self.camera prepareCamera:YES withReply:YES];
     [DataHelper setCurrentBucketId:bucket.Id];
-    //infoButton.hidden = YES;
+    
     cameraMode = YES;
     
     DropModel *replyDrop = [[DropModel alloc] init];
@@ -577,6 +583,7 @@ const int PEEK_Y_START = 300;
                                      completion:^(BOOL finished){
                                          cameraHolder.hidden = NO;
                                          canPeek = NO;
+                                         infoButton.hidden = YES;
                                      }];
     
     
@@ -618,7 +625,7 @@ const int PEEK_Y_START = 300;
 
 -(void)onCameraClose{
     cameraMode = NO;
-    //infoButton.hidden = NO;
+    infoButton.hidden = NO;
     [super onCameraClose];
 }
 
