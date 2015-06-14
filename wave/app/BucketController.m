@@ -427,6 +427,7 @@ const int PEEK_Y_START = 300;
     [peekViewController updatePeekView:[[currentPage drop] user]];
     [self updatePageIndicator:currentPage.pageIndex];
     DropController *previousPage = [previousViewControllers objectAtIndex:0];
+    [previousPage setIsDisplaying:NO];
     [currentPage startVideo];
     currentPage.isDisplaying = YES;
     [previousPage stopVideo];

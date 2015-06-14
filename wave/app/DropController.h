@@ -16,6 +16,7 @@
 @property (nonatomic) bool isStartingView;
 @property (nonatomic) bool isPlaceholderView;
 @property (nonatomic) bool isDisplaying;
+@property (nonatomic) bool isOutOfFocus;
 -(void)bindToModel;
 -(void)stopVideo;
 -(void)startVideo;

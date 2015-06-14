@@ -36,7 +36,7 @@
 }
 
 -(void)bindToModel{
-
+    NSLog(@" ---- About to request media for drop id %d", self.drop.Id);
     //Bind all ui text etc and images
     DropView *dropView = (DropView *)self.view;
     [dropView setDropUI:self.drop];

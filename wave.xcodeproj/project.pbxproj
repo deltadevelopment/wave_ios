@@ -97,7 +97,6 @@
 		F18A20EE1B1D34F0003294BE /* TemperatureView.m in Sources */ = {isa = PBXBuildFile; fileRef = F18A20ED1B1D34F0003294BE /* TemperatureView.m */; };
 		F18A20F11B1D46BA003294BE /* manatee-white.png in Resources */ = {isa = PBXBuildFile; fileRef = F18A20F01B1D46BA003294BE /* manatee-white.png */; };
 		F18A20F41B227793003294BE /* TemperatureModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F18A20F31B227793003294BE /* TemperatureModel.m */; };
-		F18A20F61B228888003294BE /* temperature-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = F18A20F51B228888003294BE /* temperature-icon.png */; };
 		F1BD621C1AE460D400BDE1CA /* Carousel.m in Sources */ = {isa = PBXBuildFile; fileRef = F1BD621B1AE460D400BDE1CA /* Carousel.m */; };
 		F1BD621F1AE46EFC00BDE1CA /* ActivityTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F1BD621E1AE46EFC00BDE1CA /* ActivityTableViewCell.m */; };
 		F1BD62211AEBB46F00BDE1CA /* 169.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F1BD62201AEBB46F00BDE1CA /* 169.jpg */; };
@@ -137,10 +136,11 @@
 		F1E127B81AFFD191000E3F2C /* ProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = F1E127B71AFFD191000E3F2C /* ProgressView.m */; };
 		F1E127BA1B00141E000E3F2C /* play.png in Resources */ = {isa = PBXBuildFile; fileRef = F1E127B91B00141E000E3F2C /* play.png */; };
 		F1E127BF1B0023C0000E3F2C /* media-pause.png in Resources */ = {isa = PBXBuildFile; fileRef = F1E127BE1B0023C0000E3F2C /* media-pause.png */; };
-		F1E2A0C51B2334C40092D61F /* color-picker-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = F1E2A0C41B2334C40092D61F /* color-picker-icon.png */; };
-		F1E2A0C71B2338100092D61F /* pencil-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = F1E2A0C61B2338100092D61F /* pencil-icon.png */; };
 		F1E2A0CA1B2338EE0092D61F /* ColorPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = F1E2A0C91B2338EE0092D61F /* ColorPickerView.m */; };
-		F1E2A0CC1B23435F0092D61F /* rect-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = F1E2A0CB1B23435F0092D61F /* rect-icon.png */; };
+		F1E3BB8B1B2DFF9900B55F2B /* temperature-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = F1E3BB8A1B2DFF9900B55F2B /* temperature-icon.png */; };
+		F1E3BB8D1B2DFFA600B55F2B /* pencil-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = F1E3BB8C1B2DFFA600B55F2B /* pencil-icon.png */; };
+		F1E3BB8F1B2DFFB100B55F2B /* color-picker-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = F1E3BB8E1B2DFFB100B55F2B /* color-picker-icon.png */; };
+		F1E3BB911B2DFFB900B55F2B /* rect-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = F1E3BB901B2DFFB900B55F2B /* rect-icon.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -299,7 +299,6 @@
 		F18A20F01B1D46BA003294BE /* manatee-white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "manatee-white.png"; path = "../../../../../../Downloads/manatee-white.png"; sourceTree = "<group>"; };
 		F18A20F21B227793003294BE /* TemperatureModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TemperatureModel.h; sourceTree = "<group>"; };
 		F18A20F31B227793003294BE /* TemperatureModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TemperatureModel.m; sourceTree = "<group>"; };
-		F18A20F51B228888003294BE /* temperature-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "temperature-icon.png"; path = "../../../../../../Downloads/temperature-icon.png"; sourceTree = "<group>"; };
 		F1BD621A1AE460D400BDE1CA /* Carousel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Carousel.h; sourceTree = "<group>"; };
 		F1BD621B1AE460D400BDE1CA /* Carousel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Carousel.m; sourceTree = "<group>"; };
 		F1BD621D1AE46EFC00BDE1CA /* ActivityTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityTableViewCell.h; sourceTree = "<group>"; };
@@ -370,11 +369,12 @@
 		F1E127B71AFFD191000E3F2C /* ProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProgressView.m; sourceTree = "<group>"; };
 		F1E127B91B00141E000E3F2C /* play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = play.png; sourceTree = "<group>"; };
 		F1E127BE1B0023C0000E3F2C /* media-pause.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "media-pause.png"; sourceTree = "<group>"; };
-		F1E2A0C41B2334C40092D61F /* color-picker-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "color-picker-icon.png"; path = "../../../../../../../../Volumes/Public/color-picker-icon.png"; sourceTree = "<group>"; };
-		F1E2A0C61B2338100092D61F /* pencil-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "pencil-icon.png"; path = "../../../../../../Downloads/pencil-icon.png"; sourceTree = "<group>"; };
 		F1E2A0C81B2338EE0092D61F /* ColorPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorPickerView.h; sourceTree = "<group>"; };
 		F1E2A0C91B2338EE0092D61F /* ColorPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ColorPickerView.m; sourceTree = "<group>"; };
-		F1E2A0CB1B23435F0092D61F /* rect-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "rect-icon.png"; path = "../../../../../../Downloads/rect-icon.png"; sourceTree = "<group>"; };
+		F1E3BB8A1B2DFF9900B55F2B /* temperature-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "temperature-icon.png"; sourceTree = "<group>"; };
+		F1E3BB8C1B2DFFA600B55F2B /* pencil-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pencil-icon.png"; sourceTree = "<group>"; };
+		F1E3BB8E1B2DFFB100B55F2B /* color-picker-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "color-picker-icon.png"; sourceTree = "<group>"; };
+		F1E3BB901B2DFFB900B55F2B /* rect-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "rect-icon.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -505,15 +505,15 @@
 		C5576B271ADBC195009C1D5E /* res */ = {
 			isa = PBXGroup;
 			children = (
-				F18A20F51B228888003294BE /* temperature-icon.png */,
 				F1DBB56D1B12B6930097F709 /* dots-icon.png */,
-				F1E2A0C61B2338100092D61F /* pencil-icon.png */,
 				F1DBB54A1B0E4A080097F709 /* manatee.png */,
-				F1E2A0CB1B23435F0092D61F /* rect-icon.png */,
+				F1E3BB901B2DFFB900B55F2B /* rect-icon.png */,
+				F1E3BB8C1B2DFFA600B55F2B /* pencil-icon.png */,
 				C5FF1E4F1B04D7D00081BEDD /* reply-icon.png */,
+				F1E3BB8A1B2DFF9900B55F2B /* temperature-icon.png */,
 				C5D473C31B0120F90097E44F /* refresh.png */,
 				F18A20F01B1D46BA003294BE /* manatee-white.png */,
-				F1E2A0C41B2334C40092D61F /* color-picker-icon.png */,
+				F1E3BB8E1B2DFFB100B55F2B /* color-picker-icon.png */,
 				F1E127BE1B0023C0000E3F2C /* media-pause.png */,
 				C5FF1E581B05EB870081BEDD /* search-icon-white.png */,
 				C5FF1E511B04EECB0081BEDD /* arrow-down-icon.png */,
@@ -921,6 +921,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F1E3BB8F1B2DFFB100B55F2B /* color-picker-icon.png in Resources */,
 				C5FF1E501B04D7D00081BEDD /* reply-icon.png in Resources */,
 				F1DBB54B1B0E4A080097F709 /* manatee.png in Resources */,
 				F1BD62231AEC7FA300BDE1CA /* cross.png in Resources */,
@@ -938,6 +939,7 @@
 				F1BD62211AEBB46F00BDE1CA /* 169.jpg in Resources */,
 				C5A27B991ADE52CC00968033 /* test1.jpg in Resources */,
 				C5D473801AE795890097E44F /* bucket-white.png in Resources */,
+				F1E3BB911B2DFFB900B55F2B /* rect-icon.png in Resources */,
 				C5A27BAC1ADEB5F100968033 /* menu.png in Resources */,
 				C5D4738D1AF2BA8D0097E44F /* wave-logo.png in Resources */,
 				C5D473641AE511730097E44F /* search-icon.png in Resources */,
@@ -945,10 +947,9 @@
 				C5D473821AE7992E0097E44F /* people-icon.png in Resources */,
 				C5A27BA51ADE779500968033 /* events-icon.png in Resources */,
 				C5576B421ADBC1FC009C1D5E /* camera-icon.png in Resources */,
-				F1E2A0C51B2334C40092D61F /* color-picker-icon.png in Resources */,
 				C5D473861AE79BC80097E44F /* the-bar-y-v2.png in Resources */,
-				F1E2A0C71B2338100092D61F /* pencil-icon.png in Resources */,
 				C5576B501ADBE0DB009C1D5E /* wz-monkey-bg.jpg in Resources */,
+				F1E3BB8D1B2DFFA600B55F2B /* pencil-icon.png in Resources */,
 				C57AD0B01AD7EDB800B6042A /* Main.storyboard in Resources */,
 				F18A20F11B1D46BA003294BE /* manatee-white.png in Resources */,
 				C57AD0B51AD7EDB800B6042A /* LaunchScreen.xib in Resources */,
@@ -956,14 +957,13 @@
 				C5D473661AE56B540097E44F /* settings-icon.png in Resources */,
 				C5E2FC0D1B187F09007E71BE /* plus-icon-simple.png in Resources */,
 				C57AD0B21AD7EDB800B6042A /* Images.xcassets in Resources */,
+				F1E3BB8B1B2DFF9900B55F2B /* temperature-icon.png in Resources */,
 				C5D473841AE799610097E44F /* people-icon-white.png in Resources */,
 				C5FF1E521B04EECB0081BEDD /* arrow-down-icon.png in Resources */,
 				C5D4736E1AE640260097E44F /* bucket.png in Resources */,
-				F18A20F61B228888003294BE /* temperature-icon.png in Resources */,
 				C5D473B21AFBB7600097E44F /* triangle.png in Resources */,
 				C5A27B511ADC014E00968033 /* cross-white.png in Resources */,
 				C5D4739E1AF93A660097E44F /* drop.png in Resources */,
-				F1E2A0CC1B23435F0092D61F /* rect-icon.png in Resources */,
 				F1E127BA1B00141E000E3F2C /* play.png in Resources */,
 				C5D4737A1AE6C29F0097E44F /* cross-simple.png in Resources */,
 				C5D473761AE699DE0097E44F /* the-bar.png in Resources */,
