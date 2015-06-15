@@ -23,6 +23,7 @@
 @property (nonatomic, strong) UIView *backgroundView;
 @property (nonatomic, strong) ActivityViewController *activityViewController;
 @property (nonatomic,strong) UIPageViewController *pageViewController;
+@property (nonatomic, strong) BucketController *parentController;
 -(void)updatePeekView:(UserModel *) user;
 -(void)showAllDetails;
 -(void)addBackgroundView;

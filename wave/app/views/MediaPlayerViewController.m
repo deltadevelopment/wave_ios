@@ -108,8 +108,8 @@
 
 -(void)pauseVideo{
     self.isPlaying = NO;
-    [player stop];
-    player.view.hidden = YES;
+    [player pause];
+    //player.view.hidden = YES;
 }
 
 -(UIImage *)getVideoThumbnail{

@@ -20,7 +20,7 @@
 
 -(id)initWithFrame:(CGRect)frame{
     self = [super initWithFrame:frame];
-    self.uiPageIndicator = [[UILabel alloc] initWithFrame:CGRectMake([UIHelper getScreenWidth] - 70, 8, 60, 30)];
+    self.uiPageIndicator = [[UILabel alloc] initWithFrame:CGRectMake([UIHelper getScreenWidth] - 70, 10, 60, 30)];
     self.uiPageIndicator.textAlignment = NSTextAlignmentRight;
     self.uiPageIndicator.text = @"-/-";
     [UIHelper applyThinLayoutOnLabel:self.uiPageIndicator withSize:15.0];

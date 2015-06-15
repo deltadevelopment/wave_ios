@@ -46,16 +46,19 @@ const int PEEK_Y_START = 300;
     bool shouldAnimateTemperatureChanges;
     bool superButtonDisabled;
     AuthHelper *authHelper;
+    bool isAboutToleaveBucket;
 }
 @synthesize infoViewMode;
 - (void)viewDidLoad {
     [super viewDidLoad];
+     isAboutToleaveBucket = NO;
     [self setUpObjects];
     [self setUpGestures];
     [self loadBucket];
     [self initUISetup];
     [self attachSubviews];
     [self setupCallbacks];
+    [self showChat];
     if(superButtonDisabled){
         [self disableReply];        
     }else{
@@ -119,7 +122,7 @@ const int PEEK_Y_START = 300;
     [infoButton addTarget:self action:@selector(tapInfoButton) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:infoButton];
     infoButtonConstraint = [ConstraintHelper addConstraintsToButton:self.view withButton:infoButton withPoint:CGPointMake(0, 15) fromLeft:YES fromTop:NO];
-    infoButton.hidden = YES;
+    infoButton.hidden = NO;
 }
 
 
@@ -221,7 +224,7 @@ const int PEEK_Y_START = 300;
                                                              toItem:view
                                                           attribute:NSLayoutAttributeTop
                                                          multiplier:1.0
-                                                           constant:30.0]];
+                                                           constant:-100.0]];
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.view
                                                           attribute:NSLayoutAttributeBottom
                                                           relatedBy:NSLayoutRelationEqual
@@ -288,6 +291,7 @@ const int PEEK_Y_START = 300;
 
 -(void)despandBucket:(UISwipeGestureRecognizer *)recognizer {
     //[self.superController removeBucketAsRoot];
+    isAboutToleaveBucket = YES;
     [currentDropPage stopVideo];
     self.onDespand();
     
@@ -304,6 +308,7 @@ const int PEEK_Y_START = 300;
     peekViewController = (PeekViewController *)[storyboard instantiateViewControllerWithIdentifier:@"peekView"];
     [peekViewController setPageViewController:self.pageViewController];
     peekViewController.view.frame = CGRectMake(0, -PEEK_Y_START, [UIHelper getScreenWidth], PEEK_Y_START);
+    [peekViewController setParentController:self];
     //[self.view addSubview:peekViewController.view];
     [self.view insertSubview:peekViewController.view aboveSubview:blurEffectView];
     // peekViewController.view.backgroundColor = [UIColor clearColor];
@@ -312,9 +317,6 @@ const int PEEK_Y_START = 300;
     
     
     // [self.view addSubview:self.chat.view];
-    
-    
-    
 }
 
 -(void)addBlur{
@@ -446,6 +448,10 @@ const int PEEK_Y_START = 300;
     [previousPage stopVideo];
 }
 
+-(void)stopAllVideo{
+    [currentDropPage stopVideo];
+}
+
 
 - (DropController *)viewControllerAtIndex:(NSUInteger)index replacingObject:(DropController *) pageToReplace
 {
@@ -505,6 +511,10 @@ const int PEEK_Y_START = 300;
                 
             }else{
                 [self animatePeekViewOut];
+                if(!isAboutToleaveBucket){
+                   // [currentDropPage startVideo];
+                }
+                NSLog(@"starting video");
                 isPeeking = NO;
             }
             

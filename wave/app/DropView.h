@@ -18,6 +18,7 @@
 @property (nonatomic) BOOL isPlaying;
 @property (nonatomic, strong) UIActivityIndicatorView *spinner;
 @property (nonatomic) bool isPlaceholderView;
+@property (nonatomic, strong) UIButton *playButton;
 -(void)setMedia:(NSObject *) media withIndexId:(int) indexId;
 -(void)dropWillHide;
 -(void)playVideo;

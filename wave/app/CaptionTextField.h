@@ -12,8 +12,12 @@
 -(NSString *)getCaptionText;
 @property (nonatomic, copy) void (^onKeyboardShow)(CaptionTextField*(textfield));
 @property (nonatomic, copy) void (^onKeyboardHide)(CaptionTextField*(textfield));
+@property (nonatomic, copy) void (^onKeyboardGainFocus)(CaptionTextField*(textfield));
 @property (nonatomic) bool hasBox;
 @property (strong, nonatomic) UIColor *currentColor;
+-(void)removeKeyboardObservers;
+-(void)addKeyboardObservers;
 -(void)toggleBox;
+@property (nonatomic) bool isValid;
 
 @end

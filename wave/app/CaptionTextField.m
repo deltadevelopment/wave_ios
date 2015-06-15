@@ -23,6 +23,11 @@ const int MIN_WIDTH = 100;
     bool isPinching;
     bool editTextMode;
     CGAffineTransform lastTransform;
+    CGSize keyboardSize;
+    CGPoint lastPointOnScreen;
+    CGSize lastSizeOnScreen;
+    UIFont *lastFont;
+    bool firstTimeEditing;
 }
 
 /*
@@ -34,7 +39,7 @@ const int MIN_WIDTH = 100;
 */
 -(id)init{
     self =[super init];
-    
+    firstTimeEditing = YES;
     self.layer.cornerRadius = 5;
     self.clipsToBounds = YES;
     self.currentColor = [ColorHelper magenta];
@@ -68,6 +73,33 @@ const int MIN_WIDTH = 100;
                                        action:@selector(labelDragged:)];
     [self addGestureRecognizer:gesture];
     
+  
+   // [self addKeyboardObservers];
+    
+    [self sizeToFit];
+    //[self addPadding];
+    
+   [self addTarget:self.delegate action:@selector(textField1Active) forControlEvents:UIControlEventEditingDidBegin];
+    
+    
+    //[self addSubview:self];
+    self.center = CGPointMake([UIHelper getScreenWidth]/2 - (self.frame.size.height/2), [UIHelper getScreenHeight]/2 - (self.frame.size.height/2));
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldDidChange:) name:UITextFieldTextDidChangeNotification object:self];
+    return self;
+}
+
+-(void)textField1Active{
+    self.onKeyboardGainFocus(self);
+    [self addKeyboardObservers];
+}
+
+
+-(void)removeKeyboardObservers{
+   [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+}
+
+-(void)addKeyboardObservers{
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(keyboardWillShow:)
                                                  name:UIKeyboardWillShowNotification
@@ -77,15 +109,6 @@ const int MIN_WIDTH = 100;
                                              selector:@selector(keyboardWillHide)
                                                  name:UIKeyboardWillHideNotification
                                                object:nil];
-    
-    
-    [self sizeToFit];
-    //[self addPadding];
-    
-    //[self addSubview:self];
-    self.center = CGPointMake([UIHelper getScreenWidth]/2 - (self.frame.size.height/2), [UIHelper getScreenHeight]/2 - (self.frame.size.height/2));
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldDidChange:) name:UITextFieldTextDidChangeNotification object:self];
-    return self;
 }
 
 -(float)getWidth{
@@ -100,7 +123,16 @@ const int MIN_WIDTH = 100;
 }
 
 -(void)keyboardWillShow:(NSNotification *)note {
+    NSLog(@"KEYBOARD");
     self.onKeyboardShow(self);
+    NSDictionary* info = [note userInfo];
+    NSValue* aValue = [info objectForKey:UIKeyboardFrameBeginUserInfoKey];
+    keyboardSize = [aValue CGRectValue].size;
+    self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, [UIHelper getScreenWidth], 50);
+    self.center = CGPointMake([UIHelper getScreenWidth]/2, [UIHelper getScreenHeight] - keyboardSize.height - (self.frame.size.height/2));
+    [self setFont:[UIFont fontWithName:self.font.fontName size:30]];
+        //verticalSpaceConstraintButton.constant += keyboardSize.height;
+    
 }
 
 -(void)keyboardWillHide {
@@ -133,6 +165,9 @@ const int MIN_WIDTH = 100;
     }else{
         editTextMode = YES;
         lastTransform = self.transform;
+        lastPointOnScreen = self.center;
+        lastSizeOnScreen = self.frame.size;
+        lastFont = self.font;
         self.transform = CGAffineTransformIdentity;
         return YES;
     }
@@ -141,7 +176,7 @@ const int MIN_WIDTH = 100;
 
 - (void)textFieldDidChange:(NSNotification *)notification {
     self.placeholder = @"";
-    [self sizeToFit];
+    //[self sizeToFit];
 }
 
 - (void)handlePinch:(UIPinchGestureRecognizer *)recognizer{
@@ -189,7 +224,22 @@ const int MIN_WIDTH = 100;
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
     [textField resignFirstResponder];
     editTextMode = NO;
-    self.transform = lastTransform;
+    if(!firstTimeEditing){
+        self.transform = lastTransform;
+        
+        self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, lastSizeOnScreen.width, lastSizeOnScreen.height);
+        [self sizeToFit];
+        self.center = lastPointOnScreen;
+        self.font = lastFont;
+        [self sizeToFit];
+        
+    }else{
+        firstTimeEditing = NO;
+        [self sizeToFit];
+        self.center = CGPointMake([UIHelper getScreenWidth]/2, [UIHelper getScreenHeight]/2);
+    }
+    
+    [self removeKeyboardObservers];
     return YES;
 }
 

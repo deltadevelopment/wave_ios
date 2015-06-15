@@ -74,6 +74,7 @@
     mediaPlayer.onVideoFinishedPlaying = ^{
         
     };
+    
     bucketTypes = [[NSMutableArray alloc]init];
     captions = [[NSMutableArray alloc] init];
     selfieButton = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -253,8 +254,10 @@
 }
 
 -(void)tapCaptionButton{
+
     
     CaptionTextField *element = [[CaptionTextField alloc] init];
+    [element becomeFirstResponder];
        __weak typeof(self) weakSelf = self;
     element.onKeyboardShow = ^(CaptionTextField *field){
         [weakSelf showEditOptionsForCaptionTextField:field];
@@ -262,19 +265,33 @@
     element.onKeyboardHide = ^(CaptionTextField *field){
         [weakSelf hideEditOptionsForCaptionTextField:field];
     };
+    element.onKeyboardGainFocus = ^(CaptionTextField *field){
+        if(mediaIsVideo){
+            NSLog(@"MEDIA IS VIDEO");
+            [captionsView addSubview:element];
+        }
+        else{
+            [imageView addSubview:element];
+        }
+    };
     
     if(mediaIsVideo){
         NSLog(@"MEDIA IS VIDEO");
         [captionsView addSubview:element];
     }
     else{
-    [imageView addSubview:element];
+        [imageView addSubview:element];
     }
     
     [captions addObject:element];
     captionElement = element;
+   // [captionElement addGesture];
     hasCaption = YES;
+  
+
 }
+
+
 
 -(void)showEditOptionsForCaptionTextField:(CaptionTextField *) captionField{
     if(colorPickerView == nil){
@@ -284,8 +301,6 @@
         [colorPickerView setCaptionField:captionField];
         colorPickerView.hidden = NO;
     }
-    
-    
     boxPickerButton.hidden = NO;
     boxPickerButton.alpha = 1.0;
     captionButton.hidden = YES;

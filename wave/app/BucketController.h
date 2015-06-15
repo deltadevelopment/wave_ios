@@ -19,4 +19,5 @@
 //@property (strong, nonatomic) NSArray *pageImages;
 @property (strong, nonatomic) CarouselController *superCarousel;
 @property (nonatomic)     bool infoViewMode;
+-(void)stopAllVideo;
 @end

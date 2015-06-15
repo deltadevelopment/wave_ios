@@ -54,6 +54,7 @@
 		C5A27BA61ADE779500968033 /* profile-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = C5A27BA31ADE779500968033 /* profile-icon.png */; };
 		C5A27BA71ADE779500968033 /* feed-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = C5A27BA41ADE779500968033 /* feed-icon.png */; };
 		C5A27BAC1ADEB5F100968033 /* menu.png in Resources */ = {isa = PBXBuildFile; fileRef = C5A27BAB1ADEB5F100968033 /* menu.png */; };
+		C5C2F4941B2F24F000AF8666 /* pause-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = C5C2F4931B2F24F000AF8666 /* pause-icon.png */; };
 		C5D473641AE511730097E44F /* search-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = C5D473631AE511730097E44F /* search-icon.png */; };
 		C5D473661AE56B540097E44F /* settings-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = C5D473651AE56B540097E44F /* settings-icon.png */; };
 		C5D4736C1AE63F610097E44F /* FilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D4736B1AE63F610097E44F /* FilterViewController.m */; };
@@ -239,6 +240,7 @@
 		C5A27BA31ADE779500968033 /* profile-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "profile-icon.png"; sourceTree = "<group>"; };
 		C5A27BA41ADE779500968033 /* feed-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "feed-icon.png"; sourceTree = "<group>"; };
 		C5A27BAB1ADEB5F100968033 /* menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu.png; sourceTree = "<group>"; };
+		C5C2F4931B2F24F000AF8666 /* pause-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pause-icon.png"; sourceTree = "<group>"; };
 		C5D473631AE511730097E44F /* search-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "search-icon.png"; sourceTree = "<group>"; };
 		C5D473651AE56B540097E44F /* settings-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "settings-icon.png"; sourceTree = "<group>"; };
 		C5D4736A1AE63F610097E44F /* FilterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterViewController.h; sourceTree = "<group>"; };
@@ -507,6 +509,7 @@
 		C5576B271ADBC195009C1D5E /* res */ = {
 			isa = PBXGroup;
 			children = (
+				C5C2F4931B2F24F000AF8666 /* pause-icon.png */,
 				F1DBB56D1B12B6930097F709 /* dots-icon.png */,
 				F1DBB54A1B0E4A080097F709 /* manatee.png */,
 				F1E3BB901B2DFFB900B55F2B /* rect-icon.png */,
@@ -933,6 +936,7 @@
 				C5D473781AE69D500097E44F /* the-bar-x-v2.png in Resources */,
 				C5FF1E591B05EB870081BEDD /* search-icon-white.png in Resources */,
 				F1E127BF1B0023C0000E3F2C /* media-pause.png in Resources */,
+				C5C2F4941B2F24F000AF8666 /* pause-icon.png in Resources */,
 				C5D473B01AFB67D80097E44F /* tick.png in Resources */,
 				C5F78C5A1B2EB383008CEB00 /* manatee-white.png in Resources */,
 				C5A27BA71ADE779500968033 /* feed-icon.png in Resources */,

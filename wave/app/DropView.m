@@ -15,11 +15,13 @@
     MediaPlayerViewController *mediaPlayer;
     UIButton *playButton;
     UIView *shadowView;
+    bool isPlaying;
     
 }
 
 -(id)initWithFrame:(CGRect)frame{
     self = [super initWithFrame:frame];
+    self.userInteractionEnabled = YES;
     mediaPlayer = [[MediaPlayerViewController alloc] init];
     //Drop topBar
     self.topBar = [[UIView alloc]initWithFrame:CGRectMake(0, 0, [UIHelper getScreenWidth], 50)];
@@ -39,13 +41,19 @@
     self.dropTitle.adjustsFontSizeToFitWidth = YES;
     
     //Drop Temperature Label
-    self.dropTemperature = [[UILabel alloc] initWithFrame:CGRectMake([UIHelper getScreenWidth] - 100, 8, 50, 30)];
+    self.dropTemperature = [[UILabel alloc] initWithFrame:CGRectMake([UIHelper getScreenWidth] - 100, 10, 50, 30)];
     //nameLabel.text = [drop username];
     [UIHelper applyThinLayoutOnLabel:self.dropTemperature withSize:15 withColor:[UIColor whiteColor]];
     [self.dropTemperature setMinimumScaleFactor:12.0/17.0];
     self.dropTemperature.textAlignment = NSTextAlignmentCenter;
     self.dropTemperature.adjustsFontSizeToFitWidth = YES;
     
+    playButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    playButton.frame = CGRectMake([UIHelper getScreenWidth] - 140, 18, 15, 15);
+    [playButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"play.png"] withSize:40] forState:UIControlStateNormal];
+    playButton.userInteractionEnabled = YES;
+    [playButton addTarget:self action:@selector(playPause) forControlEvents:UIControlEventTouchUpInside];
+    playButton.alpha = 0.5;
     //Loader
     self.spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     float center = ([UIHelper getScreenHeight])/2;
@@ -67,6 +75,8 @@
     [self addSubview:shadowView];
     [self addSubview:self.topBar];
     [self addSubview:self.spinner];
+    [self addSubview:playButton];
+    playButton.hidden = YES;
     __weak typeof(self) weakSelf = self;
     mediaPlayer.onVideoFinishedPlaying = ^{
         [weakSelf onVideoFinished];
@@ -76,8 +86,27 @@
 
 }
 
+-(void)playPause{
+    NSLog(@"PLAY PAUSE");
+    if(isPlaying){
+        isPlaying = NO;
+        [playButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"play.png"] withSize:30] forState:UIControlStateNormal];
+  
+        [mediaPlayer pauseVideo];
+    }
+    else{
+        isPlaying = YES;
+              [playButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"pause-icon.png"] withSize:30] forState:UIControlStateNormal];
+        [mediaPlayer playVideoOnce];
+    }
+}
+
 -(void)setDropUI:(DropModel *) drop{
     self.drop = drop;
+    if(drop.media_type == 1){
+        playButton.hidden = NO;
+    }
+    
     self.dropTemperature.text =[NSString stringWithFormat:@"%d°", drop.temperature];
     self.dropTitle.text = [[drop user] usernameFormatted];
     //self.dropTitle.text = [NSString stringWithFormat:@"Drop #%d",drop.Id];
@@ -89,6 +118,7 @@
 
 -(void)onVideoFinished{
     [playButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"play.png"] withSize:150] forState:UIControlStateNormal];
+    isPlaying = NO;
 }
 
 -(void)setMedia:(NSObject *) media withIndexId:(int) indexId{
@@ -127,10 +157,11 @@
 
 -(void)playVideo{
     self.isPlaying = YES;
-    [playButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"media-pause.png"] withSize:150] forState:UIControlStateNormal];
+    isPlaying = YES;
+    [playButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"pause-icon.png"] withSize:150] forState:UIControlStateNormal];
 
-    //[mediaPlayer playVideoOnce];
-    [mediaPlayer playVideo];
+    [mediaPlayer playVideoOnce];
+    //[mediaPlayer playVideo];
 }
 
 -(void)stopVideo{

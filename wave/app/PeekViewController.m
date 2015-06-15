@@ -196,6 +196,7 @@ AuthHelper *authHelper;
 
 -(void)showProfile{
     NSLog(@"showing profile");
+    [self.parentController stopAllVideo];
     //UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
     AbstractFeedViewController *profileController = [self.storyboard instantiateViewControllerWithIdentifier:@"activity"];
     [profileController setViewMode:1];
