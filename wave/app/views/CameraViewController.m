@@ -60,6 +60,7 @@
     bool hasCaption;
     NSMutableArray *captions;
     NSData *renderedVideoWithCaption;
+    bool didCancelTap;
 }
 
 @synthesize cameraHelper;
@@ -340,6 +341,7 @@
         self.onCameraOpen();
     }
     else if(intMode == 2){
+        didCancelTap = NO;
         if(currentTypeIndex == 1 && titleTextField.text.length == 0){
             [self notifyUser];
         }else{
@@ -371,6 +373,7 @@
 
 
 -(void)tapCancelButton{
+    didCancelTap = YES;
     imgTaken = nil;
     if(imageView != nil){
        imageView.hidden = YES;
@@ -733,7 +736,7 @@
         [recordTimer invalidate];
         [circleIndicatorView removeFromSuperview];
         circleIndicatorView.percent = 0;
-        [self showButton:cancelButton];
+       // [self showButton:cancelButton];
     }
     
 }
@@ -748,7 +751,10 @@
     imageReadyForUpload = YES;
     
     [mediaPlayer setVideo:video withId:-1];
-    [mediaPlayer playVideo];
+    if(!didCancelTap){
+        [mediaPlayer playVideo];
+    }
+    
     self.onVideoRecorded();
     [self showButton:cancelButton];
     [self hideTools];
