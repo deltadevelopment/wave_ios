@@ -214,7 +214,6 @@
 
 -(void)changeSubscribeUI{
     if(isSubscriber){
-        NSLog(@"DEBUG 2");
         [self.subscribeButton setTitle:@"Unsubscribe" forState:UIControlStateNormal];
         self.subscribeButton.imageView.frame = CGRectMake(0, 0, 40, 40);
         [self.subscribeButton setImage: [UIHelper iconImage:[UIImage imageNamed:@"tick.png"] withSize:40] forState:UIControlStateNormal];
@@ -224,8 +223,6 @@
         [self.subscribeButton setImageEdgeInsets:UIEdgeInsetsMake(10, 10, 10, 140)];
         [self.subscribeButton setTitleEdgeInsets:UIEdgeInsetsMake(0, -40, 0, 0)];
         [self.subscribeButton sizeToFit];
-      
-        
     }else{
         [self.subscribeButton setTitle:@"Subscribe" forState:UIControlStateNormal];
         [self removeInsetsFromButton];
