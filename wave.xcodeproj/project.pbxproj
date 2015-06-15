@@ -87,6 +87,7 @@
 		C5D473C41B0120F90097E44F /* refresh.png in Resources */ = {isa = PBXBuildFile; fileRef = C5D473C31B0120F90097E44F /* refresh.png */; };
 		C5E2FC0D1B187F09007E71BE /* plus-icon-simple.png in Resources */ = {isa = PBXBuildFile; fileRef = C5E2FC0C1B187F09007E71BE /* plus-icon-simple.png */; };
 		C5E2FC101B1884D9007E71BE /* SubscribeModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C5E2FC0F1B1884D9007E71BE /* SubscribeModel.m */; };
+		C5F78C5A1B2EB383008CEB00 /* manatee-white.png in Resources */ = {isa = PBXBuildFile; fileRef = C5F78C591B2EB383008CEB00 /* manatee-white.png */; };
 		C5FF1E501B04D7D00081BEDD /* reply-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = C5FF1E4F1B04D7D00081BEDD /* reply-icon.png */; };
 		C5FF1E521B04EECB0081BEDD /* arrow-down-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = C5FF1E511B04EECB0081BEDD /* arrow-down-icon.png */; };
 		C5FF1E551B04F1510081BEDD /* InfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = C5FF1E541B04F1510081BEDD /* InfoView.m */; };
@@ -95,7 +96,6 @@
 		C5FF1E5C1B06223B0081BEDD /* SuperModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C5FF1E5B1B06223B0081BEDD /* SuperModel.m */; };
 		F18A20EB1B1D33E3003294BE /* TemperatureController.m in Sources */ = {isa = PBXBuildFile; fileRef = F18A20EA1B1D33E3003294BE /* TemperatureController.m */; };
 		F18A20EE1B1D34F0003294BE /* TemperatureView.m in Sources */ = {isa = PBXBuildFile; fileRef = F18A20ED1B1D34F0003294BE /* TemperatureView.m */; };
-		F18A20F11B1D46BA003294BE /* manatee-white.png in Resources */ = {isa = PBXBuildFile; fileRef = F18A20F01B1D46BA003294BE /* manatee-white.png */; };
 		F18A20F41B227793003294BE /* TemperatureModel.m in Sources */ = {isa = PBXBuildFile; fileRef = F18A20F31B227793003294BE /* TemperatureModel.m */; };
 		F1BD621C1AE460D400BDE1CA /* Carousel.m in Sources */ = {isa = PBXBuildFile; fileRef = F1BD621B1AE460D400BDE1CA /* Carousel.m */; };
 		F1BD621F1AE46EFC00BDE1CA /* ActivityTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F1BD621E1AE46EFC00BDE1CA /* ActivityTableViewCell.m */; };
@@ -285,6 +285,7 @@
 		C5E2FC0C1B187F09007E71BE /* plus-icon-simple.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "plus-icon-simple.png"; sourceTree = "<group>"; };
 		C5E2FC0E1B1884D9007E71BE /* SubscribeModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubscribeModel.h; sourceTree = "<group>"; };
 		C5E2FC0F1B1884D9007E71BE /* SubscribeModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubscribeModel.m; sourceTree = "<group>"; };
+		C5F78C591B2EB383008CEB00 /* manatee-white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "manatee-white.png"; sourceTree = "<group>"; };
 		C5FF1E4F1B04D7D00081BEDD /* reply-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "reply-icon.png"; sourceTree = "<group>"; };
 		C5FF1E511B04EECB0081BEDD /* arrow-down-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow-down-icon.png"; sourceTree = "<group>"; };
 		C5FF1E531B04F1510081BEDD /* InfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InfoView.h; sourceTree = "<group>"; };
@@ -297,7 +298,6 @@
 		F18A20EA1B1D33E3003294BE /* TemperatureController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = TemperatureController.m; path = ../views/TemperatureController.m; sourceTree = "<group>"; };
 		F18A20EC1B1D34F0003294BE /* TemperatureView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TemperatureView.h; sourceTree = "<group>"; };
 		F18A20ED1B1D34F0003294BE /* TemperatureView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TemperatureView.m; sourceTree = "<group>"; };
-		F18A20F01B1D46BA003294BE /* manatee-white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "manatee-white.png"; path = "../../../../../../Downloads/manatee-white.png"; sourceTree = "<group>"; };
 		F18A20F21B227793003294BE /* TemperatureModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TemperatureModel.h; sourceTree = "<group>"; };
 		F18A20F31B227793003294BE /* TemperatureModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TemperatureModel.m; sourceTree = "<group>"; };
 		F1BD621A1AE460D400BDE1CA /* Carousel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Carousel.h; sourceTree = "<group>"; };
@@ -514,7 +514,6 @@
 				C5FF1E4F1B04D7D00081BEDD /* reply-icon.png */,
 				F1E3BB8A1B2DFF9900B55F2B /* temperature-icon.png */,
 				C5D473C31B0120F90097E44F /* refresh.png */,
-				F18A20F01B1D46BA003294BE /* manatee-white.png */,
 				F1E3BB8E1B2DFFB100B55F2B /* color-picker-icon.png */,
 				F1E127BE1B0023C0000E3F2C /* media-pause.png */,
 				C5FF1E581B05EB870081BEDD /* search-icon-white.png */,
@@ -522,6 +521,7 @@
 				F1E127B41AFFCB1E000E3F2C /* download-icon.png */,
 				C5D4736D1AE640260097E44F /* bucket.png */,
 				C5D473631AE511730097E44F /* search-icon.png */,
+				C5F78C591B2EB383008CEB00 /* manatee-white.png */,
 				C5FF1E561B05D37F0081BEDD /* arrow-up-icon.png */,
 				C5D4738E1AF371E10097E44F /* ripples.png */,
 				C5D4739C1AF93A660097E44F /* drop.png */,
@@ -891,7 +891,7 @@
 				TargetAttributes = {
 					C57AD0A01AD7EDB800B6042A = {
 						CreatedOnToolsVersion = 6.2;
-						DevelopmentTeam = G3J75RMARR;
+						DevelopmentTeam = W6H6PNGSAD;
 					};
 					C57AD0B91AD7EDB800B6042A = {
 						CreatedOnToolsVersion = 6.2;
@@ -934,6 +934,7 @@
 				C5FF1E591B05EB870081BEDD /* search-icon-white.png in Resources */,
 				F1E127BF1B0023C0000E3F2C /* media-pause.png in Resources */,
 				C5D473B01AFB67D80097E44F /* tick.png in Resources */,
+				C5F78C5A1B2EB383008CEB00 /* manatee-white.png in Resources */,
 				C5A27BA71ADE779500968033 /* feed-icon.png in Resources */,
 				C5A27B9B1ADE52CC00968033 /* miranda-kerr.jpg in Resources */,
 				C5576B451ADBD79A009C1D5E /* Localizable.strings in Resources */,
@@ -954,7 +955,6 @@
 				C5576B501ADBE0DB009C1D5E /* wz-monkey-bg.jpg in Resources */,
 				F1E3BB8D1B2DFFA600B55F2B /* pencil-icon.png in Resources */,
 				C57AD0B01AD7EDB800B6042A /* Main.storyboard in Resources */,
-				F18A20F11B1D46BA003294BE /* manatee-white.png in Resources */,
 				C57AD0B51AD7EDB800B6042A /* LaunchScreen.xib in Resources */,
 				C5D4737E1AE6C6890097E44F /* slider-cross.png in Resources */,
 				C5D473661AE56B540097E44F /* settings-icon.png in Resources */,

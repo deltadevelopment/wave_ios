@@ -11,11 +11,14 @@
 #import "SettingsTableViewController.h"
 #import "ApplicationHelper.h"
 #import "AuthHelper.h"
+#import "ConstraintHelper.h"
 @implementation PeekViewModule{
     UIViewController *superController;
     AuthHelper *authHelper;
     bool isDeviceUser;
     UIView *parentView;
+    UIActivityIndicatorView *activityIndicator;
+    bool isSubscriber;
 }
 
 -(id)initWithView:(UIView *) view withSubview:(UIView *)subview withController:(UIViewController *) controller{
@@ -41,8 +44,8 @@
     self.usernameLabel.text = @"simenlie";
     self.usernameLabel.textAlignment = NSTextAlignmentCenter;
    
-    self.subscribeButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.subscribeButton.frame = CGRectMake([UIHelper getScreenWidth]/2 - (170/2), [UIHelper getScreenHeight] - 64 - 123, 170, 40);
+    self.subscribeButton = [UIButton buttonWithType:UIButtonTypeSystem];
+   // self.subscribeButton.frame = CGRectMake([UIHelper getScreenWidth]/2 - (170/2), [UIHelper getScreenHeight] - 64 - 123, 170, 40);
     [UIHelper applyThinLayoutOnButton:self.subscribeButton];
     self.settingsButton = [UIButton buttonWithType:UIButtonTypeCustom];
     self.settingsButton.frame = CGRectMake([UIHelper getScreenWidth] - 40, 20, 20, 20);
@@ -51,10 +54,16 @@
     
     [[self.subscribeButton layer] setBorderWidth:1.0f];
     [[self.subscribeButton layer] setBorderColor:[UIColor whiteColor].CGColor];
+    //[self.subscribeButton.titleLabel setTextAlignment:NSTextAlignmentCenter];
+    [self.subscribeButton setTitleEdgeInsets:UIEdgeInsetsMake(10, 10, 10, 10)];
+  [self.subscribeButton setContentVerticalAlignment:UIControlContentVerticalAlignmentCenter];
+    [self.subscribeButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentCenter];
     [self.subscribeButton setTitle:@"Subscribe" forState:UIControlStateNormal];
     self.subscribeButton.layer.cornerRadius = 10;
     self.subscribeButton.clipsToBounds = YES;
     [self.subscribeButton addTarget:self action:@selector(subscribeAction) forControlEvents:UIControlEventTouchUpInside];
+    
+
     
     
     self.subscribersCountLabel =[[UILabel alloc] initWithFrame:
@@ -62,7 +71,7 @@
     [UIHelper applyThinLayoutOnLabel:self.subscribersCountLabel withSize:17];
     //self.subscribersCountLabel.text = @"550 others already do";
     self.subscribersCountLabel.textAlignment = NSTextAlignmentCenter;
-  
+    
     
     return self;
 }
@@ -74,14 +83,30 @@
     [parentView insertSubview:self.subscribeButton belowSubview:subview];
     [parentView insertSubview:self.subscribersCountLabel belowSubview:subview];
     [parentView insertSubview:self.settingsButton belowSubview:subview];
+    [ConstraintHelper addConstraintsToButtonWithNoSize:parentView withButton:self.subscribeButton withPoint:CGPointMake(-86, 83) fromLeft:YES fromTop:NO];
+    [self AddSizeConstraintToButton:self.subscribeButton];
+  
+}
+
+-(void)AddSizeConstraintToButton:(UIButton *) button{
+    [button addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[button(==170)]"
+                                                                                options:0
+                                                                                metrics:nil
+                                                                                  views:NSDictionaryOfVariableBindings(button)]];
+    [button addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[button(==40)]"
+                                                                                options:0
+                                                                                metrics:nil
+                                                                                  views:NSDictionaryOfVariableBindings(button)]];
+
 }
 
 -(void)layoutBackgroundWithSubview:(UIView *)subview{
-[parentView insertSubview:self.backgroundView belowSubview:subview];
+    [parentView insertSubview:self.backgroundView belowSubview:subview];
 }
 
 -(void)updateText:(UserModel *) user
 {
+    self.user = user;
     if(user.Id == [[authHelper getUserId] intValue]){
         isDeviceUser = YES;
         self.subscribeButton.hidden = YES;
@@ -93,6 +118,8 @@
     }
     self.subscribersCountLabel.text = [NSString stringWithFormat:@"%d others already do", user.subscribers_count];
     self.usernameLabel.text = user.usernameFormatted;
+      [self checkSubscription];
+   
 
 }
 
@@ -136,7 +163,10 @@
                          self.subscribersCountLabel.alpha = 1.0;
                          self.settingsButton.alpha = 1.0;
                      }
-                     completion:nil];
+                     completion:^(BOOL finished){
+                         
+                         
+                     }];
 }
 
 -(void)hide{
@@ -148,7 +178,103 @@
     self.settingsButton.alpha = 0.0;
 }
 
--(void)subscribeAction{
-    NSLog(@"subscribing");
+-(void)initActivityIndicator{
+    activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+    [self.subscribeButton addSubview:activityIndicator];
+    
+    activityIndicator.center = CGPointMake(self.subscribeButton.frame.size.width / 2, self.subscribeButton.frame.size.height / 2);
+    activityIndicator.hidden = NO;
+    activityIndicator.hidesWhenStopped = YES;
 }
+
+-(void)removeInsetsFromButton{
+    [self.subscribeButton setImage: nil forState:UIControlStateNormal];
+    [self.subscribeButton setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
+    [self.subscribeButton setTitleEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
+    [self.subscribeButton sizeToFit];
+}
+
+-(void)checkSubscription{
+    NSLog(@"Checking subscription for %d", self.user.Id);
+    UserModel *deviceUser =[[UserModel alloc] initWithDeviceUser];
+    self.subscribeModel = [[SubscribeModel alloc] initWithSubscriber:deviceUser withSubscribee:self.user];
+    [self.subscribeModel isSubscriber:^(ResponseModel *response){
+        
+        if(response.success){
+            isSubscriber = YES;
+            [self changeSubscribeUI];
+        }else{
+            isSubscriber = NO;
+            [self changeSubscribeUI];
+        }
+    } onError:^(NSError *error){
+        
+    }];
+}
+
+-(void)changeSubscribeUI{
+    if(isSubscriber){
+        NSLog(@"DEBUG 2");
+        [self.subscribeButton setTitle:@"Unsubscribe" forState:UIControlStateNormal];
+        self.subscribeButton.imageView.frame = CGRectMake(0, 0, 40, 40);
+        [self.subscribeButton setImage: [UIHelper iconImage:[UIImage imageNamed:@"tick.png"] withSize:40] forState:UIControlStateNormal];
+        [[self.subscribeButton imageView] setTintColor:[UIColor whiteColor]];
+        [self.subscribeButton setTintColor:[UIColor whiteColor]];
+          //top left bottom right
+        [self.subscribeButton setImageEdgeInsets:UIEdgeInsetsMake(10, 10, 10, 140)];
+        [self.subscribeButton setTitleEdgeInsets:UIEdgeInsetsMake(0, -40, 0, 0)];
+        [self.subscribeButton sizeToFit];
+      
+        
+    }else{
+        [self.subscribeButton setTitle:@"Subscribe" forState:UIControlStateNormal];
+        [self removeInsetsFromButton];
+    }
+    
+}
+
+-(void)updatePeekView:(UserModel *) user{
+    self.user = user;
+   
+    self.subscribersCountLabel.text = [NSString stringWithFormat:@"%d others already do", [user subscribers_count]];
+    self.usernameLabel.text = [user display_name] != nil ? [user display_name] : [user usernameFormatted];
+    if(user.Id == [[authHelper getUserId] intValue]){
+        self.subscribeButton.hidden = YES;
+        self.subscribersCountLabel.hidden = YES;
+    }else{
+        self.subscribersCountLabel.hidden = NO;
+    }
+}
+
+-(void)subscribeAction{
+    if(activityIndicator == nil){
+        [self initActivityIndicator];
+    }
+    activityIndicator.hidden = NO;
+    [activityIndicator startAnimating];
+    [self.subscribeButton setTitle:@"" forState:UIControlStateNormal];
+    [self removeInsetsFromButton];
+    if(isSubscriber){
+        [self.subscribeModel delete:^(ResponseModel *response){
+            isSubscriber = NO;
+            [self changeSubscribeUI];
+            [activityIndicator stopAnimating];
+            [self.user setSubscribers_count:[self.user subscribers_count]-1];
+            [self updatePeekView:self.user];
+        } onError:^(NSError *error){}];
+    }else{
+        [self.subscribeModel saveChanges:^(ResponseModel *response){
+            isSubscriber = YES;
+            [self changeSubscribeUI];
+            [activityIndicator stopAnimating];
+            [self.user setSubscribers_count:[self.user subscribers_count]+1];
+            [self updatePeekView:self.user];
+        } onError:^(NSError *error)
+         {
+             
+             
+         }];
+    }
+}
+
 @end

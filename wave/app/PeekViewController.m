@@ -55,7 +55,7 @@ AuthHelper *authHelper;
     
      // self.subscribeButton.titleEdgeInsets = UIEdgeInsetsMake(0, -self.subscribeButton.imageView.frame.size.width, 0, self.subscribeButton.imageView.frame.size.width);
      //self.subscribeButton.imageEdgeInsets = UIEdgeInsetsMake(0, self.subscribeButton.titleLabel.frame.size.width, 0, -self.subscribeButton.titleLabel.frame.size.width);
-   
+    
    
 }
 
@@ -69,8 +69,6 @@ AuthHelper *authHelper;
     activityIndicator.hidden = NO;
     activityIndicator.hidesWhenStopped = YES;
 }
-
-
 
 -(void)subscribeAction{
     if(activityIndicator == nil){
@@ -221,6 +219,7 @@ AuthHelper *authHelper;
                          self.pageViewController.view.frame = frame2;
                          [profileController.view removeFromSuperview];
                          [profileController layOutPeek];
+                         NSLog(@"Adding");
                          [[ApplicationHelper getMainNavigationController] pushViewController:profileController animated:NO];
                      }];
     
@@ -230,6 +229,7 @@ AuthHelper *authHelper;
 
 -(void)changeSubscribeUI{
     if(isSubscriber){
+        NSLog(@"Chaning subscribe");
         [self.subscribeButton setTitle:@"Unsubscribe" forState:UIControlStateNormal];
         self.subscribeButton.imageView.frame = CGRectMake(0, 0, 40, 40);
         [self.subscribeButton setImage: [UIHelper iconImage:[UIImage imageNamed:@"tick.png"] withSize:40] forState:UIControlStateNormal];
