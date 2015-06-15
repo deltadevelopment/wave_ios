@@ -513,7 +513,7 @@
 
 -(void)renderVideoWithCaption{
     [mediaPlayer stopVideo];
-    
+    NSLog(@"rendering");
     __weak typeof(self) weakSelf = self;
     UIImage *image =[self screenshotToVideo:UIDeviceOrientationPortrait isOpaque:NO usePresentationLayer:YES];
     UIImageView *captionsWithImage =[[UIImageView alloc] initWithImage:image];
@@ -766,7 +766,7 @@
     mediaIsVideo = YES;
     mediaPlayer.view.hidden = NO;
     imageReadyForUpload = YES;
-    
+    [self preventDoubleTap];
     [mediaPlayer setVideo:video withId:-1];
     if(!didCancelTap){
         [mediaPlayer playVideo];

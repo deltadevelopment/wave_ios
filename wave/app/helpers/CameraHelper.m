@@ -575,7 +575,7 @@ didFinishRecordingToOutputFileAtURL:(NSURL *)outputFileURL
     AVURLAsset *asset = [AVURLAsset URLAssetWithURL:inputURL options:nil];
     AVAssetExportSession *exportSession = [[AVAssetExportSession alloc] initWithAsset:asset presetName:AVAssetExportPreset640x480];
     exportSession.outputURL = outputURL;
-    exportSession.outputFileType = AVFileTypeQuickTimeMovie;
+    exportSession.outputFileType = AVFileTypeMPEG4;
     [exportSession exportAsynchronouslyWithCompletionHandler:^(void)
      {
          dispatch_async(dispatch_get_main_queue(), ^{
@@ -858,7 +858,7 @@ didFinishRecordingToOutputFileAtURL:(NSURL *)outputFileURL
     AVAssetExportSession *exporter = [[AVAssetExportSession alloc] initWithAsset:mixComposition
                                                                       presetName:AVAssetExportPresetHighestQuality];
     exporter.outputURL=url;
-    exporter.outputFileType = AVFileTypeQuickTimeMovie;
+    exporter.outputFileType = AVFileTypeMPEG4;
     exporter.shouldOptimizeForNetworkUse = YES;
     exporter.videoComposition = mainCompositionInst;
     [exporter exportAsynchronouslyWithCompletionHandler:^{
@@ -878,7 +878,7 @@ didFinishRecordingToOutputFileAtURL:(NSURL *)outputFileURL
     AVAssetExportSession *exporter = [[AVAssetExportSession alloc] initWithAsset:mixComposition
                                                                       presetName:AVAssetExportPresetHighestQuality];
     exporter.outputURL=url;
-    exporter.outputFileType = AVFileTypeQuickTimeMovie;
+    exporter.outputFileType = AVFileTypeMPEG4;
     exporter.shouldOptimizeForNetworkUse = YES;
     exporter.videoComposition = mainCompositionInst;
     [exporter exportAsynchronouslyWithCompletionHandler:^{
