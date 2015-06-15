@@ -59,6 +59,7 @@
     UIView *captionsView;
     bool hasCaption;
     NSMutableArray *captions;
+    NSData *renderedVideoWithCaption;
 }
 
 @synthesize cameraHelper;
@@ -106,7 +107,7 @@
     [self initTextField];
     // [self initUI];
    
-    //[self initCaptionsView];
+    [self initCaptionsView];
 }
 
 -(void)initCaptionsView{
@@ -221,7 +222,7 @@
     cancelButton.backgroundColor = [[UIColor blackColor]colorWithAlphaComponent:0.4];
     [cancelButton addTarget:self action:@selector(tapCancelButton) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:cancelButton];
-    [self addConstraintsToButton:self.view withButton:cancelButton withPoint:CGPointMake(11, 10) fromLeft:NO];
+    [self addConstraintsToButton:self.view withButton:cancelButton withPoint:CGPointMake(4, 20) fromLeft:NO];
    // cancelButton.hidden = YES;
     cancelButton.alpha = 1.0;
     
@@ -250,6 +251,7 @@
 }
 
 -(void)tapCaptionButton{
+    
     CaptionTextField *element = [[CaptionTextField alloc] init];
        __weak typeof(self) weakSelf = self;
     element.onKeyboardShow = ^(CaptionTextField *field){
@@ -259,7 +261,14 @@
         [weakSelf hideEditOptionsForCaptionTextField:field];
     };
     
+    if(mediaIsVideo){
+        NSLog(@"MEDIA IS VIDEO");
+        [captionsView addSubview:element];
+    }
+    else{
     [imageView addSubview:element];
+    }
+    
     [captions addObject:element];
     captionElement = element;
     hasCaption = YES;
@@ -294,7 +303,7 @@
     typeButton.backgroundColor = [[UIColor blackColor]colorWithAlphaComponent:0.4];
     [typeButton addTarget:self action:@selector(tapTypeButton) forControlEvents:UIControlEventTouchUpInside];
 
-    [self addConstraintsToButton:self.view withButton:typeButton withPoint:CGPointMake(-4, 10) fromLeft:YES];
+    [self addConstraintsToButton:self.view withButton:typeButton withPoint:CGPointMake(-4, 20) fromLeft:YES];
     typeButton.hidden = YES;
     typeButton.alpha = 0.0;
 }
@@ -341,7 +350,18 @@
     }
     else if(intMode == 0){
         if(imageReadyForUpload){
-            [self prepareForUpload];
+            if(mediaIsVideo){
+                if(hasCaption){
+                    [self renderVideoWithCaption];
+                }else{
+                  [self prepareForUpload];
+                }
+            
+            }else{
+              [self prepareForUpload];
+            }
+            
+          
         }else{
             //camera is not ready
             
@@ -471,12 +491,21 @@
 
 #pragma Upload medthods
 
+-(void)renderVideoWithCaption{
+    [mediaPlayer stopVideo];
+    
+    __weak typeof(self) weakSelf = self;
+    UIImage *image =[self screenshotToVideo:UIDeviceOrientationPortrait isOpaque:NO usePresentationLayer:YES];
+    UIImageView *captionsWithImage =[[UIImageView alloc] initWithImage:image];
+    cameraHelper.onMediaRenderCompleted =^{
+        renderedVideoWithCaption = [cameraHelper getVideoWithCaption];
+        [weakSelf prepareForUpload];
+    };
+    [cameraHelper startD:captionsWithImage toDisk:NO withURL:[cameraHelper lastRecordedVideoURL]];
+}
+
 -(void)prepareForUpload{
     recordedVideoCompressed = [cameraHelper getlastRecordedVideoCompressed];
-    if(mediaIsVideo){
-        [mediaPlayer stopVideo];
-    }
-    
     [self startCamera];
     if(mediaIsVideo){
         [mediaPlayer stopVideo];
@@ -484,16 +513,23 @@
     }
     intMode = 1;
     [self closeCamera];
-    [self initCameraHelper];
+    
     
     imageView.hidden = YES;
-    self.onCameraClose();
     cameraMode = NO;
     imageReadyForUpload = NO;
     if(mediaIsVideo){
         mediaIsVideo = NO;
-        self.onVideoTaken(recordedVideoCompressed, imgTaken, titleTextField.text);
-        [self uploadMedia:recordedVideoCompressed withMediaType:1];
+        if(hasCaption){
+            self.onVideoTaken(recordedVideoCompressed, imgTaken, titleTextField.text);
+            [self uploadMedia:renderedVideoWithCaption withMediaType:1];
+        
+        }else{
+            self.onVideoTaken(recordedVideoCompressed, imgTaken, titleTextField.text);
+            [self uploadMedia:recordedVideoCompressed withMediaType:1];
+        }
+        
+        
         
     }
     else{
@@ -511,6 +547,7 @@
 }
 
 -(void)uploadMedia:(NSData *) media withMediaType:(int) media_type{
+    [self initCameraHelper];
     if(isReply){
         //add a drop
         [self addNewDrop:media withBucketId:[DataHelper getCurrentBucketId] withMediaType:media_type];
@@ -716,7 +753,8 @@
     [self showButton:cancelButton];
     [self hideTools];
     imgTaken = [mediaPlayer getVideoThumbnail];
-
+    //[self.view insertSubview:imageView belowSubview:saveMediaButton];
+    [self.view insertSubview:captionsView aboveSubview:mediaPlayer.view];
     // [mediaPlayer ]
     
 }
@@ -727,9 +765,12 @@
     [saveMediaProgressView setProgressString:NSLocalizedString(@"progress_txt", nil)];
     [saveMediaProgressView startProgress];
     if(mediaIsVideo){
-        [cameraHelper saveVideoToDisk];
-       // [cameraHelper addAnimation];
-        //[cameraHelper startD:captionsView];
+        //[cameraHelper saveVideoToDisk];
+        // [cameraHelper addAnimation];
+        UIImage *image =[self screenshotToVideo:UIDeviceOrientationPortrait isOpaque:NO usePresentationLayer:YES];
+        UIImageView *captionsWithImage =[[UIImageView alloc] initWithImage:image];
+         NSURL *urlToVideo = [cameraHelper lastRecordedVideoURL];
+        [cameraHelper startD:captionsWithImage toDisk:YES withURL:urlToVideo];
     }
     else{
         /*
@@ -765,6 +806,32 @@
         [imageView.layer.presentationLayer renderInContext:UIGraphicsGetCurrentContext()];
     } else {
         [imageView.layer renderInContext:UIGraphicsGetCurrentContext()];
+    }
+    
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    
+    UIGraphicsEndImageContext();
+    
+    return image;
+}
+
+
+- (UIImage *)screenshotToVideo:(UIDeviceOrientation)orientation isOpaque:(BOOL)isOpaque usePresentationLayer:(BOOL)usePresentationLayer
+{
+    CGSize size;
+    
+    if (orientation == UIDeviceOrientationPortrait || orientation == UIDeviceOrientationPortraitUpsideDown) {
+        size = CGSizeMake(captionsView.frame.size.width, captionsView.frame.size.height);
+    } else {
+        size = CGSizeMake(captionsView.frame.size.height, captionsView.frame.size.width);
+    }
+    
+    UIGraphicsBeginImageContextWithOptions(size, isOpaque, 0.0);
+    
+    if (usePresentationLayer) {
+        [captionsView.layer.presentationLayer renderInContext:UIGraphicsGetCurrentContext()];
+    } else {
+        [captionsView.layer renderInContext:UIGraphicsGetCurrentContext()];
     }
     
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();

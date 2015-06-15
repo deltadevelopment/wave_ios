@@ -15,6 +15,8 @@
 //#import "VideoController.h"
 @implementation CameraHelper{
     NSString *videoURL;
+    NSURL *VideoURLWithCaption;
+    bool savingtoDisk;
 }
 @synthesize PreviewLayer;
 @synthesize stillImageOutput;
@@ -732,107 +734,19 @@ didFinishRecordingToOutputFileAtURL:(NSURL *)outputFileURL
 
 */
 
-- (void)addAnimation
-{
-    NSString *filePath = videoURL;
-    AVURLAsset* videoAsset = [[AVURLAsset alloc]initWithURL:[NSURL fileURLWithPath:filePath]  options:nil];
-    
-    AVMutableComposition* mixComposition = [AVMutableComposition composition];
-    
-    AVMutableCompositionTrack *compositionVideoTrack = [mixComposition addMutableTrackWithMediaType:AVMediaTypeVideo preferredTrackID:kCMPersistentTrackID_Invalid];
-    
-    AVAssetTrack *clipVideoTrack = [[videoAsset tracksWithMediaType:AVMediaTypeVideo] objectAtIndex:0];
-    
-    [compositionVideoTrack insertTimeRange:CMTimeRangeMake(kCMTimeZero, videoAsset.duration) ofTrack:clipVideoTrack atTime:kCMTimeZero error:nil];
-    
-    [compositionVideoTrack setPreferredTransform:[[[videoAsset tracksWithMediaType:AVMediaTypeVideo] objectAtIndex:0] preferredTransform]];
-    
-    CGSize videoSize = [clipVideoTrack naturalSize];
-    
-    UIImage *myImage = [UIImage imageNamed:@"manatee-white.png"];
-    CALayer *aLayer = [CALayer layer];
-    aLayer.contents = (id)myImage.CGImage;
-    aLayer.frame = CGRectMake(videoSize.width - 65, videoSize.height - 75, 57, 57);
-    aLayer.opacity = 0.65;
-    CALayer *parentLayer = [CALayer layer];
-    CALayer *videoLayer = [CALayer layer];
-    parentLayer.frame = CGRectMake(0, 0, videoSize.width, videoSize.height);
-    videoLayer.frame = CGRectMake(0, 0, videoSize.width, videoSize.height);
-    [parentLayer addSublayer:videoLayer];
-    [parentLayer addSublayer:aLayer];
-    
-    CATextLayer *titleLayer = [CATextLayer layer];
-    titleLayer.string = @"Text goes here";
-    titleLayer.font = CFBridgingRetain(@"Helvetica");
-    titleLayer.fontSize = videoSize.height / 6;
-    //?? titleLayer.shadowOpacity = 0.5;
-    titleLayer.alignmentMode = kCAAlignmentCenter;
-    titleLayer.bounds = CGRectMake(0, 0, videoSize.width, videoSize.height / 6); //You may need to adjust this for proper display
-    [parentLayer addSublayer:titleLayer]; //ONLY IF WE ADDED TEXT
-    
-    
-    
-    AVMutableVideoComposition* videoComp = [AVMutableVideoComposition videoComposition];
-    videoComp.renderSize = videoSize;
-    videoComp.frameDuration = CMTimeMake(1, 30);
-    videoComp.animationTool = [AVVideoCompositionCoreAnimationTool videoCompositionCoreAnimationToolWithPostProcessingAsVideoLayer:videoLayer inLayer:parentLayer];
-    
-    AVMutableVideoCompositionInstruction *instruction = [AVMutableVideoCompositionInstruction videoCompositionInstruction];
-    instruction.timeRange = CMTimeRangeMake(kCMTimeZero, [mixComposition duration]);
-    AVAssetTrack *videoTrack = [[mixComposition tracksWithMediaType:AVMediaTypeVideo] objectAtIndex:0];
-    AVMutableVideoCompositionLayerInstruction* layerInstruction = [AVMutableVideoCompositionLayerInstruction videoCompositionLayerInstructionWithAssetTrack:videoTrack];
-    instruction.layerInstructions = [NSArray arrayWithObject:layerInstruction];
-    videoComp.instructions = [NSArray arrayWithObject: instruction];
-    
-    AVAssetExportSession *assetExport = [[AVAssetExportSession alloc] initWithAsset:mixComposition presetName:AVAssetExportPresetHighestQuality];//AVAssetExportPresetPassthrough
-    assetExport.videoComposition = videoComp;
-    
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectory = [paths objectAtIndex:0];
-    NSString* VideoName = [NSString stringWithFormat:@"%@/mynewwatermarkedvideo.mp4",documentsDirectory];
-    
-    
-    //NSString *exportPath = [NSTemporaryDirectory() stringByAppendingPathComponent:VideoName];
-    NSURL *exportUrl = [NSURL fileURLWithPath:VideoName];
-    
-    if ([[NSFileManager defaultManager] fileExistsAtPath:VideoName])
-    {
-        [[NSFileManager defaultManager] removeItemAtPath:VideoName error:nil];
-    }
-    
-    assetExport.outputFileType = AVFileTypeQuickTimeMovie;
-    assetExport.outputURL = exportUrl;
-    assetExport.shouldOptimizeForNetworkUse = YES;
-    
-    //[strRecordedFilename setString: exportPath];
-    
-    [assetExport exportAsynchronouslyWithCompletionHandler:
-     ^(void ) {
-         dispatch_async(dispatch_get_main_queue(), ^{
-             [self exportDidFinish:assetExport];
-         });
-     }
-     ];
-}
--(void)startD:(UIView *) view{
-    NSString *filePath = videoURL;
+-(void)startD:(UIView *) view toDisk:(bool) isToDisk withURL:(NSURL *) url{
+    NSString *filePath = [url path];
     self.videoAsset =[[AVURLAsset alloc]initWithURL:[NSURL fileURLWithPath:filePath]  options:nil];
-    [self videoOutput:view];
+    [self videoOutput:view toDisk:isToDisk];
 }
 
 
 - (void)applyVideoEffectsToComposition:(AVMutableVideoComposition *)composition size:(CGSize)size withView:(UIView *) view
 {
-    // 1 - Set up the text layer
-    CATextLayer *subtitle1Text = [[CATextLayer alloc] init];
-    [subtitle1Text setFont:@"Helvetica-Bold"];
-    [subtitle1Text setFontSize:36];
-    [subtitle1Text setFrame:CGRectMake(0, 0, size.width, 100)];
-    [subtitle1Text setString:@"heyhey"];
-    [subtitle1Text setAlignmentMode:kCAAlignmentCenter];
-    [subtitle1Text setForegroundColor:[[UIColor whiteColor] CGColor]];
     view.frame = CGRectMake(0, 0, size.width, size.height);
     view.layer.frame = CGRectMake(0, 0, size.width, size.height);
+    
+    CGAffineTransform transform = CGAffineTransformMakeRotation(90);
     // 2 - The usual overlay
     CALayer *overlayLayer = [CALayer layer];
     [overlayLayer addSublayer:view.layer];
@@ -844,13 +758,13 @@ didFinishRecordingToOutputFileAtURL:(NSURL *)outputFileURL
     parentLayer.frame = CGRectMake(0, 0, size.width, size.height);
     videoLayer.frame = CGRectMake(0, 0, size.width, size.height);
     [parentLayer addSublayer:videoLayer];
-    [parentLayer addSublayer:overlayLayer];
+    [parentLayer addSublayer:view.layer];
     
     composition.animationTool = [AVVideoCompositionCoreAnimationTool
                                  videoCompositionCoreAnimationToolWithPostProcessingAsVideoLayer:videoLayer inLayer:parentLayer];
 }
 
-- (void)videoOutput:(UIView *) view
+- (void)videoOutput:(UIView *) view toDisk:(bool) isToDisk
 {
     // 1 - Early exit if there's no video file selected
     if (!self.videoAsset) {
@@ -866,9 +780,15 @@ didFinishRecordingToOutputFileAtURL:(NSURL *)outputFileURL
     // 3 - Video track
     AVMutableCompositionTrack *videoTrack = [mixComposition addMutableTrackWithMediaType:AVMediaTypeVideo
                                                                         preferredTrackID:kCMPersistentTrackID_Invalid];
+    AVMutableCompositionTrack *audioTrack = [mixComposition addMutableTrackWithMediaType:AVMediaTypeAudio preferredTrackID:kCMPersistentTrackID_Invalid];
     [videoTrack insertTimeRange:CMTimeRangeMake(kCMTimeZero, self.videoAsset.duration)
                         ofTrack:[[self.videoAsset tracksWithMediaType:AVMediaTypeVideo] objectAtIndex:0]
                          atTime:kCMTimeZero error:nil];
+  
+    
+    
+    [audioTrack insertTimeRange:CMTimeRangeMake(kCMTimeZero, self.videoAsset.duration) ofTrack:[[self.videoAsset tracksWithMediaType:AVMediaTypeAudio] objectAtIndex:0] atTime:kCMTimeZero error:nil];
+
     
     // 3.1 - Create AVMutableVideoCompositionInstruction
     AVMutableVideoCompositionInstruction *mainInstruction = [AVMutableVideoCompositionInstruction videoCompositionInstruction];
@@ -917,14 +837,23 @@ didFinishRecordingToOutputFileAtURL:(NSURL *)outputFileURL
     mainCompositionInst.frameDuration = CMTimeMake(1, 30);
     
     [self applyVideoEffectsToComposition:mainCompositionInst size:naturalSize withView:view];
-    
+    if(isToDisk){
+        [self saveVideoWithCaptionToDisk:mainCompositionInst withMixComp:mixComposition];
+    }else{
+        [self saveVideWithCaptionToTemp:mainCompositionInst withMixComp:mixComposition];
+    }
+   
+}
+
+-(void)saveVideoWithCaptionToDisk:(AVMutableVideoComposition *) mainCompositionInst withMixComp:(AVMutableComposition *)mixComposition{
     // 4 - Get path
+    savingtoDisk = YES;
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
     NSString *myPathDocs =  [documentsDirectory stringByAppendingPathComponent:
                              [NSString stringWithFormat:@"FinalVideo-%d.mp4",arc4random() % 1000]];
     NSURL *url = [NSURL fileURLWithPath:myPathDocs];
-    
+    VideoURLWithCaption = url;
     // 5 - Create exporter
     AVAssetExportSession *exporter = [[AVAssetExportSession alloc] initWithAsset:mixComposition
                                                                       presetName:AVAssetExportPresetHighestQuality];
@@ -939,7 +868,38 @@ didFinishRecordingToOutputFileAtURL:(NSURL *)outputFileURL
     }];
 }
 
+-(void)saveVideWithCaptionToTemp:(AVMutableVideoComposition *) mainCompositionInst withMixComp:(AVMutableComposition *)mixComposition{
+    // 4 - Get path
+    savingtoDisk = NO;
+    NSString *outputPath = [[NSString alloc] initWithFormat:@"%@%@", NSTemporaryDirectory(), [NSString stringWithFormat:@"output-%d.mov", arc4random() % 1000]];
+    NSURL *url = [NSURL fileURLWithPath:outputPath];
+    VideoURLWithCaption = url;
+    // 5 - Create exporter
+    AVAssetExportSession *exporter = [[AVAssetExportSession alloc] initWithAsset:mixComposition
+                                                                      presetName:AVAssetExportPresetHighestQuality];
+    exporter.outputURL=url;
+    exporter.outputFileType = AVFileTypeQuickTimeMovie;
+    exporter.shouldOptimizeForNetworkUse = YES;
+    exporter.videoComposition = mainCompositionInst;
+    [exporter exportAsynchronouslyWithCompletionHandler:^{
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self exportDidFinish:exporter];
+        });
+    }];
+}
+
+
+-(NSData *)getVideoWithCaption{
+    NSLog(@"NIL?");
+    NSString *path = [VideoURLWithCaption path];
+    NSLog(@"path is %@", path);
+    NSData *data = [[NSFileManager defaultManager] contentsAtPath:path];
+    return data;
+}
+
 - (void)exportDidFinish:(AVAssetExportSession*)session {
+    __weak typeof(self) weakSelf = self;
+    NSLog(@"Saving file");
     if (session.status == AVAssetExportSessionStatusCompleted) {
         NSURL *outputURL = session.outputURL;
         ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
@@ -947,18 +907,38 @@ didFinishRecordingToOutputFileAtURL:(NSURL *)outputFileURL
             [library writeVideoAtPathToSavedPhotosAlbum:outputURL completionBlock:^(NSURL *assetURL, NSError *error){
                 dispatch_async(dispatch_get_main_queue(), ^{
                     if (error) {
+                        /*
                         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Error" message:@"Video Saving Failed"
                                                                        delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
                         [alert show];
+                         */
+                        NSLog(@"ERROR");
+                        weakSelf.onMediaSavedToDiskError();
                     } else {
+                          NSLog(@"Not error");
+                        /*
                         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Video Saved" message:@"Saved To Photo Album"
                                                                        delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
                         [alert show];
+                         */
+                        if(!savingtoDisk){
+                            NSLog(@"SAVED");
+                            weakSelf.onMediaRenderCompleted();
+                        }else{
+                            weakSelf.onMediaSavedToDisk();
+                        }
+                        
                     }
                 });
             }];
         }
     }
+    
+    
+
+    
+    
+    
 }
 
 

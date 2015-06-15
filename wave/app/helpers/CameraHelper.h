@@ -24,6 +24,8 @@
 @property (nonatomic, copy) void (^onMediaSavedToDisk)(void);
 @property (nonatomic, copy) void (^onMediaSavedToDiskError)(void);
 
+@property (nonatomic, copy) void (^onMediaRenderCompleted)(void);
+
 @property (nonatomic) bool recording;
 @property (nonatomic, strong) AVCaptureDevice *VideoDevice;
 @property (nonatomic) AVCaptureDevicePosition position;
@@ -74,6 +76,6 @@
 -(void)initRecording;
 -(bool)sessionIsRunning;
 -(void)saveVideoToDisk;
-- (void)addAnimation;
--(void)startD:(UIView *) view;
+-(void)startD:(UIView *) view toDisk:(bool) isToDisk withURL:(NSURL *) url;
+-(NSData *)getVideoWithCaption;
 @end
