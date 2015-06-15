@@ -108,10 +108,23 @@ AuthHelper *authHelper;
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
+    [DataHelper storeRippleCount:[DataHelper getRippleCount] +1];
     if (application.applicationState == UIApplicationStateActive ){
         NSLog(@"active");
     }else{
         NSLog(@"not active");
+    }
+    [DataHelper storeNotifications:userInfo];
+    if([DataHelper getRippleCount]> 0){
+        UILabel *ripplesCount = [[UILabel alloc] initWithFrame:CGRectMake(16, -5, 20, 20)];
+        ripplesCount.text = [NSString stringWithFormat:@"%d", [DataHelper getRippleCount]];
+        ripplesCount.textAlignment = NSTextAlignmentCenter;
+        [UIHelper applyThinLayoutOnLabel:ripplesCount];
+        [ripplesCount setFont:[UIFont fontWithName:ripplesCount.font.fontName size:14.0f]];
+        [ripplesCount setBackgroundColor:[ColorHelper redColor]];
+        ripplesCount.layer.cornerRadius = 10;
+        ripplesCount.clipsToBounds = YES;
+        [[DataHelper getNotificationButton] addSubview:ripplesCount];
     }
     // app was already in the foreground
     

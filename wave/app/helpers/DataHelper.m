@@ -12,6 +12,8 @@ static int media_type;
 static int currentBucketId;
 static UIWindow *currentWindow;
 static StartViewController *start;
+static UIButton *notificationButton;
+static NSMutableArray *notifications;
 @implementation DataHelper
 
 /*
@@ -54,6 +56,16 @@ static StartViewController *start;
  
 }
 
++(void)storeRippleCount:(int) counter{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setValue:[NSNumber numberWithInt:counter] forKey:@"rippleCounter"];
+}
+
++(int)getRippleCount{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    return [[defaults valueForKey:@"rippleCounter"] intValue];
+}
+
 +(int)getBucketId{
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     return [[defaults valueForKey:@"bucketId"] intValue];
@@ -63,6 +75,38 @@ static StartViewController *start;
 }
 +(int)getCurrentBucketId{
     return currentBucketId;
+}
+
++(void)setNotificationButton:(UIButton *) button{
+    notificationButton = button;
+}
+
++(UIButton *)getNotificationButton{
+    return notificationButton;
+}
+
+
++(void)storeNotifications:(NSDictionary *)dictionary
+{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    NSMutableArray * array = [defaults valueForKey:@"notifications"];
+    if(array == nil){
+        if(notifications == nil){
+            notifications = [[NSMutableArray alloc] init];
+        }
+    }else{
+        notifications = array;
+    }
+    
+    [notifications addObject:dictionary];
+    //NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setValue:notifications forKey:@"notifications"];
+    
+}
+
++(NSMutableArray *)getNotifications{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    return [defaults valueForKey:@"notifications"];
 }
 
 

@@ -11,6 +11,8 @@
 #import "UIHelper.h"
 #import "ApplicationHelper.h"
 #import "SettingsTableViewController.h"
+#import "RipplesViewController.h"
+#import "DataHelper.h"
 @interface NavigationControlViewController ()
 
 @end
@@ -52,7 +54,9 @@
 }
 -(void)showNotifications{
     NSLog(@"Notificatiion will appear");
-    [self showSettings:nil];
+   // [self showSettings:nil];
+    RipplesViewController *ripples =[self.storyboard instantiateViewControllerWithIdentifier:@"ripplesView"];
+    [self.navigationController pushViewController:ripples animated:YES];
 
 }
 -(void)addLeftButton{
@@ -63,6 +67,9 @@
     [someButton setBackgroundImage:image forState:UIControlStateNormal];
     [someButton addTarget:self action:@selector(menuItemSelected) forControlEvents:UIControlEventTouchUpInside];
     [someButton setShowsTouchWhenHighlighted:YES];
+    
+
+    
     self.menuItem = [[UIBarButtonItem alloc] initWithCustomView:someButton];
  
     [self.navigationItem setLeftBarButtonItem:self.menuItem];
@@ -80,8 +87,19 @@
     [someButton setBackgroundImage:image forState:UIControlStateNormal];
     [someButton addTarget:self action:@selector(showNotifications) forControlEvents:UIControlEventTouchUpInside];
     [someButton setShowsTouchWhenHighlighted:YES];
-    
-    
+    if([DataHelper getRippleCount]> 0){
+        UILabel *ripplesCount = [[UILabel alloc] initWithFrame:CGRectMake(16, -5, 20, 20)];
+        ripplesCount.text = [NSString stringWithFormat:@"%d", [DataHelper getRippleCount]];
+        ripplesCount.textAlignment = NSTextAlignmentCenter;
+        [UIHelper applyThinLayoutOnLabel:ripplesCount];
+        [ripplesCount setFont:[UIFont fontWithName:ripplesCount.font.fontName size:14.0f]];
+        [ripplesCount setBackgroundColor:[ColorHelper redColor]];
+        ripplesCount.layer.cornerRadius = 10;
+        ripplesCount.clipsToBounds = YES;
+        [someButton addSubview:ripplesCount];
+    }
+  
+    [DataHelper setNotificationButton:someButton];
     [self.navigationItem setRightBarButtonItem:[[UIBarButtonItem alloc] initWithCustomView:someButton]];
 }
 

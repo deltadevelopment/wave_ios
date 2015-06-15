@@ -2163,6 +2163,23 @@
             </objects>
             <point key="canvasLocation" x="2239.5" y="2265"/>
         </scene>
+        <!--Ripples View Controller-->
+        <scene sceneID="Pyv-Le-RUc">
+            <objects>
+                <viewController storyboardIdentifier="ripplesView" id="5Yr-8p-LpO" customClass="RipplesViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="0iA-mF-BdM"/>
+                        <viewControllerLayoutGuide type="bottom" id="iqw-Wk-Kiz"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="02v-dZ-TrX">
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Wzn-YO-FSW" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3030" y="2268.75"/>
+        </scene>
         <!--Chat View Controller-->
         <scene sceneID="wdu-x4-hOg">
             <objects>

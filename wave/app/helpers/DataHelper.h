@@ -24,8 +24,13 @@
 +(int)getMediaType;
 +(void)setWindow:(UIWindow *) window;
 +(UIWindow *)getCurrentWindow;
-
++(void)storeNotifications:(NSDictionary *)dictionary;
 +(void)setStart:(StartViewController *) startViewController;
 +(StartViewController *) getStartViewController;
++(void)storeRippleCount:(int) counter;
++(int)getRippleCount;
++(void)setNotificationButton:(UIButton *) button;
++(UIButton *)getNotificationButton;
++(NSMutableArray *)getNotifications;
 
 @end

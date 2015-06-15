@@ -8,6 +8,7 @@
 
 #import "CarouselController.h"
 #import "BucketController.h"
+#import "DataHelper.h"
 @interface CarouselController ()
 
 @end
@@ -27,7 +28,7 @@
     pages = [[NSMutableArray alloc] init];
     
     
-    
+//    NSLog(@"ripples count %d", [DataHelper getRippleCount]);
     
     NSArray  *storyboardIds = @[@"activity",
                                 @"pinnedView",
@@ -37,7 +38,13 @@
     [self addView:1];
     [self addView:2];
     self.automaticallyAdjustsScrollViewInsets=NO;
-   
+    
+    for(NSDictionary *dic in [DataHelper getNotifications]){
+        
+        [NSString stringWithFormat:@"my dictionary is %@", dic];
+    }
+    
+        
     //_pageImages = @[@"page1.png", @"page2.png", @"page3.png", @"page4.png"];
     
     self.pageViewController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
