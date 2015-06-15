@@ -63,6 +63,12 @@
  
 }
 
+-(UIView *)getProgressIndicator{
+    return progressIndicator;
+}
+
+
+
 -(void)initCameraView{
     _camera = [[CameraViewController alloc]init];
     __weak typeof(self) weakSelf = self;
@@ -187,7 +193,7 @@
     
     float maxWidth = [UIHelper getScreenWidth];
     float percentageOfMax = (progress * maxWidth)/100;
-    progressIndicator.frame = CGRectMake(0, 0, percentageOfMax, 4);
+    progressIndicator.frame = CGRectMake(0, self.startY, percentageOfMax, 4);
     if(progress == 100){
         progressIndicator.hidden = YES;
         [self animateTick];

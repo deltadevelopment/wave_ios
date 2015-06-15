@@ -13,6 +13,7 @@
 @implementation ActivityTableViewCell{
     UIView *shadowView;
     UIActivityIndicatorView *spinner;
+    UIActivityIndicatorView *spinnerForUpload;
     int viewMode;
     UIViewController *superController;
 }
@@ -37,6 +38,12 @@
     
     spinner.hidesWhenStopped = YES;
     spinner.hidden = YES;
+    
+    spinnerForUpload = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+    spinnerForUpload.center = CGPointMake([UIHelper getScreenWidth]/2-10, center/2-10);
+    
+    spinnerForUpload.hidesWhenStopped = YES;
+    spinnerForUpload.hidden = YES;
     
     if(mode == 1){
         //UIButton *settings = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -73,6 +80,7 @@
     self.layer.shouldRasterize = YES;
     self.layer.rasterizationScale = [UIScreen mainScreen].scale;
     [self addSubview:spinner];
+    [self addSubview:spinnerForUpload];
 }
 
 -(void)showActions{
@@ -115,11 +123,21 @@
 }
 
 -(void)startSpinnerAnimtation{
+    spinner.hidden = NO;
     [spinner startAnimating];
 }
 -(void)stopSpinnerAnimation{
     [spinner stopAnimating];
 }
+
+-(void)startSpinnerForUploadAnimtation{
+    spinnerForUpload.hidden = NO;
+    [spinnerForUpload startAnimating];
+}
+-(void)stopSpinnerForUploadAnimation{
+    [spinnerForUpload stopAnimating];
+}
+
 -(void)update:(BucketModel *) bucket{
    [self.bucketImage setImage:nil];
     DropModel *drop = [bucket getLastDrop];
@@ -154,7 +172,10 @@
         self.usernameText.text = [NSString stringWithFormat:@"%@ %@",NSLocalizedString(@"by_txt", nil), [[bucket user] username]];
     }
 }
-
+-(void)updateAfterUpload{
+    self.usernameText.hidden = NO;
+    
+}
 -(void)updateDropImage:(UIImage *) image{
     self.bucketImage.image = image;
 }

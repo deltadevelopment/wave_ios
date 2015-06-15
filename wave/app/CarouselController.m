@@ -76,6 +76,14 @@
     FilterViewController *viewControllerY = (FilterViewController *)[self createViewControllerWithStoryboardId:@"filterView"];
     
     [self attachViews:viewControllerY withY:viewControllerX];
+    self.startY = 64;
+    [self getProgressIndicator].frame = CGRectMake(0, self.startY, 0, 4);
+    [self.view addSubview:[self getProgressIndicator]];
+
+}
+
+-(void)viewDidLayoutSubviews{
+    //[self.view insertSubview:[self getProgressIndicator] aboveSubview:self.pageViewController.view];
 }
 
 -(void)addView:(NSInteger) index{

@@ -14,6 +14,7 @@
 @interface SuperViewController : DefaultViewController
 @property(strong, nonatomic) SuperButton *superButton;
 @property (strong) CameraViewController *camera;
+@property (nonatomic) int startY;
 -(void)attachViews:(OverlayViewController *) x withY:(OverlayViewController *) y;
 -(OverlayViewController *)createViewControllerWithStoryboardId:(NSString *) identifier;
 -(void)attachSuperButtonToView;
@@ -35,4 +36,5 @@
 -(void)setReplyMode:(BOOL) replyMode;
 -(void)disableReply;
 -(void)enableReply;
+-(UIView *)getProgressIndicator;
 @end

@@ -44,13 +44,15 @@ const int EXPAND_SIZE = 400;
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self initialize];
-    userModel = [[UserModel alloc] initWithDeviceUser];
-  
-  storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    userModel =[[UserModel alloc] initWithDeviceUser:^(UserModel *user){
+        userModel = user;
+    } onError:^(NSError *error){}];
+    
+    storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
-  
+    
     cameraHolder = [[UIView alloc]initWithFrame:CGRectMake(0, -64, [UIHelper getScreenWidth],[UIHelper getScreenHeight])];
     cameraHolder.backgroundColor = [UIColor whiteColor];
     self.refreshControl = [[UIRefreshControl alloc] init];
@@ -404,17 +406,66 @@ const int EXPAND_SIZE = 400;
     _tableView.scrollEnabled = YES;
 }
 
--(void)mediaTaken:(UIImage *) image withText:(NSString *) text{
+
+
+
+-(void)onImageTaken:(UIImage *)image withText:(NSString *)text{
+    [self mediaTaken:image withText:text isMediaVideo:NO];
+    NSLog(@"Image taken in activity");
+   // [self uploadMedia:UIImagePNGRepresentation(image)];
+}
+-(void)onVideoTaken:(NSData *)video withImage:(UIImage *)image withtext:(NSString *)text{
+    [self mediaTaken:image withText:text isMediaVideo:YES];
+   // [self uploadMedia:video];
+  //  NSLog(@"File size is : %.2f MB",(float)video.length/1024.0f/1024.0f);
+}
+
+-(void)mediaTaken:(UIImage *) image withText:(NSString *) text isMediaVideo:(bool) isVideo{
+    
     cameraHolder.hidden = YES;
     imgTaken = image;
     if([text isEqualToString:@""]){
         //personal bucket
         if([self.feedModel isYourBucketInFeed]){
+            NSLog(@"personal bucket");
             indexValue = [self.feedModel personalBucketIndex];
         }
         [[self.feedModel feed] removeObjectAtIndex:0];
         NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];
+        [_tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationTop];
+        //Scroll your bucket
+          [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:indexValue inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
         
+        
+        ActivityTableViewCell *cell = (ActivityTableViewCell  *)[_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:indexValue inSection:0]];
+        cell.bucketImage.image = imgTaken;
+        cell.displayNameText.text = [text isEqualToString:@""] ? [userModel usernameFormatted] : text;
+        [cell startSpinnerForUploadAnimtation];
+        //cameraCell.bucketImage.image = imgTaken;
+        BucketModel *bucket = [[self.feedModel feed] objectAtIndex:indexValue];
+        DropModel *drop = [bucket.drops objectAtIndex:0];
+        drop.media_img = imgTaken;
+        drop.media_type = isVideo ? 1:0;
+        if(isVideo){
+            drop.thumbnail_tmp =(UIImagePNGRepresentation(imgTaken));
+        }else{
+            drop.media_tmp = (UIImagePNGRepresentation(imgTaken));
+        }
+       
+        cameraMode = NO;
+        shouldExpand = NO;
+        indexCurrent = nil;
+        self.onLockScreenToggle();
+        [_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:indexValue inSection:0]];
+        
+        [self.tableView beginUpdates];
+        [self.tableView endUpdates];
+        //set image to the new
+        
+        
+        //
+        
+        /*
         [CATransaction begin];
         [CATransaction setCompletionBlock:^{
             [self updat:text];
@@ -423,18 +474,56 @@ const int EXPAND_SIZE = 400;
         [_tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:newIndexPath] withRowAnimation:UITableViewRowAnimationTop];
         [self.tableView endUpdates];
         [CATransaction commit];
+         */
         
     }else{
         indexValue = 0;
-        [self updat:text];
+        [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:indexValue inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+        
+        BucketModel *bucket = [[self.feedModel feed] objectAtIndex:indexValue];
+        bucket.user = userModel;
+        bucket.Id = 9999;
+        bucket.title = text;
+        bucket.bucket_type = @"shared";
+        
+    
+        ActivityTableViewCell *cell = (ActivityTableViewCell  *)[_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:indexValue inSection:0]];
+        //cell.bucketImage.image = imgTaken;
+        //cell.usernameText.hidden = NO;
+        //cell.displayNameText.text = [text isEqualToString:@""] ? [userModel usernameFormatted] : text;
+       // cell.usernameText.text = [NSString stringWithFormat:@"%@ %@",NSLocalizedString(@"by_txt", nil), userModel.username];
+        
+        [cell startSpinnerForUploadAnimtation];
+        //cameraCell.bucketImage.image = imgTaken;
+      
+        DropModel *drop = [[DropModel alloc] init];
+        [bucket addDrop:drop];
+        drop.media_img = imgTaken;
+        drop.media_type = isVideo ? 1:0;
+        if(isVideo){
+            drop.thumbnail_tmp =(UIImagePNGRepresentation(imgTaken));
+        }else{
+            NSLog(@"NOT VIDEO");
+            drop.media_tmp = (UIImagePNGRepresentation(imgTaken));
+        }
+        [cell update:bucket];
+        cameraMode = NO;
+        shouldExpand = NO;
+        indexCurrent = nil;
+        self.onLockScreenToggle();
+        [_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:indexValue inSection:0]];
+        
+        [self.tableView beginUpdates];
+        [self.tableView endUpdates];
     }
-
-   
+    
+    
 }
+
 -(void)updat:(NSString *) text{
     //[cameraView removeFromSuperview];
     [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:indexValue inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:NO];
-
+    
     ActivityTableViewCell *cell = (ActivityTableViewCell  *)[_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:indexValue inSection:0]];
     cell.bucketImage.image = imgTaken;
     cell.displayNameText.text = [text isEqualToString:@""] ? [userModel usernameFormatted] : text;
@@ -458,30 +547,31 @@ const int EXPAND_SIZE = 400;
     
 }
 
--(void)onImageTaken:(UIImage *)image withText:(NSString *)text{
-    [self mediaTaken:image withText:text];
-   // [self uploadMedia:UIImagePNGRepresentation(image)];
-}
--(void)onVideoTaken:(NSData *)video withImage:(UIImage *)image withtext:(NSString *)text{
-    [self mediaTaken:image withText:text];
-   // [self uploadMedia:video];
-  //  NSLog(@"File size is : %.2f MB",(float)video.length/1024.0f/1024.0f);
-}
-
 -(void)onMediaPosted:(BucketModel *)bucket{
+    bucket.user = userModel;
+    [bucket addDrop:[[[self.feedModel feed] objectAtIndex:0] getLastDrop]];
     ActivityTableViewCell *cell = (ActivityTableViewCell  *)[_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-    [cell stopSpinnerAnimation];
+    [cell stopSpinnerForUploadAnimation];
     [[self.feedModel feed] replaceObjectAtIndex:0 withObject:bucket];
-     [cell update:[[self.feedModel feed] objectAtIndex:indexValue]];
+    /*
+    
+    [cell update:[[self.feedModel feed] objectAtIndex:indexValue]];
+        NSLog(@"MEdia was posted");
+     */
 }
 
 -(void)onMediaPostedDrop:(DropModel *)drop{
+    ActivityTableViewCell *cell = (ActivityTableViewCell  *)[_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+    [cell stopSpinnerForUploadAnimation];
+    /*
     ActivityTableViewCell *cell = (ActivityTableViewCell  *)[_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:indexValue inSection:0]];
     [cell stopSpinnerAnimation];
     BucketModel *bucket = [[self.feedModel feed] objectAtIndex:indexValue];
     [bucket addDropToFirst:drop];
     [[self.feedModel feed] replaceObjectAtIndex:indexValue withObject:bucket];
      [cell update:[[self.feedModel feed] objectAtIndex:indexValue]];
+      NSLog(@"MEdia was posted drop");
+     */
 }
 
 -(void)hidePeekFirst{

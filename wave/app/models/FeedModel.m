@@ -51,9 +51,12 @@
 
 -(void)investigateBucket:(BucketModel *) bucket{
     if([[bucket user] Id] == [[authHelper getUserId] intValue]){
-        //Do additional operations with user buckets here
-        self.personalBucketIndex = (int)[self.feed count] - 1;
-        self.isYourBucketInFeed = YES;
+        if([bucket.bucket_type isEqualToString:@"user"] ){
+            //Do additional operations with user buckets here
+            self.personalBucketIndex = (int)[self.feed count] - 1;
+            self.isYourBucketInFeed = YES;
+        }
+        
     }
 }
 
