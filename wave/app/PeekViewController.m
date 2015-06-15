@@ -33,8 +33,9 @@ AuthHelper *authHelper;
     self.profilePicture.userInteractionEnabled = YES;
     self.displayName.userInteractionEnabled = YES;
     UITapGestureRecognizer *showProfileGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showProfile)];
+    UITapGestureRecognizer *showProfileGesture2 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showProfile)];
     [self.profilePicture addGestureRecognizer:showProfileGesture];
-     [self.displayName addGestureRecognizer:showProfileGesture];
+     [self.displayName addGestureRecognizer:showProfileGesture2];
     self.availability.layer.cornerRadius = 5;
     self.view.backgroundColor = [UIColor clearColor];
     self.availability.clipsToBounds = YES;
@@ -191,6 +192,8 @@ AuthHelper *authHelper;
     }];
 }
 
+
+
 -(void)showProfile{
     NSLog(@"showing profile");
     //UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
@@ -199,6 +202,7 @@ AuthHelper *authHelper;
     [profileController setIsDeviceUser:NO];
     [profileController setAnotherUser:self.user];
     [profileController hidePeekFirst];
+  
     [self.view insertSubview:profileController.view atIndex:0];
     [self addChildViewController:profileController];
     CGRect frame = profileController.view.frame;

@@ -61,6 +61,7 @@
     NSMutableArray *captions;
     NSData *renderedVideoWithCaption;
     bool didCancelTap;
+    bool canUpload;
 }
 
 @synthesize cameraHelper;
@@ -330,6 +331,7 @@
 #pragma Gesture methods
 
 -(void)onTap:(NSNumber *) mode{
+    
     intMode = [mode intValue];
     if(intMode == 1){
         cameraMode = YES;
@@ -342,6 +344,8 @@
     }
     else if(intMode == 2){
         didCancelTap = NO;
+        canUpload = NO;
+        [self preventDoubleTap];
         if(currentTypeIndex == 1 && titleTextField.text.length == 0){
             [self notifyUser];
         }else{
@@ -351,7 +355,8 @@
         
     }
     else if(intMode == 0){
-        if(imageReadyForUpload){
+        if(imageReadyForUpload && canUpload){
+            NSLog(@"ready");
             if(mediaIsVideo){
                 if(hasCaption){
                     [self renderVideoWithCaption];
@@ -369,6 +374,18 @@
             
         }
     }
+}
+
+-(void)preventDoubleTap{
+    [NSTimer scheduledTimerWithTimeInterval:2.0
+                                     target:self
+                                   selector:@selector(canUploadPicture)
+                                   userInfo:nil
+                                    repeats:NO];
+}
+-(void)canUploadPicture{
+    canUpload = YES;
+    self.onImageReady();
 }
 
 
@@ -681,7 +698,7 @@
     [self.view insertSubview:imageView belowSubview:saveMediaButton];
     //[self.view insertSubview:captionsView aboveSubview:imageView];
     imageReadyForUpload = YES;
-    self.onImageReady();
+   
     [self hideTools];
     //[self showEditTools];
 }

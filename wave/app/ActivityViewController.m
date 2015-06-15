@@ -80,13 +80,40 @@ const int EXPAND_SIZE = 400;
             NSString *url = [NSString stringWithFormat:@"user/%@/buckets", [authHelper getUserId]];
             self.feedModel = [[FeedModel alloc] initWithURL:url];
         }else{
+             __weak typeof(self) weakSelf = self;
+            self.onExpand=^(BucketModel*(bucket)){
+                [weakSelf changeToBucket:bucket];
+            };
             [self.navigationItem setTitle:self.anotherUser.username];
             NSString *url = [NSString stringWithFormat:@"user/%d/buckets", self.anotherUser.Id];
-            NSLog(url);
             self.feedModel = [[FeedModel alloc] initWithURL:url];
         }
        
     }
+}
+
+-(void)changeToBucket:(BucketModel *) bucket{
+    BucketController *bucketController = [[BucketController alloc] init];
+    [bucketController setBucket:bucket];
+    //[((BucketController *)root) setSuperCarousel:self];
+    __weak typeof(self) weakSelf = self;
+    bucketController.onDespand = ^{
+        [weakSelf removeBucketAsRoot];
+    };
+    //[root addViewController:self];
+    
+    //[self.navigationController setViewControllers:@[root] animated:NO];
+    //[self.navigationController.view layoutIfNeeded];
+    [self.navigationController pushViewController:bucketController animated:NO];
+}
+
+-(void)removeBucketAsRoot{
+    //root = oldRoot;
+    
+    [self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController.view layoutIfNeeded];
+    //[self didGainFocus];
+    [self onFocusGained];
 }
 
 
