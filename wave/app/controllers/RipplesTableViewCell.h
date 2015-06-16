@@ -9,8 +9,14 @@
 #import <UIKit/UIKit.h>
 
 @interface RipplesTableViewCell : UITableViewCell
-@property (weak, nonatomic) IBOutlet UILabel *notificationLabel;
+@property (strong, nonatomic) UILabel *notificationLabel;
 @property (nonatomic) bool isInitialized;
 -(void)initalize;
-@property (weak, nonatomic) IBOutlet UILabel *NotificationTimeLabel;
+@property (strong, nonatomic)  UILabel *NotificationTimeLabel;
+@property (strong, nonatomic)  UIImageView *profilePictureImage;
+@property (strong, nonatomic)  UIButton *actionButton;
+@property (strong, nonatomic) UIButton *userButton;
+@property (strong, nonatomic)  UIButton *userButtonAction;
+- (IBAction)actionButtonAction:(id)sender;
+-(void)calculateHeight;
 @end

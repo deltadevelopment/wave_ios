@@ -2183,61 +2183,7 @@
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3Uu-ss-f6r" id="O8t-0a-Q49">
                                             <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="nL4-Am-3JY">
-                                                    <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
-                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="30" y="22" width="42" height="21"/>
-                                                    </variation>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="H5X-m8-c7e">
-                                                    <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="H5X-m8-c7e" firstAttribute="top" secondItem="nL4-Am-3JY" secondAttribute="bottom" constant="-2" id="0Lh-cY-hZH"/>
-                                                <constraint firstAttribute="centerY" secondItem="nL4-Am-3JY" secondAttribute="centerY" constant="3" id="2Xo-wC-Rh4"/>
-                                                <constraint firstItem="H5X-m8-c7e" firstAttribute="bottom" secondItem="O8t-0a-Q49" secondAttribute="bottomMargin" id="9C1-4Y-cJB"/>
-                                                <constraint firstItem="H5X-m8-c7e" firstAttribute="leading" secondItem="O8t-0a-Q49" secondAttribute="leadingMargin" constant="22" id="G1V-zg-m3m"/>
-                                                <constraint firstItem="nL4-Am-3JY" firstAttribute="leading" secondItem="O8t-0a-Q49" secondAttribute="leadingMargin" constant="22" id="Gak-2l-lIa"/>
-                                            </constraints>
-                                            <variation key="default">
-                                                <mask key="subviews">
-                                                    <exclude reference="nL4-Am-3JY"/>
-                                                    <exclude reference="H5X-m8-c7e"/>
-                                                </mask>
-                                                <mask key="constraints">
-                                                    <exclude reference="2Xo-wC-Rh4"/>
-                                                    <exclude reference="Gak-2l-lIa"/>
-                                                    <exclude reference="0Lh-cY-hZH"/>
-                                                    <exclude reference="9C1-4Y-cJB"/>
-                                                    <exclude reference="G1V-zg-m3m"/>
-                                                </mask>
-                                            </variation>
-                                            <variation key="heightClass=regular-widthClass=compact">
-                                                <mask key="subviews">
-                                                    <include reference="nL4-Am-3JY"/>
-                                                    <include reference="H5X-m8-c7e"/>
-                                                </mask>
-                                                <mask key="constraints">
-                                                    <include reference="2Xo-wC-Rh4"/>
-                                                    <include reference="Gak-2l-lIa"/>
-                                                    <exclude reference="0Lh-cY-hZH"/>
-                                                    <include reference="9C1-4Y-cJB"/>
-                                                    <include reference="G1V-zg-m3m"/>
-                                                </mask>
-                                            </variation>
                                         </tableViewCellContentView>
-                                        <connections>
-                                            <outlet property="NotificationTimeLabel" destination="H5X-m8-c7e" id="X7W-Er-cWN"/>
-                                            <outlet property="notificationLabel" destination="nL4-Am-3JY" id="dWj-Ft-6Fw"/>
-                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>

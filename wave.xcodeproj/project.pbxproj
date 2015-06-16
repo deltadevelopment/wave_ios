@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C52AAFD61B3058A0004332DD /* RipplesFeed.m in Sources */ = {isa = PBXBuildFile; fileRef = C52AAFD51B3058A0004332DD /* RipplesFeed.m */; };
 		C5576B371ADBC195009C1D5E /* CameraHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C5576B201ADBC195009C1D5E /* CameraHelper.m */; };
 		C5576B381ADBC195009C1D5E /* ColorHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C5576B221ADBC195009C1D5E /* ColorHelper.m */; };
 		C5576B391ADBC195009C1D5E /* UIHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C5576B241ADBC195009C1D5E /* UIHelper.m */; };
@@ -159,6 +160,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C52AAFD41B3058A0004332DD /* RipplesFeed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RipplesFeed.h; sourceTree = "<group>"; };
+		C52AAFD51B3058A0004332DD /* RipplesFeed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RipplesFeed.m; sourceTree = "<group>"; };
 		C5576B1F1ADBC195009C1D5E /* CameraHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraHelper.h; sourceTree = "<group>"; };
 		C5576B201ADBC195009C1D5E /* CameraHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraHelper.m; sourceTree = "<group>"; };
 		C5576B211ADBC195009C1D5E /* ColorHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorHelper.h; sourceTree = "<group>"; };
@@ -514,6 +517,8 @@
 				F18A20F31B227793003294BE /* TemperatureModel.m */,
 				C5C2F49C1B30107200AF8666 /* RippleModel.h */,
 				C5C2F49D1B30107200AF8666 /* RippleModel.m */,
+				C52AAFD41B3058A0004332DD /* RipplesFeed.h */,
+				C52AAFD51B3058A0004332DD /* RipplesFeed.m */,
 			);
 			path = models;
 			sourceTree = "<group>";
@@ -1032,6 +1037,7 @@
 				C5576B3C1ADBC195009C1D5E /* DefaultViewController.m in Sources */,
 				C5A27B721ADD0BF500968033 /* RegisterController.m in Sources */,
 				C5576B3A1ADBC195009C1D5E /* AvailabilityViewController.m in Sources */,
+				C52AAFD61B3058A0004332DD /* RipplesFeed.m in Sources */,
 				F1BD62261AEC871F00BDE1CA /* BucketTypeModel.m in Sources */,
 				C5576B4B1ADBDA22009C1D5E /* StartViewController.m in Sources */,
 				F1DBB5601B0FD46F0097F709 /* SettingsTableViewCell.m in Sources */,
