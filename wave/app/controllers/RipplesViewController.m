@@ -8,24 +8,40 @@
 
 #import "RipplesViewController.h"
 #import "RipplesTableViewCell.h"
+#import "DataHelper.h"
+#import "RippleModel.h"
+#import "BucketController.h"
+static int TABLE_CELLS_ON_SCREEN = 6;
 @interface RipplesViewController ()
 
 @end
 
 @implementation RipplesViewController{
     NSMutableArray *notifications;
+    bool shouldExpand;
+    NSIndexPath *indexCurrent;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     notifications = [[NSMutableArray alloc] init];
-    [notifications addObject:@"First notification"];
-    [notifications addObject:@"Second notification"];
     
     [self.navigationItem setTitle:@"Ripples"];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.allowsMultipleSelectionDuringEditing = NO;
+    for(NSDictionary *dic in [DataHelper getNotifications]){
+        NSMutableDictionary *mutDic = [[NSMutableDictionary alloc] initWithDictionary:dic];
+        RippleModel *rippleModel = [[RippleModel alloc] init:mutDic];
+        [notifications insertObject:rippleModel atIndex:0];
+    }
+    
+    for(NSDictionary *dic in [DataHelper getNotifications]){
+        
+        NSLog(@"my dictionary is %@", dic);
+    }
+    NSLog(@"the size of the array is %lu", (unsigned long)[[DataHelper getNotifications] count]);
+    
     // Do any additional setup after loading the view.
 }
 
@@ -41,14 +57,15 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     RipplesTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ripplesCell" forIndexPath:indexPath];
-    NSString *currentNotification = [notifications objectAtIndex:indexPath.row];
-    cell.notificationLabel.text = currentNotification;
-    /*
+    RippleModel *rippleModel = [notifications objectAtIndex:indexPath.row];
+    
+    
     if(!cell.isInitialized){
+        //UI initialization
         [cell initalize];
     }
-    cell.message.text = [messages objectAtIndex:indexPath.row];
-    */
+   cell.notificationLabel.text = [rippleModel message];
+    cell.NotificationTimeLabel.text = [rippleModel date_recieved] ? [rippleModel date_recieved] : @"test";
     return cell;
 }
 
@@ -89,6 +106,103 @@
         [cell setLayoutMargins:UIEdgeInsetsZero];
     }
 }
+
+
+-(void)expandBucketWithId:(int) Id{
+    // ActivityTableViewCell *cell = (ActivityTableViewCell *)[_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:Id inSection:0]];
+    BucketModel *bucket = [[BucketModel alloc] init];
+    [bucket setId:Id];
+    __weak typeof(self) weakSelf = self;
+    [bucket find:^{
+        NSLog(@"bucket count %@", [bucket bucket_type]);
+         [weakSelf changeToBucket:bucket];
+    
+    } onError:^(NSError *error){
+    
+    }];
+   // self.onExpand(bucket);
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    NSIndexPath *oldIndex = indexCurrent;
+    indexCurrent = indexPath;
+    if(indexCurrent == oldIndex){
+        if(shouldExpand){
+            shouldExpand = false;
+        }else{
+            shouldExpand = true;
+        }
+    }else{
+        shouldExpand = true;
+    }
+    
+    [CATransaction begin];
+    
+    [CATransaction setCompletionBlock:^{
+        if(shouldExpand){
+            [self expandBucketWithId:2];
+        }
+        
+    }];
+    
+    [tableView beginUpdates];
+    [tableView endUpdates];
+    [_tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+    [CATransaction commit];
+    
+    
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath*)indexPath
+{
+    if ([indexPath isEqual:indexCurrent] && shouldExpand)
+    {
+        return [UIHelper getScreenHeight] - 64;
+    }
+    else if([indexPath isEqual:indexCurrent]){
+        return ([UIHelper getScreenHeight] - 64)/TABLE_CELLS_ON_SCREEN;
+    }
+    else {
+        return ([UIHelper getScreenHeight] - 64)/TABLE_CELLS_ON_SCREEN;
+    }
+}
+
+-(void)changeToBucket:(BucketModel *) bucket{
+    //Same as onExpand in activity
+    BucketController *bucketController = [[BucketController alloc] init];
+    [bucketController setBucket:bucket];
+    //[((BucketController *)root) setSuperCarousel:self];
+    __weak typeof(self) weakSelf = self;
+    bucketController.onDespand = ^{
+        [weakSelf removeBucketAsRoot];
+    };
+    //[root addViewController:self];
+    
+    //[self.navigationController setViewControllers:@[root] animated:NO];
+    //[self.navigationController.view layoutIfNeeded];
+    [self.navigationController pushViewController:bucketController animated:NO];
+}
+
+-(void)removeBucketAsRoot{
+    //root = oldRoot;
+    [self.navigationController popViewControllerAnimated:NO];
+    [self.navigationController.view layoutIfNeeded];
+    //[self didGainFocus];
+    [self onFocusGained];
+}
+
+-(void)onFocusGained{
+    shouldExpand = NO;
+    indexCurrent = nil;
+    [self.tableView beginUpdates];
+    [self.tableView endUpdates];
+}
+
+
+
 
 /*
 #pragma mark - Navigation

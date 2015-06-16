@@ -7,7 +7,7 @@
 //
 
 #import "RipplesTableViewCell.h"
-
+#import "UIHelper.h"
 @implementation RipplesTableViewCell
 
 - (void)awakeFromNib {
@@ -18,6 +18,29 @@
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
+}
+
+-(void)initalize{
+    self.isInitialized = YES;
+    [UIHelper applyThinLayoutOnLabel:self.notificationLabel withSize:17.0f];
+    [self.notificationLabel setTextColor:[UIColor blackColor]];
+    [UIHelper applyThinLayoutOnLabel:self.NotificationTimeLabel withSize:15.0f];
+    [self.NotificationTimeLabel setTextColor:[UIColor blackColor]];
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
+    // self.layer.shouldRasterize = YES;
+    //self.layer.rasterizationScale = [UIScreen mainScreen].scale;
+    /*
+    self.transform = CGAffineTransformMakeRotation(M_PI);
+    self.messageImage.layer.cornerRadius = 15;
+    self.message.textContainerInset = UIEdgeInsetsMake(5, 5, 5, 5);
+    self.messageImage.clipsToBounds = YES;
+    self.selectionStyle = UITableViewCellSelectionStyleNone;
+    self.message.layer.cornerRadius = 2;
+    self.message.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.2f];
+    self.message.clipsToBounds = YES;
+    self.layer.shouldRasterize = YES;
+    self.layer.rasterizationScale = [UIScreen mainScreen].scale;
+     */
 }
 
 @end

@@ -39,11 +39,7 @@
     [self addView:2];
     self.automaticallyAdjustsScrollViewInsets=NO;
     
-    for(NSDictionary *dic in [DataHelper getNotifications]){
-        
-        [NSString stringWithFormat:@"my dictionary is %@", dic];
-    }
-    
+   
         
     //_pageImages = @[@"page1.png", @"page2.png", @"page3.png", @"page4.png"];
     

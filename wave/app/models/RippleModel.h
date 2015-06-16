@@ -13,6 +13,7 @@
 @property (nonatomic) int bucket_id;
 @property (nonatomic) int drop_id;
 @property (nonatomic, strong) NSString *message;
+@property (nonatomic, strong) NSString *date_recieved;
 -(id)init:(NSMutableDictionary *)dic;
 
 

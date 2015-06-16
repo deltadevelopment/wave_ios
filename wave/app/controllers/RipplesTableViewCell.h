@@ -10,5 +10,7 @@
 
 @interface RipplesTableViewCell : UITableViewCell
 @property (weak, nonatomic) IBOutlet UILabel *notificationLabel;
-
+@property (nonatomic) bool isInitialized;
+-(void)initalize;
+@property (weak, nonatomic) IBOutlet UILabel *NotificationTimeLabel;
 @end

@@ -97,8 +97,17 @@ static NSMutableArray *notifications;
     }else{
         notifications =[[NSMutableArray alloc] initWithArray:array];
     }
+    NSMutableDictionary *mutDic = [[NSMutableDictionary alloc] initWithDictionary:dictionary];
     
-    [notifications addObject:dictionary];
+    NSDate *currentTime = [NSDate date];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"hh-mm"];
+    NSString *resultString = [dateFormatter stringFromDate: currentTime];
+    
+    
+    [mutDic setObject:resultString forKey:@"date_recieved"];
+    
+    [notifications addObject:mutDic];
     //NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
    // [defaults setValue:notifications forKey:@"notifications"];
     
