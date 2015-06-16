@@ -56,6 +56,8 @@
 		C5A27BAC1ADEB5F100968033 /* menu.png in Resources */ = {isa = PBXBuildFile; fileRef = C5A27BAB1ADEB5F100968033 /* menu.png */; };
 		C5C2F4941B2F24F000AF8666 /* pause-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = C5C2F4931B2F24F000AF8666 /* pause-icon.png */; };
 		C5C2F4971B2F429400AF8666 /* RipplesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5C2F4961B2F429400AF8666 /* RipplesViewController.m */; };
+		C5C2F49B1B3006D500AF8666 /* RipplesTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C5C2F49A1B3006D500AF8666 /* RipplesTableViewCell.m */; };
+		C5C2F49E1B30107200AF8666 /* RippleModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C5C2F49D1B30107200AF8666 /* RippleModel.m */; };
 		C5D473641AE511730097E44F /* search-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = C5D473631AE511730097E44F /* search-icon.png */; };
 		C5D473661AE56B540097E44F /* settings-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = C5D473651AE56B540097E44F /* settings-icon.png */; };
 		C5D4736C1AE63F610097E44F /* FilterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5D4736B1AE63F610097E44F /* FilterViewController.m */; };
@@ -244,6 +246,10 @@
 		C5C2F4931B2F24F000AF8666 /* pause-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "pause-icon.png"; sourceTree = "<group>"; };
 		C5C2F4951B2F429400AF8666 /* RipplesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RipplesViewController.h; sourceTree = "<group>"; };
 		C5C2F4961B2F429400AF8666 /* RipplesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RipplesViewController.m; sourceTree = "<group>"; };
+		C5C2F4991B3006D500AF8666 /* RipplesTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RipplesTableViewCell.h; sourceTree = "<group>"; };
+		C5C2F49A1B3006D500AF8666 /* RipplesTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RipplesTableViewCell.m; sourceTree = "<group>"; };
+		C5C2F49C1B30107200AF8666 /* RippleModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RippleModel.h; sourceTree = "<group>"; };
+		C5C2F49D1B30107200AF8666 /* RippleModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RippleModel.m; sourceTree = "<group>"; };
 		C5D473631AE511730097E44F /* search-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "search-icon.png"; sourceTree = "<group>"; };
 		C5D473651AE56B540097E44F /* settings-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "settings-icon.png"; sourceTree = "<group>"; };
 		C5D4736A1AE63F610097E44F /* FilterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FilterViewController.h; sourceTree = "<group>"; };
@@ -421,6 +427,7 @@
 		C5576B1D1ADBC195009C1D5E /* controllers */ = {
 			isa = PBXGroup;
 			children = (
+				C5C2F4981B3006B500AF8666 /* ripples */,
 				F18A20EF1B1D34FC003294BE /* overlay */,
 				F1D4364E1B1A47320024205B /* NavigationController.h */,
 				F1D4364F1B1A47320024205B /* NavigationController.m */,
@@ -436,8 +443,6 @@
 				C5D473AD1AFA5BB30097E44F /* MediaController.m */,
 				F1E127AE1AFEE09F000E3F2C /* TagController.h */,
 				F1E127AF1AFEE09F000E3F2C /* TagController.m */,
-				C5C2F4951B2F429400AF8666 /* RipplesViewController.h */,
-				C5C2F4961B2F429400AF8666 /* RipplesViewController.m */,
 			);
 			path = controllers;
 			sourceTree = "<group>";
@@ -507,6 +512,8 @@
 				C5E2FC0F1B1884D9007E71BE /* SubscribeModel.m */,
 				F18A20F21B227793003294BE /* TemperatureModel.h */,
 				F18A20F31B227793003294BE /* TemperatureModel.m */,
+				C5C2F49C1B30107200AF8666 /* RippleModel.h */,
+				C5C2F49D1B30107200AF8666 /* RippleModel.m */,
 			);
 			path = models;
 			sourceTree = "<group>";
@@ -672,6 +679,17 @@
 			);
 			name = feed;
 			path = ..;
+			sourceTree = "<group>";
+		};
+		C5C2F4981B3006B500AF8666 /* ripples */ = {
+			isa = PBXGroup;
+			children = (
+				C5C2F4951B2F429400AF8666 /* RipplesViewController.h */,
+				C5C2F4961B2F429400AF8666 /* RipplesViewController.m */,
+				C5C2F4991B3006D500AF8666 /* RipplesTableViewCell.h */,
+				C5C2F49A1B3006D500AF8666 /* RipplesTableViewCell.m */,
+			);
+			name = ripples;
 			sourceTree = "<group>";
 		};
 		F18A20E71B1D330C003294BE /* bucket */ = {
@@ -1056,6 +1074,7 @@
 				C57AD0A71AD7EDB800B6042A /* main.m in Sources */,
 				C5A27B691ADD01D000968033 /* NotificationHelper.m in Sources */,
 				F1E127B01AFEE09F000E3F2C /* TagController.m in Sources */,
+				C5C2F49B1B3006D500AF8666 /* RipplesTableViewCell.m in Sources */,
 				C5E2FC101B1884D9007E71BE /* SubscribeModel.m in Sources */,
 				F1D436501B1A47320024205B /* NavigationController.m in Sources */,
 				C5D473BF1AFD0BB70097E44F /* CircleIndicatorView.m in Sources */,
@@ -1079,6 +1098,7 @@
 				C5D473C21B010A440097E44F /* DataHelper.m in Sources */,
 				F1BD62301AF057D100BDE1CA /* ChatViewController.m in Sources */,
 				C5A27B781ADD128100968033 /* UserModel.m in Sources */,
+				C5C2F49E1B30107200AF8666 /* RippleModel.m in Sources */,
 				C55FE90A1AD81F45007663FB /* SuperButton.m in Sources */,
 				F1DBB5611B0FD46F0097F709 /* SettingsTableViewController.m in Sources */,
 				F1D436471B1A10B70024205B /* DropController.m in Sources */,

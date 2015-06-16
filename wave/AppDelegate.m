@@ -108,13 +108,19 @@ AuthHelper *authHelper;
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
+    
+    
+  
+    [DataHelper storeNotifications:userInfo];
+     
     [DataHelper storeRippleCount:[DataHelper getRippleCount] +1];
+    
     if (application.applicationState == UIApplicationStateActive ){
         NSLog(@"active");
     }else{
         NSLog(@"not active");
     }
-    [DataHelper storeNotifications:userInfo];
+    
     if([DataHelper getRippleCount]> 0){
         UILabel *ripplesCount = [[UILabel alloc] initWithFrame:CGRectMake(16, -5, 20, 20)];
         ripplesCount.text = [NSString stringWithFormat:@"%d", [DataHelper getRippleCount]];
@@ -126,9 +132,8 @@ AuthHelper *authHelper;
         ripplesCount.clipsToBounds = YES;
         [[DataHelper getNotificationButton] addSubview:ripplesCount];
     }
-    // app was already in the foreground
+    NSLog(@"my dictionary is %@", userInfo);
     
-    // app was just brought from background to foreground
     
 }
 

@@ -89,24 +89,41 @@ static NSMutableArray *notifications;
 +(void)storeNotifications:(NSDictionary *)dictionary
 {
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSMutableArray * array = [defaults valueForKey:@"notifications"];
+    NSArray * array = [self getNotifications];
     if(array == nil){
         if(notifications == nil){
             notifications = [[NSMutableArray alloc] init];
         }
     }else{
-        notifications = array;
+        notifications =[[NSMutableArray alloc] initWithArray:array];
     }
     
     [notifications addObject:dictionary];
     //NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setValue:notifications forKey:@"notifications"];
+   // [defaults setValue:notifications forKey:@"notifications"];
+    
+  
+    NSData *myEncodedObject = [NSKeyedArchiver archivedDataWithRootObject:notifications];
+    [defaults setObject:myEncodedObject forKey:[NSString stringWithFormat:@"notifications"]];
     
 }
 
-+(NSMutableArray *)getNotifications{
++(NSArray *)getNotifications{
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    return [defaults valueForKey:@"notifications"];
+    NSData *myDecodedObject = [defaults objectForKey: [NSString stringWithFormat:@"notifications"]];
+    
+    NSArray *decodedArray = nil;
+    @try {
+        decodedArray =[NSKeyedUnarchiver unarchiveObjectWithData: myDecodedObject];
+    }
+    @catch (NSException *exception) {
+        NSLog(@"Error: %@", [exception name]);
+    }
+    @finally {
+        NSLog(@"trying");
+    }
+    
+    return decodedArray;
 }
 
 

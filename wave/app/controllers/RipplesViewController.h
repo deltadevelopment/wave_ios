@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface RipplesViewController : UIViewController
+@interface RipplesViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
+@property (weak, nonatomic) IBOutlet UITableView *tableView;
+
 
 @end
