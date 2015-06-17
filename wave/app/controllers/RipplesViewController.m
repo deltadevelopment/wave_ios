@@ -24,6 +24,7 @@ static int TABLE_CELLS_ON_SCREEN = 6;
     int maxWidth;
     CGRect cellFrame;
     int currentBucketId;
+    int currentDropId;
 }
 
 - (void)viewDidLoad {
@@ -88,23 +89,26 @@ static int TABLE_CELLS_ON_SCREEN = 6;
     if(!cell.isInitialized){
         //UI initialization
         [cell initalize];
-        cell.onUserTap = ^(RippleModel *ripple){
-            [weakSelf showProfile:ripple];
-        };
-        cell.onBucketTap = ^(RippleModel *ripple, RipplesTableViewCell *cell){
-            [weakSelf showBucketNormally:ripple withCell:cell];
-        };
-        cell.onDropTap = ^(RippleModel *ripple){
-            [weakSelf showDropNormally:ripple];
-        };
+       
     }
+    
+    cell.onUserTap = ^(RippleModel *ripple){
+        [weakSelf showProfile:ripple];
+    };
+    cell.onBucketTap = ^(RippleModel *ripple, RipplesTableViewCell *cell){
+        [weakSelf showBucketNormally:ripple withCell:cell];
+    };
+    cell.onDropTap = ^(RippleModel *ripple, RipplesTableViewCell *cell){
+        [weakSelf showDropNormally:ripple withCell:cell];
+    };
     [cell.profilePictureImage setImage:[UIImage imageNamed:@"miranda-kerr.jpg"]];
    
     
     
     //cell.notificationLabel.text = [rippleModel message];
    
-    cellFrame = [cell makeTextClickableAndLayout: [[rippleModel getComputedString] objectAtIndex:0] withRestOfText: [[rippleModel getComputedString] objectAtIndex:1]];
+    cellFrame = [cell makeTextClickableAndLayout: [[rippleModel getComputedString] objectAtIndex:0]
+                                  withRestOfText: [[rippleModel getComputedString] objectAtIndex:1] withRippleId:rippleModel.Id];
     [cell.userButton setTitle:@"simenlie" forState:UIControlStateNormal];
     maxWidth = cell.textView.frame.size.width;
     cell.NotificationTimeLabel.text = [rippleModel created_at] ? [rippleModel created_at] : @"test";
@@ -150,12 +154,19 @@ static int TABLE_CELLS_ON_SCREEN = 6;
     
 }
 
--(void)showBucketNormally:(RippleModel *)ripple withCell:(RipplesTableViewCell *) cell{
+-(void)showBucketNormally:(RippleModel *)ripple
+                 withCell:(RipplesTableViewCell *) cell
+{
+    NSLog(@"showing bucket normal");
     currentBucketId = [[ripple bucket] Id];
     [self tableView:self.tableView didSelectRowAtIndexPath:[self.tableView indexPathForCell:cell]];
 }
--(void)showDropNormally:(RippleModel *)ripple{
-    
+-(void)showDropNormally:(RippleModel *)ripple
+               withCell:(RipplesTableViewCell *) cell
+{
+    NSLog(@"showing drop normal");
+    currentBucketId = [[ripple drop] bucket_id];
+    [self tableView:self.tableView didSelectRowAtIndexPath:[self.tableView indexPathForCell:cell]];
 }
 
 
@@ -196,14 +207,14 @@ static int TABLE_CELLS_ON_SCREEN = 6;
 }
 
 
--(void)expandBucketWithId:(int) Id{
+-(void)expandBucketWithId:(int) Id withDrop:(int) dropId{
     // ActivityTableViewCell *cell = (ActivityTableViewCell *)[_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:Id inSection:0]];
     BucketModel *bucket = [[BucketModel alloc] init];
     [bucket setId:Id];
     __weak typeof(self) weakSelf = self;
     [bucket find:^{
         NSLog(@"bucket count %@", [bucket bucket_type]);
-         [weakSelf changeToBucket:bucket];
+         [weakSelf changeToBucket:bucket withDropId:dropId];
     
     } onError:^(NSError *error){
     
@@ -214,33 +225,58 @@ static int TABLE_CELLS_ON_SCREEN = 6;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
-    NSIndexPath *oldIndex = indexCurrent;
-    indexCurrent = indexPath;
-    if(indexCurrent == oldIndex){
-        if(shouldExpand){
-            shouldExpand = false;
+    RippleModel *rippleModel = [[self.ripplesFeedModel feed] objectAtIndex:indexPath.row];
+ 
+    if (![rippleModel.trigger_type isEqualToString:@"Subscription"]) {
+        NSIndexPath *oldIndex = indexCurrent;
+        indexCurrent = indexPath;
+        if(indexCurrent == oldIndex){
+            if(shouldExpand){
+                shouldExpand = false;
+            }else{
+                
+                shouldExpand = true;
+            }
         }else{
             shouldExpand = true;
         }
-    }else{
-        shouldExpand = true;
+        [CATransaction begin];
+        
+        [CATransaction setCompletionBlock:^{
+            if(shouldExpand){
+                [self navigateWithRipple:rippleModel];
+            }
+            
+        }];
+        
+        [tableView beginUpdates];
+        [tableView endUpdates];
+        [_tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
+        [CATransaction commit];
     }
     
-    [CATransaction begin];
     
-    [CATransaction setCompletionBlock:^{
-        if(shouldExpand){
-            [self expandBucketWithId:currentBucketId];
-        }
-        
-    }];
+   
     
-    [tableView beginUpdates];
-    [tableView endUpdates];
-    [_tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
-    [CATransaction commit];
     
+}
+
+-(void)navigateWithRipple:(RippleModel *) ripple{
+    if ([ripple.trigger_type isEqualToString:@"Drop"]) {
+        [self expandBucketWithId:[ripple.drop bucket_id] withDrop:ripple.drop.Id];
+    }
+    else if ([ripple.trigger_type isEqualToString:@"Bucket"]) {
+        [self expandBucketWithId:[ripple.bucket Id] withDrop:0];
+    }
+    else if ([ripple.trigger_type isEqualToString:@"Vote"]) {
+        [self expandBucketWithId:[ripple.temperature bucket_id] withDrop:[ripple.temperature drop_id]];
+    }
+    else if ([ripple.trigger_type isEqualToString:@"Subscription"]) {
+        //Dont do anything
+    }
+    else if ([ripple.trigger_type isEqualToString:@"Tag"]) {
+        //Dont do anything
+    }
     
 }
 
@@ -289,10 +325,15 @@ static int TABLE_CELLS_ON_SCREEN = 6;
     
 }
 
--(void)changeToBucket:(BucketModel *) bucket{
+-(void)changeToBucket:(BucketModel *) bucket withDropId:(int)dropId{
     //Same as onExpand in activity
     BucketController *bucketController = [[BucketController alloc] init];
-    [bucketController setBucket:bucket];
+    if(dropId!= 0){
+        [bucketController setBucket:bucket withCurrentDropId:dropId];
+    }
+    else{
+        [bucketController setBucket:bucket];
+    }
     //[((BucketController *)root) setSuperCarousel:self];
     __weak typeof(self) weakSelf = self;
     bucketController.onDespand = ^{

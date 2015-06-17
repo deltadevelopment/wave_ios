@@ -65,8 +65,8 @@
     self.subscribeButton.layer.cornerRadius = 2;
     self.subscribeButton.imageView.frame = CGRectMake(0, 0, 40, 40);
     [self.subscribeButton setImage: [UIHelper iconImage:[UIImage imageNamed:@"tick.png"] withSize:40] forState:UIControlStateNormal];
-    [[self.subscribeButton imageView] setTintColor:[ColorHelper purpleColor]];
-    [self.subscribeButton setTintColor:[ColorHelper purpleColor]];
+   // [[self.subscribeButton imageView] setTintColor:[ColorHelper purpleColor]];
+    
     [self.subscribeButton setImageEdgeInsets:UIEdgeInsetsMake(5, 12.5, 5, 12.5)];
     //[self.subscribeButton setTitleEdgeInsets:UIEdgeInsetsMake(0, -40, 0, 0)];
     //[self.subscribeButton sizeToFit];
@@ -146,11 +146,11 @@
     frame2.origin.y = (height /2) -(frame2.size.height/2);
     button.frame = frame2;
 }
--(CGRect)makeTextClickableAndLayout:(NSString *) username withRestOfText:(NSString *) restofText{
+-(CGRect)makeTextClickableAndLayout:(NSString *) username withRestOfText:(NSString *) restofText withRippleId:(int)rippleId{
 
     displayContent = [[NSMutableAttributedString alloc] init];
-    
-    NSAttributedString* attributedString = [[NSAttributedString alloc] initWithString:username attributes:@{ @"myCustomTag" : @(YES) }];
+    NSString *tag = [NSString stringWithFormat:@"myCustomTag%d", rippleId];
+    NSAttributedString* attributedString = [[NSAttributedString alloc] initWithString:username attributes:@{ tag : @(YES) }];
     [displayContent appendAttributedString:attributedString];
     [displayContent appendAttributedString:[[NSAttributedString alloc] initWithString:restofText attributes:@{ @"myCustomTag1" : @(YES) }]];
     
@@ -194,25 +194,37 @@
     location.y -= textView.textContainerInset.top;
     
     // Find the character that's been tapped on
+    NSLog(@"the location is %f %f", location.x, location.y);
     
     NSUInteger characterIndex;
     characterIndex = [layoutManager characterIndexForPoint:location
                                            inTextContainer:textView.textContainer
                   fractionOfDistanceBetweenInsertionPoints:NULL];
     
+    
+    
     if (characterIndex < textView.textStorage.length) {
-        
-        NSRange range;
-        id value = [textView.attributedText attribute:@"myCustomTag" atIndex:characterIndex effectiveRange:&range];
-        if(value){
-            //Navigate to the user
-            NSLog(@"%@, %lu, %lu", value, (unsigned long)range.location, (unsigned long)range.length);
-            self.onUserTap(self.ripple);
-        }else{
-            //If the user did not click any links in the text, navigate to ripple action
+        if(location.y > 0 && location.x > 0){
+            NSRange range;
             
+            NSString *tag = [NSString stringWithFormat:@"myCustomTag%d", self.ripple.Id];
+            id value = [textView.attributedText attribute:tag atIndex:characterIndex effectiveRange:&range];
+            if(value){
+                //Navigate to the user
+                NSLog(@"%@, %lu, %lu", value, (unsigned long)range.location, (unsigned long)range.length);
+                self.onUserTap(self.ripple);
+            }else{
+                if ([[self.ripple trigger_type] isEqualToString:@"Bucket"]) {
+                    self.onBucketTap(self.ripple, self);
+                }else{
+                    self.onDropTap(self.ripple, self);
+                }
+                //If the user did not click any links in the text, navigate to ripple action
+                
+            }
         }
-        // Handle as required...
+        
+       
 
     }
 }
@@ -259,9 +271,14 @@
         if ([ripple subscription] != nil) {
             if([ripple.subscription reverse]){
                 [self.subscribeButton setImage: [UIHelper iconImage:[UIImage imageNamed:@"tick.png"] withSize:40] forState:UIControlStateNormal];
+                [self.subscribeButton setBackgroundColor:[ColorHelper purpleColor]];
+                [self.subscribeButton setTintColor:[ColorHelper whiteColor]];
             }
             else{
-                [self.subscribeButton setImage: [UIHelper iconImage:[UIImage imageNamed:@"plus.png"] withSize:40] forState:UIControlStateNormal];
+                [self.subscribeButton setImage: [UIHelper iconImage:[UIImage imageNamed:@"plus-icon-simple.png"] withSize:40] forState:UIControlStateNormal];
+                [self.subscribeButton setBackgroundColor:[ColorHelper whiteColor]];
+                  [self.subscribeButton setImageEdgeInsets:UIEdgeInsetsMake(5, 12.5, 5, 12.5)];
+                [self.subscribeButton setTintColor:[ColorHelper purpleColor]];
             }
         }
       
@@ -287,13 +304,46 @@
 
 -(void)subscribeAction{
     //Subscribe to user here
+ 
+    
   NSLog(@"button pressed subscribe");
+    if([self.ripple.subscription reverse]){
+        [self.ripple.subscription delete:^(ResponseModel *response){
+            [self.subscribeButton setImage: [UIHelper iconImage:[UIImage imageNamed:@"plus-icon-simple.png"] withSize:40] forState:UIControlStateNormal];
+            [self.subscribeButton setBackgroundColor:[ColorHelper whiteColor]];
+            [self.subscribeButton setImageEdgeInsets:UIEdgeInsetsMake(5, 12.5, 5, 12.5)];
+            [self.subscribeButton setTintColor:[ColorHelper purpleColor]];
+        } onError:^(NSError *error){}];
+        [self.ripple.subscription setReverse:NO];
+    
+        
+        
+    }
+    else{
+        
+         [self.ripple.subscription setReverse:YES];
+        [self.ripple.subscription saveChanges:^(ResponseModel *response){
+           
+            [self.subscribeButton setImage: [UIHelper iconImage:[UIImage imageNamed:@"tick.png"] withSize:40] forState:UIControlStateNormal];
+            [self.subscribeButton setBackgroundColor:[ColorHelper purpleColor]];
+            [self.subscribeButton setTintColor:[ColorHelper whiteColor]];
+        } onError:^(NSError *error)
+         {
+             
+             
+         }];
+     
+    }
+    
+    
+   
+    
 }
 
 -(void)dropAction{
     //Show the bucket, then the drop
     NSLog(@"button pressed drop");
-    self.onDropTap(self.ripple);
+    self.onDropTap(self.ripple, self);
 }
 
 -(void)bucketAction{
@@ -305,13 +355,13 @@
 -(void)temperaturAction{
     //show the bucket, then the drop
     NSLog(@"button pressed tenperature");
-     self.onDropTap(self.ripple);
+     self.onDropTap(self.ripple, self);
 }
 
 -(void)tagAction{
      //show the bucket, then the drop
     NSLog(@"button pressed tag not implemented");
-     self.onDropTap(self.ripple);
+     self.onDropTap(self.ripple, self);
 }
 
 

@@ -13,32 +13,41 @@
 -(id)init:(NSMutableDictionary *)dic{
     self =[super init];
     self.dictionary = dic;
+    
     self.triggee_id =[self getIntValueFromString:@"triggee_id"];
+    self.Id =[self getIntValueFromString:@"id"];
     self.trigger_id =[self getIntValueFromString:@"trigger_id"];
     self.trigger_type =[self getStringValueFromString:@"trigger_type"];
     self.message = [self getStringValueFromString:@"message"];
     self.created_at = [dic objectForKey:@"created_at"];
     self.user = [[UserModel alloc] init:[self.dictionary objectForKey:@"triggee"]];
     
-    if([self.trigger_type isEqualToString:@"Drop"]){
-     self.drop = [[DropModel alloc] init:[self.dictionary objectForKey:@"trigger"]];
     
-    }
-    else if([self.trigger_type isEqualToString:@"Bucket"]){
-        self.bucket = [[BucketModel alloc] init:[self.dictionary objectForKey:@"trigger"]];
-        
-    }
-    else if([self.trigger_type  isEqualToString:@"Subscription"]){
-        if((NSNull*)[self.dictionary objectForKey:@"trigger"] != [NSNull null]){
+    if((NSNull*)[self.dictionary objectForKey:@"trigger"] != [NSNull null]){
+        if([self.trigger_type isEqualToString:@"Drop"]){
+            self.drop = [[DropModel alloc] init:[self.dictionary objectForKey:@"trigger"]];
+            
+        }
+        else if([self.trigger_type isEqualToString:@"Bucket"]){
+            self.bucket = [[BucketModel alloc] init:[self.dictionary objectForKey:@"trigger"]];
+            
+        }
+        else if([self.trigger_type  isEqualToString:@"Subscription"]){
+            
+            
             self.subscription = [[SubscribeModel alloc] init:[self.dictionary objectForKey:@"trigger"]];
+            
+        }
+        else if([self.trigger_type  isEqualToString:@"Vote"]){
+            
+            self.temperature = [[TemperatureModel alloc] init:[self.dictionary objectForKey:@"trigger"]];
+        }
+        else if([self.trigger_type  isEqualToString:@"Tag"]){
+            NSLog(@"Not implemented yet");
         }
     }
-    else if([self.trigger_type  isEqualToString:@"Vote"]){
-        self.temperature = [[TemperatureModel alloc] init:[self.dictionary objectForKey:@"trigger"]];
-    }
-    else if([self.trigger_type  isEqualToString:@"Tag"]){
-        NSLog(@"Not implemented yet");
-    }
+    
+   
         return self;
     
 

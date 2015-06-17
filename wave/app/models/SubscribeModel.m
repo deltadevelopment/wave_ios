@@ -22,7 +22,11 @@
     self.Id = [self getIntValueFromString:@"id"];
     self.user_id = [self getIntValueFromString:@"user_id"];
     self.subscribee_id = [self getIntValueFromString:@"subscribee_id"];
-    self.reverse = [self getBoolValueFromString:@"reciprocal"];
+    self.reverse = [self getBoolValueFromString:@"reverse"];
+    
+   self.subscriber = [[UserModel alloc] initWithDeviceUser];
+    self.subscribee = [[UserModel alloc] init];
+    [self.subscribee setId:self.user_id];
     //[self refresh:dic];
     return self;
 };

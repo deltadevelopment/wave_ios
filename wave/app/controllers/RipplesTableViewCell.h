@@ -14,7 +14,7 @@
 @property (nonatomic) bool isInitialized;
 @property (nonatomic, copy) void (^onUserTap)(RippleModel*(ripple));
 @property (nonatomic, copy) void (^onBucketTap)(RippleModel*(ripple), RipplesTableViewCell*(cell));
-@property (nonatomic, copy) void (^onDropTap)(RippleModel*(ripple));
+@property (nonatomic, copy) void (^onDropTap)(RippleModel*(ripple), RipplesTableViewCell*(cell));
 -(void)initalize;
 @property (strong, nonatomic)  UILabel *NotificationTimeLabel;
 @property (strong, nonatomic)  UIImageView *profilePictureImage;
@@ -28,5 +28,5 @@
 -(void)calculateHeight;
 -(void)updateUiWithHeight:(float) height;
 -(void)initActionButton:(RippleModel *) ripple withCellHeight:(float) height;
--(CGRect)makeTextClickableAndLayout:(NSString *) username withRestOfText:(NSString *) restofText;
+-(CGRect)makeTextClickableAndLayout:(NSString *) username withRestOfText:(NSString *) restofText withRippleId:(int)rippleId;
 @end

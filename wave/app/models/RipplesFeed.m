@@ -38,7 +38,7 @@
         NSMutableArray *rawFeed = [[response data] objectForKey:@"ripples"];
         for(NSMutableDictionary *rawBucket in rawFeed){
             RippleModel *ripple = [[RippleModel alloc] init:rawBucket];
-            [self.feed insertObject:ripple atIndex:0];
+            [self.feed addObject:ripple];
         }
     }else{
         self.hasNotifications = NO;

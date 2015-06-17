@@ -17,6 +17,7 @@
 @property (nonatomic, strong) NSString *trigger_type;
 @property (nonatomic, strong) NSString *created_at;
 @property (nonatomic) int trigger_id;
+@property (nonatomic) int Id;
 @property (nonatomic) int triggee_id;
 @property (nonatomic, strong) DropModel *drop;
 @property (nonatomic, strong) BucketModel *bucket;
@@ -29,7 +30,6 @@
 
 
 //Old values for push notification
-@property (nonatomic) int Id;
 @property (nonatomic) int bucket_id;
 @property (nonatomic) int drop_id;
 -(id)init:(NSMutableDictionary *)dic;

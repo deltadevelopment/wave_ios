@@ -47,6 +47,8 @@ const int PEEK_Y_START = 300;
     bool superButtonDisabled;
     AuthHelper *authHelper;
     bool isAboutToleaveBucket;
+    bool shouldJumpToDrop;
+    int dropIdToJumpTo;
 }
 @synthesize infoViewMode;
 - (void)viewDidLoad {
@@ -150,16 +152,22 @@ const int PEEK_Y_START = 300;
 -(void)loadBucket{
     [bucket find:[bucket Id] onCompletion:^(ResponseModel *response, BucketModel *returningBucket){
         bucket = returningBucket;
-        currentDropPage = [self viewControllerAtIndex:[bucket.drops count]-1 replacingObject:currentDropPage];
+        int dropPositionInBucket = (int)[bucket.drops count]-1;
+        if(shouldJumpToDrop){
+            int index = 0;
+            for(DropModel *drop in bucket.drops){
+                if(drop.Id == dropIdToJumpTo){
+                    dropPositionInBucket = index;
+                }
+                index++;
+            }
+        }
+        
+        currentDropPage = [self viewControllerAtIndex:dropPositionInBucket replacingObject:currentDropPage];
         NSArray *viewControllers = @[currentDropPage];
         [currentDropPage setIsStartingView:YES];
         [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
-        [self updatePageIndicator:[bucket.drops count]-1];
-        
-        for(DropModel *drop in bucket.drops){
-            NSLog(@"DROP #%d : video= %d", drop.Id, drop.media_type);
-        }
-        
+        [self updatePageIndicator:dropPositionInBucket];
         
     } onError:^(NSError *error){
         
@@ -385,6 +393,12 @@ const int PEEK_Y_START = 300;
         superButtonDisabled = NO;
         [self.navigationItem setTitle:[bucket title]];
     }
+}
+
+-(void)setBucket:(BucketModel *)inputBucket withCurrentDropId:(int) dropId{
+    [self setBucket:inputBucket];
+    dropIdToJumpTo = dropId;
+    shouldJumpToDrop = YES;
 }
 
 -(void)updatePageIndicator:(NSUInteger)index{
