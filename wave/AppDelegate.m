@@ -122,7 +122,6 @@ AuthHelper *authHelper;
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
-   
     if (application.applicationState == UIApplicationStateActive ){
         [DataHelper storeNotifications:userInfo];
         [DataHelper storeRippleCount:[DataHelper getRippleCount] +1];
