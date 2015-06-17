@@ -112,7 +112,7 @@ const int EXPAND_SIZE = 400;
 -(void)removeBucketAsRoot{
     //root = oldRoot;
     
-    [self.navigationController popViewControllerAnimated:YES];
+    [self.navigationController popViewControllerAnimated:NO];
     [self.navigationController.view layoutIfNeeded];
     //[self didGainFocus];
     [self onFocusGained];

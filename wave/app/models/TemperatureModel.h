@@ -17,7 +17,7 @@
 
 @property (nonatomic, strong) NSString *created_at;
 @property (nonatomic, strong) NSString *updated_at;
-
+-(id)init:(NSMutableDictionary *)dic;
 
 -(id)initWithDrop:(int)drop_id;
 -(void)saveChanges:(void (^)(ResponseModel *, TemperatureModel *))completionCallback

@@ -16,6 +16,17 @@
     return self;
 }
 
+-(id)init:(NSMutableDictionary *)dic{
+    self =[super init];
+    self.dictionary = dic;
+    self.Id = [self getIntValueFromString:@"id"];
+    self.user_id = [self getIntValueFromString:@"user_id"];
+    self.subscribee_id = [self getIntValueFromString:@"subscribee_id"];
+    self.reverse = [self getBoolValueFromString:@"reciprocal"];
+    //[self refresh:dic];
+    return self;
+};
+
 -(void)saveChanges:(void (^)(ResponseModel *))completionCallback
            onError:(void(^)(NSError *))errorCallback
 {

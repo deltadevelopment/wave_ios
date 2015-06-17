@@ -12,7 +12,12 @@
 @property (nonatomic) UserModel *subscribee;
 @property (nonatomic, strong) UserModel *subscriber;
 
+@property (nonatomic) int Id;
+@property (nonatomic) int user_id;
+@property (nonatomic) int subscribee_id;
+@property (nonatomic) BOOL reverse;
 
+-(id)init:(NSMutableDictionary *)dic;
 -(void)delete:(void (^)(ResponseModel *))completionCallback
 onError:(void(^)(NSError *))errorCallback;
 -(void)saveChanges:(void (^)(ResponseModel *))completionCallback

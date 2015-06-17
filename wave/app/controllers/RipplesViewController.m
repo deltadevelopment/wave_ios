@@ -21,6 +21,9 @@ static int TABLE_CELLS_ON_SCREEN = 6;
    // NSMutableArray *notifications;
     bool shouldExpand;
     NSIndexPath *indexCurrent;
+    int maxWidth;
+    CGRect cellFrame;
+    int currentBucketId;
 }
 
 - (void)viewDidLoad {
@@ -81,19 +84,79 @@ static int TABLE_CELLS_ON_SCREEN = 6;
     RipplesTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ripplesCell" forIndexPath:indexPath];
     RippleModel *rippleModel = [[self.ripplesFeedModel feed] objectAtIndex:indexPath.row];
     
-    
+       __weak typeof(self) weakSelf = self;
     if(!cell.isInitialized){
         //UI initialization
         [cell initalize];
+        cell.onUserTap = ^(RippleModel *ripple){
+            [weakSelf showProfile:ripple];
+        };
+        cell.onBucketTap = ^(RippleModel *ripple, RipplesTableViewCell *cell){
+            [weakSelf showBucketNormally:ripple withCell:cell];
+        };
+        cell.onDropTap = ^(RippleModel *ripple){
+            [weakSelf showDropNormally:ripple];
+        };
     }
     [cell.profilePictureImage setImage:[UIImage imageNamed:@"miranda-kerr.jpg"]];
+   
+    
+    
     //cell.notificationLabel.text = [rippleModel message];
+   
+    cellFrame = [cell makeTextClickableAndLayout: [[rippleModel getComputedString] objectAtIndex:0] withRestOfText: [[rippleModel getComputedString] objectAtIndex:1]];
     [cell.userButton setTitle:@"simenlie" forState:UIControlStateNormal];
+    maxWidth = cell.textView.frame.size.width;
     cell.NotificationTimeLabel.text = [rippleModel created_at] ? [rippleModel created_at] : @"test";
-    [cell calculateHeight];
+  //  [cell calculateHeight];
+    
+    if(cellFrame.size.height <50){
+        
+        [cell updateUiWithHeight:60];
+        [cell initActionButton:rippleModel withCellHeight:60];
+        
+    }
+    else{
+     [cell updateUiWithHeight:cellFrame.size.height + 20];
+         [cell initActionButton:rippleModel withCellHeight:cellFrame.size.height + 20];
+    }
+    
+   
+    
     return cell;
 }
 
+-(void)showProfile:(RippleModel *) ripple{
+    NSLog(@"showing profile for %@", [[ripple user] username]);
+    
+    
+    //UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
+    AbstractFeedViewController *profileController = [self.storyboard instantiateViewControllerWithIdentifier:@"activity"];
+    [profileController setViewMode:1];
+    [profileController setIsDeviceUser:NO];
+    [profileController setAnotherUser:[ripple user]];
+    [profileController hidePeekFirst];
+    
+    [self.view insertSubview:profileController.view atIndex:0];
+    [self addChildViewController:profileController];
+    CGRect frame = profileController.view.frame;
+    frame.origin.y = -[UIHelper getScreenHeight];
+    profileController.view.frame = frame;
+    [profileController layOutPeek];
+    NSLog(@"Adding");
+    [[ApplicationHelper getMainNavigationController] pushViewController:profileController animated:NO];
+    
+    
+    
+}
+
+-(void)showBucketNormally:(RippleModel *)ripple withCell:(RipplesTableViewCell *) cell{
+    currentBucketId = [[ripple bucket] Id];
+    [self tableView:self.tableView didSelectRowAtIndexPath:[self.tableView indexPathForCell:cell]];
+}
+-(void)showDropNormally:(RippleModel *)ripple{
+    
+}
 
 
 
@@ -168,7 +231,7 @@ static int TABLE_CELLS_ON_SCREEN = 6;
     
     [CATransaction setCompletionBlock:^{
         if(shouldExpand){
-            [self expandBucketWithId:2];
+            [self expandBucketWithId:currentBucketId];
         }
         
     }];
@@ -181,6 +244,8 @@ static int TABLE_CELLS_ON_SCREEN = 6;
     
 }
 
+
+
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath*)indexPath
 {
     if ([indexPath isEqual:indexCurrent] && shouldExpand)
@@ -189,19 +254,32 @@ static int TABLE_CELLS_ON_SCREEN = 6;
     }
   
     else {
+        /*
+        RippleModel *rip =[[self.ripplesFeedModel feed] objectAtIndex:indexPath.row];
+        NSArray *compt = [[[self.ripplesFeedModel feed] objectAtIndex:indexPath.row] getComputedString];
+        NSString *text2 = [NSString stringWithFormat:@"%@ %@", [compt objectAtIndex:0],[compt objectAtIndex:1]];
         NSString *text = [[[self.ripplesFeedModel feed] objectAtIndex:indexPath.row] message];
         NSDictionary *attributes = @{NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue-Thin" size:15]};
         // NSString class method: boundingRectWithSize:options:attributes:context is
         // available only on ios7.0 sdk.
-        CGRect rect = [text boundingRectWithSize:CGSizeMake(100, CGFLOAT_MAX)
-                                         options:NSStringDrawingUsesLineFragmentOrigin
+        CGRect rect = [text2 boundingRectWithSize:CGSizeMake(70.f, CGFLOAT_MAX)
+                                         options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading)
                                       attributes:attributes
                                          context:nil];
-        if(rect.size.height <55){
+        NSLog(@"the max width is %f", rect.size.height);
+        
+        return rect.size.height;
+        return ([UIHelper getScreenHeight] - 64)/TABLE_CELLS_ON_SCREEN;
+         */
+         //RipplesTableViewCell *cell = (RipplesTableViewCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+        if(cellFrame.size.height <50){
+           
+            
+            
             return 60;
         }
-        return rect.size.height - 16;
-        return ([UIHelper getScreenHeight] - 64)/TABLE_CELLS_ON_SCREEN;
+       
+        return cellFrame.size.height + 20;
     }
     
     

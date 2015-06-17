@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		C52AAFD61B3058A0004332DD /* RipplesFeed.m in Sources */ = {isa = PBXBuildFile; fileRef = C52AAFD51B3058A0004332DD /* RipplesFeed.m */; };
+		C52AAFD81B319B5F004332DD /* manatee-gray.png in Resources */ = {isa = PBXBuildFile; fileRef = C52AAFD71B319B5F004332DD /* manatee-gray.png */; };
 		C5576B371ADBC195009C1D5E /* CameraHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C5576B201ADBC195009C1D5E /* CameraHelper.m */; };
 		C5576B381ADBC195009C1D5E /* ColorHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C5576B221ADBC195009C1D5E /* ColorHelper.m */; };
 		C5576B391ADBC195009C1D5E /* UIHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C5576B241ADBC195009C1D5E /* UIHelper.m */; };
@@ -162,6 +163,7 @@
 /* Begin PBXFileReference section */
 		C52AAFD41B3058A0004332DD /* RipplesFeed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RipplesFeed.h; sourceTree = "<group>"; };
 		C52AAFD51B3058A0004332DD /* RipplesFeed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RipplesFeed.m; sourceTree = "<group>"; };
+		C52AAFD71B319B5F004332DD /* manatee-gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "manatee-gray.png"; sourceTree = "<group>"; };
 		C5576B1F1ADBC195009C1D5E /* CameraHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraHelper.h; sourceTree = "<group>"; };
 		C5576B201ADBC195009C1D5E /* CameraHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraHelper.m; sourceTree = "<group>"; };
 		C5576B211ADBC195009C1D5E /* ColorHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorHelper.h; sourceTree = "<group>"; };
@@ -526,6 +528,7 @@
 		C5576B271ADBC195009C1D5E /* res */ = {
 			isa = PBXGroup;
 			children = (
+				C52AAFD71B319B5F004332DD /* manatee-gray.png */,
 				C5C2F4931B2F24F000AF8666 /* pause-icon.png */,
 				F1DBB56D1B12B6930097F709 /* dots-icon.png */,
 				F1DBB54A1B0E4A080097F709 /* manatee.png */,
@@ -981,6 +984,7 @@
 				C5D473641AE511730097E44F /* search-icon.png in Resources */,
 				F1E127B51AFFCB1E000E3F2C /* download-icon.png in Resources */,
 				C5D473821AE7992E0097E44F /* people-icon.png in Resources */,
+				C52AAFD81B319B5F004332DD /* manatee-gray.png in Resources */,
 				C5A27BA51ADE779500968033 /* events-icon.png in Resources */,
 				C5576B421ADBC1FC009C1D5E /* camera-icon.png in Resources */,
 				C5D473861AE79BC80097E44F /* the-bar-y-v2.png in Resources */,
