@@ -15,6 +15,7 @@
 
 @implementation TemperatureController{
     int temperature;
+    int lastTemp;
 }
 
 - (void)viewDidLoad {
@@ -56,6 +57,7 @@
     float result = (yVal/limit)*100;
     float roundedResult = roundf(result);
     temperature = (int)roundedResult;
+    
     [((TemperatureView *)self.view) setTemperature:[NSString stringWithFormat:@"%d°", temperature]];
     [((TemperatureView *)self.view) setBackgroundColorWithPercentage:result];
 }

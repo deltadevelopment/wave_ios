@@ -50,6 +50,7 @@
 }
 
 -(void)setTemperature:(NSString *) temperature{
+    NSLog(@"setting the temp");
     self.temperatureLabel.text = temperature;
 }
 

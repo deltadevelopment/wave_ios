@@ -13,6 +13,7 @@ static int currentBucketId;
 static UIWindow *currentWindow;
 static StartViewController *start;
 static UIButton *notificationButton;
+static UILabel *notificationLabel;
 static NSMutableArray *notifications;
 @implementation DataHelper
 
@@ -83,6 +84,14 @@ static NSMutableArray *notifications;
 
 +(UIButton *)getNotificationButton{
     return notificationButton;
+}
+
++(void)setNotificationLabel:(UILabel *) label{
+    notificationLabel = label;
+}
+
++(UILabel *)getNotificationLabel{
+    return notificationLabel;
 }
 
 

@@ -12,6 +12,7 @@
 #import "RippleModel.h"
 #import "BucketController.h"
 #import "RipplesFeed.h"
+#import "DataHelper.h"
 static int TABLE_CELLS_ON_SCREEN = 6;
 @interface RipplesViewController ()
 
@@ -32,7 +33,8 @@ static int TABLE_CELLS_ON_SCREEN = 6;
     //notifications = [[NSMutableArray alloc] init];
     self.ripplesFeedModel =[[RipplesFeed alloc] init];
     
-    
+    [DataHelper storeRippleCount:0];
+    [DataHelper getNotificationLabel].hidden = YES;
     [self.navigationItem setTitle:@"Ripples"];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;

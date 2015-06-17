@@ -88,15 +88,22 @@
     [someButton addTarget:self action:@selector(showNotifications) forControlEvents:UIControlEventTouchUpInside];
     [someButton setShowsTouchWhenHighlighted:YES];
     if([DataHelper getRippleCount]> 0){
-        UILabel *ripplesCount = [[UILabel alloc] initWithFrame:CGRectMake(16, -5, 20, 20)];
-        ripplesCount.text = [NSString stringWithFormat:@"%d", [DataHelper getRippleCount]];
-        ripplesCount.textAlignment = NSTextAlignmentCenter;
-        [UIHelper applyThinLayoutOnLabel:ripplesCount];
-        [ripplesCount setFont:[UIFont fontWithName:ripplesCount.font.fontName size:14.0f]];
-        [ripplesCount setBackgroundColor:[ColorHelper redColor]];
-        ripplesCount.layer.cornerRadius = 10;
-        ripplesCount.clipsToBounds = YES;
-        [someButton addSubview:ripplesCount];
+        if ([DataHelper getNotificationLabel] == nil) {
+            UILabel *ripplesCount = [[UILabel alloc] initWithFrame:CGRectMake(16, -5, 20, 20)];
+            ripplesCount.text = [NSString stringWithFormat:@"%d", [DataHelper getRippleCount]];
+            ripplesCount.textAlignment = NSTextAlignmentCenter;
+            [UIHelper applyThinLayoutOnLabel:ripplesCount];
+            [ripplesCount setFont:[UIFont fontWithName:ripplesCount.font.fontName size:14.0f]];
+            [ripplesCount setBackgroundColor:[ColorHelper redColor]];
+            ripplesCount.layer.cornerRadius = 10;
+            ripplesCount.clipsToBounds = YES;
+            [DataHelper setNotificationLabel:ripplesCount];
+            [someButton addSubview:ripplesCount];
+        }else{
+            [DataHelper getNotificationLabel].hidden = NO;
+            [DataHelper getNotificationLabel].text = [NSString stringWithFormat:@"%d", [DataHelper getRippleCount]];
+        }
+        
     }
   
     [DataHelper setNotificationButton:someButton];

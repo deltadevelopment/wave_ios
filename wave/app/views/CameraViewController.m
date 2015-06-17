@@ -657,6 +657,7 @@
         drop.media_tmp = media;
         weakSelf.onMediaPostedDrop(drop);
     } onProgress:^(NSNumber *progress){
+        NSLog(@"progress %d", [progress intValue]);
         weakSelf.onProgression([progress intValue]);
     }
                     onError:^(NSError *error){
