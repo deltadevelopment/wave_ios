@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "SuperModel.h"
+#import "MediaModel.h"
 @interface UserModel : SuperModel
 @property (nonatomic,strong) NSString * username;
 @property (nonatomic,strong) NSString * usernameFormatted;
@@ -26,6 +27,8 @@
 @property (nonatomic) int Id;
 @property (nonatomic) int subscribers_count;
 @property (nonatomic, strong) NSString *profile_picture_url;
+@property (nonatomic,strong) NSData *media_tmp;
+@property (nonatomic,strong) MediaModel *mediaModel;
 -(id)init:(NSMutableDictionary *)dic;
 -(void)find:(void (^)(UserModel *))completionCallback
     onError:(void(^)(NSError *))errorCallback;
@@ -34,4 +37,10 @@
                 onError:(void(^)(NSError *))errorCallback;
 -(void)saveChanges:(void (^)(ResponseModel *,UserModel *))completionCallback
            onError:(void(^)(NSError *))errorCallback;
+
+-(void)upload:(void (^)(void))completionCallback
+   onProgress:(void (^)(NSNumber*))progression
+      onError:(void(^)(NSError *))errorCallback;
+
+-(void)requestProfilePic:(void (^)(NSData*))completionCallback;
 @end

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		C52AAFD61B3058A0004332DD /* RipplesFeed.m in Sources */ = {isa = PBXBuildFile; fileRef = C52AAFD51B3058A0004332DD /* RipplesFeed.m */; };
 		C52AAFD81B319B5F004332DD /* manatee-gray.png in Resources */ = {isa = PBXBuildFile; fileRef = C52AAFD71B319B5F004332DD /* manatee-gray.png */; };
+		C52AAFDB1B32D38A004332DD /* PartialTransparentBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = C52AAFDA1B32D38A004332DD /* PartialTransparentBlurView.m */; };
 		C5576B371ADBC195009C1D5E /* CameraHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C5576B201ADBC195009C1D5E /* CameraHelper.m */; };
 		C5576B381ADBC195009C1D5E /* ColorHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C5576B221ADBC195009C1D5E /* ColorHelper.m */; };
 		C5576B391ADBC195009C1D5E /* UIHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C5576B241ADBC195009C1D5E /* UIHelper.m */; };
@@ -164,6 +165,8 @@
 		C52AAFD41B3058A0004332DD /* RipplesFeed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RipplesFeed.h; sourceTree = "<group>"; };
 		C52AAFD51B3058A0004332DD /* RipplesFeed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RipplesFeed.m; sourceTree = "<group>"; };
 		C52AAFD71B319B5F004332DD /* manatee-gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "manatee-gray.png"; sourceTree = "<group>"; };
+		C52AAFD91B32D38A004332DD /* PartialTransparentBlurView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PartialTransparentBlurView.h; sourceTree = "<group>"; };
+		C52AAFDA1B32D38A004332DD /* PartialTransparentBlurView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PartialTransparentBlurView.m; sourceTree = "<group>"; };
 		C5576B1F1ADBC195009C1D5E /* CameraHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraHelper.h; sourceTree = "<group>"; };
 		C5576B201ADBC195009C1D5E /* CameraHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraHelper.m; sourceTree = "<group>"; };
 		C5576B211ADBC195009C1D5E /* ColorHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorHelper.h; sourceTree = "<group>"; };
@@ -828,6 +831,8 @@
 				C5FF1E541B04F1510081BEDD /* InfoView.m */,
 				F1DBB56A1B12ABBF0097F709 /* PeekViewModule.h */,
 				F1DBB56B1B12ABBF0097F709 /* PeekViewModule.m */,
+				C52AAFD91B32D38A004332DD /* PartialTransparentBlurView.h */,
+				C52AAFDA1B32D38A004332DD /* PartialTransparentBlurView.m */,
 			);
 			name = modules;
 			sourceTree = "<group>";
@@ -1050,6 +1055,7 @@
 				F1D4364A1B1A11F00024205B /* BucketController.m in Sources */,
 				C5A27B6C1ADD01F200968033 /* ApplicationHelper.m in Sources */,
 				C5A27B661ADD01C100968033 /* ParserHelper.m in Sources */,
+				C52AAFDB1B32D38A004332DD /* PartialTransparentBlurView.m in Sources */,
 				C5A27B7E1ADD265400968033 /* LoginController.m in Sources */,
 				C5A27B751ADD0F4500968033 /* ResponseModel.m in Sources */,
 				C57AD0AA1AD7EDB800B6042A /* AppDelegate.m in Sources */,

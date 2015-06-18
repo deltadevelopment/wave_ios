@@ -7,12 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "CameraHelper.h"
 @interface ProfilePictureViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UIView *cameraView;
 @property (weak, nonatomic) IBOutlet UIView *camView;
 - (IBAction)cameraAction:(id)sender;
+@property(nonatomic, strong) CameraHelper *cameraHelper;
 @property (weak, nonatomic) IBOutlet UIButton *cameraButton;
+@property (strong, nonatomic) UIButton *cameraButton2;
 - (IBAction)doneAction:(id)sender;
 - (IBAction)cancelAction:(id)sender;
 

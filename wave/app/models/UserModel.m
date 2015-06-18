@@ -8,17 +8,20 @@
 
 #import "UserModel.h"
 #import "AuthHelper.h"
+MediaController *mediaController;
 @implementation UserModel{
     AuthHelper *authHelper;
 }
 -(id)init:(NSMutableDictionary *)dic{
     [self refresh:dic];
+    mediaController = [[MediaController alloc] init];
     return self;
 };
 
 -(id)initWithDeviceUser{
     self = [super init];
     authHelper = [[AuthHelper alloc] init];
+    mediaController = [[MediaController alloc] init];
     self.Id = [[authHelper getUserId] intValue];
     //[self find:^{} onError:^(NSError *error){}];
     return self;
@@ -28,6 +31,7 @@
 
 -(id)initWithDeviceUser:(void (^)(UserModel*))completionCallback
                 onError:(void(^)(NSError *))errorCallback{
+    mediaController = [[MediaController alloc] init];
     self = [super init];
     authHelper = [[AuthHelper alloc] init];
     self.Id = [[authHelper getUserId] intValue];
@@ -47,6 +51,8 @@
     _created_at  = [dic objectForKey:@"created_at"];
     _updated_at  = [dic objectForKey:@"updated_at"];
     _password_hash  = [dic objectForKey:@"password_hash"];
+    _profile_picture_url  = [self getStringValueFromString:@"profile_picture_url"];
+    _profile_picture_key  = [dic objectForKey:@"profile_picture_key"];
     _password_salt  = [dic objectForKey:@"password_salt"];
     _private_profile  = [[dic objectForKey:@"private_profile"] boolValue];
     _Id  = [[dic objectForKey:@"id"] intValue];
@@ -94,6 +100,47 @@
     return @"-NA-";
     }
     return  string;
+}
+
+-(void)upload:(void (^)(void))completionCallback
+   onProgress:(void (^)(NSNumber*))progression
+      onError:(void(^)(NSError *))errorCallback{
+    [self.mediaModel uploadMedia:progression
+                    onCompletion:^(MediaModel *mediaModel){
+                        self.profile_picture_key = mediaModel.media_key;
+                        completionCallback();
+                    }
+                         onError:errorCallback];
+}
+
+-(void)downloadImage:(void (^)(NSData*))completionCallback
+{
+    NSLog(@"profile picute url %@", self.profile_picture_url);
+    [mediaController getMedia:self.profile_picture_url
+                 onCompletion:^(NSData *data){
+                     self.media_tmp = data;
+                     completionCallback(data);
+                 }
+                      onError:^(NSError *error){
+                      }];
+}
+
+-(void)requestProfilePic:(void (^)(NSData*))completionCallback{
+    NSLog(@"Requesting profile pic");
+    if (self.profile_picture_url == nil) {
+        NSLog(@"is nill");
+        self.media_tmp = UIImagePNGRepresentation([UIImage imageNamed:@"manatee-gray.png"]);
+        completionCallback(self.media_tmp);
+    }else{
+        if(self.media_tmp == nil){
+            NSLog(@"profile is not here already");
+            [self downloadImage:completionCallback];
+        }else{
+            NSLog(@"profile is here already");
+            completionCallback(self.media_tmp);
+        }
+    }
+    
 }
 
 

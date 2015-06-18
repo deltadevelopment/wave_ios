@@ -165,6 +165,11 @@ AuthHelper *authHelper;
 
 -(void)updatePeekView:(UserModel *) user{
     self.user = user;
+    NSLog(@"setting");
+    [user requestProfilePic:^(NSData *data){
+        NSLog(@"setting");
+        [self.profilePicture setImage:[UIImage imageWithData:data]];
+    }];
     self.location.text = [NSString stringWithFormat:@"%d others already do", [user subscribers_count]];
     self.displayName.text = [user display_name] != nil ? [user display_name] : [user usernameFormatted];
     if(user.Id == [[authHelper getUserId] intValue]){

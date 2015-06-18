@@ -53,6 +53,7 @@ AVCaptureSession *CaptureSession;
  */
 - (void) capImage:(NSObject *) object withSuccess:(SEL) success {
     //method to capture image from AVCaptureSession video feed
+    self.imgTaken = nil;
   AVCaptureConnection *videoConnection2 = nil;
     for (AVCaptureConnection *connection in [[self stillImageOutput]connections]) {
         for (AVCaptureInputPort *port in [connection inputPorts]) {
@@ -255,7 +256,7 @@ PreviewLayer.connection.enabled = YES;
     dispatch_async(serialQueue, ^{
         [CaptureSession startRunning];
         if(!rearCamera){
-           // [self CameraToggleButtonPressed:YES];
+           [self CameraToggleButtonPressed:YES];
         }
     });
 }
@@ -297,13 +298,13 @@ PreviewLayer.connection.enabled = YES;
 
 -(void)addImageOutput{
         if(stillImageOutput !=nil){
-            [self.CaptureSession2 removeOutput:stillImageOutput];
+            [CaptureSession removeOutput:stillImageOutput];
         }
         stillImageOutput = [[AVCaptureStillImageOutput alloc] init];
         self.outputSettings = [[NSDictionary alloc] initWithObjectsAndKeys: AVVideoCodecJPEG, AVVideoCodecKey, nil];
         [stillImageOutput setOutputSettings:self.outputSettings];
 
-        [self.CaptureSession2 addOutput:stillImageOutput];
+        [CaptureSession addOutput:stillImageOutput];
     
 }
 
@@ -933,12 +934,59 @@ didFinishRecordingToOutputFileAtURL:(NSURL *)outputFileURL
             }];
         }
     }
-    
-    
+}
 
+-(void)initaliseLightVideo:(bool)rearCamera withView:(UIView *) view{
+    CaptureSession = [[AVCaptureSession alloc] init];
+    self.isInitialised = YES;
+    self.VideoDevice = [self CameraWithPosition:AVCaptureDevicePositionFront];
+    if (self.VideoDevice)
+    {
+        NSError *error;
+        self.VideoInputDevice = [[AVCaptureDeviceInput alloc] initWithDevice:self.VideoDevice error:&error];
+        if (!error)
+        {
+            if ([CaptureSession canAddInput:self.VideoInputDevice])
+                [CaptureSession addInput:self.VideoInputDevice];
+            else
+                NSLog(@"Couldn't add video input");
+        }
+        else
+        {
+            NSLog(@"Couldn't create video input");
+        }
+    }
+    else
+    {
+        NSLog(@"Couldn't create video capture device");
+    }
+    //----- ADD OUTPUTS -----
+    [self setPreviewLayer:[[AVCaptureVideoPreviewLayer alloc]initWithSession:CaptureSession]];
+    [PreviewLayer setVideoGravity:AVLayerVideoGravityResizeAspectFill];
+  
+    [self addImageOutput];
+    NSLog(@"Setting image quality");
+    [CaptureSession setSessionPreset:AVCaptureSessionPresetMedium];
     
-    
-    
+    if ([CaptureSession canSetSessionPreset:AVCaptureSessionPreset640x480])		//Check size based configs are supported before setting them
+        [CaptureSession setSessionPreset:AVCaptureSessionPresetiFrame960x540];
+
+    //----- DISPLAY THE PREVIEW LAYER -----
+    NSLog(@"Display the preview layer");
+    CGRect layerRect = [[view layer] bounds];
+    [PreviewLayer setBounds:layerRect];
+    [PreviewLayer setPosition:CGPointMake(CGRectGetMidX(layerRect),
+                                          CGRectGetMidY(layerRect))];
+
+    self.CameraView = [[UIView alloc] init];
+    [view.layer insertSublayer:self.CameraView.layer atIndex:0];
+
+    [[self.CameraView layer] addSublayer:PreviewLayer];
+    //----- START THE CAPTURE SESSION RUNNING -----
+    dispatch_queue_t serialQueue = dispatch_queue_create("queue", NULL);
+    dispatch_async(serialQueue, ^{
+        [CaptureSession startRunning];
+    });
 }
 
 

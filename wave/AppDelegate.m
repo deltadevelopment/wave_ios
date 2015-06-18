@@ -34,6 +34,11 @@ AuthHelper *authHelper;
         UINavigationController *navigation =[mainStoryboard instantiateViewControllerWithIdentifier:@"startNav"];
         self.window.rootViewController = navigation;
     }else{
+        /*
+        UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
+        UINavigationController *navigation =[mainStoryboard instantiateViewControllerWithIdentifier:@"settings"];
+        self.window.rootViewController = navigation;
+         */
         //[self setView:[[ViewController alloc] init] second:@"mainView"];
         
         // [self setView:[[BucketViewController alloc] init] second:@"bucketView"];

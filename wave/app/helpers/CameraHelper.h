@@ -59,6 +59,7 @@
 @property (nonatomic, strong) AVCaptureDeviceInput *audioInput;
 @property (retain) AVCaptureStillImageOutput *stillImageOutput;
 @property(nonatomic, strong) AVAsset *videoAsset;
+-(void)initaliseLightVideo:(bool)rearCamera withView:(UIView *) view;
 
 -(void)stopCameraSession;
 //-(void) capImage:(NSObject *) object withSuccess:(SEL) success;

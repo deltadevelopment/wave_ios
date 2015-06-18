@@ -12,6 +12,7 @@
 @property (nonatomic,strong) NSString *upload_url;
 @property (nonatomic,strong) NSString *media_key;
 @property (nonatomic,strong) NSData *media;
+@property (nonatomic,strong) NSString *endpoint;
 -(id)init:(NSData *) media;
 -(void)uploadMedia:(void (^)(NSNumber*))progression
       onCompletion:(void (^)(MediaModel*))completionCallback
