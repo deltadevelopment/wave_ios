@@ -11,6 +11,7 @@
 @interface RipplesViewController : UIViewController<UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) RipplesFeed *ripplesFeedModel;
+@property (nonatomic, strong) UIRefreshControl *refreshControl;
 
 
 @end

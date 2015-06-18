@@ -40,36 +40,61 @@ static int TABLE_CELLS_ON_SCREEN = 6;
     self.tableView.dataSource = self;
     self.tableView.allowsMultipleSelectionDuringEditing = NO;
     [self refreshFeed];
-    /*
-    for(NSDictionary *dic in [DataHelper getNotifications]){
-        NSMutableDictionary *mutDic = [[NSMutableDictionary alloc] initWithDictionary:dic];
-        RippleModel *rippleModel = [[RippleModel alloc] init:mutDic];
-        [notifications insertObject:rippleModel atIndex:0];
-    }
    
-    for(NSDictionary *dic in [DataHelper getNotifications]){
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    self.refreshControl.backgroundColor = [ColorHelper magenta];
+    self.refreshControl.tintColor = [UIColor whiteColor];
+    [self.refreshControl addTarget:self action:@selector(refreshFeed) forControlEvents:UIControlEventValueChanged];
+    [self.tableView addSubview:self.refreshControl];
+    [self startRefreshing];
+    
+    UILabel *noNotificationsLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 10, [UIHelper getScreenWidth] - 40, 50)];
+    [noNotificationsLabel setTextColor:[UIColor blackColor]];
+    [noNotificationsLabel setFont:[UIFont fontWithName:@"HelveticaNeue-ThinItalic" size:17.0f]];
+    [noNotificationsLabel setText:@"No notifications available"];
+    [self.view addSubview:noNotificationsLabel];
+}
+
+-(void)startRefreshing{
+    [UIView animateWithDuration:0.25 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^(void){
+        self.tableView.contentOffset = CGPointMake(0, -self.refreshControl.frame.size.height);
+    } completion:^(BOOL finished) {
         
-        NSLog(@"my dictionary is %@", dic);
-    }
-    NSLog(@"the size of the array is %lu", (unsigned long)[[DataHelper getNotifications] count]);
-     */
-    // Do any additional setup after loading the view.
+        
+    }];
+    [self.refreshControl beginRefreshing];
+    [self refreshFeed];
 }
 
 -(void)refreshFeed{
+    __weak typeof(self) weakSelf = self;
     [self.ripplesFeedModel getFeed:^{
-        //[weakSelf stopRefreshing];
+         [weakSelf stopRefreshing];
         if(![self.ripplesFeedModel hasNotifications]){
-            self.tableView.hidden = YES;
-            NSLog(@"no notifications");
+            
             
         
+        }else{
+            self.tableView.hidden = YES;
+            NSLog(@"no notifications");
         }
         [self.tableView reloadData];
     } onError:^(NSError *error){
         //NSLog(@"%@", [error localizedDescription]);
-        
     }];
+}
+
+
+-(void)stopRefreshing{
+    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:@"MMM d, h:mm a"];
+    NSString *title = [NSString stringWithFormat:@"Last update: %@", [formatter stringFromDate:[NSDate date]]];
+    NSDictionary *attrsDictionary = [NSDictionary dictionaryWithObject:[UIColor whiteColor]
+                                                                forKey:NSForegroundColorAttributeName];
+    NSAttributedString *attributedTitle = [[NSAttributedString alloc] initWithString:title attributes:attrsDictionary];
+    //self.refreshControl.attributedTitle = attributedTitle;
+    [self.refreshControl endRefreshing];
+    [self.tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning {
