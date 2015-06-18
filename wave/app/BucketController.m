@@ -380,7 +380,7 @@ const int PEEK_Y_START = 300;
     bucket = inputBucket;
     authHelper = [[AuthHelper alloc] init];
     if([bucket.bucket_type isEqualToString:@"user"]){
-                [self.navigationItem setTitle:[[bucket user] username]];
+        [self.navigationItem setTitle:[[bucket user] username]];
         // NSLog(@"Bucket user id: %d %d", [bucket user].Id, [[authHelper getUserId] intValue]);
         if([bucket user].Id == [[authHelper getUserId] intValue]){
             superButtonDisabled = NO;
@@ -390,15 +390,24 @@ const int PEEK_Y_START = 300;
         }
         
     }else{
+        NSLog(@"SETTING TITLE %@", [bucket title]);
         superButtonDisabled = NO;
         [self.navigationItem setTitle:[bucket title]];
     }
 }
 
 -(void)setBucket:(BucketModel *)inputBucket withCurrentDropId:(int) dropId{
-    [self setBucket:inputBucket];
-    dropIdToJumpTo = dropId;
-    shouldJumpToDrop = YES;
+    bucket = inputBucket;
+    [bucket find:^{
+        [self setBucket:bucket];
+        if(dropId != 0){
+            dropIdToJumpTo = dropId;
+            shouldJumpToDrop = YES;
+        }
+    } onError:^(NSError *error){
+        
+    }];
+   
 }
 
 -(void)updatePageIndicator:(NSUInteger)index{

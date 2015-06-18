@@ -53,11 +53,9 @@
                                                                             target:nil action:nil];
 }
 -(void)showNotifications{
-    NSLog(@"Notificatiion will appear");
-   // [self showSettings:nil];
-    RipplesViewController *ripples =[self.storyboard instantiateViewControllerWithIdentifier:@"ripplesView"];
-    [self.navigationController pushViewController:ripples animated:YES];
-
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
+    RipplesViewController *ripples =[storyboard instantiateViewControllerWithIdentifier:@"ripplesView"];
+    [[ApplicationHelper getMainNavigationController] pushViewController:ripples animated:YES];
 }
 -(void)addLeftButton{
     //UIImage* image = [UIHelper iconImage:[UIImage imageNamed:@"wave-logo.png"]];

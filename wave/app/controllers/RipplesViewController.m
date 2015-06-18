@@ -150,7 +150,7 @@ static int TABLE_CELLS_ON_SCREEN = 6;
     profileController.view.frame = frame;
     [profileController layOutPeek];
     NSLog(@"Adding");
-    [[ApplicationHelper getMainNavigationController] pushViewController:profileController animated:NO];
+    [[ApplicationHelper getMainNavigationController] pushViewController:profileController animated:YES];
     
     
     
@@ -213,14 +213,11 @@ static int TABLE_CELLS_ON_SCREEN = 6;
     // ActivityTableViewCell *cell = (ActivityTableViewCell *)[_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:Id inSection:0]];
     BucketModel *bucket = [[BucketModel alloc] init];
     [bucket setId:Id];
-    __weak typeof(self) weakSelf = self;
-    [bucket find:^{
-        NSLog(@"bucket count %@", [bucket bucket_type]);
-         [weakSelf changeToBucket:bucket withDropId:dropId];
-    
-    } onError:^(NSError *error){
-    
-    }];
+    DropModel *drop = [[DropModel alloc] init];
+    [drop setId:dropId];
+    [bucket addDrop:drop];
+    [self changeToBucket:bucket withDropId:dropId];
+   
    // self.onExpand(bucket);
 }
 
@@ -319,23 +316,14 @@ static int TABLE_CELLS_ON_SCREEN = 6;
        
         return cellFrame.size.height + 20;
     }
-    
-    
-    
-    
-    
-    
 }
 
 -(void)changeToBucket:(BucketModel *) bucket withDropId:(int)dropId{
     //Same as onExpand in activity
     BucketController *bucketController = [[BucketController alloc] init];
-    if(dropId!= 0){
+    
         [bucketController setBucket:bucket withCurrentDropId:dropId];
-    }
-    else{
-        [bucketController setBucket:bucket];
-    }
+    
     //[((BucketController *)root) setSuperCarousel:self];
     __weak typeof(self) weakSelf = self;
     bucketController.onDespand = ^{
