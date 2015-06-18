@@ -140,6 +140,7 @@ AuthHelper *authHelper;
                  [[DataHelper getNotificationButton] addSubview:ripplesCount];
                 [DataHelper getNotificationLabel].text = [NSString stringWithFormat:@"%d", [DataHelper getRippleCount]];
             }else {
+                NSLog(@"Got notification from active state and unhiding");
                 [DataHelper getNotificationLabel].text = [NSString stringWithFormat:@"%d", [DataHelper getRippleCount]];
                 [DataHelper getNotificationLabel].hidden = NO;
             }

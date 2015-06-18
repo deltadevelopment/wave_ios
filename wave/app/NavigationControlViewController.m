@@ -61,17 +61,17 @@
 }
 -(void)addLeftButton{
     //UIImage* image = [UIHelper iconImage:[UIImage imageNamed:@"wave-logo.png"]];
-        UIImage* image = [UIHelper iconImage:[UIImage imageNamed:@"wave-logosss.png"]];
+    UIImage* image = [UIHelper iconImage:[UIImage imageNamed:@"wave-logosss.png"]];
     CGRect frame = CGRectMake(0, 0, 26, 26);
     UIButton* someButton = [[UIButton alloc] initWithFrame:frame];
     [someButton setBackgroundImage:image forState:UIControlStateNormal];
     [someButton addTarget:self action:@selector(menuItemSelected) forControlEvents:UIControlEventTouchUpInside];
     [someButton setShowsTouchWhenHighlighted:YES];
     
-
+    
     
     self.menuItem = [[UIBarButtonItem alloc] initWithCustomView:someButton];
- 
+    
     [self.navigationItem setLeftBarButtonItem:self.menuItem];
 }
 
@@ -87,6 +87,7 @@
     [someButton setBackgroundImage:image forState:UIControlStateNormal];
     [someButton addTarget:self action:@selector(showNotifications) forControlEvents:UIControlEventTouchUpInside];
     [someButton setShowsTouchWhenHighlighted:YES];
+    [DataHelper setNotificationButton:someButton];
     if([DataHelper getRippleCount]> 0){
         if ([DataHelper getNotificationLabel] == nil) {
             UILabel *ripplesCount = [[UILabel alloc] initWithFrame:CGRectMake(16, -5, 20, 20)];
