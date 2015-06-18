@@ -11,6 +11,8 @@
 #import "DropModel.h"
 static NSIndexPath *currrentIndex = 0;
 static UINavigationController *mainNavigationController;
+static void (^onNotificationRecieved)(void);
+static bool observerIsInitalised;
 NSArray *availableTexts;
 NSArray *unAvailableTexts;
 @implementation ApplicationHelper
@@ -93,6 +95,17 @@ NSArray *unAvailableTexts;
 
 +(void)setMainNavigationController:(UINavigationController *) naivgationController{
     mainNavigationController = naivgationController;
+}
+
++(void)setBlock:(void (^)())completionCallback{
+    onNotificationRecieved = completionCallback;
+    observerIsInitalised = YES;
+}
++(void)executeBlock{
+    if(observerIsInitalised){
+        onNotificationRecieved();
+    }
+    
 }
 
 

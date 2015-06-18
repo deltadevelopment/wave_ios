@@ -23,4 +23,6 @@
 +(NSMutableArray *)bucketTestData;
 +(UINavigationController *)getMainNavigationController;
 +(void)setMainNavigationController:(UINavigationController *) naivgationController;
++(void)setBlock:(void (^)())completionCallback;
++(void)executeBlock;
 @end

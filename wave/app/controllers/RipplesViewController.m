@@ -32,6 +32,10 @@ static int TABLE_CELLS_ON_SCREEN = 6;
     [super viewDidLoad];
     //notifications = [[NSMutableArray alloc] init];
     self.ripplesFeedModel =[[RipplesFeed alloc] init];
+       __weak typeof(self) weakSelf = self;
+    [ApplicationHelper setBlock:^(){
+        [weakSelf refreshFeed];
+    }];
     
     [DataHelper storeRippleCount:0];
     [DataHelper getNotificationLabel].hidden = YES;
@@ -71,12 +75,12 @@ static int TABLE_CELLS_ON_SCREEN = 6;
     [self.ripplesFeedModel getFeed:^{
          [weakSelf stopRefreshing];
         if(![self.ripplesFeedModel hasNotifications]){
-            
+            self.tableView.hidden = YES;
+            NSLog(@"no notifications");
             
         
         }else{
-            self.tableView.hidden = YES;
-            NSLog(@"no notifications");
+           
         }
         [self.tableView reloadData];
     } onError:^(NSError *error){

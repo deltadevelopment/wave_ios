@@ -73,6 +73,7 @@ AuthHelper *authHelper;
     NSDictionary *apsInfo = [userInfo objectForKey:@"aps"];
    
     if(apsInfo) {
+        [ApplicationHelper executeBlock];
         //Navigate or take action on the notification
         [DataHelper storeNotifications:userInfo];
         [DataHelper storeRippleCount:[DataHelper getRippleCount] +1];
@@ -122,7 +123,9 @@ AuthHelper *authHelper;
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
 {
+    
     if (application.applicationState == UIApplicationStateActive ){
+        [ApplicationHelper executeBlock];
         [DataHelper storeNotifications:userInfo];
         [DataHelper storeRippleCount:[DataHelper getRippleCount] +1];
         //If the application was active we want to force update the ripples count
