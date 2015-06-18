@@ -32,7 +32,7 @@
     self.profilePicture.image = [UIImage imageNamed:@"miranda-kerr.jpg"];
     self.profilePicture.layer.cornerRadius = 15;
     self.profilePicture.clipsToBounds = YES;
-    
+    self.profilePicture.hidden = YES;
     //Drop Name Label
     self.dropTitle = [[UILabel alloc] initWithFrame:CGRectMake(50, -2, [UIHelper getScreenWidth] - 52, 50)];
     //nameLabel.text = [drop username];
@@ -109,6 +109,11 @@
     
     self.dropTemperature.text =[NSString stringWithFormat:@"%d°", drop.temperature];
     self.dropTitle.text = [[drop user] usernameFormatted];
+    [drop.user requestProfilePic:^(NSData *data){
+        [self.profilePicture setImage:[UIImage imageWithData:data]];
+        self.profilePicture.hidden = NO;
+    
+    }];
     //self.dropTitle.text = [NSString stringWithFormat:@"Drop #%d",drop.Id];
 }
 

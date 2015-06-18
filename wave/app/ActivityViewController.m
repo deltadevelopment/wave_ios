@@ -282,6 +282,7 @@ const int EXPAND_SIZE = 400;
     static NSString *CellIdentifier = @"activityCell";
     ActivityTableViewCell *cell = (ActivityTableViewCell  *)[tableView  dequeueReusableCellWithIdentifier:CellIdentifier];
     if(cell == nil){
+        
         cell = [[ActivityTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     if(!cell.isInitialized){

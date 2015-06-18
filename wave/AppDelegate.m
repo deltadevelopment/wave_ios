@@ -80,7 +80,7 @@ AuthHelper *authHelper;
     if(apsInfo) {
         [ApplicationHelper executeBlock];
         //Navigate or take action on the notification
-        [DataHelper storeNotifications:userInfo];
+       // [DataHelper storeNotifications:userInfo];
         [DataHelper storeRippleCount:[DataHelper getRippleCount] +1];
         
     }
@@ -131,7 +131,7 @@ AuthHelper *authHelper;
     
     if (application.applicationState == UIApplicationStateActive ){
         [ApplicationHelper executeBlock];
-        [DataHelper storeNotifications:userInfo];
+        //[DataHelper storeNotifications:userInfo];
         [DataHelper storeRippleCount:[DataHelper getRippleCount] +1];
         //If the application was active we want to force update the ripples count
         if([DataHelper getRippleCount]> 0){

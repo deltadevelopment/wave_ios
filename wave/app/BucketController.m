@@ -300,6 +300,8 @@ const int PEEK_Y_START = 300;
 -(void)despandBucket:(UISwipeGestureRecognizer *)recognizer {
     //[self.superController removeBucketAsRoot];
     isAboutToleaveBucket = YES;
+    [currentDropPage setIsDisplaying:NO];
+    [currentDropPage setIsStartingView:NO];
     [currentDropPage stopVideo];
     self.onDespand();
     
@@ -488,6 +490,7 @@ const int PEEK_Y_START = 300;
         //Uses the prefetched thumbnail or image from the feed, instead of downloading it again
         if(dropModel.media_type == 0){
             dropModel.media_tmp = [[pageToReplace drop] media_tmp];
+            [[dropModel user] setMedia_tmp:[[[pageToReplace drop]user] media_tmp]];
         }else{
             dropModel.thumbnail_tmp = [[pageToReplace drop] thumbnail_tmp];
         }

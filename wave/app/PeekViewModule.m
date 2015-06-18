@@ -48,7 +48,8 @@
    // self.subscribeButton.frame = CGRectMake([UIHelper getScreenWidth]/2 - (170/2), [UIHelper getScreenHeight] - 64 - 123, 170, 40);
     [UIHelper applyThinLayoutOnButton:self.subscribeButton];
     self.settingsButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.settingsButton.frame = CGRectMake([UIHelper getScreenWidth] - 40, 20, 20, 20);
+    self.settingsButton.frame = CGRectMake([UIHelper getScreenWidth] - 50, 10, 40, 40);
+    [self.settingsButton setImageEdgeInsets:UIEdgeInsetsMake(10, 10, 10, 10)];
     [self.settingsButton addTarget:self action:@selector(showSettings) forControlEvents:UIControlEventTouchUpInside];
     [self.settingsButton setImage:[UIImage imageNamed:@"settings-icon-white.png"] forState:UIControlStateNormal];
     

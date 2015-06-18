@@ -43,7 +43,7 @@ static int TABLE_CELLS_ON_SCREEN = 6;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.allowsMultipleSelectionDuringEditing = NO;
-    [self refreshFeed];
+    //[self refreshFeed];
    
     self.refreshControl = [[UIRefreshControl alloc] init];
     self.refreshControl.backgroundColor = [ColorHelper magenta];

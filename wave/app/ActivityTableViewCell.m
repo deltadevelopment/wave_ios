@@ -139,7 +139,13 @@
 }
 
 -(void)update:(BucketModel *) bucket{
+    NSLog(@"Updating");
+    self.profilePictureIcon.hidden = YES;
    [self.bucketImage setImage:nil];
+    [[bucket user] requestProfilePic:^(NSData *data){
+        [self.profilePictureIcon setImage:[UIImage imageWithData:data]];
+        self.profilePictureIcon.hidden = NO;
+    }];
     DropModel *drop = [bucket getLastDrop];
     if([bucket Id] >0){
         [spinner startAnimating];
