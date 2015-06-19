@@ -170,7 +170,6 @@
         StartViewController *navigation =[mainStoryboard instantiateViewControllerWithIdentifier:@"startNav"];      
         AppDelegate *appDelegateTemp = [[UIApplication sharedApplication]delegate];
         appDelegateTemp.window.rootViewController = navigation;
-    
     }
 }
 

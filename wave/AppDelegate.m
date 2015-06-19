@@ -54,7 +54,13 @@ AuthHelper *authHelper;
        // [self setView:[[ChatViewController alloc]init] second:@"chatView"];
         
      //   [self setView:[[BucketViewController2 alloc] init] second:@"bucketController2"];
-      
+        /*
+        UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
+        UINavigationController *navigation =[mainStoryboard instantiateViewControllerWithIdentifier:@"searchNavigation"];
+        [navigation.navigationBar setBarTintColor:[ColorHelper purpleColor]];
+        self.window.rootViewController = navigation;
+        
+*/
         
     }
     if ([application respondsToSelector:@selector(isRegisteredForRemoteNotifications)])
@@ -76,7 +82,7 @@ AuthHelper *authHelper;
 
 -(void)handleNotification:(NSDictionary *) userInfo{
     NSDictionary *apsInfo = [userInfo objectForKey:@"aps"];
-   
+    //[self resetBadgeToZero];
     if(apsInfo) {
         [ApplicationHelper executeBlock];
         //Navigate or take action on the notification
@@ -131,6 +137,7 @@ AuthHelper *authHelper;
     
     if (application.applicationState == UIApplicationStateActive ){
         [ApplicationHelper executeBlock];
+        //[self resetBadgeToZero];
         //[DataHelper storeNotifications:userInfo];
         [DataHelper storeRippleCount:[DataHelper getRippleCount] +1];
         //If the application was active we want to force update the ripples count
@@ -164,6 +171,24 @@ AuthHelper *authHelper;
     
     
     
+}
+
+-(void)resetBadgeToZero{
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
+}
+
+-(void) incrementOneBadge{
+    NSInteger numberOfBadges = [UIApplication sharedApplication].applicationIconBadgeNumber;
+    numberOfBadges +=1;
+    
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:numberOfBadges];
+}
+
+-(void) decrementOneBdge{
+    NSInteger numberOfBadges = [UIApplication sharedApplication].applicationIconBadgeNumber;
+    numberOfBadges -=1;
+    
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:numberOfBadges];
 }
 
 

@@ -110,8 +110,12 @@
     self.user = user;
     if(user.Id == [[authHelper getUserId] intValue]){
         isDeviceUser = YES;
-        self.subscribeButton.hidden = YES;
+        //self.subscribeButton.hidden = YES;
         self.settingsButton.hidden = NO;
+        [self.subscribeButton setTitle:@"Subscriptions" forState:UIControlStateNormal];
+        //[self.subscribeButton setBackgroundColor:[ColorHelper purpleColor]];
+        //[[self.subscribeButton layer] setBorderColor:[ColorHelper purpleColor].CGColor];
+        
     }else{
         self.subscribeButton.hidden = NO;
         self.settingsButton.hidden = YES;
@@ -196,21 +200,23 @@
 }
 
 -(void)checkSubscription{
-    NSLog(@"Checking subscription for %d", self.user.Id);
-    UserModel *deviceUser =[[UserModel alloc] initWithDeviceUser];
-    self.subscribeModel = [[SubscribeModel alloc] initWithSubscriber:deviceUser withSubscribee:self.user];
-    [self.subscribeModel isSubscriber:^(ResponseModel *response){
-        
-        if(response.success){
-            isSubscriber = YES;
-            [self changeSubscribeUI];
-        }else{
-            isSubscriber = NO;
-            [self changeSubscribeUI];
-        }
-    } onError:^(NSError *error){
-        
-    }];
+    if(self.user.Id != [[authHelper getUserId] intValue]){
+        NSLog(@"Checking subscription for %d", self.user.Id);
+        UserModel *deviceUser =[[UserModel alloc] initWithDeviceUser];
+        self.subscribeModel = [[SubscribeModel alloc] initWithSubscriber:deviceUser withSubscribee:self.user];
+        [self.subscribeModel isSubscriber:^(ResponseModel *response){
+            
+            if(response.success){
+                isSubscriber = YES;
+                [self changeSubscribeUI];
+            }else{
+                isSubscriber = NO;
+                [self changeSubscribeUI];
+            }
+        } onError:^(NSError *error){
+            
+        }];
+    }
 }
 
 -(void)changeSubscribeUI{
@@ -237,7 +243,7 @@
     self.subscribersCountLabel.text = [NSString stringWithFormat:@"%d others already do", [user subscribers_count]];
     self.usernameLabel.text = [user display_name] != nil ? [user display_name] : [user usernameFormatted];
     if(user.Id == [[authHelper getUserId] intValue]){
-        self.subscribeButton.hidden = YES;
+        //self.subscribeButton.hidden = YES;
         self.subscribersCountLabel.hidden = YES;
     }else{
         self.subscribersCountLabel.hidden = NO;
@@ -245,33 +251,50 @@
 }
 
 -(void)subscribeAction{
-    if(activityIndicator == nil){
-        [self initActivityIndicator];
+    if (self.user.Id != [[authHelper getUserId] intValue]) {
+        if(activityIndicator == nil){
+            [self initActivityIndicator];
+        }
+        activityIndicator.hidden = NO;
+        [activityIndicator startAnimating];
+        [self.subscribeButton setTitle:@"" forState:UIControlStateNormal];
+        [self removeInsetsFromButton];
+        if(isSubscriber){
+            [self.subscribeModel delete:^(ResponseModel *response){
+                isSubscriber = NO;
+                [self changeSubscribeUI];
+                [activityIndicator stopAnimating];
+                [self.user setSubscribers_count:[self.user subscribers_count]-1];
+                [self updatePeekView:self.user];
+            } onError:^(NSError *error){}];
+        }else{
+            [self.subscribeModel saveChanges:^(ResponseModel *response){
+                isSubscriber = YES;
+                [self changeSubscribeUI];
+                [activityIndicator stopAnimating];
+                [self.user setSubscribers_count:[self.user subscribers_count]+1];
+                [self updatePeekView:self.user];
+            } onError:^(NSError *error)
+             {
+                 
+                 
+             }];
+        }
     }
-    activityIndicator.hidden = NO;
-    [activityIndicator startAnimating];
-    [self.subscribeButton setTitle:@"" forState:UIControlStateNormal];
-    [self removeInsetsFromButton];
-    if(isSubscriber){
-        [self.subscribeModel delete:^(ResponseModel *response){
-            isSubscriber = NO;
-            [self changeSubscribeUI];
-            [activityIndicator stopAnimating];
-            [self.user setSubscribers_count:[self.user subscribers_count]-1];
-            [self updatePeekView:self.user];
-        } onError:^(NSError *error){}];
-    }else{
-        [self.subscribeModel saveChanges:^(ResponseModel *response){
-            isSubscriber = YES;
-            [self changeSubscribeUI];
-            [activityIndicator stopAnimating];
-            [self.user setSubscribers_count:[self.user subscribers_count]+1];
-            [self updatePeekView:self.user];
-        } onError:^(NSError *error)
-         {
-             
-             
-         }];
+    else {
+        //Show Subscribers
+        NSLog(@"Showing subscribers");
+        UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
+        UINavigationController *vc = [mainStoryboard instantiateViewControllerWithIdentifier:@"searchNavigation"];
+        
+       // [vc.navigationBar setti]
+       // [vc.navigationBar setTintColor:[ColorHelper purpleColor]];
+        //[vc.navigationBar setBackgroundColor:[ColorHelper purpleColor]];
+        [vc.navigationBar setBarTintColor:[ColorHelper purpleColor]];
+        //[[ApplicationHelper getMainNavigationController] pushViewController:vc animated:YES];
+     
+        [[ApplicationHelper getMainNavigationController] presentViewController:vc animated:YES completion:nil];
+       
     }
 }
 

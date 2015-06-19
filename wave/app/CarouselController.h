@@ -14,10 +14,12 @@
 #import "AvailabilityViewController.h"
 
 #import "FilterViewController.h"
-@interface CarouselController : SuperViewController<UIPageViewControllerDataSource,UIPageViewControllerDelegate, UIScrollViewDelegate>
+@interface CarouselController : SuperViewController<UIPageViewControllerDataSource,UIPageViewControllerDelegate, UIScrollViewDelegate,UISearchBarDelegate, UISearchResultsUpdating,UISearchControllerDelegate, UIBarPositioningDelegate>
 @property (strong, nonatomic) AbstractFeedViewController *currentController;
 @property (strong, nonatomic) NSMutableArray *carouselObjects;
 @property (strong, nonatomic) UIPageViewController *pageViewController;
 @property (strong, nonatomic)  Carousel *carousel;
 -(void)removeBucketAsRoot;
+-(void)setScrollEnabled:(BOOL)enabled forPageViewController:(UIPageViewController*)pageViewController;
+
 @end

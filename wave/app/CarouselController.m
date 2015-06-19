@@ -31,7 +31,7 @@
 //    NSLog(@"ripples count %d", [DataHelper getRippleCount]);
     
     NSArray  *storyboardIds = @[@"activity",
-                                @"pinnedView",
+                                @"searchController",
                                 @"activity"];
     self.carouselObjects = [[NSMutableArray alloc] initWithArray:storyboardIds];
     [self addView:0];
@@ -39,7 +39,7 @@
     [self addView:2];
     self.automaticallyAdjustsScrollViewInsets=NO;
     
-   
+    [self SetSearch];
         
     //_pageImages = @[@"page1.png", @"page2.png", @"page3.png", @"page4.png"];
     
@@ -93,11 +93,20 @@
     AbstractFeedViewController *pageContentViewController = [self.storyboard instantiateViewControllerWithIdentifier:[self.carouselObjects objectAtIndex:index]];
     if(index == 0){
         [pageContentViewController setViewMode:0];
-    }else {
+    }
+    else if (index ==1){
+        [pageContentViewController setSearchMode:YES];
+        [pageContentViewController setCarouselParent:self];
+        //[pageContentViewController initSearchTable:self.searchController];
+    }
+    else {
+        
+        [pageContentViewController setSuperButton:self.superButton];
         [pageContentViewController setViewMode:1];
         [pageContentViewController setIsDeviceUser:YES];
     }
     [pages addObject:pageContentViewController];
+  
 }
 
 
@@ -145,6 +154,29 @@
     }
     
     return [self viewControllerAtIndex:index];
+}
+
+-(void)SetSearch{
+   
+    
+    self.definesPresentationContext = YES;
+   
+    
+}
+
+
+
+
+
+
+-(void)setScrollEnabled:(BOOL)enabled forPageViewController:(UIPageViewController*)pageViewController{
+    for(UIView* view in pageViewController.view.subviews){
+        if([view isKindOfClass:[UIScrollView class]]){
+            UIScrollView* scrollView=(UIScrollView*)view;
+            [scrollView setScrollEnabled:enabled];
+            return;
+        }
+    }
 }
 
 -(void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed

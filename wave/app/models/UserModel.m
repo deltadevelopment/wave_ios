@@ -14,6 +14,7 @@ MediaController *mediaController;
 }
 -(id)init:(NSMutableDictionary *)dic{
     [self refresh:dic];
+    NSLog(@"mys di is %@", dic);
     mediaController = [[MediaController alloc] init];
     return self;
 };

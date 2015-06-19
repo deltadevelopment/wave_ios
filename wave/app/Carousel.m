@@ -39,6 +39,7 @@
     [pageindicator setCenter:CGPointMake(navBar.frame.size.width / 2, navBar.frame.size.height - 10)];
     
     [navBar addSubview:pageindicator];
+    /*
     for(int i = 0; i< count -1; i++){
         if(i == count -2){
             [self createCircleForSearch:@"search-icon-white.png" withXPos:space withImageView:imageViewForSearch];
@@ -49,7 +50,21 @@
         space += 9;
     }
     [self createCircleForProfile:@"manatee.png" withXPos:space withImageView:imageViewForProfile];
-    //index of search icon
+    
+     */
+    
+    
+    for(int i = 0; i< count; i++){
+       
+            [self createCircle:space];
+        
+        
+        space += 9;
+    }
+   // [self createCircleForProfile:@"manatee.png" withXPos:space withImageView:imageViewForProfile];
+    
+    
+     //index of search icon
     searchIndex = 1;
     profileIndex = 2;
     space += 9;
@@ -128,7 +143,7 @@
         for(int index = 0;index < pageCount; index++){
             UILabel *label =[carousel objectAtIndex:index];
             if(currentPage == index){
-                
+                /*
                 if(index == searchIndex){
                     [UIHelper colorIcon:imageViewForSearch withColor:[UIColor colorWithRed:0.753 green:0.455 blue:0.808 alpha:1]];
                 }
@@ -139,8 +154,11 @@
                 else{
                     label.backgroundColor =[UIColor colorWithRed:0.753 green:0.455 blue:0.808 alpha:1];
                 }
+                 */
+                label.backgroundColor =[UIColor colorWithRed:0.753 green:0.455 blue:0.808 alpha:1];
                 
             }else{
+                    /*
                 if(index == searchIndex){
                     [UIHelper colorIcon:imageViewForSearch withColor:[UIColor colorWithRed:0.357 green:0.125 blue:0.459 alpha:1]];
                 }
@@ -150,6 +168,8 @@
                 else{
                     label.backgroundColor =[UIColor colorWithRed:0.357 green:0.125 blue:0.459 alpha:1];
                 }
+                */
+                label.backgroundColor =[UIColor colorWithRed:0.357 green:0.125 blue:0.459 alpha:1];
                 
             }
             

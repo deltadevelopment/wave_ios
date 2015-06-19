@@ -36,4 +36,5 @@
 +(UIImage *)thumbnailFromVideo:(NSData *) video;
 +(CGRect)fullScreenRect;
 +(void)applyLayoutOnLabel:(UILabel *) label withSize:(float) size;
++(void)initAndApplyLayoutOnProfilePictureSmall:(UIImageView *) imageview;
 @end

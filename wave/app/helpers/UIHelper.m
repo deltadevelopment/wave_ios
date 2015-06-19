@@ -291,4 +291,11 @@ static CGFloat screenHeight;
     return CGRectMake(0, 0, [UIHelper getScreenWidth], [UIHelper getScreenHeight]);
 }
 
+
++(void)initAndApplyLayoutOnProfilePictureSmall:(UIImageView *) imageview{
+    imageview =[[UIImageView alloc] initWithFrame:CGRectMake(10, (imageview.frame.size.height /2) -15, 30, 30)];
+    imageview.layer.cornerRadius = 15;
+    imageview.clipsToBounds = YES;
+}
+
 @end

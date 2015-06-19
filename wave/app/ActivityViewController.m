@@ -65,12 +65,15 @@ const int EXPAND_SIZE = 400;
     self.tableView.backgroundColor = [ColorHelper blueColor];
     if(viewMode == 1){
         [self addPeekView];
+        [self.superButton getButton].hidden = YES;
+        NSLog(@"hidign superbutton");
     }
 }
 
 -(void)setViewMode:(int)mode{
     viewMode = mode;
 }
+
 
 -(void)initialize{
     

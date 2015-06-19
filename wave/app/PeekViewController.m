@@ -173,10 +173,11 @@ AuthHelper *authHelper;
     self.location.text = [NSString stringWithFormat:@"%d others already do", [user subscribers_count]];
     self.displayName.text = [user display_name] != nil ? [user display_name] : [user usernameFormatted];
     if(user.Id == [[authHelper getUserId] intValue]){
-        self.subscribeButton.hidden = YES;
+       // self.subscribeButton.hidden = YES;
         self.location.hidden = YES;
     }else{
         self.location.hidden = NO;
+        self.subscribeButton.hidden = NO;
     }
 }
 

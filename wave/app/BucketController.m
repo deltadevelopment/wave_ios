@@ -162,7 +162,8 @@ const int PEEK_Y_START = 300;
                 index++;
             }
         }
-        
+        DropModel *currDrop = [[bucket drops] objectAtIndex:dropPositionInBucket];
+        [peekViewController updatePeekView:[currDrop user]];
         currentDropPage = [self viewControllerAtIndex:dropPositionInBucket replacingObject:currentDropPage];
         NSArray *viewControllers = @[currentDropPage];
         [currentDropPage setIsStartingView:YES];
@@ -380,6 +381,9 @@ const int PEEK_Y_START = 300;
 
 -(void)setBucket:(BucketModel *)inputBucket{
     bucket = inputBucket;
+    if (peekViewController != nil) {
+        [peekViewController updatePeekView:[bucket user]];
+    }
     authHelper = [[AuthHelper alloc] init];
     if([bucket.bucket_type isEqualToString:@"user"]){
         [self.navigationItem setTitle:[[bucket user] username]];

@@ -38,6 +38,19 @@
 
 }
 
+-(void)initSearchTable:(UISearchController *) controller{
+
+}
+
+
+
+
+-(void)setSuperButton:(UIButton *) superButton{
+
+}
+
+
+
 -(void)onMediaPosted:(BucketModel *)bucket{}
 -(void)onMediaPostedDrop:(DropModel *)drop{}
 -(void)setViewMode:(int)mode{}

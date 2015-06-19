@@ -36,7 +36,7 @@ static int TABLE_CELLS_ON_SCREEN = 6;
     [ApplicationHelper setBlock:^(){
         [weakSelf refreshFeed];
     }];
-    
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
     [DataHelper storeRippleCount:0];
     [DataHelper getNotificationLabel].hidden = YES;
     [self.navigationItem setTitle:@"Ripples"];
@@ -78,7 +78,6 @@ static int TABLE_CELLS_ON_SCREEN = 6;
             self.tableView.hidden = YES;
             NSLog(@"no notifications");
             
-        
         }else{
            
         }

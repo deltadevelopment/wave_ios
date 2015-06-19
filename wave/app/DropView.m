@@ -49,7 +49,9 @@
     self.dropTemperature.adjustsFontSizeToFitWidth = YES;
     
     playButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    playButton.frame = CGRectMake([UIHelper getScreenWidth] - 140, 18, 15, 15);
+    playButton.frame = CGRectMake([UIHelper getScreenWidth] - 140, 8, 35, 35);
+    [playButton setImageEdgeInsets:UIEdgeInsetsMake(10, 10, 10, 10)];
+    //[playButton setBackgroundColor:[UIColor redColor]];
     [playButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"play.png"] withSize:40] forState:UIControlStateNormal];
     playButton.userInteractionEnabled = YES;
     [playButton addTarget:self action:@selector(playPause) forControlEvents:UIControlEventTouchUpInside];

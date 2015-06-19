@@ -22,8 +22,8 @@
     [super viewDidLoad];
     servers = [[NSMutableDictionary alloc]init];
     authHelper = [[AuthHelper alloc]init];
-    [servers setObject:@"http://wzap.herokuapp.com" forKey:@"Heroku"];
-    [servers setObject:@"http://wave.apps.ddev.no" forKey:@"Smith"];
+    [servers setObject:@"http://ddev-wave-staging.herokuapp.com" forKey:@"Staging"];
+    [servers setObject:@"http://ddev-wave-production.apps.ddev.no" forKey:@"Production"];
    
   
     // Uncomment the following line to preserve selection between presentations.

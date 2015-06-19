@@ -10,6 +10,9 @@
 		C52AAFD61B3058A0004332DD /* RipplesFeed.m in Sources */ = {isa = PBXBuildFile; fileRef = C52AAFD51B3058A0004332DD /* RipplesFeed.m */; };
 		C52AAFD81B319B5F004332DD /* manatee-gray.png in Resources */ = {isa = PBXBuildFile; fileRef = C52AAFD71B319B5F004332DD /* manatee-gray.png */; };
 		C52AAFDB1B32D38A004332DD /* PartialTransparentBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = C52AAFDA1B32D38A004332DD /* PartialTransparentBlurView.m */; };
+		C5500D141B34072A00E4E8BA /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5500D131B34072A00E4E8BA /* SearchViewController.m */; };
+		C5500D171B34073E00E4E8BA /* SearchTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C5500D161B34073E00E4E8BA /* SearchTableViewCell.m */; };
+		C5500D1A1B34300C00E4E8BA /* UserFeed.m in Sources */ = {isa = PBXBuildFile; fileRef = C5500D191B34300C00E4E8BA /* UserFeed.m */; };
 		C5576B371ADBC195009C1D5E /* CameraHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C5576B201ADBC195009C1D5E /* CameraHelper.m */; };
 		C5576B381ADBC195009C1D5E /* ColorHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C5576B221ADBC195009C1D5E /* ColorHelper.m */; };
 		C5576B391ADBC195009C1D5E /* UIHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C5576B241ADBC195009C1D5E /* UIHelper.m */; };
@@ -167,6 +170,12 @@
 		C52AAFD71B319B5F004332DD /* manatee-gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "manatee-gray.png"; sourceTree = "<group>"; };
 		C52AAFD91B32D38A004332DD /* PartialTransparentBlurView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PartialTransparentBlurView.h; sourceTree = "<group>"; };
 		C52AAFDA1B32D38A004332DD /* PartialTransparentBlurView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PartialTransparentBlurView.m; sourceTree = "<group>"; };
+		C5500D121B34072A00E4E8BA /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
+		C5500D131B34072A00E4E8BA /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
+		C5500D151B34073E00E4E8BA /* SearchTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchTableViewCell.h; sourceTree = "<group>"; };
+		C5500D161B34073E00E4E8BA /* SearchTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchTableViewCell.m; sourceTree = "<group>"; };
+		C5500D181B34300C00E4E8BA /* UserFeed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserFeed.h; sourceTree = "<group>"; };
+		C5500D191B34300C00E4E8BA /* UserFeed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserFeed.m; sourceTree = "<group>"; };
 		C5576B1F1ADBC195009C1D5E /* CameraHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraHelper.h; sourceTree = "<group>"; };
 		C5576B201ADBC195009C1D5E /* CameraHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraHelper.m; sourceTree = "<group>"; };
 		C5576B211ADBC195009C1D5E /* ColorHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ColorHelper.h; sourceTree = "<group>"; };
@@ -416,6 +425,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C5500D111B34071200E4E8BA /* search */ = {
+			isa = PBXGroup;
+			children = (
+				C5500D121B34072A00E4E8BA /* SearchViewController.h */,
+				C5500D131B34072A00E4E8BA /* SearchViewController.m */,
+				C5500D151B34073E00E4E8BA /* SearchTableViewCell.h */,
+				C5500D161B34073E00E4E8BA /* SearchTableViewCell.m */,
+			);
+			name = search;
+			sourceTree = "<group>";
+		};
 		C5576B1C1ADBC195009C1D5E /* app */ = {
 			isa = PBXGroup;
 			children = (
@@ -435,6 +455,7 @@
 		C5576B1D1ADBC195009C1D5E /* controllers */ = {
 			isa = PBXGroup;
 			children = (
+				C5500D111B34071200E4E8BA /* search */,
 				C5C2F4981B3006B500AF8666 /* ripples */,
 				F18A20EF1B1D34FC003294BE /* overlay */,
 				F1D4364E1B1A47320024205B /* NavigationController.h */,
@@ -524,6 +545,8 @@
 				C5C2F49D1B30107200AF8666 /* RippleModel.m */,
 				C52AAFD41B3058A0004332DD /* RipplesFeed.h */,
 				C52AAFD51B3058A0004332DD /* RipplesFeed.m */,
+				C5500D181B34300C00E4E8BA /* UserFeed.h */,
+				C5500D191B34300C00E4E8BA /* UserFeed.m */,
 			);
 			path = models;
 			sourceTree = "<group>";
@@ -1060,6 +1083,7 @@
 				C5A27B751ADD0F4500968033 /* ResponseModel.m in Sources */,
 				C57AD0AA1AD7EDB800B6042A /* AppDelegate.m in Sources */,
 				F1D436531B1A90430024205B /* BucketView.m in Sources */,
+				C5500D1A1B34300C00E4E8BA /* UserFeed.m in Sources */,
 				F1DBB57E1B14E3D70097F709 /* ImageEditorView.m in Sources */,
 				C5576B371ADBC195009C1D5E /* CameraHelper.m in Sources */,
 				F1D9AB481AF5A048005BFE2C /* EditImageViewController.m in Sources */,
@@ -1069,6 +1093,7 @@
 				C5A27B6F1ADD083300968033 /* ConfigHelper.m in Sources */,
 				F1DBB54F1B0FCC0C0097F709 /* ProfileViewController.m in Sources */,
 				F1BD62361AF05C0C00BDE1CA /* ChatMessageLabel.m in Sources */,
+				C5500D141B34072A00E4E8BA /* SearchViewController.m in Sources */,
 				C5D4736C1AE63F610097E44F /* FilterViewController.m in Sources */,
 				C5576B541ADBE2C1009C1D5E /* RegisterViewController.m in Sources */,
 				C5D473AB1AFA4BEB0097E44F /* BucketModel.m in Sources */,
@@ -1091,6 +1116,7 @@
 				C5A27B691ADD01D000968033 /* NotificationHelper.m in Sources */,
 				F1E127B01AFEE09F000E3F2C /* TagController.m in Sources */,
 				C5C2F49B1B3006D500AF8666 /* RipplesTableViewCell.m in Sources */,
+				C5500D171B34073E00E4E8BA /* SearchTableViewCell.m in Sources */,
 				C5E2FC101B1884D9007E71BE /* SubscribeModel.m in Sources */,
 				F1D436501B1A47320024205B /* NavigationController.m in Sources */,
 				C5D473BF1AFD0BB70097E44F /* CircleIndicatorView.m in Sources */,

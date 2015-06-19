@@ -9,6 +9,7 @@
 #import "SuperLoginViewController.h"
 #import "NavigationController.h"
 #import "AppDelegate.h"
+#import "ApplicationHelper.h"
 @interface SuperLoginViewController ()
 
 @end
@@ -44,6 +45,9 @@
     NavigationController *navigation =[mainStoryboard instantiateViewControllerWithIdentifier:@"carouselStart"];
     AppDelegate *appDelegateTemp = [[UIApplication sharedApplication]delegate];
     appDelegateTemp.window.rootViewController = navigation;
+    [ApplicationHelper setMainNavigationController:navigation];
+    
+
 }
 
 -(void)keyboardWillHide {

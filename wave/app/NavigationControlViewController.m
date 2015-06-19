@@ -79,6 +79,7 @@
 }
 
 -(void)addRightButton{
+    NSLog(@"Adding right button");
     UIImage* image = [UIHelper iconImage:[UIImage imageNamed:@"ripples.png"]];
     CGRect frame = CGRectMake(0, 0, 26, 26);
     UIButton* someButton = [[UIButton alloc] initWithFrame:frame];
