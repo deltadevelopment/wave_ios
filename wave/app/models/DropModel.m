@@ -13,13 +13,13 @@
 #import "GraphicsHelper.h"
 
 @implementation DropModel
-MediaController *mediaController;
+
 -(id)init:(NSMutableDictionary *)dic{
     
     if((NSNull*)dic != [NSNull null]){
         self =[super init];
         self.dictionary = dic;
-        mediaController = [[MediaController alloc] init];
+        self.mediaController = [[MediaController alloc] init];
         self.media_key = [dic objectForKey:@"media_key"];
         self.media_url = [dic objectForKey:@"media_url"];
         self.caption = [dic objectForKey:@"caption"];
@@ -100,24 +100,54 @@ self =[super init];
 
 -(void)downloadImage:(void (^)(NSData*))completionCallback
 {
-    [mediaController getMedia:self.media_url
-                 onCompletion:^(NSData *data){
-                     self.media_tmp = data;
-                     completionCallback(data);
-                 }
-                      onError:^(NSError *error){
-                      }];
+  
+    /*
+     [mediaController getMedia:self.media_url
+     onCompletion:^(NSData *data){
+     self.media_tmp = data;
+     completionCallback(data);
+     }
+     onError:^(NSError *error){
+     }];
+     */
+    if (!self.isDownloading) {
+        self.isDownloading = YES;
+        NSLog(@"Downlad %d ", self.Id);
+        [self.mediaController downloadMedia:self.media_url
+                               onCompletion:^(NSData *data){
+                                   self.media_tmp = data;
+                                   self.isDownloading = NO;
+                                   completionCallback(data);
+                               }
+                                    onError:^(NSError *error){
+                                        
+                                    }
+                                 onProgress:^(NSNumber *progress){
+                                     
+                                 }];
+    }
+    
+    
+}
+
+-(void)cancelDownload{
+    [self.mediaController stopConnection];
 }
 
 -(void)downloadThumbnail:(void (^)(NSData*))completionCallback
 {
-    [mediaController getMedia:self.thumbnail_url
-                 onCompletion:^(NSData *data){
-                     self.thumbnail_tmp = data;
-                     completionCallback(data);
-                 }
-                      onError:^(NSError *error){
-                      }];
+    [self.mediaController downloadMedia:self.media_url
+                           onCompletion:^(NSData *data){
+                               NSLog(@"Done");
+                               self.thumbnail_tmp = data;
+                               completionCallback(data);
+                           }
+                                onError:^(NSError *error){
+                                    
+                                }
+                             onProgress:^(NSNumber *progress){
+                                 
+                             }];
 }
 
 -(NSDictionary *)asDictionary

@@ -22,7 +22,7 @@
             //_baseUrl = @"http://w4ve.herokuapp.com";
             _baseUrl = @"http://ddev-wave-staging.herokuapp.com";
         }
-        NSLog(@"baseURL: %@", _baseUrl);
+       // NSLog(@"baseURL: %@", _baseUrl);
     }
     
     return self;

@@ -13,7 +13,7 @@
 #import "ApplicationHelper.h"
 #import "ResponseModel.h"
 #import "MediaController.h"
-@interface ApplicationController : NSObject{
+@interface ApplicationController : NSObject<NSURLConnectionDataDelegate>{
     AuthHelper *authHelper;
     ParserHelper *parserHelper;
     ApplicationHelper *applicationHelper;

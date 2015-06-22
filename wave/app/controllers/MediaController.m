@@ -12,6 +12,8 @@
 {
     void (^mediaUploadComplete)(void);
     void (^mediaProgression)(NSNumber*(progress));
+    void (^mediaDownloadComplete)(NSData*(data));
+    bool isUploading;
 }
 
 
@@ -29,12 +31,14 @@
     //NSLog(@"cached data %@",strdata);
     //check if has cache
     
-    
     //[request setTimeoutInterval: 10.0]; // Will timeout after 10 seconds
+    
+    ;
+    /*
     [NSURLConnection sendAsynchronousRequest:request
                                        queue:[NSOperationQueue currentQueue]
                            completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-                               //NSLog(@"downloading");
+                               NSLog(@"downloading");
                                if (data != nil && error == nil)
                                {
                                    NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) response;
@@ -57,10 +61,39 @@
                                }
                                
                            }];
+     */
     
 }
--(void)test:(void (^)(void))callback
-{}
+
+
+-(void)downloadMedia:(NSString *) urlPath
+   onCompletion:(void (^)(NSData*))completionCallback
+        onError:(void(^)(NSError *))errorCallback
+ onProgress:(void (^)(NSNumber*))progression
+
+{
+    isUploading = NO;
+    NSURL *url = [NSURL URLWithString:urlPath];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    mediaDownloadComplete = completionCallback;
+    mediaProgression = progression;
+    
+    
+    self.theConnection = [[NSURLConnection alloc]
+                                    initWithRequest:request
+                                    delegate:self startImmediately:NO];
+    
+    
+        [self.theConnection scheduleInRunLoop:[NSRunLoop mainRunLoop]
+                                      forMode:NSDefaultRunLoopMode];
+        [self.theConnection start];
+
+
+    
+ 
+   
+    
+}
 
 -(void)putHttpRequestWithImage:(NSData *) imageData
                          token:(NSString *) token
@@ -70,7 +103,7 @@
 {
     //POST/PUT to Amazon
     //STEP 2: Upload image to S3 with generated token from backend
-    
+    isUploading = YES;
     NSString *postLength = [NSString stringWithFormat:@"%lu", (unsigned long)[imageData length]];
     
     // Init the URLRequest
@@ -107,24 +140,55 @@ totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite
     long percentageDownloaded = (totalBytesWritten * 100)/totalBytesExpectedToWrite;
     mediaProgression([NSNumber numberWithInt:(int)percentageDownloaded]);
     if(percentageDownloaded == 100){
-        mediaUploadComplete();
+        if (isUploading) {
+            mediaUploadComplete();
+        }else{
+            
+        }
+        
     }
+    
+    NSLog(@"perce");
 }
+
 
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
     NSHTTPURLResponse* httpResponse = (NSHTTPURLResponse*)response;
-    //NSLog(@"-----RESPO fra server");
-    NSLog(@"%ld", (long)[httpResponse statusCode]);
+    
+    NSLog(@"response %ld", (long)[httpResponse statusCode]);
+    //NSLog(@"Data is %lu", (unsigned long)[array count]);
+  
+    _data = [[NSMutableData alloc] init];
+    
 }
 
-- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data{
+-(void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data{
+    if (_data == nil){
+        _data = [[NSMutableData alloc]init];
+    }
+    [_data appendData:data];
+    //[_data appendData:data];
 }
+
+-(void)stopConnection{
+    if(self.theConnection != nil){
+        NSLog(@"Canceled the connection");
+        [self.theConnection cancel];
+    }
+    
+}
+
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection{
+    mediaDownloadComplete(_data);
 }
 
-- (void)connectionDidFinishDownloading:(NSURLConnection *)connection destinationURL:(NSURL *)destinationURL{
+- (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error{
+    NSLog(@"ERROR: %@",  [error localizedDescription]);
 }
+
+
+
 @end

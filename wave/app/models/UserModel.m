@@ -8,21 +8,21 @@
 
 #import "UserModel.h"
 #import "AuthHelper.h"
-MediaController *mediaController;
+
 @implementation UserModel{
     AuthHelper *authHelper;
 }
 -(id)init:(NSMutableDictionary *)dic{
     [self refresh:dic];
-    NSLog(@"mys di is %@", dic);
-    mediaController = [[MediaController alloc] init];
+   // NSLog(@"mys di is %@", dic);
+    self.mediaController = [[MediaController alloc] init];
     return self;
 };
 
 -(id)initWithDeviceUser{
     self = [super init];
     authHelper = [[AuthHelper alloc] init];
-    mediaController = [[MediaController alloc] init];
+    self.mediaController = [[MediaController alloc] init];
     self.Id = [[authHelper getUserId] intValue];
     //[self find:^{} onError:^(NSError *error){}];
     return self;
@@ -32,7 +32,7 @@ MediaController *mediaController;
 
 -(id)initWithDeviceUser:(void (^)(UserModel*))completionCallback
                 onError:(void(^)(NSError *))errorCallback{
-    mediaController = [[MediaController alloc] init];
+    self.mediaController = [[MediaController alloc] init];
     self = [super init];
     authHelper = [[AuthHelper alloc] init];
     self.Id = [[authHelper getUserId] intValue];
@@ -116,14 +116,25 @@ MediaController *mediaController;
 
 -(void)downloadImage:(void (^)(NSData*))completionCallback
 {
-    NSLog(@"profile picute url %@", self.profile_picture_url);
-    [mediaController getMedia:self.profile_picture_url
-                 onCompletion:^(NSData *data){
-                     self.media_tmp = data;
-                     completionCallback(data);
-                 }
-                      onError:^(NSError *error){
-                      }];
+    //NSLog(@"profile picute url %@", self.profile_picture_url);
+
+    
+    if (!self.isDownloading) {
+        self.isDownloading = YES;
+        NSLog(@"Downlad %d ", self.Id);
+        [self.mediaController downloadMedia:self.profile_picture_url
+                               onCompletion:^(NSData *data){
+                                   self.media_tmp = data;
+                                   self.isDownloading = NO;
+                                   completionCallback(data);
+                               }
+                                    onError:^(NSError *error){
+                                        
+                                    }
+                                 onProgress:^(NSNumber *progress){
+                                     
+                                 }];
+    }
 }
 
 -(void)requestProfilePic:(void (^)(NSData*))completionCallback{

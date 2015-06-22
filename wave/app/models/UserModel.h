@@ -29,6 +29,8 @@
 @property (nonatomic, strong) NSString *profile_picture_url;
 @property (nonatomic,strong) NSData *media_tmp;
 @property (nonatomic,strong) MediaModel *mediaModel;
+@property (nonatomic) bool isDownloading;
+@property (nonatomic,strong) MediaController *mediaController;
 -(id)init:(NSMutableDictionary *)dic;
 -(void)find:(void (^)(UserModel *))completionCallback
     onError:(void(^)(NSError *))errorCallback;

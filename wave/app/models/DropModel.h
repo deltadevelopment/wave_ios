@@ -45,6 +45,10 @@
 @property (nonatomic,strong) NSString * username;
 @property (nonatomic) int phone_number;
 
+@property (nonatomic) bool isDownloading;
+-(void)cancelDownload;
+@property (nonatomic, strong) MediaController *mediaController;
+
 //Methods
 //-(id)initWithTestData:(NSString *) media withName:(NSString *) username;
 -(id)init:(NSMutableDictionary *)dic;

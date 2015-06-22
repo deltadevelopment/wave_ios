@@ -14,6 +14,9 @@
 
 }
 
+@property (strong, nonatomic)  NSURLConnection *theConnection;
+@property (strong, nonatomic)  NSMutableData *data;
+
 -(void)putHttpRequestWithImage:(NSData *) imageData
                          token:(NSString *) token
                     onProgress:(void (^)(NSNumber*))progression
@@ -21,4 +24,13 @@
 -(void)getMedia:(NSString *) urlPath
    onCompletion:(void (^)(NSData*))completionCallback
         onError:(void(^)(NSError *))errorCallback;
+
+
+-(void)downloadMedia:(NSString *) urlPath
+        onCompletion:(void (^)(NSData*))completionCallback
+             onError:(void(^)(NSError *))errorCallback
+          onProgress:(void (^)(NSNumber*))progression;
+
+
+-(void)stopConnection;
 @end

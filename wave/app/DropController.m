@@ -82,6 +82,11 @@
     }
     
 }
+-(void)viewDidDisappear:(BOOL)animated{
+    [self.drop cancelDownload];
+    [self.drop setIsDownloading:NO];
+}
+
 -(void)stopVideo{
     DropView *dropView = (DropView *)self.view;
     if([dropView hasVideo]){

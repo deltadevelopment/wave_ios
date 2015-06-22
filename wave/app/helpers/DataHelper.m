@@ -97,6 +97,9 @@ static NSMutableArray *notifications;
 
 +(void)storeNotifications:(NSDictionary *)dictionary
 {
+    NSLog(@"REMOVING");
+     [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"notifications"];
+    /*
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     NSArray * array = [self getNotifications];
     if(array == nil){
@@ -123,7 +126,7 @@ static NSMutableArray *notifications;
   
     NSData *myEncodedObject = [NSKeyedArchiver archivedDataWithRootObject:notifications];
     [defaults setObject:myEncodedObject forKey:[NSString stringWithFormat:@"notifications"]];
-    
+    */
 }
 
 +(NSArray *)getNotifications{

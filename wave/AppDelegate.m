@@ -86,7 +86,7 @@ AuthHelper *authHelper;
     if(apsInfo) {
         [ApplicationHelper executeBlock];
         //Navigate or take action on the notification
-       // [DataHelper storeNotifications:userInfo];
+       
         [DataHelper storeRippleCount:[DataHelper getRippleCount] +1];
         
     }

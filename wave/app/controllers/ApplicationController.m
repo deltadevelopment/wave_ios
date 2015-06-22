@@ -8,6 +8,8 @@
 
 #import "ApplicationController.h"
 #import "NotificationHelper.h"
+#import "StartViewController.h"
+#import "AppDelegate.h"
 @implementation ApplicationController
 
 - (id)init
@@ -28,6 +30,7 @@
               onError:(void(^)(NSError *))errorCallback
 {
     NSURL *urlFromString = [NSURL URLWithString:[applicationHelper generateUrl:url]];
+    NSLog(@"GET : %@", urlFromString);
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:urlFromString cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:1200.0];
     [request setValue:@"text" forHTTPHeaderField:@"Content-type"];
     [request addValue:[authHelper getAuthToken] forHTTPHeaderField:@"X-AUTH-TOKEN"];
@@ -82,58 +85,77 @@
            onCompletion:(void (^)(NSURLResponse*, NSData *, NSError*))callback
                 onError:(void(^)(NSError *))errorCallback
 {
-    
     [NSURLConnection sendAsynchronousRequest:request
                                        queue:[NSOperationQueue currentQueue]
                            completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-                                    NSString *strdata=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
-                               //NSLog(strdata);
-                               NSURL *URLER = [response URL];
-                               //NSLog([URLER path]);
+
+                              
+                               
+                               
                                if (data != nil && error == nil)
                                {
                                    //Ferdig lastet ned
-                                  
                                    NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) response;
                                    //NSLog(@"response status code: %ld", (long)[httpResponse statusCode]);
                                    NSInteger statuscode = [httpResponse statusCode];
                                    if(statuscode < 300){
-                                       //NSLog(@"success");
-                                        callback(response,data,error);
-                                       //[view performSelector:success withObject:data];
-                                       
-                                   }else{
                                        callback(response,data,error);
-                                       /*
-                                        NSString *strdata=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
-                                        [applicationHelper alertUser:[NSString stringWithFormat:@"%ld on %@",(long)statuscode, strdata]];
-                                        
-                                        [self showNotification:view withData:data];
-                                        if(statuscode == 403){
-                                        [self logoutUser:view];
-                                        }
-                                        NSMutableDictionary *errors = [parserHelper parse:data];
-                                        NSError *httpError = [NSError errorWithDomain:@"world" code:200 userInfo:errors];
-                                        [view performSelector:errorAction withObject:httpError];
-                                        */
+                                   }else{
+                                       [self handleError:response withError:error withData:data];
+                                       callback(response,data,error);
                                    }
                                }
                                else
                                {
-                                   NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) response;
-                                  NSLog(@"response status code: %ld", (long)[httpResponse statusCode]);
-                                  // NSLog([error localizedDescription]);
-                                   
+                                   [self handleError:response withError:error withData:data];
+                                   // NSLog([error localizedDescription]);
                                    NSMutableDictionary *errors = [ParserHelper parse:data];
                                    NSError *httpError = [NSError errorWithDomain:@"world" code:200 userInfo:errors];
-                                   
                                    errorCallback(httpError);
-                                   // There was an error, alert the user
-                                   //[self showNotification:view withData:data];
-                                   //[view performSelector:errorAction withObject:error];
-                                   
                                }
                            }];
+}
+
+-(void)handleError:(NSURLResponse *) response
+         withError:(NSError *) error
+          withData:(NSData *) data
+{
+    NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) response;
+    NSInteger statuscode = [httpResponse statusCode];
+    NSLog(@"-------------------------");
+    //NSURL *URLER = ;
+    NSLog(@"URL: %@", [[response URL] absoluteString]);
+    NSLog(@"response status code: %ld", (long)statuscode);
+    //NSString *strdata=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+    //NSLog(@"Response: %@", strdata);
+    ResponseModel *responseModel = [[ResponseModel alloc] init:[ParserHelper parse:data]];
+    NSLog(@"Model message: %@", responseModel.message);
+    
+    
+    if((error.code == NSURLErrorUserCancelledAuthentication && statuscode == 0) || statuscode == 401){
+        NSLog(@"Logg ut her");
+        statuscode = 401;
+
+        
+        [authHelper resetCredentials];
+        UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
+        StartViewController *navigation =[mainStoryboard instantiateViewControllerWithIdentifier:@"startNav"];
+        AppDelegate *appDelegateTemp = [[UIApplication sharedApplication]delegate];
+        appDelegateTemp.window.rootViewController = navigation;
+        
+        
+    }
+    else
+    {
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:[NSString stringWithFormat:@"Network error %ld", (long)statuscode]
+                                                       message:[NSString stringWithFormat:@"Message: %@ \n URL: %@", responseModel.message, [[response URL] absoluteString]]
+                                                      delegate:self
+                                             cancelButtonTitle:@"Ok"
+                                             otherButtonTitles:nil];
+        [alert show];
+    }
+    
+    // NSLog(@"-------------------------");
 }
 /*
 -(void)showNotification:(NSObject *) view withData: (NSData *) data{
