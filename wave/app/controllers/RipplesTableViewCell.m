@@ -214,7 +214,7 @@
                 NSLog(@"%@, %lu, %lu", value, (unsigned long)range.location, (unsigned long)range.length);
                 self.onUserTap(self.ripple);
             }else{
-                if ([[self.ripple trigger_type] isEqualToString:@"Bucket"]) {
+                if ([[self.ripple.interaction topic_type] isEqualToString:@"Bucket"]) {
                     self.onBucketTap(self.ripple, self);
                 }else{
                     self.onDropTap(self.ripple, self);
@@ -232,18 +232,18 @@
 
 -(void)initActionButton:(RippleModel *) ripple withCellHeight:(float) height{
     self.ripple = ripple;
-    if([[ripple trigger_type]  isEqualToString:@"Drop"]){
+    if([[ripple.interaction topic_type]  isEqualToString:@"Drop"]){
         [self showButton:self.actionButton];
         [self.actionButton removeTarget:self action:@selector(dropAction) forControlEvents:UIControlEventTouchUpInside];
         [self.actionButton addTarget:self action:@selector(dropAction) forControlEvents:UIControlEventTouchUpInside];
         [self.actionButton setBackgroundImage:[UIHelper iconImage:[UIImage imageNamed:@"manatee-gray.png"] withSize:80.0f] forState:UIControlStateNormal];
-        if([ripple.drop media_type] == 0){
-            [ripple.drop requestPhoto:^(NSData *data){
+        if([ripple.interaction.drop media_type] == 0){
+            [ripple.interaction.drop requestPhoto:^(NSData *data){
                 [self.actionButton setBackgroundImage:[UIHelper iconImage:[UIImage imageWithData:data]  withSize:80.0f]forState:UIControlStateNormal];
                 
             } ];
         }else{
-            [ripple.drop requestThumbnail:^(NSData *data){
+            [ripple.interaction.drop requestThumbnail:^(NSData *data){
                 [self.actionButton setBackgroundImage:[UIHelper iconImage:[UIImage imageWithData:data]  withSize:80.0f]forState:UIControlStateNormal];
                 
             }];
@@ -251,12 +251,12 @@
         
         
     }
-    else if([[ripple trigger_type]   isEqualToString:@"Bucket"]){
+    else if([[ripple.interaction topic_type]   isEqualToString:@"Bucket"]){
         [self showButton:self.actionButton];
          [self.actionButton removeTarget:self action:@selector(bucketAction) forControlEvents:UIControlEventTouchUpInside];
          [self.actionButton addTarget:self action:@selector(bucketAction) forControlEvents:UIControlEventTouchUpInside];
     [self.actionButton setBackgroundImage:[UIHelper iconImage:[UIImage imageNamed:@"manatee-gray.png"] withSize:80.0f] forState:UIControlStateNormal];
-        DropModel *drop = [[ripple.bucket drops] objectAtIndex:0];
+        DropModel *drop = [[ripple.interaction.bucket drops] objectAtIndex:0];
         if([drop media_type] == 0){
             [drop requestPhoto:^(NSData *data){
                 [self.actionButton setBackgroundImage:[UIImage imageWithData:data] forState:UIControlStateNormal];
@@ -267,9 +267,9 @@
             }];
         }
     }
-    else if([[ripple trigger_type] isEqualToString:@"Subscription"]){
-        if ([ripple subscription] != nil) {
-            if([ripple.subscription reverse]){
+    else if([[ripple.interaction topic_type] isEqualToString:@"Subscription"]){
+        if ([ripple.interaction subscription] != nil) {
+            if([ripple.interaction.subscription reverse]){
                 [self.subscribeButton setImage: [UIHelper iconImage:[UIImage imageNamed:@"tick.png"] withSize:40] forState:UIControlStateNormal];
                 [self.subscribeButton setBackgroundColor:[ColorHelper purpleColor]];
                 [self.subscribeButton setTintColor:[ColorHelper whiteColor]];
@@ -285,11 +285,11 @@
         
         [self showButton:self.subscribeButton];
     }
-    else if([[ripple trigger_type] isEqualToString:@"Vote"]){
+    else if([[ripple.interaction topic_type] isEqualToString:@"Vote"]){
         [self showButton:self.temperatureButton];
-        [self.temperatureButton setTitle:[NSString stringWithFormat:@"%d °", [ripple.temperature temperature]] forState:UIControlStateNormal];
+        [self.temperatureButton setTitle:[NSString stringWithFormat:@"%d °", [ripple.interaction.temperature temperature]] forState:UIControlStateNormal];
     }
-    else if([[ripple trigger_type] isEqualToString:@"Tag"]){
+    else if([[ripple.interaction topic_type] isEqualToString:@"Tag"]){
          [self.actionButton removeTarget:self action:@selector(tagAction) forControlEvents:UIControlEventTouchUpInside];
          [self.actionButton addTarget:self action:@selector(tagAction) forControlEvents:UIControlEventTouchUpInside];
     }
@@ -307,23 +307,26 @@
  
     
   NSLog(@"button pressed subscribe");
-    if([self.ripple.subscription reverse]){
-        [self.ripple.subscription delete:^(ResponseModel *response){
+    if([self.ripple.interaction.subscription reverse]){
+        [self.ripple.interaction.subscription delete:^(ResponseModel *response){
             [self.subscribeButton setImage: [UIHelper iconImage:[UIImage imageNamed:@"plus-icon-simple.png"] withSize:40] forState:UIControlStateNormal];
             [self.subscribeButton setBackgroundColor:[ColorHelper whiteColor]];
             [self.subscribeButton setImageEdgeInsets:UIEdgeInsetsMake(5, 12.5, 5, 12.5)];
             [self.subscribeButton setTintColor:[ColorHelper purpleColor]];
         } onError:^(NSError *error){}];
-        [self.ripple.subscription setReverse:NO];
+        [self.ripple.interaction.subscription setReverse:NO];
     
         
         
     }
     else{
         
-         [self.ripple.subscription setReverse:YES];
-        [self.ripple.subscription saveChanges:^(ResponseModel *response){
-           
+         [self.ripple.interaction.subscription setReverse:YES];
+        
+     
+        
+        [self.ripple.interaction.subscription saveChanges:^(ResponseModel *response){
+            
             [self.subscribeButton setImage: [UIHelper iconImage:[UIImage imageNamed:@"tick.png"] withSize:40] forState:UIControlStateNormal];
             [self.subscribeButton setBackgroundColor:[ColorHelper purpleColor]];
             [self.subscribeButton setTintColor:[ColorHelper whiteColor]];
@@ -332,7 +335,6 @@
              
              
          }];
-     
     }
     
     

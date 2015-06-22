@@ -38,12 +38,15 @@
 -(void)bindToModel{
     NSLog(@" ---- About to request media for drop id %d", self.drop.Id);
     //Bind all ui text etc and images
+    
+    NSLog(@"Error1");
     DropView *dropView = (DropView *)self.view;
     [dropView setDropUI:self.drop];
+    NSLog(@"the drop %d", self.drop.media_type);
     if([self.drop media_type] == 1 && self.isPlaceholderView){
         //IS video, should get thumbnail
         [self.drop requestThumbnail:^(NSData *media){
-            
+            NSLog(@"Error1");
          [dropView setMedia:[UIImage imageWithData:media] withIndexId:[self.drop Id]];
         }];
         
@@ -52,9 +55,11 @@
             if([self.drop thumbnail_tmp] != nil){
               [dropView setMedia:[UIImage imageWithData:[self.drop thumbnail_tmp]] withIndexId:[self.drop Id]];
             }
-          
+        
         }
+         NSLog(@"Error2");
         [self.drop requestPhoto:^(NSData *media){
+            
             if([self.drop media_type] == 0){
                 //IMAGE
                 // [dropView setImage:[UIImage imageWithData:media]];

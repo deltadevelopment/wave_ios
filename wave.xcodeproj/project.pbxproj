@@ -37,6 +37,7 @@
 		C57AD0C11AD7EDB800B6042A /* waveTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C57AD0C01AD7EDB800B6042A /* waveTests.m */; };
 		C585215A1B382E6A000812F2 /* CacheModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C58521591B382E6A000812F2 /* CacheModel.m */; };
 		C585215D1B382FFE000812F2 /* CacheHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C585215C1B382FFE000812F2 /* CacheHelper.m */; };
+		C58521601B383EB1000812F2 /* InteractionModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C585215F1B383EB1000812F2 /* InteractionModel.m */; };
 		C5896A771AE15F3700EFCE2D /* AbstractFeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5896A761AE15F3700EFCE2D /* AbstractFeedViewController.m */; };
 		C5896A7A1AE15F4200EFCE2D /* ActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5896A791AE15F4200EFCE2D /* ActivityViewController.m */; };
 		C5A27B511ADC014E00968033 /* cross-white.png in Resources */ = {isa = PBXBuildFile; fileRef = C5A27B501ADC014E00968033 /* cross-white.png */; };
@@ -223,6 +224,8 @@
 		C58521591B382E6A000812F2 /* CacheModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CacheModel.m; sourceTree = "<group>"; };
 		C585215B1B382FFE000812F2 /* CacheHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CacheHelper.h; sourceTree = "<group>"; };
 		C585215C1B382FFE000812F2 /* CacheHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CacheHelper.m; sourceTree = "<group>"; };
+		C585215E1B383EB1000812F2 /* InteractionModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InteractionModel.h; sourceTree = "<group>"; };
+		C585215F1B383EB1000812F2 /* InteractionModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InteractionModel.m; sourceTree = "<group>"; };
 		C5896A6B1AE1342E00EFCE2D /* FeedInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedInterface.h; sourceTree = "<group>"; };
 		C5896A751AE15F3700EFCE2D /* AbstractFeedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AbstractFeedViewController.h; sourceTree = "<group>"; };
 		C5896A761AE15F3700EFCE2D /* AbstractFeedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AbstractFeedViewController.m; sourceTree = "<group>"; };
@@ -551,6 +554,8 @@
 				F18A20F31B227793003294BE /* TemperatureModel.m */,
 				C5C2F49C1B30107200AF8666 /* RippleModel.h */,
 				C5C2F49D1B30107200AF8666 /* RippleModel.m */,
+				C585215E1B383EB1000812F2 /* InteractionModel.h */,
+				C585215F1B383EB1000812F2 /* InteractionModel.m */,
 				C52AAFD41B3058A0004332DD /* RipplesFeed.h */,
 				C52AAFD51B3058A0004332DD /* RipplesFeed.m */,
 				C5500D181B34300C00E4E8BA /* UserFeed.h */,
@@ -1130,6 +1135,7 @@
 				C5C2F49B1B3006D500AF8666 /* RipplesTableViewCell.m in Sources */,
 				C5500D171B34073E00E4E8BA /* SearchTableViewCell.m in Sources */,
 				C5E2FC101B1884D9007E71BE /* SubscribeModel.m in Sources */,
+				C58521601B383EB1000812F2 /* InteractionModel.m in Sources */,
 				F1D436501B1A47320024205B /* NavigationController.m in Sources */,
 				C5D473BF1AFD0BB70097E44F /* CircleIndicatorView.m in Sources */,
 				C5D473A51AFA0E0E0097E44F /* ChatTableView.m in Sources */,

@@ -55,8 +55,11 @@ const int PEEK_Y_START = 300;
     [super viewDidLoad];
      isAboutToleaveBucket = NO;
     [self setUpObjects];
+    
     [self setUpGestures];
+    
     [self loadBucket];
+   
     [self initUISetup];
     [self attachSubviews];
     [self setupCallbacks];
@@ -188,21 +191,17 @@ const int PEEK_Y_START = 300;
 -(void)setUpObjects{
     storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     _drops = [[NSMutableArray alloc] init];
-    
     self.pageViewController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
     self.pageViewController.dataSource = self;
     self.pageViewController.delegate = self;
     isFirst = YES;
     currentDropPage = [self viewControllerAtIndex:0 replacingObject:nil];
-    
     NSArray *viewControllers = @[currentDropPage];
     [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
-    
     self.pageViewController.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
     [self addChildViewController:_pageViewController];
     [self.view insertSubview:_pageViewController.view atIndex:0];
     [self.pageViewController didMoveToParentViewController:self];
-    
     
     for (UIView *v in self.pageViewController.view.subviews) {
         if ([v isKindOfClass:[UIScrollView class]]) {
@@ -489,6 +488,7 @@ const int PEEK_Y_START = 300;
     }
     
     DropController *pageContentViewController = [[DropController alloc] init];
+    NSLog(@"size is %lu", (unsigned long)[[bucket drops] count]);
     DropModel *dropModel = [[bucket drops] objectAtIndex:index];
     if(pageToReplace != nil){
         //Uses the prefetched thumbnail or image from the feed, instead of downloading it again
@@ -538,6 +538,7 @@ const int PEEK_Y_START = 300;
         {
             if(frame.origin.y + frame.size.height >= (PEEK_Y_START-64) - 64){
                 [self animatePeekViewIn];
+                [peekViewController requestProfilePic];
                 
             }else{
                 [self animatePeekViewOut];

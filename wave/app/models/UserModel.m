@@ -126,6 +126,7 @@
                                onCompletion:^(NSData *data){
                                    self.media_tmp = data;
                                    self.isDownloading = NO;
+                                   NSLog(@"IMAGE IS DOWBLLAOED");
                                    completionCallback(data);
                                }
                                     onError:^(NSError *error){

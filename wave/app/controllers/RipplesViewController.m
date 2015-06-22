@@ -161,14 +161,14 @@ static int TABLE_CELLS_ON_SCREEN = 6;
 }
 
 -(void)showProfile:(RippleModel *) ripple{
-    NSLog(@"showing profile for %@", [[ripple user] username]);
+    NSLog(@"showing profile for %@", [[ripple.interaction user] username]);
     
     
     //UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
     AbstractFeedViewController *profileController = [self.storyboard instantiateViewControllerWithIdentifier:@"activity"];
     [profileController setViewMode:1];
     [profileController setIsDeviceUser:NO];
-    [profileController setAnotherUser:[ripple user]];
+    [profileController setAnotherUser:[ripple.interaction user]];
     [profileController hidePeekFirst];
     
     [self.view insertSubview:profileController.view atIndex:0];
@@ -188,14 +188,14 @@ static int TABLE_CELLS_ON_SCREEN = 6;
                  withCell:(RipplesTableViewCell *) cell
 {
     NSLog(@"showing bucket normal");
-    currentBucketId = [[ripple bucket] Id];
+    currentBucketId = [[ripple.interaction bucket] Id];
     [self tableView:self.tableView didSelectRowAtIndexPath:[self.tableView indexPathForCell:cell]];
 }
 -(void)showDropNormally:(RippleModel *)ripple
                withCell:(RipplesTableViewCell *) cell
 {
     NSLog(@"showing drop normal");
-    currentBucketId = [[ripple drop] bucket_id];
+    currentBucketId = [[ripple.interaction drop] bucket_id];
     [self tableView:self.tableView didSelectRowAtIndexPath:[self.tableView indexPathForCell:cell]];
 }
 
@@ -244,6 +244,7 @@ static int TABLE_CELLS_ON_SCREEN = 6;
     DropModel *drop = [[DropModel alloc] init];
     [drop setId:dropId];
     [bucket addDrop:drop];
+
     [self changeToBucket:bucket withDropId:dropId];
    
    // self.onExpand(bucket);
@@ -254,7 +255,7 @@ static int TABLE_CELLS_ON_SCREEN = 6;
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     RippleModel *rippleModel = [[self.ripplesFeedModel feed] objectAtIndex:indexPath.row];
  
-    if (![rippleModel.trigger_type isEqualToString:@"Subscription"]) {
+    if (![rippleModel.interaction.topic_type isEqualToString:@"Subscription"]) {
         NSIndexPath *oldIndex = indexCurrent;
         indexCurrent = indexPath;
         if(indexCurrent == oldIndex){
@@ -281,27 +282,24 @@ static int TABLE_CELLS_ON_SCREEN = 6;
         [_tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
         [CATransaction commit];
     }
-    
-    
-   
-    
-    
+
 }
 
 -(void)navigateWithRipple:(RippleModel *) ripple{
-    if ([ripple.trigger_type isEqualToString:@"Drop"]) {
-        [self expandBucketWithId:[ripple.drop bucket_id] withDrop:ripple.drop.Id];
+    NSLog(@"NAVIGATING");
+    if ([ripple.interaction.topic_type isEqualToString:@"Drop"]) {
+        [self expandBucketWithId:[ripple.interaction.drop bucket_id] withDrop:ripple.interaction.drop.Id];
     }
-    else if ([ripple.trigger_type isEqualToString:@"Bucket"]) {
-        [self expandBucketWithId:[ripple.bucket Id] withDrop:0];
+    else if ([ripple.interaction.topic_type isEqualToString:@"Bucket"]) {
+        [self expandBucketWithId:[ripple.interaction.bucket Id] withDrop:0];
     }
-    else if ([ripple.trigger_type isEqualToString:@"Vote"]) {
-        [self expandBucketWithId:[ripple.temperature bucket_id] withDrop:[ripple.temperature drop_id]];
+    else if ([ripple.interaction.topic_type isEqualToString:@"Vote"]) {
+        [self expandBucketWithId:[ripple.interaction.temperature bucket_id] withDrop:[ripple.interaction.temperature drop_id]];
     }
-    else if ([ripple.trigger_type isEqualToString:@"Subscription"]) {
+    else if ([ripple.interaction.topic_type isEqualToString:@"Subscription"]) {
         //Dont do anything
     }
-    else if ([ripple.trigger_type isEqualToString:@"Tag"]) {
+    else if ([ripple.interaction.topic_type isEqualToString:@"Tag"]) {
         //Dont do anything
     }
     
@@ -361,6 +359,7 @@ static int TABLE_CELLS_ON_SCREEN = 6;
     
     //[self.navigationController setViewControllers:@[root] animated:NO];
     //[self.navigationController.view layoutIfNeeded];
+        NSLog(@"Chaning to bucket no errors");
     [self.navigationController pushViewController:bucketController animated:NO];
 }
 

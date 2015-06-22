@@ -28,6 +28,7 @@
 -(void)showAllDetails;
 -(void)addBackgroundView;
 -(void)hideSubscribeButton;
+-(void)requestProfilePic;
 
 -(void)animatePeekViewIn;
 @end

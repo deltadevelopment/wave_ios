@@ -178,7 +178,7 @@
 }
 
 -(void)requestPhoto:(void (^)(NSData*))completionCallback{
-    self.media_tmp = [self mediaFromCache];
+    self.media_tmp = self.media_tmp == nil ? [self mediaFromCache] : self.media_tmp;
     if(self.media_tmp == nil){
         NSLog(@"image is not here already");
         [self downloadImage:completionCallback];
@@ -189,26 +189,31 @@
 }
 
 -(void)storeMediaInCache:(NSData *) data{
-    NSData *cacheData = [[NSUserDefaults standardUserDefaults] objectForKey:self.media_key];
-    if (cacheData == nil) {
-        // If the data is not already in the cache, store it
-        NSLog(@"STORING IN CaCHE");
-        [[NSUserDefaults standardUserDefaults] setObject:data forKey:self.media_key];
-        [self.cacheHelper storeInCashMap:self.media_key];
-        //Update the table
+    if (self.media_key != nil) {
+        NSData *cacheData = [[NSUserDefaults standardUserDefaults] objectForKey:self.media_key];
+        if (cacheData == nil) {
+            // If the data is not already in the cache, store it
+            NSLog(@"STORING IN CaCHE");
+            [[NSUserDefaults standardUserDefaults] setObject:data forKey:self.media_key];
+            [self.cacheHelper storeInCashMap:self.media_key];
+            //Update the table
+        }
     }
+ 
     
 }
 
 -(NSData *)mediaFromCache{
-    
-   NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:self.media_key];
-    
-    if (data == nil) {
-        return nil;
-    }else{
-        return data;
+    if (self.media_key != nil) {
+        NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:self.media_key];
+        
+        if (data == nil) {
+            return nil;
+        }else{
+            return data;
+        }
     }
+    return nil;
 
 }
 
