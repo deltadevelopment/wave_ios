@@ -16,56 +16,6 @@
     bool isUploading;
 }
 
-
-
--(void)getMedia:(NSString *) urlPath
-   onCompletion:(void (^)(NSData*))completionCallback
-        onError:(void(^)(NSError *))errorCallback
-{
-    //NSLog(@"downloading image");
-    //NSLog(_media_url);
-    NSURL *url = [NSURL URLWithString:urlPath];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
-    NSCachedURLResponse *cachedURLResponse = [[NSURLCache sharedURLCache] cachedResponseForRequest:request];
-    NSString *strdata=[[NSString alloc]initWithData:cachedURLResponse.data encoding:NSUTF8StringEncoding];
-    //NSLog(@"cached data %@",strdata);
-    //check if has cache
-    
-    //[request setTimeoutInterval: 10.0]; // Will timeout after 10 seconds
-    
-    ;
-    /*
-    [NSURLConnection sendAsynchronousRequest:request
-                                       queue:[NSOperationQueue currentQueue]
-                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-                               NSLog(@"downloading");
-                               if (data != nil && error == nil)
-                               {
-                                   NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) response;
-                                   
-                                   NSInteger statuscode = [httpResponse statusCode];
-                                   NSCachedURLResponse *cachedURLResponse = [[NSCachedURLResponse alloc] initWithResponse:response data:data userInfo:nil storagePolicy:NSURLCacheStorageAllowed];
-                                   [[NSURLCache sharedURLCache] storeCachedResponse:cachedURLResponse forRequest:request];
-                                   
-                                   if(statuscode < 300){
-                                       //SUKSESS
-                                       completionCallback(data);
-                                   }else{
-                                       errorCallback(error);
-                                   }
-                                   
-                               }
-                               else
-                               {
-                                   errorCallback(error);
-                               }
-                               
-                           }];
-     */
-    
-}
-
-
 -(void)downloadMedia:(NSString *) urlPath
    onCompletion:(void (^)(NSData*))completionCallback
         onError:(void(^)(NSError *))errorCallback
@@ -87,12 +37,6 @@
         [self.theConnection scheduleInRunLoop:[NSRunLoop mainRunLoop]
                                       forMode:NSDefaultRunLoopMode];
         [self.theConnection start];
-
-
-    
- 
-   
-    
 }
 
 -(void)putHttpRequestWithImage:(NSData *) imageData

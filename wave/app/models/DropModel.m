@@ -11,11 +11,13 @@
 #import "MediaModel.h"
 #import "UIHelper.h"
 #import "GraphicsHelper.h"
+#import "CacheModel.h"
+
 
 @implementation DropModel
 
 -(id)init:(NSMutableDictionary *)dic{
-    
+    self.cacheHelper = [[CacheHelper alloc] init];
     if((NSNull*)dic != [NSNull null]){
         self =[super init];
         self.dictionary = dic;
@@ -40,7 +42,8 @@
 };
 
 -(id)init{
-self =[super init];
+    self =[super init];
+    self.cacheHelper = [[CacheHelper alloc] init];
     return  self;
 }
 -(void)saveChanges:(void (^)(void))completionCallback
@@ -117,6 +120,7 @@ self =[super init];
                                onCompletion:^(NSData *data){
                                    self.media_tmp = data;
                                    self.isDownloading = NO;
+                                   [self storeMediaInCache:data];
                                    completionCallback(data);
                                }
                                     onError:^(NSError *error){
@@ -139,6 +143,7 @@ self =[super init];
     [self.mediaController downloadMedia:self.media_url
                            onCompletion:^(NSData *data){
                                NSLog(@"Done");
+                               
                                self.thumbnail_tmp = data;
                                completionCallback(data);
                            }
@@ -173,6 +178,7 @@ self =[super init];
 }
 
 -(void)requestPhoto:(void (^)(NSData*))completionCallback{
+    self.media_tmp = [self mediaFromCache];
     if(self.media_tmp == nil){
         NSLog(@"image is not here already");
         [self downloadImage:completionCallback];
@@ -181,6 +187,31 @@ self =[super init];
         completionCallback(self.media_tmp);
     }
 }
+
+-(void)storeMediaInCache:(NSData *) data{
+    NSData *cacheData = [[NSUserDefaults standardUserDefaults] objectForKey:self.media_key];
+    if (cacheData == nil) {
+        // If the data is not already in the cache, store it
+        NSLog(@"STORING IN CaCHE");
+        [[NSUserDefaults standardUserDefaults] setObject:data forKey:self.media_key];
+        [self.cacheHelper storeInCashMap:self.media_key];
+        //Update the table
+    }
+    
+}
+
+-(NSData *)mediaFromCache{
+    
+   NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:self.media_key];
+    
+    if (data == nil) {
+        return nil;
+    }else{
+        return data;
+    }
+
+}
+
 
 -(void)requestThumbnail:(void (^)(NSData*))completionCallback{
     if(self.thumbnail_tmp == nil){

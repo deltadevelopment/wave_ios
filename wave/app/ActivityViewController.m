@@ -19,6 +19,7 @@
 #import "UserModel.h"
 #import "PeekViewController.h"
 #import "PeekViewModule.h"
+#import "CacheHelper.h"
 @interface ActivityViewController ()
 
 @end
@@ -47,7 +48,9 @@ const int EXPAND_SIZE = 400;
     userModel =[[UserModel alloc] initWithDeviceUser:^(UserModel *user){
         userModel = user;
     } onError:^(NSError *error){}];
+    CacheHelper *cache = [[CacheHelper alloc] init];
     
+    [cache cleanUpCashMap];
     storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;

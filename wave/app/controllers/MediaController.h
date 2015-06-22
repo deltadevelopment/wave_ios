@@ -11,7 +11,6 @@
 @interface MediaController : NSObject<NSURLConnectionDataDelegate>
 {
  NSURLConnection *connection;
-
 }
 
 @property (strong, nonatomic)  NSURLConnection *theConnection;
@@ -21,16 +20,12 @@
                          token:(NSString *) token
                     onProgress:(void (^)(NSNumber*))progression
                   onCompletion:(void (^)(void))callback;
--(void)getMedia:(NSString *) urlPath
-   onCompletion:(void (^)(NSData*))completionCallback
-        onError:(void(^)(NSError *))errorCallback;
 
 
 -(void)downloadMedia:(NSString *) urlPath
         onCompletion:(void (^)(NSData*))completionCallback
              onError:(void(^)(NSError *))errorCallback
           onProgress:(void (^)(NSNumber*))progression;
-
 
 -(void)stopConnection;
 @end

@@ -35,6 +35,8 @@
 		C57AD0B21AD7EDB800B6042A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C57AD0B11AD7EDB800B6042A /* Images.xcassets */; };
 		C57AD0B51AD7EDB800B6042A /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = C57AD0B31AD7EDB800B6042A /* LaunchScreen.xib */; };
 		C57AD0C11AD7EDB800B6042A /* waveTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C57AD0C01AD7EDB800B6042A /* waveTests.m */; };
+		C585215A1B382E6A000812F2 /* CacheModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C58521591B382E6A000812F2 /* CacheModel.m */; };
+		C585215D1B382FFE000812F2 /* CacheHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = C585215C1B382FFE000812F2 /* CacheHelper.m */; };
 		C5896A771AE15F3700EFCE2D /* AbstractFeedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5896A761AE15F3700EFCE2D /* AbstractFeedViewController.m */; };
 		C5896A7A1AE15F4200EFCE2D /* ActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5896A791AE15F4200EFCE2D /* ActivityViewController.m */; };
 		C5A27B511ADC014E00968033 /* cross-white.png in Resources */ = {isa = PBXBuildFile; fileRef = C5A27B501ADC014E00968033 /* cross-white.png */; };
@@ -217,6 +219,10 @@
 		C57AD0BA1AD7EDB800B6042A /* waveTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = waveTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C57AD0BF1AD7EDB800B6042A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C57AD0C01AD7EDB800B6042A /* waveTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = waveTests.m; sourceTree = "<group>"; };
+		C58521581B382E6A000812F2 /* CacheModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CacheModel.h; sourceTree = "<group>"; };
+		C58521591B382E6A000812F2 /* CacheModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CacheModel.m; sourceTree = "<group>"; };
+		C585215B1B382FFE000812F2 /* CacheHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CacheHelper.h; sourceTree = "<group>"; };
+		C585215C1B382FFE000812F2 /* CacheHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CacheHelper.m; sourceTree = "<group>"; };
 		C5896A6B1AE1342E00EFCE2D /* FeedInterface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedInterface.h; sourceTree = "<group>"; };
 		C5896A751AE15F3700EFCE2D /* AbstractFeedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AbstractFeedViewController.h; sourceTree = "<group>"; };
 		C5896A761AE15F3700EFCE2D /* AbstractFeedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AbstractFeedViewController.m; sourceTree = "<group>"; };
@@ -501,6 +507,8 @@
 				C5D473B41AFCCE790097E44F /* GraphicsHelper.m */,
 				C5D473C01B010A440097E44F /* DataHelper.h */,
 				C5D473C11B010A440097E44F /* DataHelper.m */,
+				C585215B1B382FFE000812F2 /* CacheHelper.h */,
+				C585215C1B382FFE000812F2 /* CacheHelper.m */,
 			);
 			path = helpers;
 			sourceTree = "<group>";
@@ -547,6 +555,8 @@
 				C52AAFD51B3058A0004332DD /* RipplesFeed.m */,
 				C5500D181B34300C00E4E8BA /* UserFeed.h */,
 				C5500D191B34300C00E4E8BA /* UserFeed.m */,
+				C58521581B382E6A000812F2 /* CacheModel.h */,
+				C58521591B382E6A000812F2 /* CacheModel.m */,
 			);
 			path = models;
 			sourceTree = "<group>";
@@ -1103,11 +1113,13 @@
 				C5576B3E1ADBC195009C1D5E /* SuperViewController.m in Sources */,
 				C5D473981AF920080097E44F /* ConstraintHelper.m in Sources */,
 				F1DBB5641B0FD46F0097F709 /* EditProfileTableViewController.m in Sources */,
+				C585215D1B382FFE000812F2 /* CacheHelper.m in Sources */,
 				F1DBB5621B0FD46F0097F709 /* SuperSettingsTableViewController.m in Sources */,
 				F1DBB56C1B12ABBF0097F709 /* PeekViewModule.m in Sources */,
 				C5576B3D1ADBC195009C1D5E /* OverlayViewController.m in Sources */,
 				F1DBB5431B0D38030097F709 /* MediaModel.m in Sources */,
 				F1DBB57B1B14E38D0097F709 /* TestBoxViewController.m in Sources */,
+				C585215A1B382E6A000812F2 /* CacheModel.m in Sources */,
 				F1E127AA1AFED2E7000E3F2C /* DropView.m in Sources */,
 				C5D473BB1AFD05BB0097E44F /* MediaPlayerViewController.m in Sources */,
 				F1E2A0CA1B2338EE0092D61F /* ColorPickerView.m in Sources */,

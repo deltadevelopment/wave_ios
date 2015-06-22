@@ -11,7 +11,11 @@
 #import "UserModel.h"
 #import "SuperModel.h"
 #import "MediaModel.h"
+#import "CacheHelper.h"
 @interface DropModel : SuperModel
+
+
+@property (nonatomic, strong) CacheHelper *cacheHelper;
 
 //Model properties
 @property (nonatomic) int Id;
