@@ -33,3 +33,23 @@
 "profile_title" = "Profil";
 "not_authorized" = "Du er ikke autorisert til å aksessere denne ressursen";
 "by_txt" = "av";
+
+"tags_txt" = "Tagger";
+"delete_drop_txt" = "Slett drop";
+"delete_bucket_txt" = "Slett bucket";
+"cancel_menu_txt" = "Avbryt";
+"redrop_action_txt" = "Redrop";
+
+"subscriptions_button_txt" = "Abonnenter";
+"subscriptions_txt" = "andre gjør det allerede";
+"subscribe_txt" = "Abonner";
+"ripples_title" = "Krusninger";
+"ripples_info_txt" = "Ingen varslinger tilgjengelig";
+"search_info_txt" = "Søk etter brukere og emneknagger";
+"watch_action_txt" = "Se på";
+"unwatch_action_txt" = "Ikke se på";
+
+"add_drop_txt" = "Legg til en drop";
+"create_bucket_txt" = "Lag en bucket";
+"bucket_add_title_txt" = "Legg til en tittel";
+"caption_placeholder_txt" = "Si noe...";

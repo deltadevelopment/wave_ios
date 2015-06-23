@@ -39,7 +39,7 @@
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
     [DataHelper storeRippleCount:0];
     [DataHelper getNotificationLabel].hidden = YES;
-    [self.navigationItem setTitle:@"Ripples"];
+    [self.navigationItem setTitle: NSLocalizedString(@"ripples_title", nil)];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.allowsMultipleSelectionDuringEditing = NO;
@@ -55,7 +55,7 @@
     UILabel *noNotificationsLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 10, [UIHelper getScreenWidth] - 40, 50)];
     [noNotificationsLabel setTextColor:[UIColor blackColor]];
     [noNotificationsLabel setFont:[UIFont fontWithName:@"HelveticaNeue-ThinItalic" size:17.0f]];
-    [noNotificationsLabel setText:@"No notifications available"];
+    [noNotificationsLabel setText:NSLocalizedString(@"ripples_info_txt", nil)];
     [self.view addSubview:noNotificationsLabel];
 }
 

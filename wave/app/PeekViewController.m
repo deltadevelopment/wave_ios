@@ -52,7 +52,7 @@ AuthHelper *authHelper;
     [self.subscribeButton addTarget:self action:@selector(subscribeAction) forControlEvents:UIControlEventTouchUpInside];
     //[self.subscribeButton setBackgroundImage:[UIImage imageNamed:@"tick.png"] forState:UIControlStateNormal];
     
-    [self.subscribeButton setTitle:@"Subscribe" forState:UIControlStateNormal];
+    [self.subscribeButton setTitle:NSLocalizedString(@"subscribe_txt", nil) forState:UIControlStateNormal];
     self.location.alpha = 0.0;
     //40 150
     
@@ -168,7 +168,9 @@ AuthHelper *authHelper;
 
 -(void)updatePeekView:(UserModel *) user{
     self.user = user;
-    self.location.text = [NSString stringWithFormat:@"%d others already do", [user subscribers_count]];
+
+    
+    self.location.text = [NSString stringWithFormat:@"%d %@", [user subscribers_count],NSLocalizedString(@"subscriptions_txt", nil)];
     self.displayName.text = [user display_name] != nil ? [user display_name] : [user usernameFormatted];
     if(user.Id == [[authHelper getUserId] intValue]){
        // self.subscribeButton.hidden = YES;
@@ -251,7 +253,8 @@ AuthHelper *authHelper;
         //top left bottom right
 
     }else{
-        [self.subscribeButton setTitle:@"Subscribe" forState:UIControlStateNormal];
+        //[self.subscribeButton setTitle:@"Subscribe" forState:UIControlStateNormal];
+        [self.subscribeButton setTitle:NSLocalizedString(@"subscribe_txt", nil) forState:UIControlStateNormal];
         [self removeInsetsFromButton];
     }
     

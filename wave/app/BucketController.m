@@ -153,7 +153,7 @@ const int PEEK_Y_START = 300;
                                  preferredStyle:UIAlertControllerStyleActionSheet];
     
     
-    NSString *watchString = bucket.watching ? @"Unwatch" : @"Watch";
+    NSString *watchString = bucket.watching ? NSLocalizedString(@"unwatch_action_txt", nil) : NSLocalizedString(@"watch_action_txt", nil);
     
     UIAlertAction* watch = [UIAlertAction
                           actionWithTitle:watchString
@@ -180,7 +180,7 @@ const int PEEK_Y_START = 300;
     
     
     UIAlertAction* redrop = [UIAlertAction
-                            actionWithTitle:@"Redrop"
+                            actionWithTitle:NSLocalizedString(@"redrop_action_txt", nil)
                             style:UIAlertActionStyleDefault
                             handler:^(UIAlertAction * action)
                             {
@@ -194,7 +194,7 @@ const int PEEK_Y_START = 300;
                             }];
     
     UIAlertAction* delete = [UIAlertAction
-                             actionWithTitle:@"Delete bucket"
+                             actionWithTitle:NSLocalizedString(@"delete_bucket_txt", nil)
                              style:UIAlertActionStyleDestructive
                              handler:^(UIAlertAction * action)
                              {
@@ -205,7 +205,7 @@ const int PEEK_Y_START = 300;
                              }];
     
     UIAlertAction* deleteDrop = [UIAlertAction
-                             actionWithTitle:@"Delete drop"
+                             actionWithTitle:NSLocalizedString(@"delete_drop_txt", nil)
                              style:UIAlertActionStyleDestructive
                              handler:^(UIAlertAction * action)
                              {
@@ -213,8 +213,12 @@ const int PEEK_Y_START = 300;
                                  [self showDeleteAlert];
                                  
                              }];
+    
+   
+    
+    
     UIAlertAction* tag = [UIAlertAction
-                          actionWithTitle:@"Tags"
+                          actionWithTitle:NSLocalizedString(@"tags_txt", nil)
                           style:UIAlertActionStyleDefault
                           handler:^(UIAlertAction * action)
                           {
@@ -242,8 +246,9 @@ const int PEEK_Y_START = 300;
                               [view dismissViewControllerAnimated:YES completion:nil];
                               
                           }];
+ 
     UIAlertAction* cancel = [UIAlertAction
-                             actionWithTitle:@"Cancel"
+                             actionWithTitle:NSLocalizedString(@"cancel_menu_txt", nil)
                              style:UIAlertActionStyleCancel
                              handler:^(UIAlertAction * action)
                              {

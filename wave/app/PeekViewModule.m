@@ -59,7 +59,8 @@
     [self.subscribeButton setTitleEdgeInsets:UIEdgeInsetsMake(10, 10, 10, 10)];
   [self.subscribeButton setContentVerticalAlignment:UIControlContentVerticalAlignmentCenter];
     [self.subscribeButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentCenter];
-    [self.subscribeButton setTitle:@"Subscribe" forState:UIControlStateNormal];
+   // [self.subscribeButton setTitle:@"Subscribe" forState:UIControlStateNormal];
+    [self.subscribeButton setTitle:NSLocalizedString(@"subscribe_txt", nil) forState:UIControlStateNormal];
     self.subscribeButton.layer.cornerRadius = 10;
     self.subscribeButton.clipsToBounds = YES;
     [self.subscribeButton addTarget:self action:@selector(subscribeAction) forControlEvents:UIControlEventTouchUpInside];
@@ -115,7 +116,8 @@
         isDeviceUser = YES;
         //self.subscribeButton.hidden = YES;
         self.settingsButton.hidden = NO;
-        [self.subscribeButton setTitle:@"Subscriptions" forState:UIControlStateNormal];
+       
+        [self.subscribeButton setTitle:NSLocalizedString(@"subscriptions_button_txt", nil) forState:UIControlStateNormal];
         //[self.subscribeButton setBackgroundColor:[ColorHelper purpleColor]];
         //[[self.subscribeButton layer] setBorderColor:[ColorHelper purpleColor].CGColor];
     }else{
@@ -123,7 +125,8 @@
         self.settingsButton.hidden = YES;
         isDeviceUser = NO;
     }
-    self.subscribersCountLabel.text = [NSString stringWithFormat:@"%d others already do", user.subscribers_count];
+   
+    self.subscribersCountLabel.text = [NSString stringWithFormat:@"%d %@", user.subscribers_count, NSLocalizedString(@"subscriptions_txt", nil)];
     self.usernameLabel.text = user.usernameFormatted;
       [self checkSubscription];
    
@@ -226,7 +229,8 @@
         [self.subscribeButton setTitleEdgeInsets:UIEdgeInsetsMake(0, -40, 0, 0)];
         [self.subscribeButton sizeToFit];
     }else{
-        [self.subscribeButton setTitle:@"Subscribe" forState:UIControlStateNormal];
+        //[self.subscribeButton setTitle:@"Subscribe" forState:UIControlStateNormal];
+        [self.subscribeButton setTitle:NSLocalizedString(@"subscribe_txt", nil) forState:UIControlStateNormal];
         [self removeInsetsFromButton];
     }
     
@@ -235,7 +239,7 @@
 -(void)updatePeekView:(UserModel *) user{
     self.user = user;
     NSLog(@"HERE");
-    self.subscribersCountLabel.text = [NSString stringWithFormat:@"%d others already do", [user subscribers_count]];
+    self.subscribersCountLabel.text = [NSString stringWithFormat:@"%d %@", user.subscribers_count, NSLocalizedString(@"subscriptions_txt", nil)];
     self.usernameLabel.text = [user display_name] != nil ? [user display_name] : [user usernameFormatted];
     if(user.Id == [[authHelper getUserId] intValue]){
         //self.subscribeButton.hidden = YES;

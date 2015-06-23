@@ -33,3 +33,30 @@
 "profile_title" = "Profile";
 "not_authorized" = "You are not authorized to access that resource";
 "by_txt" = "by";
+
+//New lang support that are not implemented for norwegian
+
+"tags_txt" = "Tags";
+"delete_drop_txt" = "Delete drop";
+"delete_bucket_txt" = "Delete bucket";
+"cancel_menu_txt" = "Cancel";
+"redrop_action_txt" = "Redrop";
+
+"subscriptions_button_txt" = "Subscriptions";
+"subscriptions_txt" = "others already do";
+"subscribe_txt" = "Subscribe";
+"ripples_title" = "Ripples";
+"ripples_info_txt" = "No notifications available";
+"search_info_txt" = "Search for users and hashtags";
+"watch_action_txt" = "Watch";
+"unwatch_action_txt" = "Unwatch";
+
+"add_drop_txt" = "Add a drop";
+"create_bucket_txt" = "Create a bucket";
+"bucket_add_title_txt" = "Add a title";
+"caption_placeholder_txt" = "Say something...";
+
+
+
+
+

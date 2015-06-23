@@ -159,11 +159,14 @@
 }
 
 -(void)initTextField{
+
     float width = [UIHelper getScreenWidth] -100;
     titleTextField = [[UITextField alloc] initWithFrame:CGRectMake(20, 64, width, 60)];
     titleTextField.font = [UIFont fontWithName:@"HelveticaNeue-Thin" size:19.0f];
     [titleTextField setTextColor:[UIColor whiteColor]];
-    titleTextField.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"Add a title" attributes:@{                                                                                                                                 NSForegroundColorAttributeName: [[UIColor whiteColor]colorWithAlphaComponent:0.8]                                                                                                                                                                     }];
+    titleTextField.attributedPlaceholder = [[NSAttributedString alloc]
+                                            initWithString:NSLocalizedString(@"bucket_add_title_txt", nil)
+                                            attributes:@{                                                                                                                                 NSForegroundColorAttributeName: [[UIColor whiteColor]colorWithAlphaComponent:0.8]                                                                                                                                                                     }];
     titleTextField.delegate = self;
        titleTextField.returnKeyType = UIReturnKeyDone;
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -202,8 +205,10 @@
 }
 
 -(void)initBucketTypes{
-    [bucketTypes addObject:[[BucketTypeModel alloc] initWithProperties:0 withDescription:@"Add a drop" withIconPath:@"events-icon.png"]];
-    [bucketTypes addObject:[[BucketTypeModel alloc] initWithProperties:1 withDescription:@"Create a bucket" withIconPath:@"bucket-white.png"]];
+    [bucketTypes addObject:[[BucketTypeModel alloc] initWithProperties:0
+                                                       withDescription:NSLocalizedString(@"add_drop_txt", nil) withIconPath:@"events-icon.png"]];
+    [bucketTypes addObject:[[BucketTypeModel alloc] initWithProperties:1
+                                                       withDescription:NSLocalizedString(@"create_bucket_txt", nil) withIconPath:@"bucket-white.png"]];
     
 }
 

@@ -50,7 +50,9 @@ const int MIN_WIDTH = 100;
     [UIHelper applyThinLayoutOnTextField:self withSize:30];
     
     //self.text = @"caption this it the cap!";
-    self.placeholder = @"Say something...";
+    self.placeholder = NSLocalizedString(@"caption_placeholder_txt", nil);
+
+    
     self.textAlignment = NSTextAlignmentCenter;
     if([self getWidth]< MIN_WIDTH){
         self.frame = CGRectMake(10, 10, MIN_WIDTH + PADDING, 50);

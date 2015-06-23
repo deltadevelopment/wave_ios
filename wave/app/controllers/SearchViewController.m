@@ -34,7 +34,7 @@
     if (self.tagMode) {
         [self.navigationItem setTitle:@"Tagged users"];
     }else {
-        [self.navigationItem setTitle:@"Subscriptions"];
+        [self.navigationItem setTitle:NSLocalizedString(@"subscriptions_button_txt", nil)];
     }
     
     self.userFeed = [[UserFeed alloc] init];
@@ -82,8 +82,11 @@
     [noUsersLabel setFont:[UIFont fontWithName:@"HelveticaNeue-ThinItalic" size:17.0f]];
     [noUsersLabel setText:@"No Subscribers yet"];
     [self.view addSubview:noUsersLabel];
+    
+   
+    
     if (self.searchMode) {
-        [noUsersLabel setText:@"Search for users and hashtags"];
+        [noUsersLabel setText:NSLocalizedString(@"search_info_txt", nil)];
         spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
         float center = ([UIHelper getScreenHeight] - 64)/2;
         spinner.center = CGPointMake([UIHelper getScreenWidth]/2-10, 64);
