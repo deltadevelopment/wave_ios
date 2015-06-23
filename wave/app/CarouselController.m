@@ -85,6 +85,8 @@
 
 }
 
+
+
 -(void)viewDidLayoutSubviews{
     //[self.view insertSubview:[self getProgressIndicator] aboveSubview:self.pageViewController.view];
 }
@@ -181,9 +183,12 @@
 
 -(void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed
 {
-    self.currentController = [pageViewController.viewControllers objectAtIndex:0];
+    NSLog(@"HERE preparinf");
+    self.currentController = [pageViewController.viewControllers lastObject];
     [self prepareCamera];
 }
+
+
 
 
 - (AbstractFeedViewController *)viewControllerAtIndex:(NSUInteger)index

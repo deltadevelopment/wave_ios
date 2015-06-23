@@ -59,13 +59,13 @@ const int EXPAND_SIZE = 400;
     cameraHolder = [[UIView alloc]initWithFrame:CGRectMake(0, -64, [UIHelper getScreenWidth],[UIHelper getScreenHeight])];
     cameraHolder.backgroundColor = [UIColor whiteColor];
     self.refreshControl = [[UIRefreshControl alloc] init];
-    self.refreshControl.backgroundColor = [ColorHelper blueColor];
+    self.refreshControl.backgroundColor = [ColorHelper purpleColor];
     self.refreshControl.tintColor = [UIColor whiteColor];
     [self.refreshControl addTarget:self action:@selector(refreshFeed) forControlEvents:UIControlEventValueChanged];
     [self.tableView addSubview:self.refreshControl];
     [self startRefreshing];
     
-    self.tableView.backgroundColor = [ColorHelper blueColor];
+    self.tableView.backgroundColor = [ColorHelper purpleColor];
     if(viewMode == 1){
         [self addPeekView];
         [self.superButton getButton].hidden = YES;
@@ -190,7 +190,7 @@ const int EXPAND_SIZE = 400;
     NSDictionary *attrsDictionary = [NSDictionary dictionaryWithObject:[UIColor whiteColor]
                                                                 forKey:NSForegroundColorAttributeName];
     NSAttributedString *attributedTitle = [[NSAttributedString alloc] initWithString:title attributes:attrsDictionary];
-    self.refreshControl.attributedTitle = attributedTitle;
+    //self.refreshControl.attributedTitle = attributedTitle;
     [self.refreshControl endRefreshing];
     [self.tableView reloadData];
 }
@@ -258,6 +258,14 @@ const int EXPAND_SIZE = 400;
     indexCurrent = nil;
     [self.tableView beginUpdates];
     [self.tableView endUpdates];
+    NSMutableArray *deletionQueue = [DataHelper getDeletionQueue];
+    if (deletionQueue != nil) {
+        if ([deletionQueue count] > 0) {
+            //Refresh feed
+            [self startRefreshing];
+            [DataHelper resetDeletionQueue];
+        }
+    }
 }
 
 -(void)expandBucketWithId:(int) Id{
@@ -303,10 +311,8 @@ const int EXPAND_SIZE = 400;
 #pragma Camera methods
 
 -(void)prepareCamera:(UIView *)view{
-    if(cameraView == nil){
-        cameraView = view;
-        [cameraHolder addSubview:cameraView];
-    }
+    cameraView = view;
+    [cameraHolder addSubview:cameraView];
 }
 
 -(void)layOutPeek{
@@ -623,6 +629,9 @@ const int EXPAND_SIZE = 400;
 
 -(void)viewDidAppear:(BOOL)animated{
 //animate the view down
+    NSLog(@"SHOWED NOW");
+    
+    
 }
 
 

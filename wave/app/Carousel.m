@@ -188,6 +188,7 @@
     [carouselTitles addObject:navTitle];
     [carouselTitles2 addObject:navTitle];
     [navBar addSubview:navTitle];
+    
     if([carouselTitles count] == pages){
         [self addFeatheredEdgesToNavBar];
     }

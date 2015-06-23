@@ -15,6 +15,7 @@
 #import "DataHelper.h"
 #import "InfoView.h"
 #import "ConstraintHelper.h"
+#import "SearchViewController.h"
 #import "TemperatureModel.h"
 @interface BucketController ()
 
@@ -49,6 +50,8 @@ const int PEEK_Y_START = 300;
     bool isAboutToleaveBucket;
     bool shouldJumpToDrop;
     int dropIdToJumpTo;
+    bool dropForDeletion;
+    int currentDropPosition;
 }
 @synthesize infoViewMode;
 - (void)viewDidLoad {
@@ -132,13 +135,150 @@ const int PEEK_Y_START = 300;
 
 
 -(void)tapInfoButton{
-    if([infoView viewHidden]){
-        [infoView show];
-        
-    }else{
-        [infoView hide];
+    NSLog(@"tapping here");
+    [self showActions];
+    /*if([infoView viewHidden]){
+     [infoView show];
+     
+     }else{
+     [infoView hide];
+     
+     }*/
+}
+
+-(void)showActions{
+    UIAlertController * view = [UIAlertController
+                                 alertControllerWithTitle:nil
+                                 message:nil
+                                 preferredStyle:UIAlertControllerStyleActionSheet];
+    
+    
+    NSString *watchString = bucket.watching ? @"Unwatch" : @"Watch";
+    
+    UIAlertAction* watch = [UIAlertAction
+                          actionWithTitle:watchString
+                          style:UIAlertActionStyleDefault
+                          handler:^(UIAlertAction * action)
+                          {
+                              if (bucket.watching) {
+                                  [bucket unwatch:^(ResponseModel *response){
+                                      NSLog(@"sucessfully unwathcing");
+                                      [view dismissViewControllerAnimated:YES completion:nil];
+                                  }
+                                        onError:^(NSError *error){
+                                            
+                                        }];
+                              }else{
+                                  [bucket watch:^(ResponseModel *response){
+                                      NSLog(@"sucessfully wathcing");
+                                      [view dismissViewControllerAnimated:YES completion:nil];
+                                  }
+                                        onError:^(NSError *error){
+                                            
+                                        }];
+                              }
+                              
+                          }];
+    
+    
+    UIAlertAction* redrop = [UIAlertAction
+                            actionWithTitle:@"Redrop"
+                            style:UIAlertActionStyleDefault
+                            handler:^(UIAlertAction * action)
+                            {
+                                
+                                [currentDropPage.drop redrop:^(ResponseModel *response){
+                                    NSLog(@"sucessfully redropped");
+                                    [view dismissViewControllerAnimated:YES completion:nil];
+                                } onError:^(NSError *error){}];
+                                //Do some thing here
+                                //[view dismissViewControllerAnimated:YES completion:nil];
+                                
+                            }];
+    
+    UIAlertAction* delete = [UIAlertAction
+                             actionWithTitle:@"Delete bucket"
+                             style:UIAlertActionStyleDestructive
+                             handler:^(UIAlertAction * action)
+                             {
+                                 //Do some thing here
+                                // [view dismissViewControllerAnimated:YES completion:nil];
+                                 dropForDeletion = NO;
+                                 [self showDeleteAlert];
+                             }];
+    
+    UIAlertAction* deleteDrop = [UIAlertAction
+                             actionWithTitle:@"Delete drop"
+                             style:UIAlertActionStyleDestructive
+                             handler:^(UIAlertAction * action)
+                             {
+                                 dropForDeletion = YES;
+                                 [self showDeleteAlert];
+                                 
+                             }];
+    UIAlertAction* tag = [UIAlertAction
+                          actionWithTitle:@"Tags"
+                          style:UIAlertActionStyleDefault
+                          handler:^(UIAlertAction * action)
+                          {
+                              //Do some thing here
+                              
+                              //Show Subscribers
+                              NSLog(@"Showing subscribers");
+                              UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
+                              UINavigationController *vc = [mainStoryboard instantiateViewControllerWithIdentifier:@"searchNavigation"];
+                              SearchViewController *tagsView =  [[vc viewControllers] objectAtIndex:0];
+                              [tagsView setTagMode:YES];
+                              [tagsView setSearchMode:YES];
+                              [tagsView setCurrentBucket:bucket];
+                             
+                             
+                              // [vc.navigationBar setti]
+                              [vc.navigationBar setTintColor:[ColorHelper purpleColor]];
+                              [vc.navigationBar setBackgroundColor:[ColorHelper purpleColor]];
+                              [vc.navigationBar setBarTintColor:[ColorHelper purpleColor]];
+                              //[[ApplicationHelper getMainNavigationController] pushViewController:vc animated:YES];
+                              
+                              [[ApplicationHelper getMainNavigationController] presentViewController:vc animated:YES completion:nil];
+                              
+                              
+                              
+                              [view dismissViewControllerAnimated:YES completion:nil];
+                              
+                          }];
+    UIAlertAction* cancel = [UIAlertAction
+                             actionWithTitle:@"Cancel"
+                             style:UIAlertActionStyleCancel
+                             handler:^(UIAlertAction * action)
+                             {
+                                 [view dismissViewControllerAnimated:YES completion:nil];
+                                 
+                             }];
+    
+    [view addAction:tag];
+    
+    
+    if (![bucket.bucket_type isEqualToString:@"user"]) {
+          [view addAction:watch];
+    }
+    if ([bucket.bucket_type isEqualToString:@"user"] && bucket.user.Id == [[authHelper getUserId] intValue]) {
         
     }
+    else{
+     [view addAction:redrop];
+    }
+   
+    
+    if (currentDropPage.drop.user.Id == [[authHelper getUserId] intValue]) {
+        [view addAction:deleteDrop];
+    }
+    
+    if (bucket.user.Id == [[authHelper getUserId] intValue]) {
+        [view addAction:delete];
+    }
+    
+    [view addAction:cancel];
+    [self presentViewController:view animated:YES completion:nil];
 }
 
 -(void)initUISetup{
@@ -151,6 +291,67 @@ const int PEEK_Y_START = 300;
     
     
 }
+
+-(void)showDeleteAlert{
+    UIAlertView *alert;
+    if (dropForDeletion) {
+        alert = [[UIAlertView alloc]initWithTitle:@"Delete Drop"
+                                                       message:@"Are you sure you want to delete this drop?"
+                                                      delegate:self
+                                             cancelButtonTitle:@"Cancel"
+                                             otherButtonTitles:@"Ok",nil];
+    }else{
+        alert = [[UIAlertView alloc]initWithTitle:@"Delete Bucket"
+                                                       message:@"Are you sure you want to delete this bucket?"
+                                                      delegate:self
+                                             cancelButtonTitle:@"Cancel"
+                                             otherButtonTitles:@"Ok",nil];
+    }
+
+    [alert show];
+}
+
+- (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0)
+    {
+        //ikke logg ut
+    }else{
+        //Logg ut
+        if (dropForDeletion) {
+            //Do some thing here
+            
+            [currentDropPage.drop delete:^(ResponseModel *response){
+                NSLog(@"sucessfully deleted");
+                DropModel *oldDrop = currentDropPage.drop;
+                currentDropPage = [self viewControllerAtIndex:[currentDropPage pageIndex] -1 replacingObject:nil];
+                NSArray *viewControllers = @[currentDropPage];
+                [self.pageViewController setViewControllers:viewControllers
+                                                  direction:UIPageViewControllerNavigationDirectionReverse
+                                                   animated:YES
+                                                 completion:^(BOOL finished){
+                                                     [bucket removeDrop:oldDrop];
+                                                     [self updatePageIndicator:currentDropPage.pageIndex];
+                                                 }];
+                
+                
+                
+                //[view dismissViewControllerAnimated:YES completion:nil];
+            } onError:^(NSError *error){}];
+        }else{
+            [bucket delete:^(ResponseModel *response, BucketModel *newBucket){
+                 NSLog(@"sucessfully deleted bucket");
+                [DataHelper addToDeletionQueue:bucket];
+                [self despandBucket:nil];
+            } onError:^(NSError *error){
+                
+            }];
+            
+        }
+        
+    }
+}
+
 
 -(void)loadBucket{
     [bucket find:[bucket Id] onCompletion:^(ResponseModel *response, BucketModel *returningBucket){
@@ -168,6 +369,7 @@ const int PEEK_Y_START = 300;
         DropModel *currDrop = [[bucket drops] objectAtIndex:dropPositionInBucket];
         [peekViewController updatePeekView:[currDrop user]];
         currentDropPage = [self viewControllerAtIndex:dropPositionInBucket replacingObject:currentDropPage];
+        currentDropPosition = dropPositionInBucket;
         NSArray *viewControllers = @[currentDropPage];
         [currentDropPage setIsStartingView:YES];
         [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
@@ -196,6 +398,7 @@ const int PEEK_Y_START = 300;
     self.pageViewController.delegate = self;
     isFirst = YES;
     currentDropPage = [self viewControllerAtIndex:0 replacingObject:nil];
+    currentDropPosition = 0;
     NSArray *viewControllers = @[currentDropPage];
     [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
     self.pageViewController.view.frame = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
@@ -532,14 +735,11 @@ const int PEEK_Y_START = 300;
             blurEffectView.alpha = alpha;
             //infoButton.alpha = 1 - alpha;
         }
-        
-        
         if(gesture.state == UIGestureRecognizerStateEnded || gesture.state == UIGestureRecognizerStateFailed || gesture.state == UIGestureRecognizerStateCancelled)
         {
             if(frame.origin.y + frame.size.height >= (PEEK_Y_START-64) - 64){
                 [self animatePeekViewIn];
                 [peekViewController requestProfilePic];
-                
             }else{
                 [self animatePeekViewOut];
                 if(!isAboutToleaveBucket){
@@ -548,7 +748,6 @@ const int PEEK_Y_START = 300;
                 NSLog(@"starting video");
                 isPeeking = NO;
             }
-            
         }
         [gesture setTranslation:CGPointZero inView:label];
     }

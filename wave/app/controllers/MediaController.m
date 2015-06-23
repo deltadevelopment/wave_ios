@@ -126,7 +126,10 @@ totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite
 
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection{
-    mediaDownloadComplete(_data);
+    if (!isUploading) {
+         mediaDownloadComplete(_data);
+    }
+   
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error{

@@ -37,7 +37,7 @@
     self.visibility = [self getBoolValueFromString:@"locked"];
     self.user_id = [self getIntValueFromString:@"user_id"];
     self.drops_count = [self getIntValueFromString:@"drops_count"];
-    
+    self.watching = [self getBoolValueFromString:@"watching"];
     self.title= [self getStringValueFromString:@"title"];
     self.bucket_description= [self getStringValueFromString:@"description"];
     self.when_datetime= [dic objectForKey:@"when_datetime"];
@@ -127,6 +127,36 @@
                                         onError:errorCallback];
 }
 
+
+-(void)watch:(void (^)(ResponseModel *))completionCallback
+     onError:(void (^)(NSError *))errorCallback
+{
+    [self.applicationController postHttpRequest:[NSString stringWithFormat:@"bucket/%d/watch", self.Id]
+                                           json:nil
+                                   onCompletion:^(NSURLResponse *response,NSData *data,NSError *error)
+     {
+         //[self showResponseFromData:data withCallback:completionCallback];
+         ResponseModel *responseModel = [self responseModelFromData:data];
+         completionCallback(responseModel);
+     }
+                                        onError:errorCallback];
+}
+
+-(void)unwatch:(void (^)(ResponseModel *))completionCallback
+     onError:(void (^)(NSError *))errorCallback
+{
+    [self.applicationController deleteHttpRequest:[NSString stringWithFormat:@"bucket/%d/watch", self.Id]
+                                   onCompletion:^(NSURLResponse *response,NSData *data,NSError *error)
+     {
+         //[self showResponseFromData:data withCallback:completionCallback];
+         ResponseModel *responseModel = [self responseModelFromData:data];
+         completionCallback(responseModel);
+     }
+                                        onError:errorCallback];
+}
+
+
+
 -(void)find:(int) bucketId
 onCompletion:(void (^)(ResponseModel*, BucketModel*))completionCallback
     onError:(void(^)(NSError *))errorCallback
@@ -162,6 +192,10 @@ onCompletion:(void (^)(ResponseModel*, BucketModel*))completionCallback
                onCompletion:^(NSURLResponse *response,NSData *data,NSError *error){
                    [self showResponseFromData:data withCallback:completionCallback];
                } onError:errorCallback];
+}
+
+-(void)removeDrop:(DropModel *) drop{
+  [self.drops removeObject:drop];
 }
 
 -(DropModel *)getDrop:(int)index{

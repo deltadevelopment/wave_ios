@@ -140,11 +140,12 @@
 
 -(void)downloadThumbnail:(void (^)(NSData*))completionCallback
 {
-    [self.mediaController downloadMedia:self.media_url
+    [self.mediaController downloadMedia:self.thumbnail_url
                            onCompletion:^(NSData *data){
                                NSLog(@"Done");
                                
                                self.thumbnail_tmp = data;
+                               [self storeThumbnailInCache:data];
                                completionCallback(data);
                            }
                                 onError:^(NSError *error){
@@ -188,6 +189,38 @@
     }
 }
 
+-(void)requestThumbnail:(void (^)(NSData*))completionCallback{
+    self.thumbnail_tmp = self.thumbnail_tmp == nil ? [self thumbnailFromCache] : self.thumbnail_tmp;
+    if(self.thumbnail_tmp == nil){
+        [self downloadThumbnail:completionCallback];
+    }else{
+        completionCallback(self.thumbnail_tmp);
+    }
+}
+
+
+-(void)redrop:(void (^)(ResponseModel *))completionCallback
+     onError:(void (^)(NSError *))errorCallback
+{
+    [self.applicationController postHttpRequest:[NSString stringWithFormat:@"drop/%d/redrop", self.Id]
+                                           json:nil
+                                   onCompletion:^(NSURLResponse *response,NSData *data,NSError *error)
+     {
+         //[self showResponseFromData:data withCallback:completionCallback];
+         ResponseModel *responseModel = [self responseModelFromData:data];
+         completionCallback(responseModel);
+     }
+                                        onError:errorCallback];
+}
+
+-(void)delete:(void (^)(ResponseModel*))completionCallback onError:(void(^)(NSError *))errorCallback{
+    [self.applicationController deleteHttpRequest:[NSString stringWithFormat:@"drop/%d", self.Id]
+                                     onCompletion:^(NSURLResponse *response,NSData *data,NSError *error){
+                                         ResponseModel *responseModel = [self responseModelFromData:data];
+                                         completionCallback(responseModel);
+                                     } onError:errorCallback];
+}
+
 -(void)storeMediaInCache:(NSData *) data{
     if (self.media_key != nil) {
         NSData *cacheData = [[NSUserDefaults standardUserDefaults] objectForKey:self.media_key];
@@ -200,6 +233,21 @@
         }
     }
  
+    
+}
+
+-(void)storeThumbnailInCache:(NSData *) data{
+    if (self.thumbnail_key != nil) {
+        NSData *cacheData = [[NSUserDefaults standardUserDefaults] objectForKey:self.thumbnail_key];
+        if (cacheData == nil) {
+            // If the data is not already in the cache, store it
+            NSLog(@"STORING IN CaCHE");
+            [[NSUserDefaults standardUserDefaults] setObject:data forKey:self.thumbnail_key];
+            [self.cacheHelper storeInCashMap:self.thumbnail_key];
+            //Update the table
+        }
+    }
+    
     
 }
 
@@ -218,13 +266,22 @@
 }
 
 
--(void)requestThumbnail:(void (^)(NSData*))completionCallback{
-    if(self.thumbnail_tmp == nil){
-        [self downloadThumbnail:completionCallback];
-    }else{
-        completionCallback(self.thumbnail_tmp);
+-(NSData *)thumbnailFromCache{
+    if (self.thumbnail_key != nil) {
+        NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:self.thumbnail_key];
+        
+        if (data == nil) {
+            return nil;
+        }else{
+            return data;
+        }
     }
+    return nil;
+    
 }
+
+
+
 
 
 

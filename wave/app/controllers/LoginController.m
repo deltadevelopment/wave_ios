@@ -51,6 +51,8 @@ onCompletion:(void (^)(UserModel*,ResponseModel*))callback
                         }
                 };
     }
+    
+    NSLog(@"my dic us %@", body);
     return body;
 }
 

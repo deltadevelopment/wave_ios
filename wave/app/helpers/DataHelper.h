@@ -16,7 +16,7 @@
 
 +(NSData *)getData;
 
-
++(void)addToDeletionQueue:(BucketModel *) bucket;
 +(void)storeBucketId:(int)Id;
 +(int)getBucketId;
 +(void)setCurrentBucketId:(int)bucketId;
@@ -34,5 +34,7 @@
 +(NSMutableArray *)getNotifications;
 +(void)setNotificationLabel:(UILabel *) label;
 +(UILabel *)getNotificationLabel;
++(NSMutableArray *)getDeletionQueue;
 
++(void)resetDeletionQueue;
 @end

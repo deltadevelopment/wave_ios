@@ -16,6 +16,7 @@
 @property (nonatomic) int temperature;
 @property (nonatomic) int visibility;
 @property (nonatomic) BOOL locked;
+@property (nonatomic) BOOL watching;
 @property (nonatomic) int user_id;
 @property (nonatomic,strong) NSString *title;
 @property (nonatomic,strong) NSString *bucket_description;
@@ -40,6 +41,12 @@ onCompletion:(void (^)(ResponseModel*, BucketModel*))completionCallback
 -(void)find:(void (^)(void))completionCallback
     onError:(void(^)(NSError *))errorCallback;
 
+-(void)delete:(void (^)(ResponseModel*, BucketModel*))completionCallback onError:(void(^)(NSError *))errorCallback;
+-(void)watch:(void (^)(ResponseModel *))completionCallback
+     onError:(void (^)(NSError *))errorCallback;
+-(void)unwatch:(void (^)(ResponseModel *))completionCallback
+       onError:(void (^)(NSError *))errorCallback;
+-(void)removeDrop:(DropModel *) drop;
 @property (nonatomic) BOOL isInitalized;
 -(void)addDropToFirst:(DropModel *) drop;
 -(void)addDrop:(DropModel *) drop;

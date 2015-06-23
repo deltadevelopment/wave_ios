@@ -24,11 +24,11 @@
     self.subscribee_id = [self getIntValueFromString:@"subscribee_id"];
     self.reverse = [self getBoolValueFromString:@"reverse"];
     self.subscribee = [[UserModel alloc] init:[self.dictionary objectForKey:@"subscribee"]];
-   self.subscriber = [[UserModel alloc] initWithDeviceUser];
+    self.subscriber = [[UserModel alloc] initWithDeviceUser];
     
     
     if ((NSNull*)[self.dictionary objectForKey: @"subscribee"] != [NSNull null]) {
-        [self.dictionary objectForKey:@"subscribee"];
+       [self.dictionary objectForKey:@"subscribee"];
     }else{
         self.subscribee = [[UserModel alloc] init];
         [self.subscribee setId:self.user_id];

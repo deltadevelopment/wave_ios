@@ -15,6 +15,7 @@ static StartViewController *start;
 static UIButton *notificationButton;
 static UILabel *notificationLabel;
 static NSMutableArray *notifications;
+static NSMutableArray *deletionQueue;
 @implementation DataHelper
 
 /*
@@ -29,6 +30,23 @@ static NSMutableArray *notifications;
     data = recievedData;
     media_type = media_ty;
 }
+
++(void)addToDeletionQueue:(BucketModel *) bucket{
+    if (deletionQueue == nil) {
+        deletionQueue = [[NSMutableArray alloc] init];
+    }
+    [deletionQueue addObject:bucket];
+}
+
++(NSMutableArray *)getDeletionQueue{
+    return deletionQueue;
+}
+
++(void)resetDeletionQueue{
+deletionQueue = [[NSMutableArray alloc] init];
+}
+
+
 
 +(void)setStart:(StartViewController *) startViewController{
     start = startViewController;

@@ -34,6 +34,9 @@
 @property (nonatomic, strong) NSString *thumbnail_key;
 @property (nonatomic, strong) NSString *thumbnail_url;
 
+-(void)redrop:(void (^)(ResponseModel *))completionCallback
+      onError:(void (^)(NSError *))errorCallback;
+
 //Properties for client
 @property (nonatomic,strong) NSData *media_tmp;
 @property (nonatomic,strong) NSData *thumbnail_tmp;
@@ -64,6 +67,8 @@
 -(void)saveChangesToDrop:(void (^)(ResponseModel*, DropModel*))completionCallback
               onProgress:(void (^)(NSNumber*))progression
                  onError:(void(^)(NSError *))errorCallback;
+
+-(void)delete:(void (^)(ResponseModel*))completionCallback onError:(void(^)(NSError *))errorCallback;
 -(NSDictionary *)asDictionary;
 
 @end

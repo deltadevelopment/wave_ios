@@ -35,6 +35,7 @@
     [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
    // [self.navigationController.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
     [self.navigationController.navigationBar setBarTintColor:[ColorHelper purpleColor]];
+    [self.navigationController.navigationBar setShadowImage:[[UIImage alloc] init]];
     [self.navigationController.navigationBar setTitleTextAttributes: @{
                                                             NSForegroundColorAttributeName: [UIColor whiteColor],
                                                             NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue-Thin" size:18.0f]
@@ -51,6 +52,11 @@
     }
     self.navigationItem.backBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"" style:UIBarButtonItemStylePlain
                                                                             target:nil action:nil];
+    
+    [self.navigationController.navigationBar setShadowImage:[[UIImage alloc] init]];
+    [self.navigationController.navigationBar setBackgroundImage:[[UIImage alloc]init] forBarMetrics:UIBarMetricsDefault];
+    
+    
 }
 -(void)showNotifications{
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
@@ -58,8 +64,9 @@
     [[ApplicationHelper getMainNavigationController] pushViewController:ripples animated:YES];
 }
 -(void)addLeftButton{
+    NSLog(@"Adding left button");
     //UIImage* image = [UIHelper iconImage:[UIImage imageNamed:@"wave-logo.png"]];
-    UIImage* image = [UIHelper iconImage:[UIImage imageNamed:@"wave-logosss.png"]];
+    UIImage* image = [UIHelper iconImage:[UIImage imageNamed:@"wave-logo.png"]];
     CGRect frame = CGRectMake(0, 0, 26, 26);
     UIButton* someButton = [[UIButton alloc] initWithFrame:frame];
     [someButton setBackgroundImage:image forState:UIControlStateNormal];
@@ -105,9 +112,12 @@
         }
         
     }
-  
+    
     [DataHelper setNotificationButton:someButton];
     [self.navigationItem setRightBarButtonItem:[[UIBarButtonItem alloc] initWithCustomView:someButton]];
+  
+    //
+    
 }
 
 -(void)didGainFocus{
