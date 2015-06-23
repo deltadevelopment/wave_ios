@@ -18,6 +18,7 @@
 @property (strong, nonatomic)  UIButton *subscribeButton;
 @property (strong, nonatomic)  UserModel *user;
 @property (strong, nonatomic)  SubscribeModel *subscription;
+@property (strong, nonatomic)  UserModel *userReturned;
 @property (nonatomic)  bool searchMode;
--(void)updateUI:(SubscribeModel *) subscribeModel;
+-(void)updateUI:(SuperModel *) superModel;
 @end

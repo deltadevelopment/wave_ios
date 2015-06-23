@@ -9,6 +9,7 @@
 #import "UIHelper.h"
 #import "ColorHelper.h"
 #import "GraphicsHelper.h"
+#import "DataHelper.h"
 static CGRect screenBound;
 static CGSize screenSize;
 static CGFloat screenWidth;
@@ -297,5 +298,31 @@ static CGFloat screenHeight;
     imageview.layer.cornerRadius = 15;
     imageview.clipsToBounds = YES;
 }
+
+
++(void)updateNotificationButton:(UINavigationItem *) item withButton:(UIButton *) button
+{
+    NSLog(@"Ripple count %d", [DataHelper getRippleCount]);
+    if([DataHelper getRippleCount]> 0){
+        if ([DataHelper getNotificationLabel] == nil) {
+            UILabel *ripplesCount = [[UILabel alloc] initWithFrame:CGRectMake(16, -5, 20, 20)];
+            ripplesCount.text = [NSString stringWithFormat:@"%d", [DataHelper getRippleCount]];
+            ripplesCount.textAlignment = NSTextAlignmentCenter;
+            [UIHelper applyThinLayoutOnLabel:ripplesCount];
+            [ripplesCount setFont:[UIFont fontWithName:ripplesCount.font.fontName size:14.0f]];
+            [ripplesCount setBackgroundColor:[ColorHelper redColor]];
+            ripplesCount.layer.cornerRadius = 10;
+            ripplesCount.clipsToBounds = YES;
+            [DataHelper setNotificationLabel:ripplesCount];
+            [button addSubview:ripplesCount];
+        }else{
+            [DataHelper getNotificationLabel].hidden = NO;
+            [DataHelper getNotificationLabel].text = [NSString stringWithFormat:@"%d", [DataHelper getRippleCount]];
+        }
+        
+    }
+    [item setRightBarButtonItem:[[UIBarButtonItem alloc] initWithCustomView:button]];
+}
+
 
 @end

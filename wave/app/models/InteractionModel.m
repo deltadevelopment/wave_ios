@@ -31,10 +31,7 @@
             
         }
         else if([self.topic_type  isEqualToString:@"Subscription"]){
-            
-            
             self.subscription = [[SubscribeModel alloc] init:[self.dictionary objectForKey:@"topic"]];
-            
         }
         else if([self.topic_type  isEqualToString:@"Vote"]){
             
@@ -48,5 +45,26 @@
 
     return self;
 }
+
+-(UserModel *)GetCurrentUser{
+    if (self.drop != nil) {
+        return [self.drop user];
+    }
+    else if (self.temperature != nil) {
+        return nil;
+    }
+    
+    if (self.bucket != nil) {
+        return [self.bucket user];
+    }
+    
+    if (self.subscription != nil) {
+        return [self.subscription subscribee];
+    }
+    return nil;
+}
+
+
+
 
 @end

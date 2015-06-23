@@ -16,7 +16,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     [self.navigationBar setTintColor:[ColorHelper purpleColor]];
     [self.navigationBar setBackgroundColor:[ColorHelper purpleColor]];
     // Do any additional setup after loading the view.

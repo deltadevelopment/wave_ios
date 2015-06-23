@@ -52,7 +52,7 @@
     self.notificationLabel.numberOfLines = 0;
    // self.notificationLabel.backgroundColor = [UIColor redColor];
 
-    self.actionButton =[UIButton buttonWithType:UIButtonTypeSystem];
+    self.actionButton =[UIButton buttonWithType:UIButtonTypeCustom];
     self.actionButton.frame = CGRectMake((self.frame.size.width) -50, (self.frame.size.height /2) -20, 40, 40);
     
     self.subscribeButton =[UIButton buttonWithType:UIButtonTypeSystem];
@@ -74,14 +74,13 @@
     //top left bottom right
     self.actionButton.clipsToBounds = YES;
     [self.actionButton addTarget:self action:@selector(dropAction) forControlEvents:UIControlEventTouchUpInside];
-    
+    [self.actionButton.imageView setContentMode:UIViewContentModeScaleAspectFit];
     
     self.temperatureButton =[UIButton buttonWithType:UIButtonTypeSystem];
     self.temperatureButton.frame = CGRectMake((self.frame.size.width) -50, (self.frame.size.height /2) -20, 40, 40);
      [self.temperatureButton setTintColor:[ColorHelper purpleColor]];
     //self.actionButton.backgroundColor =[UIColor redColor];
     [self.userButton setTitle:@"simenle" forState:UIControlStateNormal];
-    
     
     self.isInitialized = YES;
     [UIHelper applyThinLayoutOnLabel:self.notificationLabel withSize:15.0f];
@@ -232,11 +231,18 @@
 
 -(void)initActionButton:(RippleModel *) ripple withCellHeight:(float) height{
     self.ripple = ripple;
+    
+    
     if([[ripple.interaction topic_type]  isEqualToString:@"Drop"]){
+        [ripple.interaction.drop.user requestProfilePic:^(NSData *data){
+            [self.profilePictureImage setImage:[UIImage imageWithData:data]];
+        }];
+        
         [self showButton:self.actionButton];
         [self.actionButton removeTarget:self action:@selector(dropAction) forControlEvents:UIControlEventTouchUpInside];
         [self.actionButton addTarget:self action:@selector(dropAction) forControlEvents:UIControlEventTouchUpInside];
         [self.actionButton setBackgroundImage:[UIHelper iconImage:[UIImage imageNamed:@"manatee-gray.png"] withSize:80.0f] forState:UIControlStateNormal];
+        
         if([ripple.interaction.drop media_type] == 0){
             [ripple.interaction.drop requestPhoto:^(NSData *data){
                 [self.actionButton setBackgroundImage:[UIHelper iconImage:[UIImage imageWithData:data]  withSize:80.0f]forState:UIControlStateNormal];
@@ -251,12 +257,16 @@
         
         
     }
-    else if([[ripple.interaction topic_type]   isEqualToString:@"Bucket"]){
+    else if([[ripple.interaction topic_type] isEqualToString:@"Bucket"]){
+        [ripple.interaction.bucket.user requestProfilePic:^(NSData *data){
+            [self.profilePictureImage setImage:[UIImage imageWithData:data]];
+        }];
         [self showButton:self.actionButton];
          [self.actionButton removeTarget:self action:@selector(bucketAction) forControlEvents:UIControlEventTouchUpInside];
          [self.actionButton addTarget:self action:@selector(bucketAction) forControlEvents:UIControlEventTouchUpInside];
     [self.actionButton setBackgroundImage:[UIHelper iconImage:[UIImage imageNamed:@"manatee-gray.png"] withSize:80.0f] forState:UIControlStateNormal];
         DropModel *drop = [[ripple.interaction.bucket drops] objectAtIndex:0];
+        self.actionButton.imageView.contentMode = UIViewContentModeScaleAspectFill;
         if([drop media_type] == 0){
             [drop requestPhoto:^(NSData *data){
                 [self.actionButton setBackgroundImage:[UIImage imageWithData:data] forState:UIControlStateNormal];
@@ -268,6 +278,9 @@
         }
     }
     else if([[ripple.interaction topic_type] isEqualToString:@"Subscription"]){
+        [ripple.interaction.subscription.subscribee requestProfilePic:^(NSData *data){
+            [self.profilePictureImage setImage:[UIImage imageWithData:data]];
+        }];
         if ([ripple.interaction subscription] != nil) {
             if([ripple.interaction.subscription reverse]){
                 [self.subscribeButton setImage: [UIHelper iconImage:[UIImage imageNamed:@"tick.png"] withSize:40] forState:UIControlStateNormal];
@@ -385,5 +398,7 @@
 }
 
 - (IBAction)actionButtonAction:(id)sender {
+    
+    
 }
 @end

@@ -66,45 +66,69 @@
     
 }
 
--(void)updateUI:(SubscribeModel *) subscribeModel{
-    self.subscription = subscribeModel;
-    [self.usernameLabel setText:[[subscribeModel subscribee] username]];
-    [self.subscribeButton setImage: [UIHelper iconImage:[UIImage imageNamed:@"tick.png"] withSize:40] forState:UIControlStateNormal];
-    [self.subscribeButton setBackgroundColor:[ColorHelper purpleColor]];
-    [self.subscribeButton setTintColor:[ColorHelper whiteColor]];
+-(void)updateUI:(SuperModel *) superModel{
+    if([superModel isKindOfClass:[SubscribeModel class]])
+    {
+        // do somthing
+        self.subscription = (SubscribeModel *)superModel;
+        [self.usernameLabel setText:[[self.subscription subscribee] username]];
+        [self updateUIWithSubscription:self.subscription];
+    }
+    else if ([superModel isKindOfClass:[UserModel class]]){
+        self.userReturned = (UserModel *)superModel;
+        SubscribeModel *subscription = [[SubscribeModel alloc] init];
+        subscription.subscribee = self.userReturned;
+        [self.usernameLabel setText:[self.userReturned username]];
+        [self updateUIWithSubscription:subscription];
+    }
 }
 
-
-
-
--(void)subscribeAction{
-    if([self.subscription reverse]){
+-(void)updateUIWithSubscription:(SubscribeModel *) subscription{
+    if (subscription.isSubscriberLocal) {
+        [self.subscribeButton setImage: [UIHelper iconImage:[UIImage imageNamed:@"tick.png"] withSize:40] forState:UIControlStateNormal];
+        [self.subscribeButton setBackgroundColor:[ColorHelper purpleColor]];
+        [self.subscribeButton setTintColor:[ColorHelper whiteColor]];
+    }else{
         [self.subscribeButton setImage: [UIHelper iconImage:[UIImage imageNamed:@"plus-icon-simple.png"] withSize:40] forState:UIControlStateNormal];
         [self.subscribeButton setBackgroundColor:[ColorHelper whiteColor]];
         [self.subscribeButton setImageEdgeInsets:UIEdgeInsetsMake(5, 12.5, 5, 12.5)];
         [self.subscribeButton setTintColor:[ColorHelper purpleColor]];
-        [self.subscription delete:^(ResponseModel *response){
-            
-        } onError:^(NSError *error){}];
-        [self.subscription setReverse:NO];
     }
-    else{
+}
+
+-(void)subscribeAction{
+    if (self.subscription != nil) {
+        [self subscribeActionWithSubscription:self.subscription];
+    }else{
+        SubscribeModel *subscription = [[SubscribeModel alloc] init];
+        subscription.subscribee = self.userReturned;
+        subscription.subscriber = [[UserModel alloc] initWithDeviceUser];
+        [self subscribeActionWithSubscription:subscription];
+    }
+}
+
+-(void)subscribeActionWithSubscription:(SubscribeModel *) subscription{
+    if (subscription.isSubscriberLocal) {
+        [self.subscribeButton setImage: [UIHelper iconImage:[UIImage imageNamed:@"plus-icon-simple.png"] withSize:40] forState:UIControlStateNormal];
+        [self.subscribeButton setBackgroundColor:[ColorHelper whiteColor]];
+        [self.subscribeButton setImageEdgeInsets:UIEdgeInsetsMake(5, 12.5, 5, 12.5)];
+        [self.subscribeButton setTintColor:[ColorHelper purpleColor]];
+        [subscription delete:^(ResponseModel *response){
+            NSLog(@"Deleted");
+        } onError:^(NSError *error){}];
+    }else{
         [self.subscribeButton setImage: [UIHelper iconImage:[UIImage imageNamed:@"tick.png"] withSize:40] forState:UIControlStateNormal];
         [self.subscribeButton setBackgroundColor:[ColorHelper purpleColor]];
         [self.subscribeButton setTintColor:[ColorHelper whiteColor]];
-        [self.subscription setReverse:YES];
-        [self.subscription saveChanges:^(ResponseModel *response){
+        [subscription saveChanges:^(ResponseModel *response){
             
-           
+            
         } onError:^(NSError *error)
          {
              
              
          }];
-        
     }
-    
-    
 }
 
 @end

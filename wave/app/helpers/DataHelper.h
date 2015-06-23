@@ -36,5 +36,6 @@
 +(UILabel *)getNotificationLabel;
 +(NSMutableArray *)getDeletionQueue;
 
+
 +(void)resetDeletionQueue;
 @end

@@ -161,14 +161,10 @@ static int TABLE_CELLS_ON_SCREEN = 6;
 }
 
 -(void)showProfile:(RippleModel *) ripple{
-    NSLog(@"showing profile for %@", [[ripple.interaction user] username]);
-    
-    
-    //UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
     AbstractFeedViewController *profileController = [self.storyboard instantiateViewControllerWithIdentifier:@"activity"];
     [profileController setViewMode:1];
     [profileController setIsDeviceUser:NO];
-    [profileController setAnotherUser:[ripple.interaction user]];
+    [profileController setAnotherUser:[ripple.interaction GetCurrentUser]];
     [profileController hidePeekFirst];
     
     [self.view insertSubview:profileController.view atIndex:0];
@@ -179,9 +175,6 @@ static int TABLE_CELLS_ON_SCREEN = 6;
     [profileController layOutPeek];
     NSLog(@"Adding");
     [[ApplicationHelper getMainNavigationController] pushViewController:profileController animated:YES];
-    
-    
-    
 }
 
 -(void)showBucketNormally:(RippleModel *)ripple

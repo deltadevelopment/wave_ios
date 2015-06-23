@@ -137,40 +137,19 @@ AuthHelper *authHelper;
     
     if (application.applicationState == UIApplicationStateActive ){
         [ApplicationHelper executeBlock];
-        //[self resetBadgeToZero];
-        //[DataHelper storeNotifications:userInfo];
         [DataHelper storeRippleCount:[DataHelper getRippleCount] +1];
         //If the application was active we want to force update the ripples count
+        
         if([DataHelper getRippleCount]> 0){
-            if ([DataHelper getNotificationLabel] == nil) {
-                UILabel *ripplesCount = [[UILabel alloc] initWithFrame:CGRectMake(16, -5, 20, 20)];
-                
-                ripplesCount.textAlignment = NSTextAlignmentCenter;
-                [UIHelper applyThinLayoutOnLabel:ripplesCount];
-                [ripplesCount setFont:[UIFont fontWithName:ripplesCount.font.fontName size:14.0f]];
-                [ripplesCount setBackgroundColor:[ColorHelper redColor]];
-                ripplesCount.layer.cornerRadius = 10;
-                ripplesCount.clipsToBounds = YES;
-                [DataHelper setNotificationLabel:ripplesCount];
-                 [[DataHelper getNotificationButton] addSubview:ripplesCount];
-                [DataHelper getNotificationLabel].text = [NSString stringWithFormat:@"%d", [DataHelper getRippleCount]];
-            }else {
-                NSLog(@"Got notification from active state and unhiding");
+            if ([DataHelper getNotificationLabel] != nil) {
                 [DataHelper getNotificationLabel].text = [NSString stringWithFormat:@"%d", [DataHelper getRippleCount]];
                 [DataHelper getNotificationLabel].hidden = NO;
             }
-           
         }
-        
-        
     }else{
-       //If the application was not active, we want to navigate/take action on the ripple
+        //If the application was not active, we want to navigate/take action on the ripple
         [self handleNotification:userInfo];
     }
-    
-    
-    
-    
 }
 
 -(void)resetBadgeToZero{

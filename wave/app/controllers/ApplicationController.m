@@ -88,10 +88,6 @@
     [NSURLConnection sendAsynchronousRequest:request
                                        queue:[NSOperationQueue currentQueue]
                            completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-
-                              
-                               
-                               
                                if (data != nil && error == nil)
                                {
                                    //Ferdig lastet ned
@@ -109,7 +105,10 @@
                                {
                                    [self handleError:response withError:error withData:data];
                                    // NSLog([error localizedDescription]);
-                                   NSMutableDictionary *errors = [ParserHelper parse:data];
+                                   NSMutableDictionary *errors;
+                                   if (data != nil) {
+                                       errors = [ParserHelper parse:data];
+                                   }
                                    NSError *httpError = [NSError errorWithDomain:@"world" code:200 userInfo:errors];
                                    errorCallback(httpError);
                                }
@@ -128,22 +127,20 @@
     NSLog(@"response status code: %ld", (long)statuscode);
     //NSString *strdata=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
     //NSLog(@"Response: %@", strdata);
-    ResponseModel *responseModel = [[ResponseModel alloc] init:[ParserHelper parse:data]];
-    NSLog(@"Model message: %@", responseModel.message);
-    
-    
+    ResponseModel *responseModel;
+    if (data != nil) {
+        responseModel = [[ResponseModel alloc] init:[ParserHelper parse:data]];
+        NSLog(@"Model message: %@", responseModel.message);
+    }
+
     if((error.code == NSURLErrorUserCancelledAuthentication && statuscode == 0) || statuscode == 401){
         NSLog(@"Logg ut her");
         statuscode = 401;
-
-        
         [authHelper resetCredentials];
         UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
         StartViewController *navigation =[mainStoryboard instantiateViewControllerWithIdentifier:@"startNav"];
         AppDelegate *appDelegateTemp = [[UIApplication sharedApplication]delegate];
         appDelegateTemp.window.rootViewController = navigation;
-        
-        
     }
     else
     {

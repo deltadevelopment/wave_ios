@@ -371,7 +371,12 @@ const int PEEK_Y_START = 300;
         currentDropPage = [self viewControllerAtIndex:dropPositionInBucket replacingObject:currentDropPage];
         currentDropPosition = dropPositionInBucket;
         NSArray *viewControllers = @[currentDropPage];
-        [currentDropPage setIsStartingView:YES];
+        if (currentDropPage.isLoaded) {
+            [currentDropPage startVideo];
+        }else{
+            [currentDropPage setIsStartingView:YES];
+        }
+        
         [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
         [self updatePageIndicator:dropPositionInBucket];
         
@@ -670,13 +675,33 @@ const int PEEK_Y_START = 300;
 {
     DropController *currentPage = [pageViewController.viewControllers lastObject];
     currentDropPage = currentPage;
-    [peekViewController updatePeekView:[[currentPage drop] user]];
-    [self updatePageIndicator:currentPage.pageIndex];
+    [self updatePageIndicator:currentDropPage.pageIndex];
+    [peekViewController updatePeekView:[[currentDropPage drop] user]];
+    
     DropController *previousPage = [previousViewControllers objectAtIndex:0];
     [previousPage setIsDisplaying:NO];
-    [currentPage startVideo];
-    currentPage.isDisplaying = YES;
     [previousPage stopVideo];
+    //[currentDropPage startVideo];
+    currentDropPage.isDisplaying = YES;
+    [self startVideoTimer];
+    
+    
+    
+}
+
+-(void)startVideoTimer{
+    [NSTimer scheduledTimerWithTimeInterval:0.3
+                                     target:self
+                                   selector:@selector(playDelayed)
+                                   userInfo:nil
+                                    repeats:NO];
+}
+
+-(void)playDelayed{
+    if (currentDropPage.isDisplaying) {
+        [currentDropPage startVideo];
+    }
+
 }
 
 -(void)stopAllVideo{

@@ -37,4 +37,5 @@
 +(CGRect)fullScreenRect;
 +(void)applyLayoutOnLabel:(UILabel *) label withSize:(float) size;
 +(void)initAndApplyLayoutOnProfilePictureSmall:(UIImageView *) imageview;
++(void)updateNotificationButton:(UINavigationItem *) item withButton:(UIButton *) button;
 @end

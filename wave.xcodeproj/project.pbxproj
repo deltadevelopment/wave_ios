@@ -10,6 +10,7 @@
 		C52AAFD61B3058A0004332DD /* RipplesFeed.m in Sources */ = {isa = PBXBuildFile; fileRef = C52AAFD51B3058A0004332DD /* RipplesFeed.m */; };
 		C52AAFD81B319B5F004332DD /* manatee-gray.png in Resources */ = {isa = PBXBuildFile; fileRef = C52AAFD71B319B5F004332DD /* manatee-gray.png */; };
 		C52AAFDB1B32D38A004332DD /* PartialTransparentBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = C52AAFDA1B32D38A004332DD /* PartialTransparentBlurView.m */; };
+		C5381EB01B395A7D006EE505 /* SearchModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C5381EAF1B395A7D006EE505 /* SearchModel.m */; };
 		C5500D141B34072A00E4E8BA /* SearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5500D131B34072A00E4E8BA /* SearchViewController.m */; };
 		C5500D171B34073E00E4E8BA /* SearchTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C5500D161B34073E00E4E8BA /* SearchTableViewCell.m */; };
 		C5500D1A1B34300C00E4E8BA /* UserFeed.m in Sources */ = {isa = PBXBuildFile; fileRef = C5500D191B34300C00E4E8BA /* UserFeed.m */; };
@@ -173,6 +174,8 @@
 		C52AAFD71B319B5F004332DD /* manatee-gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "manatee-gray.png"; sourceTree = "<group>"; };
 		C52AAFD91B32D38A004332DD /* PartialTransparentBlurView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PartialTransparentBlurView.h; sourceTree = "<group>"; };
 		C52AAFDA1B32D38A004332DD /* PartialTransparentBlurView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PartialTransparentBlurView.m; sourceTree = "<group>"; };
+		C5381EAE1B395A7D006EE505 /* SearchModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchModel.h; sourceTree = "<group>"; };
+		C5381EAF1B395A7D006EE505 /* SearchModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchModel.m; sourceTree = "<group>"; };
 		C5500D121B34072A00E4E8BA /* SearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchViewController.h; sourceTree = "<group>"; };
 		C5500D131B34072A00E4E8BA /* SearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchViewController.m; sourceTree = "<group>"; };
 		C5500D151B34073E00E4E8BA /* SearchTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchTableViewCell.h; sourceTree = "<group>"; };
@@ -562,6 +565,8 @@
 				C5500D191B34300C00E4E8BA /* UserFeed.m */,
 				C58521581B382E6A000812F2 /* CacheModel.h */,
 				C58521591B382E6A000812F2 /* CacheModel.m */,
+				C5381EAE1B395A7D006EE505 /* SearchModel.h */,
+				C5381EAF1B395A7D006EE505 /* SearchModel.m */,
 			);
 			path = models;
 			sourceTree = "<group>";
@@ -1164,6 +1169,7 @@
 				F1D436471B1A10B70024205B /* DropController.m in Sources */,
 				C5D473711AE66D820097E44F /* PartialTransparentView.m in Sources */,
 				C5A27B631ADD01AE00968033 /* AuthHelper.m in Sources */,
+				C5381EB01B395A7D006EE505 /* SearchModel.m in Sources */,
 				C5A27B7B1ADD1DEB00968033 /* LoginViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

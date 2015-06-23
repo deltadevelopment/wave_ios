@@ -204,18 +204,14 @@
         NSLog(@"Checking subscription for %d", self.user.Id);
         UserModel *deviceUser =[[UserModel alloc] initWithDeviceUser];
         self.subscribeModel = [[SubscribeModel alloc] initWithSubscriber:deviceUser withSubscribee:self.user];
-        [self.subscribeModel isSubscriber:^(ResponseModel *response){
-            
-            if(response.success){
-                isSubscriber = YES;
-                [self changeSubscribeUI];
-            }else{
-                isSubscriber = NO;
-                [self changeSubscribeUI];
-            }
-        } onError:^(NSError *error){
-            
-        }];
+        if (self.subscribeModel.isSubscriberLocal) {
+            isSubscriber = YES;
+            [self changeSubscribeUI];
+        }
+        else{
+            isSubscriber = NO;
+            [self changeSubscribeUI];
+        }
     }
 }
 

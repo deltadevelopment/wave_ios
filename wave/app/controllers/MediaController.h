@@ -27,5 +27,9 @@
              onError:(void(^)(NSError *))errorCallback
           onProgress:(void (^)(NSNumber*))progression;
 
+-(void)search:(NSString *) urlPath
+ onCompletion:(void (^)(NSData*))completionCallback
+      onError:(void(^)(NSError *))errorCallback;
+
 -(void)stopConnection;
 @end

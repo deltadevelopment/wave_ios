@@ -26,6 +26,8 @@
 @property (nonatomic, strong) SubscribeModel *subscription;
 @property (nonatomic, strong) UserModel *user;
 
+-(UserModel *)GetCurrentUser;
+
 
 
 

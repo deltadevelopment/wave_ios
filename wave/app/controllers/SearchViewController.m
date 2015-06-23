@@ -15,7 +15,11 @@
 @end
 
 @implementation SearchViewController{
-   
+    NSTimer *searchTimer;
+    NSInteger currentScopeIndex;
+    NSString *currentSearchString;
+    UIActivityIndicatorView *spinner;
+    UILabel *noUsersLabel;
 }
 
 - (void)viewDidLoad {
@@ -34,6 +38,7 @@
     }
     
     self.userFeed = [[UserFeed alloc] init];
+    self.searchFeed = [[SearchModel alloc] init];
     if (self.searchMode) {
         self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
         
@@ -63,6 +68,7 @@
         [self.searchController.searchBar setBackgroundColor:[UIColor whiteColor]];
         self.searchController.searchBar.barTintColor = [UIColor whiteColor];
         self.tableView.tableHeaderView.tintColor = [ColorHelper purpleColor];
+         self.searchController.searchBar.autocapitalizationType = UITextAutocapitalizationTypeNone;
        //[self.tableView setContentOffset:CGPointMake(0,44) animated:YES];
     }
     
@@ -71,14 +77,25 @@
     self.refreshControl.tintColor = [UIColor whiteColor];
     [self.refreshControl addTarget:self action:@selector(refreshFeed) forControlEvents:UIControlEventValueChanged];
     [self.tableView addSubview:self.refreshControl];
-    
-    [self startRefreshing];
-    UILabel *noUsersLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 74, [UIHelper getScreenWidth] - 40, 50)];
+    noUsersLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 30, [UIHelper getScreenWidth] - 40, 50)];
     [noUsersLabel setTextColor:[UIColor blackColor]];
     [noUsersLabel setFont:[UIFont fontWithName:@"HelveticaNeue-ThinItalic" size:17.0f]];
     [noUsersLabel setText:@"No Subscribers yet"];
     [self.view addSubview:noUsersLabel];
-   
+    if (self.searchMode) {
+        [noUsersLabel setText:@"Search for users and hashtags"];
+        spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        float center = ([UIHelper getScreenHeight] - 64)/2;
+        spinner.center = CGPointMake([UIHelper getScreenWidth]/2-10, 64);
+        spinner.hidesWhenStopped = YES;
+        spinner.hidden = YES;
+        [self.view addSubview:spinner];
+        self.tableView.hidden = YES;
+    }
+    else{
+        
+        [self startRefreshing];
+    }
     
     //[self hideShowSearch:0];
     
@@ -118,8 +135,6 @@
 
 -(void)addLeftButton{
     [self.navigationItem setHidesBackButton:YES animated:YES];
- 
-    
     //UIImage* image = [UIHelper iconImage:[UIImage imageNamed:@"wave-logo.png"]];
     UIImage* image = [UIHelper iconImage:[UIImage imageNamed:@"search-icon-white.png"] withSize:40];
     CGRect frame = CGRectMake(0, 0, 20, 20);
@@ -127,36 +142,52 @@
     [someButton setBackgroundImage:image forState:UIControlStateNormal];
     [someButton addTarget:self action:@selector(showSearch) forControlEvents:UIControlEventTouchUpInside];
     [someButton setShowsTouchWhenHighlighted:YES];
-    
-   
     self.menuItem = [[UIBarButtonItem alloc] initWithCustomView:someButton];
     [[[ApplicationHelper getMainNavigationController] navigationItem] setLeftBarButtonItem:self.menuItem];
     [self.carouselParent.navigationItem setLeftBarButtonItem:self.menuItem];
-    
-
-
-    
-    
 }
 
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController
 {
     NSString *searchString = searchController.searchBar.text;
-    //[self searchForText:searchString scope:searchController.searchBar.selectedScopeButtonIndex];
-    //[self.tableView reloadData];
+    if (searchString.length > 2) {
+        //[spinner setHidden:NO];
+        //[spinner startAnimating];
+         //self.tableView.hidden = YES;
+        currentScopeIndex = searchController.searchBar.selectedScopeButtonIndex;
+        currentSearchString = searchString;
+        if (searchTimer != nil && [searchTimer isValid]) {
+            [searchTimer invalidate];
+        }
+        searchTimer = [NSTimer scheduledTimerWithTimeInterval:0.3
+                                                       target:self
+                                                     selector:@selector(searchDelayed)
+                                                     userInfo:nil
+                                                      repeats:NO];
+    }
 }
+
+-(void)searchDelayed{
+    [self searchForText:currentSearchString
+                  scope:currentScopeIndex];
+}
+
 -(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
     NSLog(@"CLICKED");
-     //[self.searchController setActive:NO];
-    // [self.searchController.searchBar resignFirstResponder];
-    
+     [self.searchController setActive:NO];
+    self.searhIsShowing = NO;
+    self.tableView.tableHeaderView = nil;
+}
+
+-(void)searchBarCancelButtonClicked:(UISearchBar *)searchBar{
+    self.searhIsShowing = NO;
+    self.tableView.tableHeaderView = nil;
 }
 
 
 - (void)searchBar:(UISearchBar *)searchBar selectedScopeButtonIndexDidChange:(NSInteger)selectedScope
 {
     NSLog(@"select %ld", (long)selectedScope);
-    
     [self updateSearchResultsForSearchController:self.searchController];
 }
 
@@ -167,9 +198,17 @@
     return YES;
 }
 
+
+
+
 -(BOOL)searchBarShouldEndEditing:(UISearchBar *)searchBar{
-   
-     NSLog(@"here4");
+    if (self.searchController.isActive) {
+    }else{
+        self.searhIsShowing = NO;
+        self.tableView.tableHeaderView = nil;
+    }
+    
+    
 
     return YES;
 }
@@ -208,6 +247,39 @@
         //NSLog(@"%@", [error localizedDescription]);
     }];
 }
+
+-(void)searchForText:(NSString *)searchString
+               scope:(NSInteger) scopeIndex{
+    
+    [self.searchFeed stopSearchConnection];
+    if (scopeIndex == 0) {
+        [self.searchFeed setSearchMode:@"user"];
+    }else {
+        [self.searchFeed setSearchMode:@"hashtag"];
+    }
+    
+    [self.searchFeed search:searchString
+             withCompletion:^
+     {
+         NSLog(@"the count is %lu", (unsigned long)[self.searchFeed searchResults].count);
+         if ([self.searchFeed.searchResults count] == 0) {
+             self.tableView.hidden = YES;
+             if (currentScopeIndex == 0) {
+                 [noUsersLabel setText:[NSString stringWithFormat:@"No users found mathcing '%@'", searchString]];
+             }else{
+                 [noUsersLabel setText:[NSString stringWithFormat:@"No hashtags found mathcing '%@'", searchString]];
+             }
+             
+         }else{
+             [self.tableView reloadData];
+             self.tableView.hidden = NO;
+         }
+     }
+                    onError:^(NSError *error)
+     {
+     }];
+}
+
 -(void)stopRefreshing{
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"MMM d, h:mm a"];
@@ -222,10 +294,7 @@
 
 
 -(void)viewDidLayoutSubviews{
-    
-        self.topConstraint.constant = 0;
-    
-    
+    self.topConstraint.constant = 0;
 }
 
 
@@ -238,20 +307,32 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView
          cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     SearchTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"searchCell" forIndexPath:indexPath];
-   SubscribeModel *subscribeModel = [[self.userFeed feed] objectAtIndex:indexPath.row];
-    
     __weak typeof(self) weakSelf = self;
     if(!cell.isInitialized){
         //UI initialization
-        [cell initalizeWithMode:NO];
+        [cell initalizeWithMode:self.searchMode];
     }
-    [cell updateUI:subscribeModel];
+    
+    if (self.searchMode) {
+        UserModel *userModel = [[self.searchFeed searchResults] objectAtIndex:indexPath.row];
+        [cell updateUI:userModel];
+    }else{
+        SubscribeModel *subscribeModel = [[self.userFeed feed] objectAtIndex:indexPath.row];
+        [cell updateUI:subscribeModel];
+    }
+    
     
     return cell;
 }
 
+
+
+
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     NSLog(@"the count for subscribers is %lu", (unsigned long)[[self.userFeed feed] count]);
+    if (self.searchMode) {
+        return [[self.searchFeed searchResults] count];
+    }
     return [[self.userFeed feed] count];
 }
 

@@ -7,13 +7,17 @@
 //
 
 #import "MediaController.h"
-
+#import "ConfigHelper.h"
+#import "AuthHelper.h"
 @implementation MediaController
 {
     void (^mediaUploadComplete)(void);
     void (^mediaProgression)(NSNumber*(progress));
     void (^mediaDownloadComplete)(NSData*(data));
+    void (^searchCompleted)(NSData*(data));
     bool isUploading;
+    bool isSearching;
+    AuthHelper *authHelper;
 }
 
 -(void)downloadMedia:(NSString *) urlPath
@@ -37,6 +41,34 @@
         [self.theConnection scheduleInRunLoop:[NSRunLoop mainRunLoop]
                                       forMode:NSDefaultRunLoopMode];
         [self.theConnection start];
+}
+
+
+-(void)search:(NSString *) urlPath
+        onCompletion:(void (^)(NSData*))completionCallback
+             onError:(void(^)(NSError *))errorCallback
+{
+    isUploading = NO;
+    isSearching = YES;
+    authHelper = [[AuthHelper alloc] init];
+    urlPath = [NSString stringWithFormat:@"%@/%@", [[[ConfigHelper alloc] init] baseUrl], urlPath];
+    NSLog(@"the url is %@", urlPath);
+    NSURL *url = [NSURL URLWithString:urlPath];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    [request setHTTPMethod:@"POST"];
+    [request setValue:@"application/json" forHTTPHeaderField:@"Content-type"];
+    [request addValue:[authHelper getAuthToken] forHTTPHeaderField:@"X-AUTH-TOKEN"];
+    searchCompleted = completionCallback;
+    
+    
+    self.theConnection = [[NSURLConnection alloc]
+                          initWithRequest:request
+                          delegate:self startImmediately:NO];
+    
+    
+    [self.theConnection scheduleInRunLoop:[NSRunLoop mainRunLoop]
+                                  forMode:NSDefaultRunLoopMode];
+    [self.theConnection start];
 }
 
 -(void)putHttpRequestWithImage:(NSData *) imageData
@@ -113,6 +145,7 @@ totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite
         _data = [[NSMutableData alloc]init];
     }
     [_data appendData:data];
+    NSLog(@"Appending data");
     //[_data appendData:data];
 }
 
@@ -121,12 +154,13 @@ totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite
         NSLog(@"Canceled the connection");
         [self.theConnection cancel];
     }
-    
 }
 
-
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection{
-    if (!isUploading) {
+    if (isSearching) {
+        searchCompleted(_data);
+    }
+    else if (!isUploading) {
          mediaDownloadComplete(_data);
     }
    

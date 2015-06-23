@@ -351,7 +351,6 @@ PreviewLayer.connection.enabled = YES;
         //AVCaptureVideoOrientation orientation = AVCaptureVideoOrientationLandscapeRight;		//<<<<<SET VIDEO ORIENTATION IF LANDSCAPE
         //[CaptureConnection setVideoOrientation:orientation];
     }
-    
     //Set frame rate (if requried)
     /*
      CMTimeShow(CaptureConnection.videoMinFrameDuration);
@@ -377,7 +376,6 @@ PreviewLayer.connection.enabled = YES;
      CMTimeShow([VideoDevice activeVideoMinFrameDuration]);
      CMTimeShow([VideoDevice activeVideoMaxFrameDuration]);
      */
-    
 }
 
 //********** GET CAMERA IN SPECIFIED POSITION IF IT EXISTS **********
@@ -827,7 +825,7 @@ didFinishRecordingToOutputFileAtURL:(NSURL *)outputFileURL
     if(isVideoAssetPortrait_){
         naturalSize = CGSizeMake(videoAssetTrack.naturalSize.height, videoAssetTrack.naturalSize.width);
     } else {
-        naturalSize = videoAssetTrack.naturalSize;
+          naturalSize = CGSizeMake(videoAssetTrack.naturalSize.height, videoAssetTrack.naturalSize.width);
     }
     
     float renderWidth, renderHeight;
