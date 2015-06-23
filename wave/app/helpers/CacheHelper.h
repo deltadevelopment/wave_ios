@@ -10,7 +10,7 @@
 
 @interface CacheHelper : NSObject
 
--(void)storeInCashMap:(NSString *) key;
--(void)cleanUpCashMap;
++(void)storeInCashMap:(NSString *) key;
++(void)cleanUpCashMap;
 
 @end

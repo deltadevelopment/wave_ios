@@ -33,7 +33,7 @@
     self.backgroundView.alpha = 0.5;
     
     self.profilePicture = [[UIImageView alloc] initWithFrame:CGRectMake([UIHelper getScreenWidth]/2 - (100/2), 50, 100, 100)];
-    self.profilePicture.image = [UIImage imageNamed:@"miranda-kerr.jpg"];
+    self.profilePicture.image = [UIImage imageNamed:@"user-icon-gray.png"];
     self.profilePicture.layer.cornerRadius = 50;
     self.profilePicture.clipsToBounds = YES;
     self.profilePicture.contentMode = UIViewContentModeScaleAspectFill;

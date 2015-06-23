@@ -28,8 +28,7 @@
     self.profilePictureImage =[[UIImageView alloc] initWithFrame:CGRectMake(10, (self.frame.size.height /2) -15, 30, 30)];
     self.profilePictureImage.layer.cornerRadius = 15;
     self.profilePictureImage.clipsToBounds = YES;
-    [self.profilePictureImage setImage:[UIImage imageNamed:@"miranda-kerr.jpg"]];
-    
+    [self.profilePictureImage setImage:[UIImage imageNamed:@"user-icon-gray.png"]];
     self.usernameLabel = [[UILabel alloc] initWithFrame:CGRectMake(60, 10, [UIHelper getScreenWidth] -120, self.frame.size.height -20)];
     [self.usernameLabel setText:@"simenlie"];
   //[self.usernameLabel setBackgroundColor:[UIColor redColor]];

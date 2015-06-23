@@ -29,7 +29,7 @@
     //Drop profilePicture
     self.profilePicture = [[UIImageView alloc] initWithFrame:CGRectMake(10, 8, 30, 30)];
     
-    self.profilePicture.image = [UIImage imageNamed:@"miranda-kerr.jpg"];
+    self.profilePicture.image = [UIImage imageNamed:@"user-icon-gray.png"];
     self.profilePicture.layer.cornerRadius = 15;
     self.profilePicture.clipsToBounds = YES;
     self.profilePicture.hidden = YES;

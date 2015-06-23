@@ -31,7 +31,6 @@
 +(int)getRippleCount;
 +(void)setNotificationButton:(UIButton *) button;
 +(UIButton *)getNotificationButton;
-+(NSMutableArray *)getNotifications;
 +(void)setNotificationLabel:(UILabel *) label;
 +(UILabel *)getNotificationLabel;
 +(NSMutableArray *)getDeletionQueue;

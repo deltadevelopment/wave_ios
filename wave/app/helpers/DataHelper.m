@@ -146,23 +146,6 @@ deletionQueue = [[NSMutableArray alloc] init];
     */
 }
 
-+(NSArray *)getNotifications{
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSData *myDecodedObject = [defaults objectForKey: [NSString stringWithFormat:@"notifications"]];
-    
-    NSArray *decodedArray = nil;
-    @try {
-        decodedArray =[NSKeyedUnarchiver unarchiveObjectWithData: myDecodedObject];
-    }
-    @catch (NSException *exception) {
-        NSLog(@"Error: %@", [exception name]);
-    }
-    @finally {
-        NSLog(@"trying");
-    }
-    
-    return decodedArray;
-}
 
 
 @end

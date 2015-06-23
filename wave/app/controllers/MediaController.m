@@ -28,6 +28,8 @@
 {
     isUploading = NO;
     NSURL *url = [NSURL URLWithString:urlPath];
+    NSLog(@"GET DOWNLOAD : %@", url);
+    NSLog(@"-------------------------");
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     mediaDownloadComplete = completionCallback;
     mediaProgression = progression;

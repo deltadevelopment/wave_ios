@@ -13,6 +13,7 @@
     AuthHelper *authHelper;
 }
 -(id)init:(NSMutableDictionary *)dic{
+    self.cacheHelper = [[CacheHelper alloc] init];
     [self refresh:dic];
    // NSLog(@"mys di is %@", dic);
     self.mediaController = [[MediaController alloc] init];
@@ -20,6 +21,7 @@
 };
 
 -(id)initWithDeviceUser{
+    self.cacheHelper = [[CacheHelper alloc] init];
     self = [super init];
     authHelper = [[AuthHelper alloc] init];
     self.mediaController = [[MediaController alloc] init];
@@ -32,6 +34,7 @@
 
 -(id)initWithDeviceUser:(void (^)(UserModel*))completionCallback
                 onError:(void(^)(NSError *))errorCallback{
+    self.cacheHelper = [[CacheHelper alloc] init];
     self.mediaController = [[MediaController alloc] init];
     self = [super init];
     authHelper = [[AuthHelper alloc] init];
@@ -125,6 +128,7 @@
                                onCompletion:^(NSData *data){
                                    self.media_tmp = data;
                                    self.isDownloading = NO;
+                                   [self storeMediaInCache:data];
                                    completionCallback(data);
                                }
                                     onError:^(NSError *error){
@@ -137,20 +141,38 @@
 }
 
 -(void)requestProfilePic:(void (^)(NSData*))completionCallback{
-    if (self.profile_picture_url == nil) {
-        self.media_tmp = UIImagePNGRepresentation([UIImage imageNamed:@"user-icon-gray.png"]);
-        completionCallback(self.media_tmp);
+    self.media_tmp = self.media_tmp == nil ? [self mediaFromCache] : self.media_tmp;
+    if(self.media_tmp == nil){
+        [self downloadImage:completionCallback];
     }else{
-        if(self.media_tmp == nil){
-            [self downloadImage:completionCallback];
-        }else{
-            completionCallback(self.media_tmp);
+        completionCallback(self.media_tmp);
+    }
+}
+-(void)storeMediaInCache:(NSData *) data{
+    if (self.profile_picture_key != nil) {
+        NSData *cacheData = [[NSUserDefaults standardUserDefaults] objectForKey:self.profile_picture_key];
+        if (cacheData == nil) {
+            // If the data is not already in the cache, store it
+            [[NSUserDefaults standardUserDefaults] setObject:data forKey:self.profile_picture_key];
+            [CacheHelper storeInCashMap:self.profile_picture_key];
+            //Update the table
         }
     }
-    
 }
 
-
+-(NSData *)mediaFromCache{
+    if (self.profile_picture_key != nil) {
+        NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:self.profile_picture_key];
+        
+        if (data == nil) {
+            return nil;
+        }else{
+            return data;
+        }
+    }
+    return nil;
+    
+}
 
 
 -(void)saveChanges:(void (^)(ResponseModel *,UserModel *))completionCallback

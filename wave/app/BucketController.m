@@ -52,6 +52,7 @@ const int PEEK_Y_START = 300;
     int dropIdToJumpTo;
     bool dropForDeletion;
     int currentDropPosition;
+    UIImageView *tickView;
 }
 @synthesize infoViewMode;
 - (void)viewDidLoad {
@@ -111,6 +112,7 @@ const int PEEK_Y_START = 300;
     [self initInfoButton];
     infoView = [[InfoView alloc] initWithSuperViewController:self withButton:infoButton withConstraint:infoButtonConstraint];
     [self.view addSubview:infoView];
+    [self initTickView];
     [self addPeekView];
 }
 
@@ -183,6 +185,7 @@ const int PEEK_Y_START = 300;
                             handler:^(UIAlertAction * action)
                             {
                                 [currentDropPage.drop redrop:^(ResponseModel *response){
+                                    [self animateTick];
                                     [view dismissViewControllerAnimated:YES completion:nil];
                                 } onError:^(NSError *error){}];
                                 //Do some thing here
@@ -283,6 +286,34 @@ const int PEEK_Y_START = 300;
     
     
     
+}
+
+-(void)animateTick{
+    tickView.hidden = NO;
+    [UIView animateWithDuration:0.3f
+                          delay:0.0f
+                        options: UIViewAnimationOptionCurveLinear
+                     animations:^{
+                         tickView.alpha = 0.8;
+                     }
+                     completion:^(BOOL finished){
+                         [UIView animateWithDuration:0.3f
+                                               delay:0.5f
+                                             options: UIViewAnimationOptionCurveLinear
+                                          animations:^{
+                                              tickView.alpha = 0.0;
+                                             // [infoView.view layoutIfNeeded];
+                                          }
+                                          completion:nil];
+                     }];
+}
+
+-(void)initTickView{
+    tickView = [[UIImageView alloc] initWithFrame:CGRectMake([UIHelper getScreenWidth]/2-25, [UIHelper getScreenHeight]/2-25, 50, 50)];
+    tickView.image = [UIImage imageNamed:@"tick.png"];
+    tickView.alpha = 0.0;
+    tickView.hidden = YES;
+    [self.view addSubview:tickView];
 }
 
 -(void)showDeleteAlert{

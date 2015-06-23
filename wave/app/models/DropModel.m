@@ -211,7 +211,7 @@
         if (cacheData == nil) {
             // If the data is not already in the cache, store it
             [[NSUserDefaults standardUserDefaults] setObject:data forKey:self.media_key];
-            [self.cacheHelper storeInCashMap:self.media_key];
+            [CacheHelper storeInCashMap:self.media_key];
             //Update the table
         }
     }
@@ -225,7 +225,7 @@
         if (cacheData == nil) {
             // If the data is not already in the cache, store it
             [[NSUserDefaults standardUserDefaults] setObject:data forKey:self.thumbnail_key];
-            [self.cacheHelper storeInCashMap:self.thumbnail_key];
+            [CacheHelper storeInCashMap:self.thumbnail_key];
             //Update the table
         }
     }

@@ -50,7 +50,7 @@ const int EXPAND_SIZE = 400;
     } onError:^(NSError *error){}];
     CacheHelper *cache = [[CacheHelper alloc] init];
     
-    [cache cleanUpCashMap];
+    [CacheHelper cleanUpCashMap];
     storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;

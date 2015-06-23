@@ -1427,7 +1427,7 @@
                                                                 </mask>
                                                             </variation>
                                                         </label>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="miranda-kerr.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="XRJ-zZ-nYs">
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="user-icon-gray.png" translatesAutoresizingMaskIntoConstraints="NO" id="XRJ-zZ-nYs">
                                                             <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="37" id="Cr7-wi-6bE">
@@ -1684,7 +1684,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PtJ-FP-ejk">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="miranda-kerr.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="lMt-rg-QEU">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="user-icon-gray.png" translatesAutoresizingMaskIntoConstraints="NO" id="lMt-rg-QEU">
                                         <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="32" id="Iyc-AG-hA9">
@@ -1965,7 +1965,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="miranda-kerr.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="lsR-uQ-pGV">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="user-icon-gray.png" translatesAutoresizingMaskIntoConstraints="NO" id="lsR-uQ-pGV">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="251" id="01h-tT-lJQ">
@@ -2332,7 +2332,7 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="wPd-1X-5CC" id="fq6-dA-swn">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="miranda-kerr.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="YfU-yC-BX2">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="user-icon-gray.png" translatesAutoresizingMaskIntoConstraints="NO" id="YfU-yC-BX2">
                                                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="35" id="blr-Ee-Uk0">
@@ -4480,7 +4480,7 @@
         <image name="camera-icon.png" width="500" height="500"/>
         <image name="drop.png" width="500" height="500"/>
         <image name="eye.png" width="500" height="500"/>
-        <image name="miranda-kerr.jpg" width="634" height="699"/>
+        <image name="user-icon-gray.png" width="512" height="512"/>
         <image name="wz-monkey-bg.jpg" width="750" height="1334"/>
     </resources>
 </document>

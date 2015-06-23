@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "SuperModel.h"
 #import "MediaModel.h"
+#import "CacheHelper.h"
 @interface UserModel : SuperModel
 @property (nonatomic,strong) NSString * username;
 @property (nonatomic,strong) NSString * usernameFormatted;
@@ -31,6 +32,7 @@
 @property (nonatomic,strong) MediaModel *mediaModel;
 @property (nonatomic) bool isDownloading;
 @property (nonatomic,strong) MediaController *mediaController;
+@property (nonatomic, strong) CacheHelper *cacheHelper;
 -(id)init:(NSMutableDictionary *)dic;
 -(void)find:(void (^)(UserModel *))completionCallback
     onError:(void(^)(NSError *))errorCallback;

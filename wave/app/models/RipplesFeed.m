@@ -20,14 +20,14 @@
 }
 
 -(void)getFeed:(void (^)(void))completionCallback onError:(void(^)(NSError *))errorCallback{
-    self.feed = [[NSMutableArray alloc] init];
+    
     [self.applicationController getHttpRequest:url
                                   onCompletion:^(NSURLResponse *response,NSData *data,NSError *error){
+                                      self.feed = [[NSMutableArray alloc] init];
                                       NSMutableDictionary *dic = [ParserHelper parse:data];
                                       ResponseModel *responseModel = [[ResponseModel alloc] init:dic];
                                       [self feedFromResponseModel:responseModel];
                                       completionCallback();
-                                      
                                   } onError:errorCallback];
 }
 

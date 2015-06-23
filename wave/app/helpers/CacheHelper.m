@@ -8,6 +8,7 @@
 
 #import "CacheHelper.h"
 #import "CacheModel.h"
+static NSMutableArray *localCacheMap;
 @implementation CacheHelper
 
 
@@ -17,47 +18,45 @@
     return self;
 }
 
--(NSArray *)getCacheMap{
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSData *myDecodedObject = [defaults objectForKey: [NSString stringWithFormat:@"cacheMap"]];
-    
-    NSArray *decodedArray = nil;
-    @try {
-        decodedArray =[[NSKeyedUnarchiver unarchiveObjectWithData: myDecodedObject] mutableCopy];
-    }
-    @catch (NSException *exception) {
-        NSLog(@"Error: %@", [exception name]);
++(NSMutableArray *)getCacheMap{
+    if (localCacheMap == nil) {
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        NSData *myDecodedObject = [defaults objectForKey: [NSString stringWithFormat:@"cacheMap"]];
+        @try {
+            localCacheMap = [[NSMutableArray alloc] initWithArray:[[NSKeyedUnarchiver unarchiveObjectWithData: myDecodedObject] mutableCopy]];
+        }
+        @catch (NSException *exception) {
+            NSLog(@"Error: %@", [exception name]);
+            
+        }
+        @finally {
+            NSLog(@"trying");
+        }
         
+        return localCacheMap;
     }
-    @finally {
-        NSLog(@"trying");
-    }
+    return localCacheMap;
     
-    return decodedArray;
 }
 
--(void)storeInCashMap:(NSString *) key{
++(void)storeInCashMap:(NSString *) key{
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSArray *cacheMap = [self getCacheMap];
-    NSMutableArray *array;
-    if (cacheMap == nil) {
-        array = [[NSMutableArray alloc] init];
-    }
-    else{
-        array = [[NSMutableArray alloc] initWithArray:cacheMap];
+    [self getCacheMap];
+    if (localCacheMap == nil) {
+        localCacheMap = [[NSMutableArray alloc] init];
     }
     
     CacheModel *cacheModel = [self createCacheForKey:key];
     
-    [array addObject:cacheModel];
+    [localCacheMap addObject:cacheModel];
     
-    NSData *myEncodedObject = [NSKeyedArchiver archivedDataWithRootObject:array];
+    NSData *myEncodedObject = [NSKeyedArchiver archivedDataWithRootObject:localCacheMap];
     [defaults setObject:myEncodedObject forKey:[NSString stringWithFormat:@"cacheMap"]];
     [defaults synchronize];
 }
 
 
--(void)cleanUpCashMap{
++(void)cleanUpCashMap{
     NSArray *cacheMap = [self getCacheMap];
     NSMutableArray *newArray = [[NSMutableArray alloc] init];
     NSDate *currentTime = [self getCurrentTime];
@@ -80,7 +79,7 @@
     }
 }
 
--(CacheModel *)createCacheForKey:(NSString *) key{
++(CacheModel *)createCacheForKey:(NSString *) key{
     NSDate *currentTime = [NSDate date];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"MM/dd/yyyy hh:mm:ss aa"];
@@ -88,7 +87,7 @@
     return [[CacheModel alloc] initWithKey:key withDate:currentTime];
 }
 
--(NSDate *)getCurrentTime{
++(NSDate *)getCurrentTime{
     NSDate *currentTime = [NSDate date];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"MM/dd/yyyy hh:mm:ss aa"];
