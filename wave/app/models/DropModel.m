@@ -36,6 +36,7 @@
         self.rgt = [self getIntValueFromString:@"rgt"];
         self.temperature = [self getIntValueFromString:@"temperature"];
         self.thumbnail_url = [self getStringValueFromString:@"thumbnail_url"];
+        self.thumbnail_key = [self getStringValueFromString:@"thumbnail_key"];
         self.user = [[UserModel alloc]init:[dic objectForKey:@"user"]];
     }
     return self;
@@ -103,19 +104,8 @@
 
 -(void)downloadImage:(void (^)(NSData*))completionCallback
 {
-  
-    /*
-     [mediaController getMedia:self.media_url
-     onCompletion:^(NSData *data){
-     self.media_tmp = data;
-     completionCallback(data);
-     }
-     onError:^(NSError *error){
-     }];
-     */
     if (!self.isDownloading) {
         self.isDownloading = YES;
-        NSLog(@"Downlad %d ", self.Id);
         [self.mediaController downloadMedia:self.media_url
                                onCompletion:^(NSData *data){
                                    self.media_tmp = data;
@@ -130,8 +120,6 @@
                                      
                                  }];
     }
-    
-    
 }
 
 -(void)cancelDownload{
@@ -142,8 +130,6 @@
 {
     [self.mediaController downloadMedia:self.thumbnail_url
                            onCompletion:^(NSData *data){
-                               NSLog(@"Done");
-                               
                                self.thumbnail_tmp = data;
                                [self storeThumbnailInCache:data];
                                completionCallback(data);
@@ -181,10 +167,8 @@
 -(void)requestPhoto:(void (^)(NSData*))completionCallback{
     self.media_tmp = self.media_tmp == nil ? [self mediaFromCache] : self.media_tmp;
     if(self.media_tmp == nil){
-        NSLog(@"image is not here already");
         [self downloadImage:completionCallback];
     }else{
-        NSLog(@"image is here already");
         completionCallback(self.media_tmp);
     }
 }
@@ -226,7 +210,6 @@
         NSData *cacheData = [[NSUserDefaults standardUserDefaults] objectForKey:self.media_key];
         if (cacheData == nil) {
             // If the data is not already in the cache, store it
-            NSLog(@"STORING IN CaCHE");
             [[NSUserDefaults standardUserDefaults] setObject:data forKey:self.media_key];
             [self.cacheHelper storeInCashMap:self.media_key];
             //Update the table
@@ -241,7 +224,6 @@
         NSData *cacheData = [[NSUserDefaults standardUserDefaults] objectForKey:self.thumbnail_key];
         if (cacheData == nil) {
             // If the data is not already in the cache, store it
-            NSLog(@"STORING IN CaCHE");
             [[NSUserDefaults standardUserDefaults] setObject:data forKey:self.thumbnail_key];
             [self.cacheHelper storeInCashMap:self.thumbnail_key];
             //Update the table

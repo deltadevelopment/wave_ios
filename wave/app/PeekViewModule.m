@@ -52,7 +52,7 @@
     [self.settingsButton setImageEdgeInsets:UIEdgeInsetsMake(10, 10, 10, 10)];
     [self.settingsButton addTarget:self action:@selector(showSettings) forControlEvents:UIControlEventTouchUpInside];
     [self.settingsButton setImage:[UIImage imageNamed:@"settings-icon-white.png"] forState:UIControlStateNormal];
-    
+    [self.settingsButton showsTouchWhenHighlighted];
     [[self.subscribeButton layer] setBorderWidth:1.0f];
     [[self.subscribeButton layer] setBorderColor:[UIColor whiteColor].CGColor];
     //[self.subscribeButton.titleLabel setTextAlignment:NSTextAlignmentCenter];
@@ -108,6 +108,9 @@
 -(void)updateText:(UserModel *) user
 {
     self.user = user;
+    [self.user requestProfilePic:^(NSData *data){
+        [self.profilePicture setImage:[UIImage imageWithData:data]];
+    }];
     if(user.Id == [[authHelper getUserId] intValue]){
         isDeviceUser = YES;
         //self.subscribeButton.hidden = YES;
@@ -115,7 +118,6 @@
         [self.subscribeButton setTitle:@"Subscriptions" forState:UIControlStateNormal];
         //[self.subscribeButton setBackgroundColor:[ColorHelper purpleColor]];
         //[[self.subscribeButton layer] setBorderColor:[ColorHelper purpleColor].CGColor];
-        
     }else{
         self.subscribeButton.hidden = NO;
         self.settingsButton.hidden = YES;
@@ -129,8 +131,6 @@
 }
 
 -(void)showSettings{
-    
-    NSLog(@"SERTTIN");
     UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
     SettingsTableViewController *vc = [mainStoryboard instantiateViewControllerWithIdentifier:@"settings"];
     //[superController.navigationController presentViewController:vc animated:YES completion:nil];
@@ -142,7 +142,7 @@
 }
 
 -(void)fadeOut{
-    [UIView animateWithDuration:0.3f
+    [UIView animateWithDuration:0.1f
                           delay:0.0f
                         options: UIViewAnimationOptionCurveLinear
                      animations:^{
@@ -157,8 +157,8 @@
 }
 
 -(void)fadeIn{
-    [UIView animateWithDuration:0.3f
-                          delay:0.5f
+    [UIView animateWithDuration:0.1f
+                          delay:0.0f
                         options: UIViewAnimationOptionCurveLinear
                      animations:^{
                          self.backgroundView.alpha = 0.5;
@@ -201,7 +201,6 @@
 
 -(void)checkSubscription{
     if(self.user.Id != [[authHelper getUserId] intValue]){
-        NSLog(@"Checking subscription for %d", self.user.Id);
         UserModel *deviceUser =[[UserModel alloc] initWithDeviceUser];
         self.subscribeModel = [[SubscribeModel alloc] initWithSubscriber:deviceUser withSubscribee:self.user];
         if (self.subscribeModel.isSubscriberLocal) {
@@ -235,7 +234,7 @@
 
 -(void)updatePeekView:(UserModel *) user{
     self.user = user;
-   
+    NSLog(@"HERE");
     self.subscribersCountLabel.text = [NSString stringWithFormat:@"%d others already do", [user subscribers_count]];
     self.usernameLabel.text = [user display_name] != nil ? [user display_name] : [user usernameFormatted];
     if(user.Id == [[authHelper getUserId] intValue]){
@@ -279,18 +278,14 @@
     }
     else {
         //Show Subscribers
-        NSLog(@"Showing subscribers");
         UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
         UINavigationController *vc = [mainStoryboard instantiateViewControllerWithIdentifier:@"searchNavigation"];
-        
        // [vc.navigationBar setti]
        [vc.navigationBar setTintColor:[ColorHelper purpleColor]];
         [vc.navigationBar setBackgroundColor:[ColorHelper purpleColor]];
         [vc.navigationBar setBarTintColor:[ColorHelper purpleColor]];
         //[[ApplicationHelper getMainNavigationController] pushViewController:vc animated:YES];
-     
         [[ApplicationHelper getMainNavigationController] presentViewController:vc animated:YES completion:nil];
-       
     }
 }
 

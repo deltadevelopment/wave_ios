@@ -22,7 +22,6 @@
 }
 -(void)initalizeWithMode:(bool)searchMode{
     self.isInitialized = YES;
-    NSLog(@"Is initalised");
     self.searchMode = searchMode;
      self.selectionStyle = UITableViewCellSelectionStyleNone;
     //Drawings here
@@ -89,11 +88,16 @@
         [self.subscribeButton setBackgroundColor:[ColorHelper purpleColor]];
         [self.subscribeButton setTintColor:[ColorHelper whiteColor]];
     }else{
-        [self.subscribeButton setImage: [UIHelper iconImage:[UIImage imageNamed:@"plus-icon-simple.png"] withSize:40] forState:UIControlStateNormal];
+        [self.subscribeButton setImage: [UIHelper iconImage:[UIImage imageNamed:@"plus-icon-simple.png"]
+                                                   withSize:40]
+                              forState:UIControlStateNormal];
         [self.subscribeButton setBackgroundColor:[ColorHelper whiteColor]];
         [self.subscribeButton setImageEdgeInsets:UIEdgeInsetsMake(5, 12.5, 5, 12.5)];
         [self.subscribeButton setTintColor:[ColorHelper purpleColor]];
     }
+    [[subscription subscribee] requestProfilePic:^(NSData *data){
+        [self.profilePictureImage setImage:[UIHelper iconImage:[UIImage imageWithData:data] withSize:60.0f]];
+    }];
 }
 
 -(void)subscribeAction{
@@ -114,7 +118,6 @@
         [self.subscribeButton setImageEdgeInsets:UIEdgeInsetsMake(5, 12.5, 5, 12.5)];
         [self.subscribeButton setTintColor:[ColorHelper purpleColor]];
         [subscription delete:^(ResponseModel *response){
-            NSLog(@"Deleted");
         } onError:^(NSError *error){}];
     }else{
         [self.subscribeButton setImage: [UIHelper iconImage:[UIImage imageNamed:@"tick.png"] withSize:40] forState:UIControlStateNormal];

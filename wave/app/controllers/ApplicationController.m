@@ -31,6 +31,7 @@
 {
     NSURL *urlFromString = [NSURL URLWithString:[applicationHelper generateUrl:url]];
     NSLog(@"GET : %@", urlFromString);
+    NSLog(@"-------------------------");
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:urlFromString cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:1200.0];
     [request setValue:@"text" forHTTPHeaderField:@"Content-type"];
     [request addValue:[authHelper getAuthToken] forHTTPHeaderField:@"X-AUTH-TOKEN"];
@@ -44,6 +45,8 @@
                 onError:(void(^)(NSError *))errorCallback
 {
     NSURL * urlFromString = [NSURL URLWithString:[applicationHelper generateUrl:url]];
+    NSLog(@"POST : %@", urlFromString);
+    NSLog(@"-------------------------");
     NSMutableURLRequest * request = [NSMutableURLRequest requestWithURL:urlFromString];
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-type"];
     [request addValue:[authHelper getAuthToken] forHTTPHeaderField:@"X-AUTH-TOKEN"];
@@ -57,6 +60,8 @@
                   onError:(void(^)(NSError *))errorCallback
 {
     NSURL *urlFromString = [NSURL URLWithString:[applicationHelper generateUrl:url]];
+    NSLog(@"DELETE : %@", urlFromString);
+    NSLog(@"-------------------------");
     NSMutableURLRequest * request = [NSMutableURLRequest requestWithURL:urlFromString];
     [request setValue:@"text" forHTTPHeaderField:@"Content-type"];
     [request addValue:[authHelper getAuthToken] forHTTPHeaderField:@"X-AUTH-TOKEN"];
@@ -70,15 +75,14 @@
                onError:(void(^)(NSError *))errorCallback
 {
     NSURL *urlFromString = [NSURL URLWithString:[applicationHelper generateUrl:url]];
+    NSLog(@"PUT : %@", urlFromString);
+    NSLog(@"-------------------------");
     NSMutableURLRequest * request = [NSMutableURLRequest requestWithURL:urlFromString];
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-type"];
     [request addValue:[authHelper getAuthToken] forHTTPHeaderField:@"X-AUTH-TOKEN"];
     [request setHTTPMethod:@"PUT"];
     [request setHTTPBody:[data dataUsingEncoding:NSUTF8StringEncoding]];
     [self sendRequestAsync:request onCompletion:callback onError:errorCallback];
-    
-    
-    
 };
 
 -(void)sendRequestAsync:(NSMutableURLRequest *)request
@@ -134,7 +138,6 @@
     }
 
     if((error.code == NSURLErrorUserCancelledAuthentication && statuscode == 0) || statuscode == 401){
-        NSLog(@"Logg ut her");
         statuscode = 401;
         [authHelper resetCredentials];
         UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];

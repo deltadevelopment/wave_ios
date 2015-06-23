@@ -78,7 +78,6 @@ const int PEEK_Y_START = 300;
         TemperatureModel *temperatureModel = [[TemperatureModel alloc] initWithDrop:[[currentDropPage drop] Id]];
         [temperatureModel setTemperature:[temperature intValue]];
         [temperatureModel saveChanges:^(ResponseModel *response, TemperatureModel *temperatureModel){
-            NSLog(@"temperature was saved to bucket");
             if(shouldAnimateTemperatureChanges){
                 [currentDropPage bindTemperatureChanges];
                 shouldAnimateTemperatureChanges = NO;
@@ -135,7 +134,6 @@ const int PEEK_Y_START = 300;
 
 
 -(void)tapInfoButton{
-    NSLog(@"tapping here");
     [self showActions];
     /*if([infoView viewHidden]){
      [infoView show];
@@ -162,7 +160,6 @@ const int PEEK_Y_START = 300;
                           {
                               if (bucket.watching) {
                                   [bucket unwatch:^(ResponseModel *response){
-                                      NSLog(@"sucessfully unwathcing");
                                       [view dismissViewControllerAnimated:YES completion:nil];
                                   }
                                         onError:^(NSError *error){
@@ -170,7 +167,6 @@ const int PEEK_Y_START = 300;
                                         }];
                               }else{
                                   [bucket watch:^(ResponseModel *response){
-                                      NSLog(@"sucessfully wathcing");
                                       [view dismissViewControllerAnimated:YES completion:nil];
                                   }
                                         onError:^(NSError *error){
@@ -186,9 +182,7 @@ const int PEEK_Y_START = 300;
                             style:UIAlertActionStyleDefault
                             handler:^(UIAlertAction * action)
                             {
-                                
                                 [currentDropPage.drop redrop:^(ResponseModel *response){
-                                    NSLog(@"sucessfully redropped");
                                     [view dismissViewControllerAnimated:YES completion:nil];
                                 } onError:^(NSError *error){}];
                                 //Do some thing here
@@ -224,7 +218,6 @@ const int PEEK_Y_START = 300;
                               //Do some thing here
                               
                               //Show Subscribers
-                              NSLog(@"Showing subscribers");
                               UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
                               UINavigationController *vc = [mainStoryboard instantiateViewControllerWithIdentifier:@"searchNavigation"];
                               SearchViewController *tagsView =  [[vc viewControllers] objectAtIndex:0];
@@ -322,7 +315,6 @@ const int PEEK_Y_START = 300;
             //Do some thing here
             
             [currentDropPage.drop delete:^(ResponseModel *response){
-                NSLog(@"sucessfully deleted");
                 DropModel *oldDrop = currentDropPage.drop;
                 currentDropPage = [self viewControllerAtIndex:[currentDropPage pageIndex] -1 replacingObject:nil];
                 NSArray *viewControllers = @[currentDropPage];
@@ -340,7 +332,6 @@ const int PEEK_Y_START = 300;
             } onError:^(NSError *error){}];
         }else{
             [bucket delete:^(ResponseModel *response, BucketModel *newBucket){
-                 NSLog(@"sucessfully deleted bucket");
                 [DataHelper addToDeletionQueue:bucket];
                 [self despandBucket:nil];
             } onError:^(NSError *error){
@@ -519,13 +510,22 @@ const int PEEK_Y_START = 300;
     // NSLog(@"dismissing");
 }
 
+-(void)viewDidAppear:(BOOL)animated{
+
+   
+   
+    NSLog(@"PEEK view");
+}
+
 
 -(void)addPeekView{
     [self addBlur];
     //peekViewController = [[PeekViewController alloc] init];
     peekViewController = (PeekViewController *)[storyboard instantiateViewControllerWithIdentifier:@"peekView"];
+    
     [peekViewController setPageViewController:self.pageViewController];
     peekViewController.view.frame = CGRectMake(0, -PEEK_Y_START, [UIHelper getScreenWidth], PEEK_Y_START);
+    //peekViewController.view.translatesAutoresizingMaskIntoConstraints = YES;
     [peekViewController setParentController:self];
     //[self.view addSubview:peekViewController.view];
     [self.view insertSubview:peekViewController.view aboveSubview:blurEffectView];
@@ -603,7 +603,6 @@ const int PEEK_Y_START = 300;
         }
         
     }else{
-        NSLog(@"SETTING TITLE %@", [bucket title]);
         superButtonDisabled = NO;
         [self.navigationItem setTitle:[bucket title]];
     }
@@ -642,7 +641,6 @@ const int PEEK_Y_START = 300;
         return nil;
     }
     if(index == 0){
-        NSLog(@"RETURNING LAST DROP");
         return [self viewControllerAtIndex:[[bucket drops] count]-1 replacingObject:nil];
     }
     
@@ -716,7 +714,6 @@ const int PEEK_Y_START = 300;
     }
     
     DropController *pageContentViewController = [[DropController alloc] init];
-    NSLog(@"size is %lu", (unsigned long)[[bucket drops] count]);
     DropModel *dropModel = [[bucket drops] objectAtIndex:index];
     if(pageToReplace != nil){
         //Uses the prefetched thumbnail or image from the feed, instead of downloading it again
@@ -747,6 +744,7 @@ const int PEEK_Y_START = 300;
 {
     if(!cameraMode && !infoViewMode){
         isPeeking = YES;
+        NSLog(@"ISPEEKING");
         UILabel *label = (UILabel *)gesture.view;
         CGPoint translation = [gesture translationInView:label];
         CGRect frame = peekViewController.view.frame;
@@ -770,7 +768,6 @@ const int PEEK_Y_START = 300;
                 if(!isAboutToleaveBucket){
                    // [currentDropPage startVideo];
                 }
-                NSLog(@"starting video");
                 isPeeking = NO;
             }
         }
@@ -836,7 +833,6 @@ const int PEEK_Y_START = 300;
 
 
 -(void)onCameraOpen{
-    NSLog(@"CAMERA OPEN");
     [currentDropPage stopVideo];
     [self.camera prepareCamera:YES withReply:YES];
     [DataHelper setCurrentBucketId:bucket.Id];
@@ -920,9 +916,6 @@ const int PEEK_Y_START = 300;
                                          [bucket removeLastDrop];
                                          [self updatePageIndicator:[bucket drops].count-1];
                                      }];
-    
-    
-    NSLog(@"cancel");
     // Scroller.userInteractionEnabled = YES;
     //PageCount -=1;
     //[currentView removeFromSuperview];

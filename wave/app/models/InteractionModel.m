@@ -14,7 +14,6 @@
 -(id)init:(NSMutableDictionary *)dic{
     self =[super init];
     self.dictionary = dic;
-    NSLog(@"my dic is %@", dic);
     self.Id = [self getIntValueFromString:@"Id"];
     self.topic_id = [self getIntValueFromString:@"topic_id"];
     self.topic_type = [self getStringValueFromString:@"topic_type"];

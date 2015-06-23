@@ -87,7 +87,6 @@
 -(BOOL)isSubscriberLocal{
    int localId = [[[NSUserDefaults standardUserDefaults] objectForKey:
                    [NSString stringWithFormat:@"subscriber-%d", [self.subscribee Id]]] intValue];
-    NSLog(@"the subscriber id is %d", localId);
     if (localId > 0) {
         return YES;
     }else{

@@ -139,7 +139,6 @@
 }
 
 -(void)update:(BucketModel *) bucket{
-    NSLog(@"Updating");
     self.profilePictureIcon.hidden = YES;
    [self.bucketImage setImage:nil];
     [[bucket user] requestProfilePic:^(NSData *data){

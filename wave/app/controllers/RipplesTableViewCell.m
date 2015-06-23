@@ -193,8 +193,6 @@
     location.y -= textView.textContainerInset.top;
     
     // Find the character that's been tapped on
-    NSLog(@"the location is %f %f", location.x, location.y);
-    
     NSUInteger characterIndex;
     characterIndex = [layoutManager characterIndexForPoint:location
                                            inTextContainer:textView.textContainer
@@ -210,7 +208,6 @@
             id value = [textView.attributedText attribute:tag atIndex:characterIndex effectiveRange:&range];
             if(value){
                 //Navigate to the user
-                NSLog(@"%@, %lu, %lu", value, (unsigned long)range.location, (unsigned long)range.length);
                 self.onUserTap(self.ripple);
             }else{
                 if ([[self.ripple.interaction topic_type] isEqualToString:@"Bucket"]) {
@@ -317,9 +314,6 @@
 
 -(void)subscribeAction{
     //Subscribe to user here
- 
-    
-  NSLog(@"button pressed subscribe");
     if([self.ripple.interaction.subscription reverse]){
         [self.ripple.interaction.subscription delete:^(ResponseModel *response){
             [self.subscribeButton setImage: [UIHelper iconImage:[UIImage imageNamed:@"plus-icon-simple.png"] withSize:40] forState:UIControlStateNormal];
@@ -328,18 +322,10 @@
             [self.subscribeButton setTintColor:[ColorHelper purpleColor]];
         } onError:^(NSError *error){}];
         [self.ripple.interaction.subscription setReverse:NO];
-    
-        
-        
     }
     else{
-        
-         [self.ripple.interaction.subscription setReverse:YES];
-        
-     
-        
+        [self.ripple.interaction.subscription setReverse:YES];
         [self.ripple.interaction.subscription saveChanges:^(ResponseModel *response){
-            
             [self.subscribeButton setImage: [UIHelper iconImage:[UIImage imageNamed:@"tick.png"] withSize:40] forState:UIControlStateNormal];
             [self.subscribeButton setBackgroundColor:[ColorHelper purpleColor]];
             [self.subscribeButton setTintColor:[ColorHelper whiteColor]];
@@ -349,33 +335,25 @@
              
          }];
     }
-    
-    
-   
-    
 }
 
 -(void)dropAction{
     //Show the bucket, then the drop
-    NSLog(@"button pressed drop");
     self.onDropTap(self.ripple, self);
 }
 
 -(void)bucketAction{
     //Show the bucket normally
-    NSLog(@"button pressed bucket");
-     self.onBucketTap(self.ripple, self);
+    self.onBucketTap(self.ripple, self);
 }
 
 -(void)temperaturAction{
     //show the bucket, then the drop
-    NSLog(@"button pressed tenperature");
      self.onDropTap(self.ripple, self);
 }
 
 -(void)tagAction{
      //show the bucket, then the drop
-    NSLog(@"button pressed tag not implemented");
      self.onDropTap(self.ripple, self);
 }
 
@@ -391,7 +369,6 @@
 }
 
 -(void)calculateHeight{
-    NSLog(@"HEIGHT IS %f", [self getHeightForLabel]);
     CGRect rect = self.notificationLabel.frame;
     rect.size.height =[self getHeightForLabel];
     self.notificationLabel.frame = rect;

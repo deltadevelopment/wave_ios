@@ -44,7 +44,6 @@
     //NSURL *url = [NSURL URLWithString:dataString];
     player = [[MPMoviePlayerController alloc] initWithContentURL:movieUrl];
     player.view.frame = CGRectMake(0, 0, [UIHelper getScreenWidth], [UIHelper getScreenHeight]);
-    //NSLog(@"video: %@",[status getMediaUrl]);
     player.movieSourceType = MPMovieSourceTypeFile;
     player.controlStyle = MPMovieControlStyleNone;
     player.repeatMode = MPMovieRepeatModeOne;

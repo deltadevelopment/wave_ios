@@ -52,7 +52,6 @@
     isSearching = YES;
     authHelper = [[AuthHelper alloc] init];
     urlPath = [NSString stringWithFormat:@"%@/%@", [[[ConfigHelper alloc] init] baseUrl], urlPath];
-    NSLog(@"the url is %@", urlPath);
     NSURL *url = [NSURL URLWithString:urlPath];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [request setHTTPMethod:@"POST"];
@@ -123,8 +122,6 @@ totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite
         }
         
     }
-    
-    NSLog(@"perce");
 }
 
 
@@ -132,12 +129,8 @@ totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
     NSHTTPURLResponse* httpResponse = (NSHTTPURLResponse*)response;
-    
     NSLog(@"response %ld", (long)[httpResponse statusCode]);
-    //NSLog(@"Data is %lu", (unsigned long)[array count]);
-  
     _data = [[NSMutableData alloc] init];
-    
 }
 
 -(void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data{
@@ -145,7 +138,7 @@ totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite
         _data = [[NSMutableData alloc]init];
     }
     [_data appendData:data];
-    NSLog(@"Appending data");
+    //NSLog(@"Appending data");
     //[_data appendData:data];
 }
 

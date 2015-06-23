@@ -36,13 +36,9 @@
 }
 
 -(void)bindToModel{
-    NSLog(@" ---- About to request media for drop id %d", self.drop.Id);
-    //Bind all ui text etc and images
     DropView *dropView = (DropView *)self.view;
     [dropView setDropUI:self.drop];
     if([self.drop media_type] == 1 && self.isPlaceholderView){
-        //IS video, should get thumbnail
-         NSLog(@" ---- About to request thumbnail for drop id %d", self.drop.Id);
         [self.drop requestThumbnail:^(NSData *media){
          [dropView setMedia:[UIImage imageWithData:media] withIndexId:[self.drop Id]];
         }];
@@ -66,9 +62,7 @@
                 [[dropView spinner] stopAnimating];
                 if([self isStartingView]){
                     [dropView playVideo];
-                    NSLog(@"STARTING VIDEOOOOO");
                 }else if(self.isDisplaying){
-                     NSLog(@"STARTING VIDEOOOOO");
                     [dropView playVideo];
                 }
                 //[self startStopVideo:nil];
@@ -78,7 +72,6 @@
             self.isLoaded = YES;
         }];
     }
-    
 }
 -(void)viewDidDisappear:(BOOL)animated{
     [self.drop cancelDownload];

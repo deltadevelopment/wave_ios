@@ -121,12 +121,10 @@
     
     if (!self.isDownloading) {
         self.isDownloading = YES;
-        NSLog(@"Downlad %d ", self.Id);
         [self.mediaController downloadMedia:self.profile_picture_url
                                onCompletion:^(NSData *data){
                                    self.media_tmp = data;
                                    self.isDownloading = NO;
-                                   NSLog(@"IMAGE IS DOWBLLAOED");
                                    completionCallback(data);
                                }
                                     onError:^(NSError *error){
@@ -139,17 +137,13 @@
 }
 
 -(void)requestProfilePic:(void (^)(NSData*))completionCallback{
-    NSLog(@"Requesting profile pic");
     if (self.profile_picture_url == nil) {
-        NSLog(@"is nill");
-        self.media_tmp = UIImagePNGRepresentation([UIImage imageNamed:@"manatee-gray.png"]);
+        self.media_tmp = UIImagePNGRepresentation([UIImage imageNamed:@"user-icon-gray.png"]);
         completionCallback(self.media_tmp);
     }else{
         if(self.media_tmp == nil){
-            NSLog(@"profile is not here already");
             [self downloadImage:completionCallback];
         }else{
-            NSLog(@"profile is here already");
             completionCallback(self.media_tmp);
         }
     }

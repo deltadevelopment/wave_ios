@@ -13,7 +13,7 @@
 #import "BucketController.h"
 #import "RipplesFeed.h"
 #import "DataHelper.h"
-static int TABLE_CELLS_ON_SCREEN = 6;
+//static int TABLE_CELLS_ON_SCREEN = 6;
 @interface RipplesViewController ()
 
 @end
@@ -76,8 +76,6 @@ static int TABLE_CELLS_ON_SCREEN = 6;
          [weakSelf stopRefreshing];
         if(![self.ripplesFeedModel hasNotifications]){
             self.tableView.hidden = YES;
-            NSLog(@"no notifications");
-            
         }else{
            
         }
@@ -91,10 +89,10 @@ static int TABLE_CELLS_ON_SCREEN = 6;
 -(void)stopRefreshing{
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"MMM d, h:mm a"];
-    NSString *title = [NSString stringWithFormat:@"Last update: %@", [formatter stringFromDate:[NSDate date]]];
-    NSDictionary *attrsDictionary = [NSDictionary dictionaryWithObject:[UIColor whiteColor]
-                                                                forKey:NSForegroundColorAttributeName];
-    NSAttributedString *attributedTitle = [[NSAttributedString alloc] initWithString:title attributes:attrsDictionary];
+    //NSString *title = [NSString stringWithFormat:@"Last update: %@", [formatter stringFromDate:[NSDate date]]];
+    //NSDictionary *attrsDictionary = [NSDictionary dictionaryWithObject:[UIColor whiteColor]
+                                                            //    forKey:NSForegroundColorAttributeName];
+   // NSAttributedString *attributedTitle = [[NSAttributedString alloc] initWithString:title attributes:attrsDictionary];
     //self.refreshControl.attributedTitle = attributedTitle;
     [self.refreshControl endRefreshing];
     [self.tableView reloadData];
@@ -106,7 +104,6 @@ static int TABLE_CELLS_ON_SCREEN = 6;
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    NSLog(@"count is %lu", (unsigned long)[[self.ripplesFeedModel feed] count]);
     return [[self.ripplesFeedModel feed] count];
 }
 
@@ -131,10 +128,8 @@ static int TABLE_CELLS_ON_SCREEN = 6;
     cell.onDropTap = ^(RippleModel *ripple, RipplesTableViewCell *cell){
         [weakSelf showDropNormally:ripple withCell:cell];
     };
-    [cell.profilePictureImage setImage:[UIImage imageNamed:@"miranda-kerr.jpg"]];
+    [cell.profilePictureImage setImage:[UIImage imageNamed:@"user-icon-gray.png"]];
    
-    
-    
     //cell.notificationLabel.text = [rippleModel message];
    
     cellFrame = [cell makeTextClickableAndLayout: [[rippleModel getComputedString] objectAtIndex:0]
@@ -173,21 +168,24 @@ static int TABLE_CELLS_ON_SCREEN = 6;
     frame.origin.y = -[UIHelper getScreenHeight];
     profileController.view.frame = frame;
     [profileController layOutPeek];
-    NSLog(@"Adding");
+    self.navigationItem.backBarButtonItem =
+    [[UIBarButtonItem alloc] initWithTitle:@""
+                                      style:UIBarButtonItemStylePlain
+                                     target:nil
+                                     action:nil];
+    
     [[ApplicationHelper getMainNavigationController] pushViewController:profileController animated:YES];
 }
 
 -(void)showBucketNormally:(RippleModel *)ripple
                  withCell:(RipplesTableViewCell *) cell
 {
-    NSLog(@"showing bucket normal");
     currentBucketId = [[ripple.interaction bucket] Id];
     [self tableView:self.tableView didSelectRowAtIndexPath:[self.tableView indexPathForCell:cell]];
 }
 -(void)showDropNormally:(RippleModel *)ripple
                withCell:(RipplesTableViewCell *) cell
 {
-    NSLog(@"showing drop normal");
     currentBucketId = [[ripple.interaction drop] bucket_id];
     [self tableView:self.tableView didSelectRowAtIndexPath:[self.tableView indexPathForCell:cell]];
 }
@@ -279,7 +277,6 @@ static int TABLE_CELLS_ON_SCREEN = 6;
 }
 
 -(void)navigateWithRipple:(RippleModel *) ripple{
-    NSLog(@"NAVIGATING");
     if ([ripple.interaction.topic_type isEqualToString:@"Drop"]) {
         [self expandBucketWithId:[ripple.interaction.drop bucket_id] withDrop:ripple.interaction.drop.Id];
     }
@@ -352,7 +349,6 @@ static int TABLE_CELLS_ON_SCREEN = 6;
     
     //[self.navigationController setViewControllers:@[root] animated:NO];
     //[self.navigationController.view layoutIfNeeded];
-        NSLog(@"Chaning to bucket no errors");
     [self.navigationController pushViewController:bucketController animated:NO];
 }
 

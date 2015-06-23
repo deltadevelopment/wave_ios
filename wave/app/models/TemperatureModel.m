@@ -40,7 +40,6 @@
 -(void)saveChanges:(void (^)(ResponseModel *, TemperatureModel *))completionCallback
            onError:(void (^)(NSError *))errorCallback
 {
-    NSLog([NSString stringWithFormat:@"drop/%d/vote", self.drop_id]);
     [self.applicationController postHttpRequest:[NSString stringWithFormat:@"drop/%d/vote", self.drop_id]
                                            json:[self asJSON:self.asDictionary]
                                    onCompletion:^(NSURLResponse *response,NSData *data,NSError *error)
@@ -50,6 +49,5 @@
          completionCallback(responseModel, temperatureModel);
      }
                                         onError:errorCallback];
-    
 }
 @end

@@ -302,7 +302,6 @@ static CGFloat screenHeight;
 
 +(void)updateNotificationButton:(UINavigationItem *) item withButton:(UIButton *) button
 {
-    NSLog(@"Ripple count %d", [DataHelper getRippleCount]);
     if([DataHelper getRippleCount]> 0){
         if ([DataHelper getNotificationLabel] == nil) {
             UILabel *ripplesCount = [[UILabel alloc] initWithFrame:CGRectMake(16, -5, 20, 20)];

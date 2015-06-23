@@ -128,7 +128,6 @@
         [self stopIndicatorSpinning];
         if(response.success){
             //login
-            NSLog(@"logging in...");
             response.success ? [self showMainView] : nil;
         }else{
             /*

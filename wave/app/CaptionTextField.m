@@ -123,7 +123,6 @@ const int MIN_WIDTH = 100;
 }
 
 -(void)keyboardWillShow:(NSNotification *)note {
-    NSLog(@"KEYBOARD");
     self.onKeyboardShow(self);
     NSDictionary* info = [note userInfo];
     NSValue* aValue = [info objectForKey:UIKeyboardFrameBeginUserInfoKey];

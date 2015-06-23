@@ -889,16 +889,13 @@ didFinishRecordingToOutputFileAtURL:(NSURL *)outputFileURL
 
 
 -(NSData *)getVideoWithCaption{
-    NSLog(@"NIL?");
     NSString *path = [VideoURLWithCaption path];
-    NSLog(@"path is %@", path);
     NSData *data = [[NSFileManager defaultManager] contentsAtPath:path];
     return data;
 }
 
 - (void)exportDidFinish:(AVAssetExportSession*)session {
     __weak typeof(self) weakSelf = self;
-    NSLog(@"Saving file");
     if (session.status == AVAssetExportSessionStatusCompleted) {
         NSURL *outputURL = session.outputURL;
         ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
@@ -911,17 +908,14 @@ didFinishRecordingToOutputFileAtURL:(NSURL *)outputFileURL
                                                                        delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
                         [alert show];
                          */
-                        NSLog(@"ERROR");
                         weakSelf.onMediaSavedToDiskError();
                     } else {
-                          NSLog(@"Not error");
                         /*
                         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Video Saved" message:@"Saved To Photo Album"
                                                                        delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
                         [alert show];
                          */
                         if(!savingtoDisk){
-                            NSLog(@"SAVED");
                             weakSelf.onMediaRenderCompleted();
                         }else{
                             weakSelf.onMediaSavedToDisk();

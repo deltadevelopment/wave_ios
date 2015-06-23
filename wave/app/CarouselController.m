@@ -82,10 +82,7 @@
     self.startY = 64;
     [self getProgressIndicator].frame = CGRectMake(0, self.startY, 0, 4);
     [self.view addSubview:[self getProgressIndicator]];
-
 }
-
-
 
 -(void)viewDidLayoutSubviews{
     //[self.view insertSubview:[self getProgressIndicator] aboveSubview:self.pageViewController.view];
@@ -125,10 +122,9 @@
 
 #pragma mark - Page View Controller Data Source
 
-- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController
+- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController
+      viewControllerBeforeViewController:(UIViewController *)viewController
 {
-    
-    
     NSUInteger index = ((AbstractFeedViewController*) viewController).pageIndex;
     [self.carousel backward:index];
     if ((index == 0) || (index == NSNotFound)) {
@@ -166,11 +162,6 @@
     
 }
 
-
-
-
-
-
 -(void)setScrollEnabled:(BOOL)enabled forPageViewController:(UIPageViewController*)pageViewController{
     for(UIView* view in pageViewController.view.subviews){
         if([view isKindOfClass:[UIScrollView class]]){
@@ -183,13 +174,42 @@
 
 -(void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed
 {
-    NSLog(@"HERE preparinf");
     self.currentController = [pageViewController.viewControllers lastObject];
+    if (self.currentController.pageIndex != 0) {
+        [self animateSuperbuttonOut];
+    }else
+    {
+        [self animateSuperbuttonIn];
+    }
     [self prepareCamera];
 }
 
 
-
+-(void)animateSuperbuttonOut
+{
+    [UIView animateWithDuration:0.1f
+                          delay:0.0f
+                        options: UIViewAnimationOptionCurveLinear
+                     animations:^{
+                         [[[self superButton] getButton] setAlpha:0.0f];
+                     }
+                     completion:^(BOOL finished){
+                         [[[self superButton] getButton] setHidden:YES];
+                     }];
+}
+-(void)animateSuperbuttonIn
+{
+    [[[self superButton] getButton] setHidden:NO];
+    [UIView animateWithDuration:0.1f
+                          delay:0.0f
+                        options: UIViewAnimationOptionCurveLinear
+                     animations:^{
+                         [[[self superButton] getButton] setAlpha:1.0f];
+                     }
+                     completion:^(BOOL finished){
+                         
+                     }];
+}
 
 - (AbstractFeedViewController *)viewControllerAtIndex:(NSUInteger)index
 {
@@ -276,6 +296,7 @@
     [self.currentController onMediaPostedDrop:drop];
 }
 -(void)onCameraClose{
+    self.isRightButtonClickable = YES;
     [self.currentController oncameraClose];
 }
 -(void)showCamera{
@@ -293,6 +314,7 @@
 }
 
 -(void)onCameraOpen{
+    self.isRightButtonClickable = NO;
     [super onCameraOpen];
     [self.currentController onCameraOpen];
 }

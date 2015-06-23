@@ -32,11 +32,9 @@
     
     [self.mediaController search:[NSString stringWithFormat:@"%@/%@/%@/%d", url, self.searchMode,self.searchString,offset]
                     onCompletion:^(NSData *data){
-                        NSLog(@"Got here");
                         NSMutableDictionary *dic = [ParserHelper parse:data];
-                        NSLog(@"mys di is %@", dic);
-                        NSString *strdata=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
-                        NSLog(strdata);
+                        //NSString *strdata=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+                        //NSLog(strdata);
                         ResponseModel *responseModel = [[ResponseModel alloc] init:dic];
                         [self feedFromResponseModel:responseModel];
                         completionCallback();
@@ -49,7 +47,6 @@
 
 -(void)feedFromResponseModel:(ResponseModel *) response{
     if ([response success]) {
-        NSLog(@"users was returned");
         self.hasSearchResults = YES;
         NSMutableArray *rawFeed = [[response data] objectForKey:@"results"];
         for(NSMutableDictionary *rawBucket in rawFeed){

@@ -68,8 +68,7 @@ const int EXPAND_SIZE = 400;
     self.tableView.backgroundColor = [ColorHelper purpleColor];
     if(viewMode == 1){
         [self addPeekView];
-        [self.superButton getButton].hidden = YES;
-        NSLog(@"hidign superbutton");
+        //[self.superButton getButton].hidden = YES;
     }
 }
 
@@ -127,7 +126,6 @@ const int EXPAND_SIZE = 400;
 
 -(void)addPeekView{
     peekViewModule = [[PeekViewModule alloc] initWithView:self.view withSubview:cameraHolder withController:self.navigationController];
-     NSLog(@"hiding2");
     if(self.isDeviceUser){
         userModel =[[UserModel alloc] initWithDeviceUser:^(UserModel *user){
             [peekViewModule updateText:user];
@@ -178,8 +176,7 @@ const int EXPAND_SIZE = 400;
     [self.feedModel getFeed:^{
         [weakSelf stopRefreshing];
     } onError:^(NSError *error){
-        //NSLog(@"%@", [error localizedDescription]);
-        
+        NSLog(@"%@", [error localizedDescription]);
     }];
 }
 
@@ -424,7 +421,6 @@ const int EXPAND_SIZE = 400;
 
 -(void)onImageTaken:(UIImage *)image withText:(NSString *)text{
     [self mediaTaken:image withText:text isMediaVideo:NO];
-    NSLog(@"Image taken in activity");
    // [self uploadMedia:UIImagePNGRepresentation(image)];
 }
 -(void)onVideoTaken:(NSData *)video withImage:(UIImage *)image withtext:(NSString *)text{
@@ -440,7 +436,6 @@ const int EXPAND_SIZE = 400;
     if([text isEqualToString:@""]){
         //personal bucket
         if([self.feedModel isYourBucketInFeed]){
-            NSLog(@"personal bucket");
             indexValue = [self.feedModel personalBucketIndex];
         }
         [[self.feedModel feed] removeObjectAtIndex:0];
@@ -516,7 +511,6 @@ const int EXPAND_SIZE = 400;
         if(isVideo){
             drop.thumbnail_tmp =(UIImagePNGRepresentation(imgTaken));
         }else{
-            NSLog(@"NOT VIDEO");
             drop.media_tmp = (UIImagePNGRepresentation(imgTaken));
         }
         [cell update:bucket];
@@ -589,7 +583,6 @@ const int EXPAND_SIZE = 400;
 
 -(void)hidePeekFirst{
     self.shouldHidePeek = YES;
-    NSLog(@"hiding");
 }
 
 -(void)uploadMedia:(NSData *) media{
@@ -629,9 +622,6 @@ const int EXPAND_SIZE = 400;
 
 -(void)viewDidAppear:(BOOL)animated{
 //animate the view down
-    NSLog(@"SHOWED NOW");
-    
-    
 }
 
 

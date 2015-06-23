@@ -37,8 +37,8 @@
          //request finished
          //NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) response;
          //NSInteger statuscode = [httpResponse statusCode];
-         NSString *strdata=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
-         NSLog(@"%@",strdata);
+        // NSString *strdata=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
+        // NSLog(@"%@",strdata);
          NSMutableDictionary *dic = [ParserHelper parse:data];
          ResponseModel *responseModel = [[ResponseModel alloc] init:dic];
          UserModel *user = [[UserModel alloc] init:[[dic objectForKey:@"data"] objectForKey:@"user"]];

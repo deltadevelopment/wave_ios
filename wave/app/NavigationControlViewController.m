@@ -21,7 +21,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    self.isRightButtonClickable = YES;
     if([ApplicationHelper getMainNavigationController] == nil){
         [ApplicationHelper setMainNavigationController:self.navigationController];
     }
@@ -59,12 +59,14 @@
     
 }
 -(void)showNotifications{
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
-    RipplesViewController *ripples =[storyboard instantiateViewControllerWithIdentifier:@"ripplesView"];
-    [[ApplicationHelper getMainNavigationController] pushViewController:ripples animated:YES];
+    if (self.isRightButtonClickable) {
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
+        RipplesViewController *ripples =[storyboard instantiateViewControllerWithIdentifier:@"ripplesView"];
+        [[ApplicationHelper getMainNavigationController] pushViewController:ripples animated:YES];
+    }
+    
 }
 -(void)addLeftButton{
-    NSLog(@"Adding left button");
     //UIImage* image = [UIHelper iconImage:[UIImage imageNamed:@"wave-logo.png"]];
     UIImage* image = [UIHelper iconImage:[UIImage imageNamed:@"wave-logo.png"]];
     CGRect frame = CGRectMake(0, 0, 26, 26);

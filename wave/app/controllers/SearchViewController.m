@@ -130,7 +130,24 @@
 }
 
 -(void)viewWillAppear:(BOOL)animated{
-   [self addLeftButton];
+  
+}
+-(void)viewDidAppear:(BOOL)animated{
+    [self addLeftButton];
+}
+-(void)viewWillDisappear:(BOOL)animated{
+    [self.searchController setActive:NO];
+    [self.navigationItem setHidesBackButton:YES animated:YES];
+    //UIImage* image = [UIHelper iconImage:[UIImage imageNamed:@"wave-logo.png"]];
+    UIImage* image = [UIHelper iconImage:[UIImage imageNamed:@"wave-logo.png"] withSize:40];
+    CGRect frame = CGRectMake(0, 0, 20, 20);
+    UIButton* someButton = [[UIButton alloc] initWithFrame:frame];
+    [someButton setBackgroundImage:image forState:UIControlStateNormal];
+   // [someButton addTarget:self action:@selector(nil) forControlEvents:UIControlEventTouchUpInside];
+    [someButton setShowsTouchWhenHighlighted:YES];
+    self.menuItem = [[UIBarButtonItem alloc] initWithCustomView:someButton];
+    [[[ApplicationHelper getMainNavigationController] navigationItem] setLeftBarButtonItem:self.menuItem];
+    [self.carouselParent.navigationItem setLeftBarButtonItem:self.menuItem];
 }
 
 -(void)addLeftButton{
@@ -173,8 +190,7 @@
 }
 
 -(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
-    NSLog(@"CLICKED");
-     [self.searchController setActive:NO];
+    [self.searchController setActive:NO];
     self.searhIsShowing = NO;
     self.tableView.tableHeaderView = nil;
 }
@@ -187,7 +203,6 @@
 
 - (void)searchBar:(UISearchBar *)searchBar selectedScopeButtonIndexDidChange:(NSInteger)selectedScope
 {
-    NSLog(@"select %ld", (long)selectedScope);
     [self updateSearchResultsForSearchController:self.searchController];
 }
 
@@ -236,15 +251,12 @@
         [weakSelf stopRefreshing];
         if(![self.self.userFeed hasUsers]){
             self.tableView.hidden = YES;
-            NSLog(@"no users yets");
-            
         }else{
             
         }
-        
         [self.tableView reloadData];
     } onError:^(NSError *error){
-        //NSLog(@"%@", [error localizedDescription]);
+        NSLog(@"%@", [error localizedDescription]);
     }];
 }
 
@@ -261,7 +273,6 @@
     [self.searchFeed search:searchString
              withCompletion:^
      {
-         NSLog(@"the count is %lu", (unsigned long)[self.searchFeed searchResults].count);
          if ([self.searchFeed.searchResults count] == 0) {
              self.tableView.hidden = YES;
              if (currentScopeIndex == 0) {
@@ -292,6 +303,42 @@
     [self.tableView reloadData];
 }
 
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    UserModel *user;
+    if (self.searchMode) {
+        user = [[self.searchFeed searchResults] objectAtIndex:indexPath.row];
+    }else{
+       SubscribeModel *subscription = [[self.userFeed feed] objectAtIndex:indexPath.row];
+        user = [subscription subscribee];
+    }
+    
+    [self showProfile:user];
+}
+
+-(void)showProfile:(UserModel *) user{
+    AbstractFeedViewController *profileController = [self.storyboard instantiateViewControllerWithIdentifier:@"activity"];
+    [profileController setViewMode:1];
+    [profileController setIsDeviceUser:NO];
+    [profileController setAnotherUser:user];
+    [profileController hidePeekFirst];
+    
+    [self.view insertSubview:profileController.view atIndex:0];
+    [self addChildViewController:profileController];
+    CGRect frame = profileController.view.frame;
+    frame.origin.y = -[UIHelper getScreenHeight];
+    profileController.view.frame = frame;
+    [profileController layOutPeek];
+    self.navigationItem.backBarButtonItem =
+    [[UIBarButtonItem alloc] initWithTitle:@""
+                                     style:UIBarButtonItemStylePlain
+                                    target:nil
+                                    action:nil];
+    [self dismiss];
+    [[ApplicationHelper getMainNavigationController] pushViewController:profileController animated:YES];
+    
+    
+    
+}
 
 -(void)viewDidLayoutSubviews{
     self.topConstraint.constant = 0;
@@ -328,8 +375,9 @@
 
 
 
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    NSLog(@"the count for subscribers is %lu", (unsigned long)[[self.userFeed feed] count]);
+-(NSInteger)tableView:(UITableView *)tableView
+numberOfRowsInSection:(NSInteger)section
+{
     if (self.searchMode) {
         return [[self.searchFeed searchResults] count];
     }

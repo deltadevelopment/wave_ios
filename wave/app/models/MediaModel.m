@@ -26,12 +26,9 @@
 -(void)uploadMedia:(void (^)(NSNumber*))progression
       onCompletion:(void (^)(MediaModel*))completionCallback
            onError:(void(^)(NSError *))errorCallback{
-    
-    NSLog(@"media model laster");
     NSString *stringUrl = [NSString stringWithFormat:@"%@/generate_upload_url", self.endpoint];
     [self.applicationController getHttpRequest:stringUrl
                                    onCompletion:^(NSURLResponse *response,NSData *data,NSError *error){
-                                       NSLog(@"done");
                                        //Parsing av data som returneres
                                        NSMutableDictionary *dic = [ParserHelper parse:data];
                                        ResponseModel *responseModel = [[ResponseModel alloc] init:dic];

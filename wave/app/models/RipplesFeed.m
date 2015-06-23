@@ -33,7 +33,6 @@
 
 -(void)feedFromResponseModel:(ResponseModel *) response{
     if ([response success]) {
-        NSLog(@"notifcations");
         self.hasNotifications = YES;
         NSMutableArray *rawFeed = [[response data] objectForKey:@"ripples"];
         for(NSMutableDictionary *rawBucket in rawFeed){

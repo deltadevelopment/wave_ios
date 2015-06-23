@@ -25,10 +25,6 @@
     self.interaction = [[InteractionModel alloc] init:[self.dictionary objectForKey:@"interaction"]];
 
     return self;
-    
-
-  //  NSLog(self.message);
-    
 };
 
 -(id)initFromPushNotification:(NSMutableDictionary *)dic{

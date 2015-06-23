@@ -36,7 +36,6 @@
 
 -(id)initWithCoder:(NSCoder *)aDecoder{
     self = [super initWithCoder:aDecoder];
-     NSLog(@"did normal init");
     self.opaque = NO;
     [self setBackgroundColor:[UIColor clearColor]];
     backgroundColor = [UIColor colorWithRed:0.051 green:0.875 blue:0.843 alpha:0.9];

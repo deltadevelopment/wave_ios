@@ -85,7 +85,6 @@
     if(![self.cameraHelper isInitialised]){
         [self.cameraHelper initaliseLightVideo:NO withView:self.camView];
         if (imageView == nil) {
-            NSLog(@"the width is %f", [UIHelper getScreenWidth]);
             float val = ([UIHelper getScreenHeight]/2)-([UIHelper getScreenWidth]/2) - 32;
             imageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, -32, [UIHelper getScreenWidth], [UIHelper getScreenHeight])];
             [imageView setContentMode:UIViewContentModeScaleAspectFit];
@@ -200,7 +199,6 @@
     CGSize size =  CGSizeMake([UIHelper getScreenWidth], [UIHelper getScreenHeight]);
     //[imageView setBackgroundColor:[UIColor redColor]];
     imageForUplaod = [self cropImageWithSize:CGSizeMake(480, 480) withY:80];
-       NSLog(@"the cropped image size is %f %f", imageForUplaod.size.width, imageForUplaod.size.height);
    
     //imageForUplaod = [self croptere];
    // imageForUplaod = [UIImage imageWithData:UIImagePNGRepresentation(imageForUplaod)];

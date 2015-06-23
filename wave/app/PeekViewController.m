@@ -31,6 +31,7 @@ AuthHelper *authHelper;
     self.profilePicture.clipsToBounds = YES;
     self.profilePicture.contentMode = UIViewContentModeScaleAspectFill;
     self.profilePicture.userInteractionEnabled = YES;
+    self.profilePicture.frame = CGRectMake(([UIHelper getScreenWidth]/2) - 50, 50, 100, 100);
     self.displayName.userInteractionEnabled = YES;
     UITapGestureRecognizer *showProfileGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showProfile)];
     UITapGestureRecognizer *showProfileGesture2 = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showProfile)];
@@ -55,9 +56,11 @@ AuthHelper *authHelper;
     self.location.alpha = 0.0;
     //40 150
     
-    
+    self.profilePicture.translatesAutoresizingMaskIntoConstraints = YES;
      // self.subscribeButton.titleEdgeInsets = UIEdgeInsetsMake(0, -self.subscribeButton.imageView.frame.size.width, 0, self.subscribeButton.imageView.frame.size.width);
      //self.subscribeButton.imageEdgeInsets = UIEdgeInsetsMake(0, self.subscribeButton.titleLabel.frame.size.width, 0, -self.subscribeButton.titleLabel.frame.size.width);
+    
+    //[self.view addSubview:self.profilePicture];
     
    
 }
@@ -165,8 +168,6 @@ AuthHelper *authHelper;
 
 -(void)updatePeekView:(UserModel *) user{
     self.user = user;
-    NSLog(@"setting");
-  
     self.location.text = [NSString stringWithFormat:@"%d others already do", [user subscribers_count]];
     self.displayName.text = [user display_name] != nil ? [user display_name] : [user usernameFormatted];
     if(user.Id == [[authHelper getUserId] intValue]){
@@ -200,7 +201,6 @@ AuthHelper *authHelper;
 
 
 -(void)showProfile{
-    NSLog(@"showing profile");
     [self.parentController stopAllVideo];
     //UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
     AbstractFeedViewController *profileController = [self.storyboard instantiateViewControllerWithIdentifier:@"activity"];
@@ -231,7 +231,6 @@ AuthHelper *authHelper;
                          self.pageViewController.view.frame = frame2;
                          [profileController.view removeFromSuperview];
                          [profileController layOutPeek];
-                         NSLog(@"Adding");
                          [[ApplicationHelper getMainNavigationController] pushViewController:profileController animated:NO];
                      }];
     
@@ -241,7 +240,6 @@ AuthHelper *authHelper;
 
 -(void)changeSubscribeUI{
     if(isSubscriber){
-        NSLog(@"Chaning subscribe");
         [self.subscribeButton setTitle:@"Unsubscribe" forState:UIControlStateNormal];
         self.subscribeButton.imageView.frame = CGRectMake(0, 0, 40, 40);
         [self.subscribeButton setImage: [UIHelper iconImage:[UIImage imageNamed:@"tick.png"] withSize:40] forState:UIControlStateNormal];

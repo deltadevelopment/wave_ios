@@ -30,6 +30,7 @@
 		C5576B571ADBE31A009C1D5E /* SuperLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5576B561ADBE31A009C1D5E /* SuperLoginViewController.m */; };
 		C5576B5A1ADBE77E009C1D5E /* Navigationbar.m in Sources */ = {isa = PBXBuildFile; fileRef = C5576B591ADBE77E009C1D5E /* Navigationbar.m */; };
 		C55FE90A1AD81F45007663FB /* SuperButton.m in Sources */ = {isa = PBXBuildFile; fileRef = C55FE9091AD81F45007663FB /* SuperButton.m */; };
+		C567A1DF1B39AE2300C47237 /* user-icon-gray.png in Resources */ = {isa = PBXBuildFile; fileRef = C567A1DE1B39AE2300C47237 /* user-icon-gray.png */; };
 		C57AD0A71AD7EDB800B6042A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C57AD0A61AD7EDB800B6042A /* main.m */; };
 		C57AD0AA1AD7EDB800B6042A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C57AD0A91AD7EDB800B6042A /* AppDelegate.m */; };
 		C57AD0B01AD7EDB800B6042A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C57AD0AE1AD7EDB800B6042A /* Main.storyboard */; };
@@ -212,6 +213,7 @@
 		C5576B591ADBE77E009C1D5E /* Navigationbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Navigationbar.m; path = views/Navigationbar.m; sourceTree = "<group>"; };
 		C55FE9081AD81F45007663FB /* SuperButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SuperButton.h; path = ../../SuperButton.h; sourceTree = "<group>"; };
 		C55FE9091AD81F45007663FB /* SuperButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SuperButton.m; path = ../../SuperButton.m; sourceTree = "<group>"; };
+		C567A1DE1B39AE2300C47237 /* user-icon-gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user-icon-gray.png"; sourceTree = "<group>"; };
 		C57AD0A11AD7EDB800B6042A /* wave.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = wave.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C57AD0A51AD7EDB800B6042A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C57AD0A61AD7EDB800B6042A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -615,6 +617,7 @@
 				C5A27BA41ADE779500968033 /* feed-icon.png */,
 				C5D473791AE6C29F0097E44F /* cross-simple.png */,
 				C5D473771AE69D500097E44F /* the-bar-x-v2.png */,
+				C567A1DE1B39AE2300C47237 /* user-icon-gray.png */,
 				C5D473751AE699DE0097E44F /* the-bar.png */,
 				C5D473811AE7992E0097E44F /* people-icon.png */,
 				C5D473831AE799610097E44F /* people-icon-white.png */,
@@ -1014,6 +1017,7 @@
 				F1DBB56E1B12B6930097F709 /* dots-icon.png in Resources */,
 				C5D473781AE69D500097E44F /* the-bar-x-v2.png in Resources */,
 				C5FF1E591B05EB870081BEDD /* search-icon-white.png in Resources */,
+				C567A1DF1B39AE2300C47237 /* user-icon-gray.png in Resources */,
 				F1E127BF1B0023C0000E3F2C /* media-pause.png in Resources */,
 				C5C2F4941B2F24F000AF8666 /* pause-icon.png in Resources */,
 				C5D473B01AFB67D80097E44F /* tick.png in Resources */,

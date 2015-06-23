@@ -89,7 +89,6 @@
 }
 
 -(void)playPause{
-    NSLog(@"PLAY PAUSE");
     if(isPlaying){
         isPlaying = NO;
         [playButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"play.png"] withSize:30] forState:UIControlStateNormal];
@@ -111,9 +110,7 @@
     
     self.dropTemperature.text =[NSString stringWithFormat:@"%d°", drop.temperature];
     self.dropTitle.text = [[drop user] usernameFormatted];
-    NSLog(@"user %@", drop.user.profile_picture_url);
     [drop.user requestProfilePic:^(NSData *data){
-        NSLog(@"REQUESTED");
         [self.profilePicture setImage:[UIImage imageWithData:data]];
         self.profilePicture.hidden = NO;
     }];

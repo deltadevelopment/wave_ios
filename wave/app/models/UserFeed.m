@@ -33,7 +33,6 @@
 
 -(void)feedFromResponseModel:(ResponseModel *) response{
     if ([response success]) {
-        NSLog(@"users was returned");
         self.hasUsers = YES;
         NSMutableArray *rawFeed = [[response data] objectForKey:@"subscriptions"];
         for(NSMutableDictionary *rawBucket in rawFeed){
@@ -43,7 +42,6 @@
     }else{
         self.hasUsers = NO;
     }
-    
 }
 
 @end

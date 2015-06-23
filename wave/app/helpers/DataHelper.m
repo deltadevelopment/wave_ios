@@ -115,7 +115,6 @@ deletionQueue = [[NSMutableArray alloc] init];
 
 +(void)storeNotifications:(NSDictionary *)dictionary
 {
-    NSLog(@"REMOVING");
      [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"notifications"];
     /*
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];

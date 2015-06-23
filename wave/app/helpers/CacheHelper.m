@@ -23,7 +23,7 @@
     
     NSArray *decodedArray = nil;
     @try {
-        decodedArray =[NSKeyedUnarchiver unarchiveObjectWithData: myDecodedObject];
+        decodedArray =[[NSKeyedUnarchiver unarchiveObjectWithData: myDecodedObject] mutableCopy];
     }
     @catch (NSException *exception) {
         NSLog(@"Error: %@", [exception name]);
@@ -53,6 +53,7 @@
     
     NSData *myEncodedObject = [NSKeyedArchiver archivedDataWithRootObject:array];
     [defaults setObject:myEncodedObject forKey:[NSString stringWithFormat:@"cacheMap"]];
+    [defaults synchronize];
 }
 
 
@@ -62,12 +63,13 @@
     NSDate *currentTime = [self getCurrentTime];
     
     if (cacheMap != nil) {
+        NSLog(@"Cache Size %lu", (unsigned long)cacheMap.count);
+        NSLog(@"--------------------------");
         for (CacheModel *cacheModel in cacheMap) {
-            NSLog(@"THE KEY is %@", cacheModel.key);
-            NSLog(@"expire %@", cacheModel.expirationDate);
+            //NSLog(@"expire %@", cacheModel.expirationDate);
             if ([cacheModel.expirationDate compare:currentTime] == NSOrderedAscending) {
                 //Remove from the list
-                NSLog(@"Should remove");
+                //NSLog(@"Should remove");
                 [[NSUserDefaults standardUserDefaults] removeObjectForKey:cacheModel.key];
             }else{
                 [newArray addObject:cacheModel];
@@ -82,7 +84,7 @@
     NSDate *currentTime = [NSDate date];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"MM/dd/yyyy hh:mm:ss aa"];
-    NSString *resultString = [dateFormatter stringFromDate: currentTime];
+    //NSString *resultString = [dateFormatter stringFromDate: currentTime];
     return [[CacheModel alloc] initWithKey:key withDate:currentTime];
 }
 

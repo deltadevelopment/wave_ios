@@ -267,7 +267,6 @@
     };
     element.onKeyboardGainFocus = ^(CaptionTextField *field){
         if(mediaIsVideo){
-            NSLog(@"MEDIA IS VIDEO");
             [captionsView addSubview:element];
         }
         else{
@@ -276,7 +275,6 @@
     };
     
     if(mediaIsVideo){
-        NSLog(@"MEDIA IS VIDEO");
         [captionsView addSubview:element];
     }
     else{
@@ -371,7 +369,6 @@
     }
     else if(intMode == 0){
         if(imageReadyForUpload && canUpload){
-            NSLog(@"ready");
             if(mediaIsVideo){
                 if(hasCaption){
                     [self renderVideoWithCaption];
@@ -528,7 +525,6 @@
 
 -(void)renderVideoWithCaption{
     [mediaPlayer stopVideo];
-    NSLog(@"rendering");
     __weak typeof(self) weakSelf = self;
     UIImage *image =[self screenshotToVideo:UIDeviceOrientationPortrait isOpaque:NO usePresentationLayer:YES];
     UIImageView *captionsWithImage =[[UIImageView alloc] initWithImage:image];
@@ -657,7 +653,6 @@
         drop.media_tmp = media;
         weakSelf.onMediaPostedDrop(drop);
     } onProgress:^(NSNumber *progress){
-        NSLog(@"progress %d", [progress intValue]);
         weakSelf.onProgression([progress intValue]);
     }
                     onError:^(NSError *error){
