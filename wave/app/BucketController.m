@@ -40,6 +40,7 @@ const int PEEK_Y_START = 300;
     UIScrollView *scrollView;
     bool isFirst;
     DropController *currentDropPage;
+    DropController *lastUploadedDropPage;
     UserModel *user;
     InfoView *infoView;
     UIButton *infoButton;
@@ -114,6 +115,10 @@ const int PEEK_Y_START = 300;
     [self.view addSubview:infoView];
     [self initTickView];
     [self addPeekView];
+    self.startY = 0;
+    [self getProgressIndicator].frame = CGRectMake(0, self.startY, 0, 4);
+    [self getProgressIndicator].hidden = NO;
+    [self.view addSubview:[self getProgressIndicator]];
 }
 
 
@@ -275,7 +280,10 @@ const int PEEK_Y_START = 300;
     }
     
     if (bucket.user.Id == [[authHelper getUserId] intValue]) {
-        [view addAction:delete];
+        if (![bucket.bucket_type isEqualToString:@"user"]) {
+            [view addAction:delete];
+        }
+        
     }
     
     [view addAction:cancel];
@@ -859,6 +867,31 @@ const int PEEK_Y_START = 300;
                      }];
 }
 
+-(void)onMediaPostedDrop:(DropModel *)drop{
+    [lastUploadedDropPage.drop setId:drop.Id];
+    [lastUploadedDropPage.drop setTemperature:drop.temperature];
+    [lastUploadedDropPage bindTemperatureChanges];
+    infoButton.hidden = NO;
+    [self showSuperButton];
+    
+}
+
+-(void)showSuperButton{
+    [UIView animateWithDuration:0.2f
+                          delay:0.0f
+                        options: UIViewAnimationOptionCurveLinear
+                     animations:^{
+                      [[self superButton] getButton].alpha = 1.0f;
+                     }
+                     completion:^(BOOL finished){
+                         
+                         //[self showToolButtons];
+                         
+                         
+                     }];
+}
+
+
 # pragma SuperButton callbacks
 -(void)prepareCamera{
     if(cameraView == nil){
@@ -930,7 +963,7 @@ const int PEEK_Y_START = 300;
 
 -(void)onCameraClose{
     cameraMode = NO;
-    infoButton.hidden = NO;
+    //infoButton.hidden = NO;
     [super onCameraClose];
 }
 
@@ -968,6 +1001,7 @@ const int PEEK_Y_START = 300;
     [currentDropPage drop].media_tmp = video;
     [currentDropPage setIsStartingView:YES];
     [currentDropPage bindToModel];
+    lastUploadedDropPage = currentDropPage;
     // Scroller.userInteractionEnabled = YES;
     //  [currentView setMedia:video withIndexId:(int)[drops count]];
     // [drops addObject:currentView];
@@ -985,6 +1019,7 @@ const int PEEK_Y_START = 300;
     CGSize size = CGSizeMake([UIHelper getScreenWidth], [UIHelper getScreenHeight]);
     [currentDropPage drop].media_tmp = UIImagePNGRepresentation([GraphicsHelper imageByScalingAndCroppingForSize:size img:image]);
     [currentDropPage bindToModel];
+    lastUploadedDropPage = currentDropPage;
     
     // Scroller.userInteractionEnabled = YES;
     

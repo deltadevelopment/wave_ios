@@ -22,4 +22,5 @@
 -(ResponseModel *)responseModelFromData:(NSData *) data;
 -(NSDictionary *)asDictionary;
 -(NSString *)asJSON:(NSDictionary *) dictionary;
+-(NSString *)addSpaceToString:(NSString *) string;
 @end

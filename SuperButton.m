@@ -147,7 +147,8 @@ typedef enum {
 
 -(void)tapCancelButton{
     superButtonMode = NONE;
-    [self animateButtonToRight];
+   // [self animateButtonToRight];
+    [self animateButtonToRightWithoutOpacity];
        [self setSuperButtonImage:self.defaultIconPath];
     self.onCancelTap();
 
@@ -370,6 +371,21 @@ typedef enum {
 }
 
 -(void)animateButtonToRight{
+    [UIView animateWithDuration:0.3f
+                          delay:0.0f
+                        options: UIViewAnimationOptionCurveLinear
+                     animations:^{
+                         
+                         [superView removeConstraint:buttonXConstraintMiddle];
+                         [superView addConstraint:buttonXConstraint];
+                         lockButton = NO;
+                         [superView  layoutIfNeeded];
+                         superButton.alpha = 0.0;
+                     }
+                     completion:nil];
+}
+
+-(void)animateButtonToRightWithoutOpacity{
     [UIView animateWithDuration:0.3f
                           delay:0.0f
                         options: UIViewAnimationOptionCurveLinear

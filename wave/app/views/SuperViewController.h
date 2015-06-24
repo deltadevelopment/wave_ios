@@ -24,6 +24,7 @@
 -(void)onCameraClose;
 -(void)onCancelTap;
 -(void)onMediaPosted:(BucketModel *) bucket;
+-(void)onMediaPostedDrop:(DropModel *)drop;
 -(void)addConstraints:(UIView *) view;
 -(void)onImageTaken:(UIImage *)image withText:(NSString *) text;
 -(void)onVideoTaken:(NSData *) video withImage:(UIImage *) image withtext:(NSString *) text;

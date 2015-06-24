@@ -85,7 +85,6 @@
     }];
 }
 
-
 -(void)stopRefreshing{
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"MMM d, h:mm a"];
@@ -116,9 +115,7 @@
     if(!cell.isInitialized){
         //UI initialization
         [cell initalize];
-       
     }
-    
     cell.onUserTap = ^(RippleModel *ripple){
         [weakSelf showProfile:ripple];
     };
@@ -131,27 +128,22 @@
     [cell.profilePictureImage setImage:[UIImage imageNamed:@"user-icon-gray.png"]];
    
     //cell.notificationLabel.text = [rippleModel message];
-   
-    cellFrame = [cell makeTextClickableAndLayout: [[rippleModel getComputedString] objectAtIndex:0]
-                                  withRestOfText: [[rippleModel getComputedString] objectAtIndex:1] withRippleId:rippleModel.Id];
+    NSString *username = [rippleModel.interaction GetCurrentUser] != nil ? [[rippleModel.interaction GetCurrentUser] username] :@"N/A";
+    cellFrame = [cell makeTextClickableAndLayout:username
+                                  withRestOfText: [rippleModel addSpaceToString:[rippleModel.interaction localizedMessage]] withRippleId:rippleModel.Id];
     [cell.userButton setTitle:@"simenlie" forState:UIControlStateNormal];
     maxWidth = cell.textView.frame.size.width;
     cell.NotificationTimeLabel.text = [rippleModel created_at] ? [rippleModel created_at] : @"test";
   //  [cell calculateHeight];
     
     if(cellFrame.size.height <50){
-        
         [cell updateUiWithHeight:60];
         [cell initActionButton:rippleModel withCellHeight:60];
-        
     }
     else{
-     [cell updateUiWithHeight:cellFrame.size.height + 20];
-         [cell initActionButton:rippleModel withCellHeight:cellFrame.size.height + 20];
+        [cell updateUiWithHeight:cellFrame.size.height + 20];
+        [cell initActionButton:rippleModel withCellHeight:cellFrame.size.height + 20];
     }
-    
-   
-    
     return cell;
 }
 

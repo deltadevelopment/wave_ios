@@ -118,6 +118,7 @@
                            @"bucket":[self asDictionary],
                            @"drop":[[self firstDrop] asDictionary]
                            };
+        NSLog(@"the body is %@", body);
     [self.applicationController postHttpRequest:@"bucket"
                                            json:[self asJSON:body]
                                    onCompletion:^(NSURLResponse *response,NSData *data,NSError *error)

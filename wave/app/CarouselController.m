@@ -81,6 +81,7 @@
     [self attachViews:viewControllerY withY:viewControllerX];
     self.startY = 64;
     [self getProgressIndicator].frame = CGRectMake(0, self.startY, 0, 4);
+     [self getProgressIndicator].hidden = NO;
     [self.view addSubview:[self getProgressIndicator]];
 }
 

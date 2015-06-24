@@ -53,3 +53,12 @@
 "create_bucket_txt" = "Lag en bucket";
 "bucket_add_title_txt" = "Legg til en tittel";
 "caption_placeholder_txt" = "Si noe...";
+"tagged_users_txt" = "Taggede brukere";
+
+"create_bucket" = "har laget en ny bucket";
+"create_drop_user_bucket" = "har lagt til en drop i sin bucket";
+"create_drop_shared_bucket" = "har lagt til en drop i";
+"create_vote" = "har satt temperaturen på din drop til";
+"create_redrop" = "har re-droppet din drop";
+"create_subscription" = "abonnerer nå på deg";
+

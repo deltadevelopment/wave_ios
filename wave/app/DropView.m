@@ -48,6 +48,11 @@
     self.dropTemperature.textAlignment = NSTextAlignmentCenter;
     self.dropTemperature.adjustsFontSizeToFitWidth = YES;
     
+    self.redropView = [[UIImageView alloc] initWithFrame:CGRectMake([UIHelper getScreenWidth] - 86, 15, 20, 20)];
+    [self.redropView setImage:[UIHelper iconImage:[UIImage imageNamed:@"drop.png"] withSize:40.0f]];
+    self.redropView.hidden = YES;
+    [self.redropView setAlpha:0.5f];
+    
     playButton = [UIButton buttonWithType:UIButtonTypeCustom];
     playButton.frame = CGRectMake([UIHelper getScreenWidth] - 140, 8, 35, 35);
     [playButton setImageEdgeInsets:UIEdgeInsetsMake(10, 10, 10, 10)];
@@ -78,6 +83,7 @@
     [self addSubview:self.topBar];
     [self addSubview:self.spinner];
     [self addSubview:playButton];
+    [self addSubview:self.redropView];
     playButton.hidden = YES;
     __weak typeof(self) weakSelf = self;
     mediaPlayer.onVideoFinishedPlaying = ^{
@@ -107,13 +113,24 @@
     if(drop.media_type == 1){
         playButton.hidden = NO;
     }
-    
-    self.dropTemperature.text =[NSString stringWithFormat:@"%d°", drop.temperature];
-    self.dropTitle.text = [[drop user] usernameFormatted];
-    [drop.user requestProfilePic:^(NSData *data){
-        [self.profilePicture setImage:[UIImage imageWithData:data]];
-        self.profilePicture.hidden = NO;
-    }];
+    if (self.drop.originator != nil) {
+        self.redropView.hidden = NO;
+        self.dropTemperature.hidden = YES;
+        //[self.dropTitle setFont:[UIFont fontWithName:@"HelveticaNeue" size:17.0f]];
+        self.dropTitle.text = [[drop originator] usernameFormatted];
+        [drop.originator requestProfilePic:^(NSData *data){
+            [self.profilePicture setImage:[UIImage imageWithData:data]];
+            self.profilePicture.hidden = NO;
+        }];
+        
+    }else{
+        self.dropTemperature.text =[NSString stringWithFormat:@"%d°", drop.temperature];
+        self.dropTitle.text = [[drop user] usernameFormatted];
+        [drop.user requestProfilePic:^(NSData *data){
+            [self.profilePicture setImage:[UIImage imageWithData:data]];
+            self.profilePicture.hidden = NO;
+        }];
+    }
     //self.dropTitle.text = [NSString stringWithFormat:@"Drop #%d",drop.Id];
 }
 

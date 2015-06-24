@@ -26,6 +26,9 @@
 @property (nonatomic, strong) SubscribeModel *subscription;
 @property (nonatomic, strong) UserModel *user;
 
+//Client vars
+@property(nonatomic, strong) NSString *localizedMessage;
+
 -(UserModel *)GetCurrentUser;
 
 

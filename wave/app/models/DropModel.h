@@ -43,6 +43,7 @@
 @property (nonatomic,strong) UIImage *media_img;
 @property (nonatomic,strong) UIImage *image;
 @property (nonatomic,strong) UserModel *user;
+@property (nonatomic,strong) UserModel *originator;
 @property (nonatomic,strong) MediaModel *mediaModel;
 
 @property (nonatomic,strong) NSString *upload_url;

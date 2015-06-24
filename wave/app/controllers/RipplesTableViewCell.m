@@ -146,7 +146,7 @@
     button.frame = frame2;
 }
 -(CGRect)makeTextClickableAndLayout:(NSString *) username withRestOfText:(NSString *) restofText withRippleId:(int)rippleId{
-
+    NSLog(username);
     displayContent = [[NSMutableAttributedString alloc] init];
     NSString *tag = [NSString stringWithFormat:@"myCustomTag%d", rippleId];
     NSAttributedString* attributedString = [[NSAttributedString alloc] initWithString:username attributes:@{ tag : @(YES) }];

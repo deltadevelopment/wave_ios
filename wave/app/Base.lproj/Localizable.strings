@@ -33,9 +33,6 @@
 "profile_title" = "Profile";
 "not_authorized" = "You are not authorized to access that resource";
 "by_txt" = "by";
-
-//New lang support that are not implemented for norwegian
-
 "tags_txt" = "Tags";
 "delete_drop_txt" = "Delete drop";
 "delete_bucket_txt" = "Delete bucket";
@@ -55,6 +52,14 @@
 "create_bucket_txt" = "Create a bucket";
 "bucket_add_title_txt" = "Add a title";
 "caption_placeholder_txt" = "Say something...";
+
+"tagged_users_txt" = "Tagged users";
+"create_bucket" = "has created a new shared bucket";
+"create_drop_user_bucket" = "has added a drop to his bucket";
+"create_drop_shared_bucket" = "has added a drop to";
+"create_vote" = "has set the temperature of your drop to 96";
+"create_redrop" = "has re-dropped your drop";
+"create_subscription" = "is now subscribing to you";
 
 
 

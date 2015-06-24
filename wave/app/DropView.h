@@ -19,6 +19,7 @@
 @property (nonatomic, strong) UIActivityIndicatorView *spinner;
 @property (nonatomic) bool isPlaceholderView;
 @property (nonatomic, strong) UIButton *playButton;
+@property (nonatomic, strong) UIImageView *redropView;
 -(void)setMedia:(NSObject *) media withIndexId:(int) indexId;
 -(void)dropWillHide;
 -(void)playVideo;

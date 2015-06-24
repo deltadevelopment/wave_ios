@@ -40,9 +40,20 @@
             NSLog(@"Not implemented yet");
         }
     }
-    
+    [self translate];
 
     return self;
+}
+
+-(void)translate{
+   
+    self.localizedMessage = NSLocalizedString(self.action, nil);
+    
+    if ([self.topic_type isEqualToString:@"Vote"]) {
+        self.localizedMessage = [NSString stringWithFormat:@"%@ %d", self.localizedMessage, self.temperature.temperature];
+    }
+    
+    //"create_drop_shared_bucket" = "har lagt til en drop i";
 }
 
 -(UserModel *)GetCurrentUser{

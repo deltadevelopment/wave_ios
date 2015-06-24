@@ -423,6 +423,7 @@
         for(CaptionTextField *cap in captions){
             [cap removeFromSuperview];
         }
+        captions = [[NSMutableArray alloc] init];
        // [self initCaptionsView];
         if(mediaIsVideo){
             [mediaPlayer stopVideo];
@@ -557,25 +558,24 @@
     if(mediaIsVideo){
         mediaIsVideo = NO;
         if(hasCaption){
-            self.onVideoTaken(recordedVideoCompressed, imgTaken, titleTextField.text);
+            self.onVideoTaken(renderedVideoWithCaption, imgTaken, titleTextField.text);
             [self uploadMedia:renderedVideoWithCaption withMediaType:1];
         
         }else{
             self.onVideoTaken(recordedVideoCompressed, imgTaken, titleTextField.text);
             [self uploadMedia:recordedVideoCompressed withMediaType:1];
         }
-        
-        
-        
     }
     else{
-        self.onImageTaken(imgTaken, titleTextField.text);
         CGSize size = CGSizeMake([UIHelper getScreenWidth], [UIHelper getScreenHeight]);
         if(hasCaption){
+            NSLog(@"HAS CAPTION");
             UIImage *image =[self screenshot:UIDeviceOrientationPortrait isOpaque:NO usePresentationLayer:YES];
+            self.onImageTaken(image, titleTextField.text);
             [self uploadMedia:UIImagePNGRepresentation(image) withMediaType:0];
 
         }else{
+            self.onImageTaken(imgTaken, titleTextField.text);
             [self uploadMedia:UIImagePNGRepresentation([GraphicsHelper imageByScalingAndCroppingForSize:size img:imgTaken]) withMediaType:0];
         }
     }
@@ -599,6 +599,24 @@
     for(CaptionTextField *cap in captions){
         [cap removeFromSuperview];
     }
+    captions = [[NSMutableArray alloc] init];
+}
+
+-(NSString *)getCaptionsJoined{
+    NSString *captionsJoined;
+    if (captions.count != 0) {
+        for (CaptionTextField *element in captions) {
+            if (captionsJoined == nil) {
+                captionsJoined = [element getCaptionText];
+            }else{
+                captionsJoined = [NSString stringWithFormat:@"%@|||%@", captionsJoined, [element getCaptionText]];
+            }
+        }
+    }else{
+        captionsJoined = @"";
+    }
+    
+    return captionsJoined;
 }
 
 -(void)createNewBucket:(NSData *) media withMediaType:(int)media_type{
@@ -613,11 +631,12 @@
     
     //Creating a new drop
     DropModel *drop = [[DropModel alloc] init];
-    [drop setCaption:@"My crazy caption"];
+    [drop setCaption:[self getCaptionsJoined]];
+    /*
     if(captionElement != nil){
         [drop setCaption:[captionElement getCaptionText]];
     }
-    
+    */
     [drop setMedia_type:media_type];
     [drop setMediaModel:mediaModel];
     [bucket addDrop:drop];
@@ -645,10 +664,13 @@
     
     DropModel *drop = [[DropModel alloc] init];
     MediaModel *mediaModel = [[MediaModel alloc] init:media];
-    drop.caption = @"test caption";
+   // drop.caption = @"test caption";
+     [drop setCaption:[self getCaptionsJoined]];
+    /*
     if(captionElement != nil){
         [drop setCaption:[captionElement getCaptionText]];
     }
+     */
     drop.bucket_id = bucketId;
     drop.media_type = media_type;
     drop.mediaModel = mediaModel;
@@ -684,6 +706,7 @@
 
 -(void)closeCamera{
     cameraMode = NO;
+   
     self.onCameraClose();
     [cameraHelper stopCameraSession];
 }

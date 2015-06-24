@@ -56,6 +56,10 @@
     return nil;
 }
 
+-(NSString *)addSpaceToString:(NSString *) string{
+    return [NSString stringWithFormat:@" %@", string];
+}
+
 -(NSString *)asJSON:(NSDictionary *) dictionary{
     NSString *jsonData = [ApplicationHelper generateJsonFromDictionary:dictionary];
     return jsonData;

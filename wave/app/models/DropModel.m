@@ -38,6 +38,10 @@
         self.thumbnail_url = [self getStringValueFromString:@"thumbnail_url"];
         self.thumbnail_key = [self getStringValueFromString:@"thumbnail_key"];
         self.user = [[UserModel alloc]init:[dic objectForKey:@"user"]];
+        if((NSNull*)[self.dictionary objectForKey:@"originator"] != [NSNull null]){
+            self.originator = [[UserModel alloc]init:[dic objectForKey:@"originator"]];
+        }
+        
     }
     return self;
 };
@@ -88,6 +92,7 @@
         NSDictionary *body = @{
                                @"drop":[self asDictionary]
                                };
+        NSLog(@"the body is %@", body);
         [self.applicationController postHttpRequest:[NSString stringWithFormat:@"bucket/%d/drop", self.bucket_id]
                                                json:[self asJSON:body]
                                        onCompletion:^(NSURLResponse *response,NSData *data,NSError *error)

@@ -32,7 +32,7 @@
     [titleBarAttributes setValue:[UIColor whiteColor] forKey:NSForegroundColorAttributeName];
     [[UINavigationBar appearance] setTitleTextAttributes:titleBarAttributes];
     if (self.tagMode) {
-        [self.navigationItem setTitle:@"Tagged users"];
+        [self.navigationItem setTitle:NSLocalizedString(@"tagged_users_txt", nil)];
     }else {
         [self.navigationItem setTitle:NSLocalizedString(@"subscriptions_button_txt", nil)];
     }
