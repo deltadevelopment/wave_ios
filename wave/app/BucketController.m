@@ -261,10 +261,11 @@ const int PEEK_Y_START = 300;
                                  
                              }];
     
-    [view addAction:tag];
+   
     
     
     if (![bucket.bucket_type isEqualToString:@"user"]) {
+         [view addAction:tag];
           [view addAction:watch];
     }
     if ([bucket.bucket_type isEqualToString:@"user"] && bucket.user.Id == [[authHelper getUserId] intValue]) {

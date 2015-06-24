@@ -7,14 +7,14 @@
 //
 
 #import "SuperModel.h"
-
+#import "UserModel.h";
 @interface TemperatureModel : SuperModel
 @property (nonatomic) int temperature;
 @property (nonatomic) int Id;
 @property (nonatomic) int user_id;
 @property (nonatomic) int drop_id;
 @property (nonatomic) int bucket_id;
-
+@property (nonatomic, strong) UserModel *user;
 @property (nonatomic, strong) NSString *created_at;
 @property (nonatomic, strong) NSString *updated_at;
 -(id)init:(NSMutableDictionary *)dic;

@@ -84,6 +84,7 @@ AuthHelper *authHelper;
     NSDictionary *apsInfo = [userInfo objectForKey:@"aps"];
     //[self resetBadgeToZero];
     if(apsInfo) {
+        NSLog(@"my dic is %@", apsInfo);
         [ApplicationHelper executeBlock];
         //Navigate or take action on the notification
        

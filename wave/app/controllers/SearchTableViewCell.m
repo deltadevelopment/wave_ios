@@ -82,6 +82,7 @@
 }
 
 -(void)updateUIWithSubscription:(SubscribeModel *) subscription{
+   
     if (subscription.isSubscriberLocal) {
         [self.subscribeButton setImage: [UIHelper iconImage:[UIImage imageNamed:@"tick.png"] withSize:40] forState:UIControlStateNormal];
         [self.subscribeButton setBackgroundColor:[ColorHelper purpleColor]];
@@ -97,6 +98,9 @@
     [[subscription subscribee] requestProfilePic:^(NSData *data){
         [self.profilePictureImage setImage:[UIHelper iconImage:[UIImage imageWithData:data] withSize:60.0f]];
     }];
+    if ([[subscription subscribee] Id] == [[[[AuthHelper alloc] init] getUserId] intValue]) {
+        [self.subscribeButton setHidden:YES];
+    }
 }
 
 -(void)subscribeAction{

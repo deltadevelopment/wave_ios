@@ -296,6 +296,9 @@
         [self showButton:self.subscribeButton];
     }
     else if([[ripple.interaction topic_type] isEqualToString:@"Vote"]){
+        [ripple.interaction.temperature.user requestProfilePic:^(NSData *data){
+            [self.profilePictureImage setImage:[UIImage imageWithData:data]];
+        }];
         [self showButton:self.temperatureButton];
         [self.temperatureButton setTitle:[NSString stringWithFormat:@"%d °", [ripple.interaction.temperature temperature]] forState:UIControlStateNormal];
     }

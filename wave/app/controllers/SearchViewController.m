@@ -48,15 +48,11 @@
                                                                   NSLocalizedString(@"#",@"hashtag")];
         }else{
             self.searchController.searchBar.scopeButtonTitles = @[NSLocalizedString(@"@",@"user")];
-
         }
         self.searchController.searchBar.delegate = self;//(CarouselController *)[self carouselParent];
         self.searchController.searchResultsUpdater = self;//(CarouselController *)[self carouselParent];
         self.searchController.hidesNavigationBarDuringPresentation = NO;
-        
-        
      // self.definesPresentationContext = YES;
-        
         if (self.tagMode) {
             self.tableView.tableHeaderView = self.searchController.searchBar;
         }
@@ -170,7 +166,7 @@
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController
 {
     NSString *searchString = searchController.searchBar.text;
-    if (searchString.length > 2) {
+    if (searchString.length > 0) {
         //[spinner setHidden:NO];
         //[spinner startAnimating];
          //self.tableView.hidden = YES;
@@ -279,14 +275,21 @@
          if ([self.searchFeed.searchResults count] == 0) {
              self.tableView.hidden = YES;
              if (currentScopeIndex == 0) {
-                 [noUsersLabel setText:[NSString stringWithFormat:@"No users found mathcing '%@'", searchString]];
+                 
+                 [noUsersLabel setText:[NSString stringWithFormat:@"%@ '%@'",NSLocalizedString(@"search_users_match_txt", nil),searchString]];
              }else{
-                 [noUsersLabel setText:[NSString stringWithFormat:@"No hashtags found mathcing '%@'", searchString]];
+                 [noUsersLabel setText:[NSString stringWithFormat:@"%@ '%@'",NSLocalizedString(@"search_hashtag_match_txt", nil), searchString]];
              }
              
          }else{
-             [self.tableView reloadData];
-             self.tableView.hidden = NO;
+             if (currentScopeIndex == 1) {
+                 [noUsersLabel setText:[NSString stringWithFormat:@"No hashtags found matching '%@'", searchString]];
+                 self.tableView.hidden = YES;
+             }else{
+                 [self.tableView reloadData];
+                 self.tableView.hidden = NO;
+             }
+             
          }
      }
                     onError:^(NSError *error)

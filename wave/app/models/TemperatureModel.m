@@ -25,6 +25,7 @@
     self.temperature = [self getIntValueFromString:@"temperature"];
     self.created_at = [self getStringValueFromString:@"created_at"];
     self.updated_at = [self getStringValueFromString:@"updated_at"];
+    self.user = [[UserModel alloc] init:[self.dictionary objectForKey:@"user"]];
     return self;
 }
 

@@ -46,11 +46,13 @@
 "subscriptions_txt" = "andre gjør det allerede";
 "subscribe_txt" = "Abonner";
 "unsubscribe_txt" = "Abonnerer";
-"ripples_title" = "Krusninger";
+"ripples_title" = "Ripples";
 "ripples_info_txt" = "Ingen varslinger tilgjengelig";
 "search_info_txt" = "Søk etter brukere og emneknagger";
-"watch_action_txt" = "Se på";
-"unwatch_action_txt" = "Ikke se på";
+"search_users_match_txt" = "Fant ingen brukere med brukernavn";
+"search_hashtag_match_txt" = "Fant ingen emneknagger for";
+"watch_action_txt" = "Følg";
+"unwatch_action_txt" = "Følger";
 
 "add_drop_txt" = "Legg til en drop";
 "create_bucket_txt" = "Lag en bucket";

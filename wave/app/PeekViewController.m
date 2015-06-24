@@ -83,7 +83,7 @@ AuthHelper *authHelper;
     activityIndicator.hidden = NO;
     [activityIndicator startAnimating];
     [self.subscribeButton setTitle:@"" forState:UIControlStateNormal];
-    [self removeInsetsFromButton];
+    //[self removeInsetsFromButton];
     if(isSubscriber){
         [self.subscribeModel delete:^(ResponseModel *response){
             isSubscriber = NO;
@@ -244,6 +244,7 @@ AuthHelper *authHelper;
 -(void)changeSubscribeUI{
     if(isSubscriber){
         [self.subscribeButton setTitle:NSLocalizedString(@"unsubscribe_txt", nil) forState:UIControlStateNormal];
+        /*
         self.subscribeButton.imageView.frame = CGRectMake(0, 0, 40, 40);
         [self.subscribeButton setImage: [UIHelper iconImage:[UIImage imageNamed:@"tick.png"] withSize:40] forState:UIControlStateNormal];
         [[self.subscribeButton imageView] setTintColor:[UIColor whiteColor]];
@@ -251,11 +252,17 @@ AuthHelper *authHelper;
         [self.subscribeButton setImageEdgeInsets:UIEdgeInsetsMake(0, 10, 0, 120)];
         [self.subscribeButton setTitleEdgeInsets:UIEdgeInsetsMake(0, -40, 0, 0)];
         [self.subscribeButton sizeToFit];
+         */
         //top left bottom right
+       [[self.subscribeButton layer] setBorderColor:[ColorHelper magenta].CGColor];
+       //[self.subscribeButton setBackgroundColor:[[ColorHelper magenta] colorWithAlphaComponent:1.0f]];
+       // [self.subscribeButton setTitleColor:[ColorHelper purpleColor] forState:UIControlStateNormal];
 
     }else{
         //[self.subscribeButton setTitle:@"Subscribe" forState:UIControlStateNormal];
         [self.subscribeButton setTitle:NSLocalizedString(@"subscribe_txt", nil) forState:UIControlStateNormal];
+        [[self.subscribeButton layer] setBorderColor:[UIColor whiteColor].CGColor];
+        [self.subscribeButton setBackgroundColor:[UIColor clearColor]];
         [self removeInsetsFromButton];
     }
     

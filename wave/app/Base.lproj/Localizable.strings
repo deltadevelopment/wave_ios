@@ -48,6 +48,8 @@
 "ripples_title" = "Ripples";
 "ripples_info_txt" = "No notifications available";
 "search_info_txt" = "Search for users and hashtags";
+"search_users_match_txt" = "No users found matching";
+"search_hashtag_match_txt" = "No hashtags found matching";
 "watch_action_txt" = "Watch";
 "unwatch_action_txt" = "Unwatch";
 
@@ -60,7 +62,7 @@
 "create_bucket" = "has created a new shared bucket";
 "create_drop_user_bucket" = "has added a drop to his bucket";
 "create_drop_shared_bucket" = "has added a drop to";
-"create_vote" = "has set the temperature of your drop to 96";
+"create_vote" = "has set the temperature of your drop to";
 "create_redrop" = "has re-dropped your drop";
 "create_subscription" = "is now subscribing to you";
 

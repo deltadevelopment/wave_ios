@@ -50,7 +50,7 @@
     self.localizedMessage = NSLocalizedString(self.action, nil);
     
     if ([self.topic_type isEqualToString:@"Vote"]) {
-        self.localizedMessage = [NSString stringWithFormat:@"%@ %d", self.localizedMessage, self.temperature.temperature];
+        self.localizedMessage = [NSString stringWithFormat:@"%@ %d °", self.localizedMessage, self.temperature.temperature];
     }
     
     //"create_drop_shared_bucket" = "har lagt til en drop i";
@@ -61,7 +61,7 @@
         return [self.drop user];
     }
     else if (self.temperature != nil) {
-        return nil;
+        return [self.temperature user];
     }
     
     if (self.bucket != nil) {
