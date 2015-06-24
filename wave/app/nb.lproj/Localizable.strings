@@ -37,12 +37,15 @@
 "tags_txt" = "Tagger";
 "delete_drop_txt" = "Slett drop";
 "delete_bucket_txt" = "Slett bucket";
+"delete_drop_confirmation_txt" = "Er du sikker på at du vil slette denne droppen?";
+"delete_bucket_confirmation_txt" = "Er du sikker på at du vil slette denne bucketen?";
 "cancel_menu_txt" = "Avbryt";
 "redrop_action_txt" = "Redrop";
 
 "subscriptions_button_txt" = "Abonnenter";
 "subscriptions_txt" = "andre gjør det allerede";
 "subscribe_txt" = "Abonner";
+"unsubscribe_txt" = "Abonnerer";
 "ripples_title" = "Krusninger";
 "ripples_info_txt" = "Ingen varslinger tilgjengelig";
 "search_info_txt" = "Søk etter brukere og emneknagger";

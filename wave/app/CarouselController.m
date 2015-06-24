@@ -100,7 +100,6 @@
         //[pageContentViewController initSearchTable:self.searchController];
     }
     else {
-        
         [pageContentViewController setSuperButton:self.superButton];
         [pageContentViewController setViewMode:1];
         [pageContentViewController setIsDeviceUser:YES];

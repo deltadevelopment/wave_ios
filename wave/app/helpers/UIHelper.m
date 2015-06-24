@@ -93,6 +93,12 @@ static CGFloat screenHeight;
     [label setTintColor:[ColorHelper whiteColor]];
 }
 
++(void)applyCaptionLayoutOnTextField:(UITextField *) label withSize:(float) size{
+    [label setFont:[UIFont fontWithName:@"HelveticaNeue-Medium" size:size]];
+    [label setTextColor:[ColorHelper whiteColor]];
+    [label setTintColor:[ColorHelper whiteColor]];
+}
+
 +(void)applyThinLayoutOnLabel:(UILabel *) label withSize:(float) size withColor:(UIColor *) color{
     [label setFont:[UIFont fontWithName:@"HelveticaNeue-Thin" size:size]];
     [label setTextColor:color];
@@ -302,7 +308,6 @@ static CGFloat screenHeight;
 
 +(void)updateNotificationButton:(UINavigationItem *) item withButton:(UIButton *) button
 {
-    if([DataHelper getRippleCount]> 0){
         if ([DataHelper getNotificationLabel] == nil) {
             UILabel *ripplesCount = [[UILabel alloc] initWithFrame:CGRectMake(16, -5, 20, 20)];
             ripplesCount.text = [NSString stringWithFormat:@"%d", [DataHelper getRippleCount]];
@@ -313,13 +318,21 @@ static CGFloat screenHeight;
             ripplesCount.layer.cornerRadius = 10;
             ripplesCount.clipsToBounds = YES;
             [DataHelper setNotificationLabel:ripplesCount];
-            [button addSubview:ripplesCount];
+            [button addSubview:[DataHelper getNotificationLabel]];
+            if([DataHelper getRippleCount] <= 0){
+                ripplesCount.hidden = YES;
+            }
         }else{
-            [DataHelper getNotificationLabel].hidden = NO;
-            [DataHelper getNotificationLabel].text = [NSString stringWithFormat:@"%d", [DataHelper getRippleCount]];
+            if([DataHelper getRippleCount] <= 0){
+                //HDIE HERE
+               [DataHelper getNotificationLabel].hidden = YES;
+            }else{
+                NSLog(@"here");
+                [button addSubview:[DataHelper getNotificationLabel]];
+                [DataHelper getNotificationLabel].hidden = NO;
+                [DataHelper getNotificationLabel].text = [NSString stringWithFormat:@"%d", [DataHelper getRippleCount]];
+            }
         }
-        
-    }
     [item setRightBarButtonItem:[[UIBarButtonItem alloc] initWithCustomView:button]];
 }
 

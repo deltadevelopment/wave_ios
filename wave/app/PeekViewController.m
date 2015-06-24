@@ -137,7 +137,8 @@ AuthHelper *authHelper;
 }
 
 -(void)animatePeekViewIn{
-                             [self resetToSubscription];
+    [self resetToSubscription];
+     [self checkSubscription];
     [UIView animateWithDuration:0.3f
                           delay:0.0f
                         options: UIViewAnimationOptionCurveLinear
@@ -154,15 +155,15 @@ AuthHelper *authHelper;
                          [self.view updateConstraintsIfNeeded];
                      }
                      completion:^(BOOL finished){
-
-                          [self checkSubscription];
+                         
+                         
                      }];
     
 }
 
 
 -(void)resetToSubscription{
-    [self.subscribeButton setTitle:@"Subscribe" forState:UIControlStateNormal];
+    [self.subscribeButton setTitle:NSLocalizedString(@"subscribe_txt", nil) forState:UIControlStateNormal];
     [self removeInsetsFromButton];
 }
 
@@ -242,12 +243,12 @@ AuthHelper *authHelper;
 
 -(void)changeSubscribeUI{
     if(isSubscriber){
-        [self.subscribeButton setTitle:@"Unsubscribe" forState:UIControlStateNormal];
+        [self.subscribeButton setTitle:NSLocalizedString(@"unsubscribe_txt", nil) forState:UIControlStateNormal];
         self.subscribeButton.imageView.frame = CGRectMake(0, 0, 40, 40);
         [self.subscribeButton setImage: [UIHelper iconImage:[UIImage imageNamed:@"tick.png"] withSize:40] forState:UIControlStateNormal];
         [[self.subscribeButton imageView] setTintColor:[UIColor whiteColor]];
         [self.subscribeButton setTintColor:[UIColor whiteColor]];
-        [self.subscribeButton setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 130)];
+        [self.subscribeButton setImageEdgeInsets:UIEdgeInsetsMake(0, 10, 0, 120)];
         [self.subscribeButton setTitleEdgeInsets:UIEdgeInsetsMake(0, -40, 0, 0)];
         [self.subscribeButton sizeToFit];
         //top left bottom right

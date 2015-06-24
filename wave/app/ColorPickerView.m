@@ -31,13 +31,14 @@
     
     self.colorPickerButton = [UIButton buttonWithType:UIButtonTypeCustom];
     self.colorPickerButton.frame = CGRectMake(10, 10, 30, 30);
-    
 
     [self.colorPickerButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"pencil-icon.png"] withSize:150] forState:UIControlStateNormal];
     [self.colorPickerButton addTarget:self action:@selector(tapColorPickerButton) forControlEvents:UIControlEventTouchUpInside];
-    
+    self.colorPicker.layer.cornerRadius = 5;
+    self.colorPicker.clipsToBounds = YES;
     [self addSubview:self.colorPickerButton];
     [self addSubview:self.colorPicker];
+    
     
     return self;
 }
@@ -66,11 +67,9 @@
     
     CGColorSpaceRelease(colorSpace);
     
-   // NSLog(@"pixel: %d %d %d %d", pixel[0], pixel[1], pixel[2], pixel[3]);
+    NSLog(@"pixel: %d %d %d %d", pixel[0], pixel[1], pixel[2], pixel[3]);
     UIColor *color = [UIColor colorWithRed:pixel[0]/255.0 green:pixel[1]/255.0 blue:pixel[2]/255.0 alpha:pixel[3]/255.0];
-    if(pixel[0] == 0 && pixel[1] == 0 && pixel[2] == 0 && pixel[3] == 0 ){
-    
-    }else{
+    if (pixel[3] == 255) {
         [self.captionField setCurrentColor:color];
         if(self.captionField.hasBox){
             self.captionField.backgroundColor = color;
@@ -81,8 +80,6 @@
         self.currentColor = color;
         self.colorPickerButton.backgroundColor = color;
     }
-    
- 
     return color;
 }
 

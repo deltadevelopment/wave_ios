@@ -38,4 +38,5 @@
 +(void)applyLayoutOnLabel:(UILabel *) label withSize:(float) size;
 +(void)initAndApplyLayoutOnProfilePictureSmall:(UIImageView *) imageview;
 +(void)updateNotificationButton:(UINavigationItem *) item withButton:(UIButton *) button;
++(void)applyCaptionLayoutOnTextField:(UITextField *) label withSize:(float) size;
 @end

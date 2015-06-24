@@ -8,6 +8,8 @@
 
 #import "LoginController.h"
 #import "DataHelper.h"
+#import "SubscribeModel.h"
+#import "UserFeed.h"
 @implementation LoginController
 -(void)login:(NSString *) username
         pass:(NSString *) password
@@ -17,7 +19,6 @@ onCompletion:(void (^)(UserModel*,ResponseModel*))callback
     NSDictionary *credentials = [self loginBody:username pass:password];
     NSString *jsonData = [ApplicationHelper generateJsonFromDictionary:credentials];
     [self postHttpRequest:@"login" json:jsonData onCompletion:^(NSURLResponse *response,NSData *data,NSError *error){
-
         NSString *strdata=[[NSString alloc]initWithData:data encoding:NSUTF8StringEncoding];
         NSMutableDictionary *dic = [ParserHelper parse:data];
         ResponseModel *responseModel = [[ResponseModel alloc] init:dic];
@@ -28,8 +29,20 @@ onCompletion:(void (^)(UserModel*,ResponseModel*))callback
         int bucketId = [[[responseModel.data objectForKey:@"bucket"] objectForKey:@"id"] intValue];
         [DataHelper storeBucketId:bucketId];
         callback(user, responseModel);
+        [self fetchSubscriptions];
     } onError:errorCallback];
 
+}
+
+-(void)fetchSubscriptions{
+    UserFeed *userFeed = [[UserFeed alloc] init];
+    [userFeed getFeed:^{
+        for (SubscribeModel *subscriber in userFeed.feed) {
+            [subscriber storeSubscriberLocal];
+        }
+    } onError:^(NSError *error){
+    
+    }];
 }
 
 -(void)storeBucketId:(BucketModel *) bucket{

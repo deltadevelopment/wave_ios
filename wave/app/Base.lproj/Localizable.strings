@@ -36,12 +36,15 @@
 "tags_txt" = "Tags";
 "delete_drop_txt" = "Delete drop";
 "delete_bucket_txt" = "Delete bucket";
+"delete_drop_confirmation_txt" = "Are you sure you want to delete this drop?";
+"delete_bucket_confirmation_txt" = "Are you sure you want to delete this bucket?";
 "cancel_menu_txt" = "Cancel";
 "redrop_action_txt" = "Redrop";
 
 "subscriptions_button_txt" = "Subscriptions";
 "subscriptions_txt" = "others already do";
 "subscribe_txt" = "Subscribe";
+"unsubscribe_txt" = "Subscribing";
 "ripples_title" = "Ripples";
 "ripples_info_txt" = "No notifications available";
 "search_info_txt" = "Search for users and hashtags";
@@ -60,6 +63,7 @@
 "create_vote" = "has set the temperature of your drop to 96";
 "create_redrop" = "has re-dropped your drop";
 "create_subscription" = "is now subscribing to you";
+
 
 
 

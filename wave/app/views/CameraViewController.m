@@ -18,7 +18,7 @@
 #import "MediaModel.h"
 #import "CaptionTextField.h"
 #import "ColorPickerView.h"
-
+#import "SimpleListController.h"
 @interface CameraViewController ()
 
 @end
@@ -62,6 +62,8 @@
     NSData *renderedVideoWithCaption;
     bool didCancelTap;
     bool canUpload;
+    SimpleListController *controller;
+
 }
 
 @synthesize cameraHelper;
@@ -111,6 +113,7 @@
     // [self initUI];
    
     [self initCaptionsView];
+ //   [self showSubscribers:nil];
 }
 
 -(void)initCaptionsView{
@@ -238,9 +241,9 @@
 
 -(void)initCaptionButton{
     [UIHelper applyUIOnButton:captionButton];
-    [captionButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"plus-icon-simple.png"] withSize:150] forState:UIControlStateNormal];
+    [captionButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"text-edit-icon.png"] withSize:150] forState:UIControlStateNormal];
     [captionButton addTarget:self action:@selector(tapCaptionButton) forControlEvents:UIControlEventTouchUpInside];
-    [self addConstraintsToButton:self.view withButton:captionButton withPoint:CGPointMake(-4, -64) fromLeft:YES fromTop:YES];
+    [self addConstraintsToButton:self.view withButton:captionButton withPoint:CGPointMake(5, -64) fromLeft:YES fromTop:YES];
     captionButton.hidden = YES;
     captionButton.alpha = 0.0;
 }
@@ -249,7 +252,7 @@
     [UIHelper applyUIOnButton:boxPickerButton];
     [boxPickerButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"rect-icon.png"] withSize:150] forState:UIControlStateNormal];
     [boxPickerButton addTarget:self action:@selector(tapBoxPicker) forControlEvents:UIControlEventTouchUpInside];
-    [self addConstraintsToButton:self.view withButton:boxPickerButton withPoint:CGPointMake(-4, -64) fromLeft:YES fromTop:YES];
+    [self addConstraintsToButton:self.view withButton:boxPickerButton withPoint:CGPointMake(5, -64) fromLeft:YES fromTop:YES];
     boxPickerButton.hidden = YES;
     boxPickerButton.alpha = 0.0;
 }
@@ -259,8 +262,6 @@
 }
 
 -(void)tapCaptionButton{
-
-    
     CaptionTextField *element = [[CaptionTextField alloc] init];
     [element becomeFirstResponder];
        __weak typeof(self) weakSelf = self;
@@ -278,6 +279,9 @@
             [imageView addSubview:element];
         }
     };
+    element.onAlphasFound = ^(CaptionTextField *field){
+        [weakSelf showSubscribers:field];
+    };
     
     if(mediaIsVideo){
         [captionsView addSubview:element];
@@ -294,11 +298,43 @@
 
 }
 
+-(void)showSubscribers:(CaptionTextField *) textfield{
+    if (controller == nil) {
+        controller = [[SimpleListController alloc]
+                      initWithSize:textfield.keyboardSize.height + textfield.frame.size.height];
+        __weak typeof(self) weakSelf = self;
+        controller.onShow = ^{
+            weakSelf.blurEffectView.alpha = 1.0f;
+        };
+        controller.onHide = ^{
+            weakSelf.blurEffectView.alpha = 0.0f;
+        };
+        
+    }
+    if ([controller.view superview] == nil) {
+        [self addBlurWithFrame:controller.view.frame];
+        [self.view addSubview:controller.view];
+        NSLog(@"ADDING-------");
+    }
+    [controller searchForUser:textfield.text withTextField:textfield];
+}
 
+-(void)addBlurWithFrame:(CGRect) frame{
+    
+    UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+    
+    self.blurEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+    self.blurEffectView.frame = frame;
+    // blurEffectView.alpha = 0.9;
+    self.blurEffectView.alpha = 1.0;
+    [self.view addSubview:self.blurEffectView];
+    //add auto layout constraints so that the blur fills the screen upon rotating device
+    [self.blurEffectView setTranslatesAutoresizingMaskIntoConstraints:NO];
+}
 
 -(void)showEditOptionsForCaptionTextField:(CaptionTextField *) captionField{
     if(colorPickerView == nil){
-        colorPickerView = [[ColorPickerView alloc] initWithCaptionField:captionElement];
+        colorPickerView = [[ColorPickerView alloc] initWithCaptionField:captionField];
         [self.view addSubview:colorPickerView];
     }else{
         [colorPickerView setCaptionField:captionField];
@@ -307,15 +343,21 @@
     boxPickerButton.hidden = NO;
     boxPickerButton.alpha = 1.0;
     captionButton.hidden = YES;
-    
 }
 
 -(void)hideEditOptionsForCaptionTextField:(CaptionTextField *) captionField{
- 
+    if (captionField.text.length == 0) {
+        [captions removeObject:captionField];
+        [captionField removeFromSuperview];
+    }
     colorPickerView.hidden = YES;
     boxPickerButton.hidden = YES;
      captionButton.hidden = NO;
     boxPickerButton.alpha = 0.0;
+    if (controller != nil) {
+        [controller.view removeFromSuperview];
+        [self.blurEffectView removeFromSuperview];
+    }
 }
 
 -(void)initTypeButton{

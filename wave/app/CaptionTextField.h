@@ -13,7 +13,9 @@
 @property (nonatomic, copy) void (^onKeyboardShow)(CaptionTextField*(textfield));
 @property (nonatomic, copy) void (^onKeyboardHide)(CaptionTextField*(textfield));
 @property (nonatomic, copy) void (^onKeyboardGainFocus)(CaptionTextField*(textfield));
+@property (nonatomic, copy) void (^onAlphasFound)(CaptionTextField*(textfield));
 @property (nonatomic) bool hasBox;
+@property (nonatomic) CGSize keyboardSize;
 @property (strong, nonatomic) UIColor *currentColor;
 -(void)removeKeyboardObservers;
 -(void)addKeyboardObservers;

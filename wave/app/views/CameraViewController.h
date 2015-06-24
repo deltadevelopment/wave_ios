@@ -31,6 +31,7 @@ CGSize keyboardSize;
 @property (nonatomic, copy) void (^onMediaPosted)(BucketModel *(bucket));
 @property (nonatomic, copy) void (^onMediaPostedDrop)(DropModel *(drop));
 @property(nonatomic, strong) CameraHelper *cameraHelper;
+@property (nonatomic, strong) UIVisualEffectView *blurEffectView;
 //@property(nonatomic, strong) CameraHelper2 *cameraHelper;
 
 @property bool hasAddedTitle;

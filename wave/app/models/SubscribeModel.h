@@ -26,4 +26,5 @@ onError:(void(^)(NSError *))errorCallback;
             onError:(void(^)(NSError *))errorCallback;
 -(BOOL)isSubscriberLocal;
 -(id)initWithSubscriber:(UserModel *) user withSubscribee:(UserModel *) subscribee;
+-(void)storeSubscriberLocal;
 @end

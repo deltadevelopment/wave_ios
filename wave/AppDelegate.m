@@ -138,18 +138,24 @@ AuthHelper *authHelper;
     if (application.applicationState == UIApplicationStateActive ){
         [ApplicationHelper executeBlock];
         [DataHelper storeRippleCount:[DataHelper getRippleCount] +1];
+        [self playSound];
         //If the application was active we want to force update the ripples count
-        
         if([DataHelper getRippleCount]> 0){
             if ([DataHelper getNotificationLabel] != nil) {
+                [[DataHelper getNotificationButton] addSubview:[DataHelper getNotificationLabel]];
                 [DataHelper getNotificationLabel].text = [NSString stringWithFormat:@"%d", [DataHelper getRippleCount]];
                 [DataHelper getNotificationLabel].hidden = NO;
             }
         }
     }else{
+        NSLog(@"Ikke Aktiv notif");
         //If the application was not active, we want to navigate/take action on the ripple
         [self handleNotification:userInfo];
     }
+}
+
+-(void)playSound{
+    AudioServicesPlaySystemSound (0x3f4);
 }
 
 -(void)resetBadgeToZero{

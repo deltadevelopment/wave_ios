@@ -56,7 +56,7 @@
     _updated_at  = [dic objectForKey:@"updated_at"];
     _password_hash  = [dic objectForKey:@"password_hash"];
     _profile_picture_url  = [self getStringValueFromString:@"profile_picture_url"];
-    _profile_picture_key  = [dic objectForKey:@"profile_picture_key"];
+    _profile_picture_key  = [self getStringValueFromString:@"profile_picture_key"];
     _password_salt  = [dic objectForKey:@"password_salt"];
     _private_profile  = [[dic objectForKey:@"private_profile"] boolValue];
     _Id  = [[dic objectForKey:@"id"] intValue];
@@ -162,6 +162,8 @@
 
 -(NSData *)mediaFromCache{
     if (self.profile_picture_key != nil) {
+        NSLog(@"");
+        NSLog(self.profile_picture_key);
         NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:self.profile_picture_key];
         
         if (data == nil) {

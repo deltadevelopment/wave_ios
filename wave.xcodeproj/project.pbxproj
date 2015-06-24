@@ -29,8 +29,11 @@
 		C5576B541ADBE2C1009C1D5E /* RegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5576B531ADBE2C1009C1D5E /* RegisterViewController.m */; };
 		C5576B571ADBE31A009C1D5E /* SuperLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5576B561ADBE31A009C1D5E /* SuperLoginViewController.m */; };
 		C5576B5A1ADBE77E009C1D5E /* Navigationbar.m in Sources */ = {isa = PBXBuildFile; fileRef = C5576B591ADBE77E009C1D5E /* Navigationbar.m */; };
+		C55E75A81B3B07B6002C1542 /* text-edit-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = C55E75A71B3B07B6002C1542 /* text-edit-icon.png */; };
 		C55FE90A1AD81F45007663FB /* SuperButton.m in Sources */ = {isa = PBXBuildFile; fileRef = C55FE9091AD81F45007663FB /* SuperButton.m */; };
 		C567A1DF1B39AE2300C47237 /* user-icon-gray.png in Resources */ = {isa = PBXBuildFile; fileRef = C567A1DE1B39AE2300C47237 /* user-icon-gray.png */; };
+		C57433071B3AD80900394E15 /* SimpleListController.m in Sources */ = {isa = PBXBuildFile; fileRef = C57433061B3AD80900394E15 /* SimpleListController.m */; };
+		C574330A1B3ADB4600394E15 /* SimpleListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C57433091B3ADB4600394E15 /* SimpleListCell.m */; };
 		C57AD0A71AD7EDB800B6042A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C57AD0A61AD7EDB800B6042A /* main.m */; };
 		C57AD0AA1AD7EDB800B6042A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C57AD0A91AD7EDB800B6042A /* AppDelegate.m */; };
 		C57AD0B01AD7EDB800B6042A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C57AD0AE1AD7EDB800B6042A /* Main.storyboard */; };
@@ -211,9 +214,14 @@
 		C5576B561ADBE31A009C1D5E /* SuperLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SuperLoginViewController.m; sourceTree = "<group>"; };
 		C5576B581ADBE77E009C1D5E /* Navigationbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Navigationbar.h; path = views/Navigationbar.h; sourceTree = "<group>"; };
 		C5576B591ADBE77E009C1D5E /* Navigationbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Navigationbar.m; path = views/Navigationbar.m; sourceTree = "<group>"; };
+		C55E75A71B3B07B6002C1542 /* text-edit-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "text-edit-icon.png"; sourceTree = "<group>"; };
 		C55FE9081AD81F45007663FB /* SuperButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SuperButton.h; path = ../../SuperButton.h; sourceTree = "<group>"; };
 		C55FE9091AD81F45007663FB /* SuperButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SuperButton.m; path = ../../SuperButton.m; sourceTree = "<group>"; };
 		C567A1DE1B39AE2300C47237 /* user-icon-gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user-icon-gray.png"; sourceTree = "<group>"; };
+		C57433051B3AD80900394E15 /* SimpleListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleListController.h; sourceTree = "<group>"; };
+		C57433061B3AD80900394E15 /* SimpleListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleListController.m; sourceTree = "<group>"; };
+		C57433081B3ADB4600394E15 /* SimpleListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimpleListCell.h; sourceTree = "<group>"; };
+		C57433091B3ADB4600394E15 /* SimpleListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimpleListCell.m; sourceTree = "<group>"; };
 		C57AD0A11AD7EDB800B6042A /* wave.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = wave.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C57AD0A51AD7EDB800B6042A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C57AD0A61AD7EDB800B6042A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -581,6 +589,7 @@
 				F1DBB56D1B12B6930097F709 /* dots-icon.png */,
 				F1DBB54A1B0E4A080097F709 /* manatee.png */,
 				F1E3BB901B2DFFB900B55F2B /* rect-icon.png */,
+				C55E75A71B3B07B6002C1542 /* text-edit-icon.png */,
 				F1E3BB8C1B2DFFA600B55F2B /* pencil-icon.png */,
 				C5FF1E4F1B04D7D00081BEDD /* reply-icon.png */,
 				F1E3BB8A1B2DFF9900B55F2B /* temperature-icon.png */,
@@ -879,6 +888,10 @@
 				F1DBB56B1B12ABBF0097F709 /* PeekViewModule.m */,
 				C52AAFD91B32D38A004332DD /* PartialTransparentBlurView.h */,
 				C52AAFDA1B32D38A004332DD /* PartialTransparentBlurView.m */,
+				C57433051B3AD80900394E15 /* SimpleListController.h */,
+				C57433061B3AD80900394E15 /* SimpleListController.m */,
+				C57433081B3ADB4600394E15 /* SimpleListCell.h */,
+				C57433091B3ADB4600394E15 /* SimpleListCell.m */,
 			);
 			name = modules;
 			sourceTree = "<group>";
@@ -1046,6 +1059,7 @@
 				C57AD0B51AD7EDB800B6042A /* LaunchScreen.xib in Resources */,
 				C5D4737E1AE6C6890097E44F /* slider-cross.png in Resources */,
 				C5D473661AE56B540097E44F /* settings-icon.png in Resources */,
+				C55E75A81B3B07B6002C1542 /* text-edit-icon.png in Resources */,
 				C5E2FC0D1B187F09007E71BE /* plus-icon-simple.png in Resources */,
 				C57AD0B21AD7EDB800B6042A /* Images.xcassets in Resources */,
 				F1E3BB8B1B2DFF9900B55F2B /* temperature-icon.png in Resources */,
@@ -1084,6 +1098,7 @@
 				C5576B391ADBC195009C1D5E /* UIHelper.m in Sources */,
 				F1D4364D1B1A2E350024205B /* CarouselController.m in Sources */,
 				C5576B5A1ADBE77E009C1D5E /* Navigationbar.m in Sources */,
+				C574330A1B3ADB4600394E15 /* SimpleListCell.m in Sources */,
 				C5896A7A1AE15F4200EFCE2D /* ActivityViewController.m in Sources */,
 				C5A27B5F1ADD019900968033 /* SSKeychain.m in Sources */,
 				F18A20EE1B1D34F0003294BE /* TemperatureView.m in Sources */,
@@ -1107,6 +1122,7 @@
 				C5A27B751ADD0F4500968033 /* ResponseModel.m in Sources */,
 				C57AD0AA1AD7EDB800B6042A /* AppDelegate.m in Sources */,
 				F1D436531B1A90430024205B /* BucketView.m in Sources */,
+				C57433071B3AD80900394E15 /* SimpleListController.m in Sources */,
 				C5500D1A1B34300C00E4E8BA /* UserFeed.m in Sources */,
 				F1DBB57E1B14E3D70097F709 /* ImageEditorView.m in Sources */,
 				C5576B371ADBC195009C1D5E /* CameraHelper.m in Sources */,

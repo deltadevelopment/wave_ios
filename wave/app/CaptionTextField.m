@@ -23,11 +23,11 @@ const int MIN_WIDTH = 100;
     bool isPinching;
     bool editTextMode;
     CGAffineTransform lastTransform;
-    CGSize keyboardSize;
     CGPoint lastPointOnScreen;
     CGSize lastSizeOnScreen;
     UIFont *lastFont;
     bool firstTimeEditing;
+    NSTimer *searchTimer;
 }
 
 /*
@@ -47,7 +47,7 @@ const int MIN_WIDTH = 100;
     self.delegate = self;
     self.hasBox = YES;
     //[UIHelper applyThinLayoutOnLabel:self.captionLabel withSize:30];
-    [UIHelper applyThinLayoutOnTextField:self withSize:30];
+    [UIHelper applyCaptionLayoutOnTextField:self withSize:30];
     
     //self.text = @"caption this it the cap!";
     self.placeholder = NSLocalizedString(@"caption_placeholder_txt", nil);
@@ -128,9 +128,9 @@ const int MIN_WIDTH = 100;
     self.onKeyboardShow(self);
     NSDictionary* info = [note userInfo];
     NSValue* aValue = [info objectForKey:UIKeyboardFrameBeginUserInfoKey];
-    keyboardSize = [aValue CGRectValue].size;
+    self.keyboardSize = [aValue CGRectValue].size;
     self.frame = CGRectMake(self.frame.origin.x, self.frame.origin.y, [UIHelper getScreenWidth], 50);
-    self.center = CGPointMake([UIHelper getScreenWidth]/2, [UIHelper getScreenHeight] - keyboardSize.height - (self.frame.size.height/2));
+    self.center = CGPointMake([UIHelper getScreenWidth]/2, [UIHelper getScreenHeight] - self.keyboardSize.height - (self.frame.size.height/2));
     [self setFont:[UIFont fontWithName:self.font.fontName size:30]];
         //verticalSpaceConstraintButton.constant += keyboardSize.height;
     
@@ -177,7 +177,32 @@ const int MIN_WIDTH = 100;
 
 - (void)textFieldDidChange:(NSNotification *)notification {
     self.placeholder = @"";
+    if ([self.text rangeOfString:@"@"].location == NSNotFound) {
+        NSLog(@"string does not contain any alphas");
+    } else {
+
+        NSRange range = [self.text rangeOfString:@"@"];
+        
+        if (searchTimer != nil && [searchTimer isValid]) {
+            [searchTimer invalidate];
+        }
+        searchTimer = [NSTimer scheduledTimerWithTimeInterval:0.3
+                                                       target:self
+                                                     selector:@selector(searchNotify)
+                                                     userInfo:nil
+                                                      repeats:NO];
+        
+        
+        
+        //range.location
+    }
+    
     //[self sizeToFit];
+}
+
+-(void)searchNotify{
+    self.onAlphasFound(self);
+            NSLog(@"string contains alph!");
 }
 
 - (void)handlePinch:(UIPinchGestureRecognizer *)recognizer{

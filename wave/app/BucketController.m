@@ -332,16 +332,16 @@ const int PEEK_Y_START = 300;
 -(void)showDeleteAlert{
     UIAlertView *alert;
     if (dropForDeletion) {
-        alert = [[UIAlertView alloc]initWithTitle:@"Delete Drop"
-                                                       message:@"Are you sure you want to delete this drop?"
+        alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"delete_drop_txt", nil)
+                                                       message:NSLocalizedString(@"delete_drop_confirmation_txt", nil)
                                                       delegate:self
-                                             cancelButtonTitle:@"Cancel"
+                                             cancelButtonTitle:NSLocalizedString(@"cancel_menu_txt", nil)
                                              otherButtonTitles:@"Ok",nil];
     }else{
-        alert = [[UIAlertView alloc]initWithTitle:@"Delete Bucket"
-                                                       message:@"Are you sure you want to delete this bucket?"
+        alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"delete_bucket_txt", nil)
+                                                       message:NSLocalizedString(@"delete_bucket_confirmation_txt", nil)
                                                       delegate:self
-                                             cancelButtonTitle:@"Cancel"
+                                             cancelButtonTitle:NSLocalizedString(@"cancel_menu_txt", nil)
                                              otherButtonTitles:@"Ok",nil];
     }
 
