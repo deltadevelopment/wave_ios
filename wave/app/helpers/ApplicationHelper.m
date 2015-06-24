@@ -89,6 +89,10 @@ NSArray *unAvailableTexts;
 
 }
 
++(int)userBucketId{
+    return [[[NSUserDefaults standardUserDefaults] objectForKey:@"user-bucket-id"] intValue];
+}
+
 +(UINavigationController *)getMainNavigationController{
     return mainNavigationController;
 }

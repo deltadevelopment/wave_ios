@@ -394,7 +394,7 @@
 }
 
 -(void)preventDoubleTap{
-    [NSTimer scheduledTimerWithTimeInterval:1.0
+    [NSTimer scheduledTimerWithTimeInterval:0.5
                                      target:self
                                    selector:@selector(canUploadPicture)
                                    userInfo:nil

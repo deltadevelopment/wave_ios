@@ -285,6 +285,18 @@
     [self.currentController onFocusGained];
 }
 
+-(void)showSuperButton{
+    [UIView animateWithDuration:0.2f
+                          delay:0.0f
+                        options: UIViewAnimationOptionCurveLinear
+                     animations:^{
+                         [[self superButton] getButton].alpha = 1.0f;
+                     }
+                     completion:^(BOOL finished){
+                         //[self showToolButtons];
+                     }];
+}
+
 # pragma SuperButton callbacks
 -(void)prepareCamera{
     [self.currentController prepareCamera:self.camera.view];
@@ -292,9 +304,11 @@
 
 -(void)onMediaPosted:(BucketModel *)bucket{
     [self.currentController onMediaPosted:bucket];
+    [self showSuperButton];
 }
 -(void)onMediaPostedDrop:(DropModel *)drop{
     [self.currentController onMediaPostedDrop:drop];
+    [self showSuperButton];
 }
 -(void)onCameraClose{
     self.isRightButtonClickable = YES;

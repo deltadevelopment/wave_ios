@@ -655,6 +655,7 @@ const int PEEK_Y_START = 300;
 -(void)setBucket:(BucketModel *)inputBucket withCurrentDropId:(int) dropId{
     bucket = inputBucket;
     [bucket find:^{
+        NSLog(@"trying to find");
         [self setBucket:bucket];
         if(dropId != 0){
             dropIdToJumpTo = dropId;
@@ -881,13 +882,10 @@ const int PEEK_Y_START = 300;
                           delay:0.0f
                         options: UIViewAnimationOptionCurveLinear
                      animations:^{
-                      [[self superButton] getButton].alpha = 1.0f;
+                         [[self superButton] getButton].alpha = 1.0f;
                      }
                      completion:^(BOOL finished){
-                         
                          //[self showToolButtons];
-                         
-                         
                      }];
 }
 

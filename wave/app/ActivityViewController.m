@@ -20,6 +20,7 @@
 #import "PeekViewController.h"
 #import "PeekViewModule.h"
 #import "CacheHelper.h"
+#import "DataHelper.h"
 @interface ActivityViewController ()
 
 @end
@@ -318,6 +319,7 @@ const int EXPAND_SIZE = 400;
 }
 
 -(void)onCameraOpen{
+    [DataHelper setCurrentBucketId:[ApplicationHelper userBucketId]];
     /*
     _tableView.scrollEnabled = NO;
     self.onLockScreenToggle();

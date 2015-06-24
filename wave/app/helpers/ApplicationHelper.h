@@ -25,4 +25,5 @@
 +(void)setMainNavigationController:(UINavigationController *) naivgationController;
 +(void)setBlock:(void (^)())completionCallback;
 +(void)executeBlock;
++(int)userBucketId;
 @end

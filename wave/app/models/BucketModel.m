@@ -95,6 +95,11 @@
            onError:(void (^)(NSError *))errorCallback
         onProgress:(void (^)(NSNumber*))progression
 {
+    /*
+    if(self.Id > 0){
+        [[self firstDrop] setBucket_id:self.Id];
+    }
+     */
     [[self firstDrop] saveChanges:^{
         [self saveChanges:completionCallback
                   onError:errorCallback];
@@ -104,6 +109,7 @@
 }
 -(void)saveChanges:(void (^)(ResponseModel*, BucketModel*))completionCallback onError:(void(^)(NSError *))errorCallback{
     if(self.Id > 0){
+        NSLog(@"updating for some");
         [self update:completionCallback onError:errorCallback];
     }
     else{

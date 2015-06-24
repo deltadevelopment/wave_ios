@@ -22,12 +22,19 @@ onCompletion:(void (^)(UserModel*,ResponseModel*))callback
         NSMutableDictionary *dic = [ParserHelper parse:data];
         ResponseModel *responseModel = [[ResponseModel alloc] init:dic];
         UserModel *user = [[UserModel alloc] init:[[dic objectForKey:@"data"] objectForKey:@"user"]];
+        BucketModel *bucket = [[BucketModel alloc] init:[[dic objectForKey:@"data"] objectForKey:@"bucket"]];
+        [self storeBucketId:bucket];
         [self storeCredentials:[responseModel.data objectForKey:@"user_session"]];
         int bucketId = [[[responseModel.data objectForKey:@"bucket"] objectForKey:@"id"] intValue];
         [DataHelper storeBucketId:bucketId];
         callback(user, responseModel);
     } onError:errorCallback];
 
+}
+
+-(void)storeBucketId:(BucketModel *) bucket{
+    [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInt:bucket.Id] forKey:@"user-bucket-id"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 -(NSDictionary *) loginBody:(NSString *) username
