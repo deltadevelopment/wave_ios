@@ -24,7 +24,7 @@
 @property (weak, nonatomic) IBOutlet UITableViewCell *logoutCell;
 @property (weak, nonatomic) IBOutlet UITableViewCell *profilePictureCell;
 
-
+@property(nonatomic) BOOL hideTableSection;
 - (IBAction)toggleServerAction:(id)sender;
 
 @end

@@ -27,6 +27,7 @@
     [super viewDidLoad];
   // self.searchMode = YES;
     //self.tagMode = NO;
+   
     
     NSMutableDictionary *titleBarAttributes = [NSMutableDictionary dictionaryWithDictionary: [[UINavigationBar appearance] titleTextAttributes]];
     [titleBarAttributes setValue:[UIFont fontWithName:@"HelveticaNeue-Thin" size:17] forKey:NSFontAttributeName];
@@ -121,6 +122,11 @@
     
    // [self addLeftButton];
     //self.tableView.contentInset = UIEdgeInsetsMake(160, 0, 0, 0);
+    if (self.searchMode && !self.tagMode) {
+        self.discover = [self.storyboard instantiateViewControllerWithIdentifier:@"activity"];
+        [self.view addSubview:self.discover.view];
+        [noUsersLabel setHidden:YES];
+    }
 }
 
 -(void)hideShowSearch:(float) heigth{
@@ -191,6 +197,7 @@
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController
 {
     self.isSearching = YES;
+    [self.view bringSubviewToFront:self.tableView];
     NSString *searchString = searchController.searchBar.text;
     if (searchString.length > 0) {
         //[spinner setHidden:NO];
@@ -222,6 +229,10 @@
     }else{
      self.isSearching = NO;
     }
+    
+    if (self.searchMode && !self.tagMode) {
+        [self.view addSubview:self.discover.view];
+    }
 }
 
 -(void)searchBarCancelButtonClicked:(UISearchBar *)searchBar{
@@ -232,6 +243,14 @@
     else{
         self.isSearching = NO;
     }
+    
+    if (self.searchMode && !self.tagMode) {
+        NSLog(@"canceling");
+        [self.view addSubview:self.discover.view];
+        self.tableView.hidden = YES;
+    }
+
+
 }
 
 
@@ -290,6 +309,7 @@
             
         }];
     }
+
 }
 
 

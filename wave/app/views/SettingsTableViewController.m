@@ -49,9 +49,8 @@
     self.serverCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     self.logoutCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     self.profilePictureCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    
-    
-
+    [self.serverCell setHidden:YES];
+    self.hideTableSection = YES;
 }
 -(void)userWasReturned{
     [self.privateToggleSwitch setOn:[user private_profile] animated:YES];
@@ -182,4 +181,72 @@
 - (IBAction)toggleServerAction:(id)sender {
 
 }
+
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    
+    if(section == 3 && _hideTableSection){
+        return 0.0; //header height for selected section
+    } else {
+        return [super tableView:tableView heightForHeaderInSection:section]; }  //keeps inalterate all other Header
+}
+
+-(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
+    
+    if(section == 3 && _hideTableSection){
+        return 0.1; //header height for selected section
+    } else {
+        return [super tableView:tableView heightForFooterInSection:section]; } //keeps inalterate all other footer
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    if(section == 3) //Index number of interested section
+    {
+        if(_hideTableSection)
+            return 0; //number of row in section when you click on hide
+        else
+            return 2; //number of row in section when you click on show (if it's higher than rows in Storyboard, app willcrash)
+    }
+    else
+    {
+        return [super tableView:tableView numberOfRowsInSection:section]; //keeps inalterate all other rows
+    }
+    
+}
+
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    NSString *sectionName;
+    switch (section)
+    {
+        case 0:
+            sectionName = @"PROFILE";
+            break;
+        case 1:
+            sectionName = @"ACCOUNT";
+            break;
+        case 2:
+            sectionName = @"ABOUT";
+            break;
+        case 3:
+            sectionName = @"";
+            break;
+        default:
+            sectionName = @"";
+            break;
+    }
+    return sectionName;
+}
+
+
+
+
+
+
+
+
+
+
 @end

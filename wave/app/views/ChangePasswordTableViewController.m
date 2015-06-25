@@ -32,6 +32,10 @@
     self.tableView.allowsSelection = NO;
     self.passwordTextField.delegate = self;
     self.repeatedPasswordField.delegate = self;
+    [self.navigationController.navigationBar setBackgroundColor:[UIColor redColor]];
+    [self.navigationController.navigationBar setTintColor:[ColorHelper purpleColor]];
+    [self.navigationController.navigationBar setBackgroundColor:[ColorHelper purpleColor]];
+    [self.navigationController.navigationBar setBarTintColor:[ColorHelper purpleColor]];
 }
 
 

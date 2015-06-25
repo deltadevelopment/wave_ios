@@ -37,6 +37,10 @@
     self.emailTextField.delegate = self;
     self.displayNameTextField.delegate = self;
     self.phoneNumberTextField.delegate = self;
+    [self.navigationController.navigationBar setBackgroundColor:[UIColor redColor]];
+    [self.navigationController.navigationBar setTintColor:[ColorHelper purpleColor]];
+    [self.navigationController.navigationBar setBackgroundColor:[ColorHelper purpleColor]];
+    [self.navigationController.navigationBar setBarTintColor:[ColorHelper purpleColor]];
 }
 
 

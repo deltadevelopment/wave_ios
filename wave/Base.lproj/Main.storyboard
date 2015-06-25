@@ -3186,71 +3186,6 @@
                         <sections>
                             <tableViewSection headerTitle="Profile" id="93U-Ya-Qdi">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" id="vvl-Sy-gpP">
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="vvl-Sy-gpP" id="6HI-f7-zIl">
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uSu-VU-7wM">
-                                                    <rect key="frame" x="-25" y="-15" width="51" height="31"/>
-                                                    <connections>
-                                                        <action selector="togglePrivateProfile:" destination="zLo-mo-xfu" eventType="valueChanged" id="QcE-nJ-rG6"/>
-                                                    </connections>
-                                                </switch>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Private profile" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2u8-NU-7KM">
-                                                    <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="42" id="4nU-rQ-xrY"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="17"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                    <variation key="default">
-                                                        <mask key="constraints">
-                                                            <exclude reference="4nU-rQ-xrY"/>
-                                                        </mask>
-                                                    </variation>
-                                                    <variation key="heightClass=regular-widthClass=compact">
-                                                        <mask key="constraints">
-                                                            <exclude reference="4nU-rQ-xrY"/>
-                                                        </mask>
-                                                    </variation>
-                                                </label>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="2u8-NU-7KM" firstAttribute="leading" secondItem="6HI-f7-zIl" secondAttribute="leadingMargin" constant="10" id="HpQ-Eh-8Up"/>
-                                                <constraint firstAttribute="centerY" secondItem="2u8-NU-7KM" secondAttribute="centerY" constant="-3" id="Lhl-ci-4Hh"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="uSu-VU-7wM" secondAttribute="trailing" constant="17" id="bDA-BD-y4p">
-                                                    <variation key="heightClass=regular-widthClass=compact" constant="15"/>
-                                                </constraint>
-                                                <constraint firstAttribute="centerY" secondItem="uSu-VU-7wM" secondAttribute="centerY" constant="-2" id="lmH-mp-k8o"/>
-                                            </constraints>
-                                            <variation key="default">
-                                                <mask key="subviews">
-                                                    <exclude reference="uSu-VU-7wM"/>
-                                                    <exclude reference="2u8-NU-7KM"/>
-                                                </mask>
-                                                <mask key="constraints">
-                                                    <exclude reference="HpQ-Eh-8Up"/>
-                                                    <exclude reference="Lhl-ci-4Hh"/>
-                                                    <exclude reference="bDA-BD-y4p"/>
-                                                    <exclude reference="lmH-mp-k8o"/>
-                                                </mask>
-                                            </variation>
-                                            <variation key="heightClass=regular-widthClass=compact">
-                                                <mask key="subviews">
-                                                    <include reference="uSu-VU-7wM"/>
-                                                    <include reference="2u8-NU-7KM"/>
-                                                </mask>
-                                                <mask key="constraints">
-                                                    <include reference="HpQ-Eh-8Up"/>
-                                                    <include reference="Lhl-ci-4Hh"/>
-                                                    <include reference="bDA-BD-y4p"/>
-                                                    <include reference="lmH-mp-k8o"/>
-                                                </mask>
-                                            </variation>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="1eZ-Hq-F4S">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="1eZ-Hq-F4S" id="FQc-TM-ZfQ">
@@ -3624,7 +3559,6 @@
                     <connections>
                         <outlet property="changePasswordCell" destination="l3W-ZZ-9Ag" id="ra5-FD-hsY"/>
                         <outlet property="logoutCell" destination="K76-AH-u1k" id="Ep1-qf-4CZ"/>
-                        <outlet property="privateToggleSwitch" destination="uSu-VU-7wM" id="Ysn-5E-ZIy"/>
                         <outlet property="profileCell" destination="1eZ-Hq-F4S" id="tSd-E2-vkf"/>
                         <outlet property="profilePictureCell" destination="P25-dY-4JA" id="VtI-nS-gJS"/>
                         <outlet property="serverCell" destination="Duy-19-Vjx" id="tTh-vy-pjg"/>
@@ -3647,69 +3581,6 @@
                         <sections>
                             <tableViewSection headerTitle="Edit profile" id="XQQ-o4-Y9e">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="xIg-KO-iuI">
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xIg-KO-iuI" id="HCd-V5-TV2">
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Display name" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zY2-Jh-QRa">
-                                                    <rect key="frame" x="0.0" y="-30" width="97" height="30"/>
-                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="17"/>
-                                                    <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="yes"/>
-                                                </textField>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Display name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b0j-UM-KKM">
-                                                    <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
-                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstAttribute="centerY" secondItem="zY2-Jh-QRa" secondAttribute="centerY" constant="-5" id="1fj-Ba-Q3H">
-                                                    <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
-                                                </constraint>
-                                                <constraint firstItem="b0j-UM-KKM" firstAttribute="top" secondItem="HCd-V5-TV2" secondAttribute="topMargin" constant="7" id="D00-cb-42q">
-                                                    <variation key="heightClass=regular-widthClass=compact" constant="10"/>
-                                                </constraint>
-                                                <constraint firstAttribute="trailingMargin" secondItem="zY2-Jh-QRa" secondAttribute="trailing" constant="6" id="Dua-7I-kvI"/>
-                                                <constraint firstItem="b0j-UM-KKM" firstAttribute="leading" secondItem="HCd-V5-TV2" secondAttribute="leadingMargin" constant="9" id="qKu-GB-5yC">
-                                                    <variation key="heightClass=regular-widthClass=compact" constant="10"/>
-                                                </constraint>
-                                                <constraint firstAttribute="centerY" secondItem="b0j-UM-KKM" secondAttribute="centerY" constant="-4" id="wau-EC-6GT">
-                                                    <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
-                                                </constraint>
-                                                <constraint firstAttribute="centerY" secondItem="b0j-UM-KKM" secondAttribute="centerY" id="yu0-kR-WeL"/>
-                                            </constraints>
-                                            <variation key="default">
-                                                <mask key="subviews">
-                                                    <exclude reference="zY2-Jh-QRa"/>
-                                                    <exclude reference="b0j-UM-KKM"/>
-                                                </mask>
-                                                <mask key="constraints">
-                                                    <exclude reference="D00-cb-42q"/>
-                                                    <exclude reference="qKu-GB-5yC"/>
-                                                    <exclude reference="wau-EC-6GT"/>
-                                                    <exclude reference="yu0-kR-WeL"/>
-                                                    <exclude reference="1fj-Ba-Q3H"/>
-                                                    <exclude reference="Dua-7I-kvI"/>
-                                                </mask>
-                                            </variation>
-                                            <variation key="heightClass=regular-widthClass=compact">
-                                                <mask key="subviews">
-                                                    <include reference="zY2-Jh-QRa"/>
-                                                    <include reference="b0j-UM-KKM"/>
-                                                </mask>
-                                                <mask key="constraints">
-                                                    <exclude reference="D00-cb-42q"/>
-                                                    <include reference="qKu-GB-5yC"/>
-                                                    <include reference="wau-EC-6GT"/>
-                                                    <exclude reference="yu0-kR-WeL"/>
-                                                    <include reference="1fj-Ba-Q3H"/>
-                                                    <include reference="Dua-7I-kvI"/>
-                                                </mask>
-                                            </variation>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="RX4-m2-qUL">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="RX4-m2-qUL" id="qoS-Jo-xwa">
@@ -3865,8 +3736,6 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="displayNameCell" destination="xIg-KO-iuI" id="gGR-J2-D8m"/>
-                        <outlet property="displayNameTextField" destination="zY2-Jh-QRa" id="XO1-CB-dpV"/>
                         <outlet property="emailCell" destination="RX4-m2-qUL" id="vTZ-gW-XjX"/>
                         <outlet property="emailTextField" destination="cWW-IC-PTV" id="gAh-pU-RFb"/>
                         <outlet property="phoneNumberCell" destination="IEi-uN-NnB" id="bV8-FT-2hU"/>
@@ -4354,7 +4223,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="Qv2-VM-m3q">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.5568627451" green="0.2666666667" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="barTintColor" red="0.55686274509803924" green="0.26666666666666666" blue="0.67843137254901964" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <textAttributes key="titleTextAttributes">
                             <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="17"/>
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

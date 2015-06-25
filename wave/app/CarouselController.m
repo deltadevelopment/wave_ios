@@ -155,11 +155,7 @@
 }
 
 -(void)SetSearch{
-   
-    
     self.definesPresentationContext = YES;
-   
-    
 }
 
 -(void)setScrollEnabled:(BOOL)enabled forPageViewController:(UIPageViewController*)pageViewController{

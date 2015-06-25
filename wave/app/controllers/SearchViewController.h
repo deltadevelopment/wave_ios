@@ -12,6 +12,7 @@
 #import "BucketModel.h"
 #import "SearchModel.h"
 #import "TagSearchModel.h"
+#import "ActivityViewController.h"
 @interface SearchViewController : AbstractFeedViewController<UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchResultsUpdating,UISearchControllerDelegate, UIBarPositioningDelegate>
 - (IBAction)cancelAction:(id)sender;
 - (IBAction)doneAction:(id)sender;
@@ -27,4 +28,5 @@
 @property (nonatomic) bool searhIsShowing;
 @property (nonatomic) bool isSearching;
 @property (nonatomic, strong) BucketModel *currentBucket;
+@property (nonatomic, strong) ActivityViewController *discover;
 @end

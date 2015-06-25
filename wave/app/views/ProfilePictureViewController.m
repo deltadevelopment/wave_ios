@@ -55,6 +55,10 @@
     progressIndicator = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 0, 4)];
     progressIndicator.backgroundColor = [ColorHelper blueColor];
     progressIndicator.hidden = YES;
+    [self.navigationController.navigationBar setBackgroundColor:[UIColor redColor]];
+    [self.navigationController.navigationBar setTintColor:[ColorHelper purpleColor]];
+    [self.navigationController.navigationBar setBackgroundColor:[ColorHelper purpleColor]];
+    [self.navigationController.navigationBar setBarTintColor:[ColorHelper purpleColor]];
    
      //
    
