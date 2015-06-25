@@ -31,8 +31,8 @@
     //Requesting user
     user = [[UserModel alloc] initWithDeviceUser:^(UserModel *returningUser){
       [self userWasReturned];
-    
     } onError:^(NSError *error){}];
+    
     self.tableView.allowsSelection = NO;
     self.emailTextField.delegate = self;
     self.displayNameTextField.delegate = self;
@@ -81,13 +81,11 @@ NSString *finalString = [NSString stringWithFormat:@"%@ %@ %@", [text substringW
 
 -(void)userWasReturned{
     NSString *phoneNumber = [user phone_number] == 0 ? @"" : [NSString stringWithFormat:@"%d", [user phone_number]];
-
     self.emailTextField.text = [user email];
     self.displayNameTextField.text = [user display_name];
     if([phoneNumber length] == 8){
-     self.phoneNumberTextField.text = [self formatPhoneNumber:phoneNumber];
+        self.phoneNumberTextField.text = [self formatPhoneNumber:phoneNumber];
     }
-   
 }
 
 

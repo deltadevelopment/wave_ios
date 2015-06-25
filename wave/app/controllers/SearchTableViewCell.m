@@ -9,6 +9,7 @@
 #import "SearchTableViewCell.h"
 #import "UIHelper.h"
 #import "ColorHelper.h"
+#import "TagModel.h"
 @implementation SearchTableViewCell
 
 - (void)awakeFromNib {
@@ -64,7 +65,22 @@
     
 }
 
--(void)updateUI:(SuperModel *) superModel{
+-(void)updateUI:(SuperModel *) superModel withTagmode:(BOOL) tagmode withBucketId:(int)bucketId{
+    self.bucketId = bucketId;
+    [self.profilePictureImage setImage:[UIImage imageNamed:@"user-icon-gray.png"]];
+   // NSLog(@"the tag mode is %@", tagmode ? @"YES":@"NO");
+    self.tagMode = tagmode;
+    if ([superModel isKindOfClass:[TagModel class]]) {
+        TagModel *tag = (TagModel *)superModel;
+        self.tage = tag;
+        [self.usernameLabel setText:[[tag taggee] username]];
+        [[tag taggee] requestProfilePic:^(NSData *data){
+            [self.profilePictureImage setImage:[UIHelper iconImage:[UIImage imageWithData:data] withSize:60.0f]];
+        }];
+        [self.subscribeButton setImage: [UIHelper iconImage:[UIImage imageNamed:@"tick.png"] withSize:40] forState:UIControlStateNormal];
+        [self.subscribeButton setBackgroundColor:[ColorHelper purpleColor]];
+        [self.subscribeButton setTintColor:[ColorHelper whiteColor]];
+    }
     if([superModel isKindOfClass:[SubscribeModel class]])
     {
         // do somthing
@@ -82,8 +98,25 @@
 }
 
 -(void)updateUIWithSubscription:(SubscribeModel *) subscription{
-   
-    if (subscription.isSubscriberLocal) {
+    if (self.tagMode) {
+        if (self.isTagged) {
+            [self.subscribeButton setImage: [UIHelper iconImage:[UIImage imageNamed:@"tick.png"] withSize:40] forState:UIControlStateNormal];
+            [self.subscribeButton setBackgroundColor:[ColorHelper purpleColor]];
+            [self.subscribeButton setTintColor:[ColorHelper whiteColor]];
+        }else{
+            [self.subscribeButton setImage: [UIHelper iconImage:[UIImage imageNamed:@"plus-icon-simple.png"]
+                                                       withSize:40]
+                                  forState:UIControlStateNormal];
+            [self.subscribeButton setBackgroundColor:[ColorHelper whiteColor]];
+            [self.subscribeButton setImageEdgeInsets:UIEdgeInsetsMake(5, 12.5, 5, 12.5)];
+            [self.subscribeButton setTintColor:[ColorHelper purpleColor]];
+        }
+        [[subscription subscribee] requestProfilePic:^(NSData *data){
+            [self.profilePictureImage setImage:[UIHelper iconImage:[UIImage imageWithData:data] withSize:60.0f]];
+        }];
+        //Sjekke om brukeren allerede er tagget i bucketen
+    }
+    else if (subscription.isSubscriberLocal) {
         [self.subscribeButton setImage: [UIHelper iconImage:[UIImage imageNamed:@"tick.png"] withSize:40] forState:UIControlStateNormal];
         [self.subscribeButton setBackgroundColor:[ColorHelper purpleColor]];
         [self.subscribeButton setTintColor:[ColorHelper whiteColor]];
@@ -100,11 +133,19 @@
     }];
     if ([[subscription subscribee] Id] == [[[[AuthHelper alloc] init] getUserId] intValue]) {
         [self.subscribeButton setHidden:YES];
+    }else{
+    [self.subscribeButton setHidden:NO];
     }
 }
 
 -(void)subscribeAction{
-    if (self.subscription != nil) {
+    if (self.tagMode) {
+        [self tagAction];
+    }
+    else if (self.tage != nil) {
+        [self untagAction];
+    }
+    else if (self.subscription != nil) {
         [self subscribeActionWithSubscription:self.subscription];
     }else{
         SubscribeModel *subscription = [[SubscribeModel alloc] init];
@@ -112,6 +153,26 @@
         subscription.subscriber = [[UserModel alloc] initWithDeviceUser];
         [self subscribeActionWithSubscription:subscription];
     }
+}
+
+-(void)untagAction{
+    [self.tage delete:^(ResponseModel *response){
+        self.onTagDeleted(self.tage);
+    } onError:^(NSError *error){
+        
+    }];
+}
+
+-(void)tagAction{
+    TagModel *tagModel = [[TagModel alloc] init];
+    [tagModel setBucketId:self.bucketId];
+    [tagModel setTaggee:self.userReturned];
+    [tagModel setTagString:[self.userReturned usernameFormatted]];
+    [tagModel saveChanges:^(ResponseModel *response){
+        self.onTagCreated(tagModel);
+    } onError:^(NSError *error){
+        
+    }];
 }
 
 -(void)subscribeActionWithSubscription:(SubscribeModel *) subscription{

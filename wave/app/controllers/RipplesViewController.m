@@ -282,9 +282,8 @@
         //Dont do anything
     }
     else if ([ripple.interaction.topic_type isEqualToString:@"Tag"]) {
-        //Dont do anything
+        [self expandBucketWithId:[ripple.interaction.tag.taggable bucket_id] withDrop:ripple.interaction.tag.taggable.Id];
     }
-    
 }
 
 

@@ -30,6 +30,9 @@
 		C5576B571ADBE31A009C1D5E /* SuperLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C5576B561ADBE31A009C1D5E /* SuperLoginViewController.m */; };
 		C5576B5A1ADBE77E009C1D5E /* Navigationbar.m in Sources */ = {isa = PBXBuildFile; fileRef = C5576B591ADBE77E009C1D5E /* Navigationbar.m */; };
 		C55E75A81B3B07B6002C1542 /* text-edit-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = C55E75A71B3B07B6002C1542 /* text-edit-icon.png */; };
+		C55E75AA1B3C0321002C1542 /* dots-hor-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = C55E75A91B3C0321002C1542 /* dots-hor-icon.png */; };
+		C55E75AD1B3C0463002C1542 /* TagModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C55E75AC1B3C0463002C1542 /* TagModel.m */; };
+		C55E75B01B3C0DD9002C1542 /* TagSearchModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C55E75AF1B3C0DD9002C1542 /* TagSearchModel.m */; };
 		C55FE90A1AD81F45007663FB /* SuperButton.m in Sources */ = {isa = PBXBuildFile; fileRef = C55FE9091AD81F45007663FB /* SuperButton.m */; };
 		C567A1DF1B39AE2300C47237 /* user-icon-gray.png in Resources */ = {isa = PBXBuildFile; fileRef = C567A1DE1B39AE2300C47237 /* user-icon-gray.png */; };
 		C57433071B3AD80900394E15 /* SimpleListController.m in Sources */ = {isa = PBXBuildFile; fileRef = C57433061B3AD80900394E15 /* SimpleListController.m */; };
@@ -215,6 +218,11 @@
 		C5576B581ADBE77E009C1D5E /* Navigationbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Navigationbar.h; path = views/Navigationbar.h; sourceTree = "<group>"; };
 		C5576B591ADBE77E009C1D5E /* Navigationbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Navigationbar.m; path = views/Navigationbar.m; sourceTree = "<group>"; };
 		C55E75A71B3B07B6002C1542 /* text-edit-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "text-edit-icon.png"; sourceTree = "<group>"; };
+		C55E75A91B3C0321002C1542 /* dots-hor-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dots-hor-icon.png"; sourceTree = "<group>"; };
+		C55E75AB1B3C0463002C1542 /* TagModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TagModel.h; sourceTree = "<group>"; };
+		C55E75AC1B3C0463002C1542 /* TagModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TagModel.m; sourceTree = "<group>"; };
+		C55E75AE1B3C0DD9002C1542 /* TagSearchModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TagSearchModel.h; sourceTree = "<group>"; };
+		C55E75AF1B3C0DD9002C1542 /* TagSearchModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TagSearchModel.m; sourceTree = "<group>"; };
 		C55FE9081AD81F45007663FB /* SuperButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SuperButton.h; path = ../../SuperButton.h; sourceTree = "<group>"; };
 		C55FE9091AD81F45007663FB /* SuperButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SuperButton.m; path = ../../SuperButton.m; sourceTree = "<group>"; };
 		C567A1DE1B39AE2300C47237 /* user-icon-gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user-icon-gray.png"; sourceTree = "<group>"; };
@@ -577,6 +585,10 @@
 				C58521591B382E6A000812F2 /* CacheModel.m */,
 				C5381EAE1B395A7D006EE505 /* SearchModel.h */,
 				C5381EAF1B395A7D006EE505 /* SearchModel.m */,
+				C55E75AB1B3C0463002C1542 /* TagModel.h */,
+				C55E75AC1B3C0463002C1542 /* TagModel.m */,
+				C55E75AE1B3C0DD9002C1542 /* TagSearchModel.h */,
+				C55E75AF1B3C0DD9002C1542 /* TagSearchModel.m */,
 			);
 			path = models;
 			sourceTree = "<group>";
@@ -588,6 +600,7 @@
 				C5C2F4931B2F24F000AF8666 /* pause-icon.png */,
 				F1DBB56D1B12B6930097F709 /* dots-icon.png */,
 				F1DBB54A1B0E4A080097F709 /* manatee.png */,
+				C55E75A91B3C0321002C1542 /* dots-hor-icon.png */,
 				F1E3BB901B2DFFB900B55F2B /* rect-icon.png */,
 				C55E75A71B3B07B6002C1542 /* text-edit-icon.png */,
 				F1E3BB8C1B2DFFA600B55F2B /* pencil-icon.png */,
@@ -1032,6 +1045,7 @@
 				C5FF1E591B05EB870081BEDD /* search-icon-white.png in Resources */,
 				C567A1DF1B39AE2300C47237 /* user-icon-gray.png in Resources */,
 				F1E127BF1B0023C0000E3F2C /* media-pause.png in Resources */,
+				C55E75AA1B3C0321002C1542 /* dots-hor-icon.png in Resources */,
 				C5C2F4941B2F24F000AF8666 /* pause-icon.png in Resources */,
 				C5D473B01AFB67D80097E44F /* tick.png in Resources */,
 				C5F78C5A1B2EB383008CEB00 /* manatee-white.png in Resources */,
@@ -1130,6 +1144,7 @@
 				F1BD621C1AE460D400BDE1CA /* Carousel.m in Sources */,
 				C5576B381ADBC195009C1D5E /* ColorHelper.m in Sources */,
 				C5D473891AE79C590097E44F /* InfoViewController.m in Sources */,
+				C55E75B01B3C0DD9002C1542 /* TagSearchModel.m in Sources */,
 				C5A27B6F1ADD083300968033 /* ConfigHelper.m in Sources */,
 				F1DBB54F1B0FCC0C0097F709 /* ProfileViewController.m in Sources */,
 				F1BD62361AF05C0C00BDE1CA /* ChatMessageLabel.m in Sources */,
@@ -1144,6 +1159,7 @@
 				C5D473981AF920080097E44F /* ConstraintHelper.m in Sources */,
 				F1DBB5641B0FD46F0097F709 /* EditProfileTableViewController.m in Sources */,
 				C585215D1B382FFE000812F2 /* CacheHelper.m in Sources */,
+				C55E75AD1B3C0463002C1542 /* TagModel.m in Sources */,
 				F1DBB5621B0FD46F0097F709 /* SuperSettingsTableViewController.m in Sources */,
 				F1DBB56C1B12ABBF0097F709 /* PeekViewModule.m in Sources */,
 				C5576B3D1ADBC195009C1D5E /* OverlayViewController.m in Sources */,

@@ -15,6 +15,7 @@
 #import "EditImageViewController.h"
 #import "TestBoxViewController.h"
 #import "BucketController.h"
+#import "SearchViewController.h"
 @interface AppDelegate ()
 
 @end
@@ -56,12 +57,26 @@ AuthHelper *authHelper;
      //   [self setView:[[BucketViewController2 alloc] init] second:@"bucketController2"];
         /*
         UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
-        UINavigationController *navigation =[mainStoryboard instantiateViewControllerWithIdentifier:@"searchNavigation"];
-        [navigation.navigationBar setBarTintColor:[ColorHelper purpleColor]];
-        self.window.rootViewController = navigation;
         
-*/
         
+        //Show Subscribers
+        UINavigationController *vc = [mainStoryboard instantiateViewControllerWithIdentifier:@"searchNavigation"];
+        SearchViewController *tagsView =  [[vc viewControllers] objectAtIndex:0];
+        [tagsView setTagMode:YES];
+        [tagsView setSearchMode:YES];
+        BucketModel *buc = [[BucketModel alloc] init];
+        [buc setId:138];
+        [tagsView setCurrentBucket:buc];
+        
+        
+        // [vc.navigationBar setti]
+        [vc.navigationBar setTintColor:[ColorHelper purpleColor]];
+        [vc.navigationBar setBackgroundColor:[ColorHelper purpleColor]];
+        [vc.navigationBar setBarTintColor:[ColorHelper purpleColor]];
+        //[[ApplicationHelper getMainNavigationController] pushViewController:vc animated:YES];
+        
+        self.window.rootViewController = vc;
+        */
     }
     if ([application respondsToSelector:@selector(isRegisteredForRemoteNotifications)])
     {

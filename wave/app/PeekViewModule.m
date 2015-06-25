@@ -285,6 +285,8 @@
         UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
         UINavigationController *vc = [mainStoryboard instantiateViewControllerWithIdentifier:@"searchNavigation"];
        // [vc.navigationBar setti]
+        //Sea[[vc viewControllers] objectAtIndex:0];
+        
        [vc.navigationBar setTintColor:[ColorHelper purpleColor]];
         [vc.navigationBar setBackgroundColor:[ColorHelper purpleColor]];
         [vc.navigationBar setBarTintColor:[ColorHelper purpleColor]];

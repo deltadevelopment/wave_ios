@@ -11,6 +11,7 @@
 #import "AbstractFeedViewController.h"
 #import "BucketModel.h"
 #import "SearchModel.h"
+#import "TagSearchModel.h"
 @interface SearchViewController : AbstractFeedViewController<UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UISearchResultsUpdating,UISearchControllerDelegate, UIBarPositioningDelegate>
 - (IBAction)cancelAction:(id)sender;
 - (IBAction)doneAction:(id)sender;
@@ -18,10 +19,12 @@
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
 @property (strong, nonatomic) UISearchBar *searchBar;
 @property (strong, nonatomic) UserFeed *userFeed;
+@property (strong, nonatomic) TagSearchModel *tagFeed;
 @property (strong, nonatomic) SearchModel *searchFeed;
 @property (strong, nonatomic) UISearchController *searchController;
 @property (strong, nonatomic) UIBarButtonItem *menuItem;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *topConstraint;
 @property (nonatomic) bool searhIsShowing;
+@property (nonatomic) bool isSearching;
 @property (nonatomic, strong) BucketModel *currentBucket;
 @end

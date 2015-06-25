@@ -132,7 +132,7 @@ const int PEEK_Y_START = 300;
     infoButton = [UIButton buttonWithType:UIButtonTypeCustom];
     //infoButton.frame = CGRectMake([UIHelper getScreenWidth] - 40,15 , 20, 20);
     [UIHelper applyUIOnButton:infoButton];
-    [infoButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"arrow-up-icon.png"] withSize:150] forState:UIControlStateNormal];
+    [infoButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"dots-hor-icon.png"] withSize:150] forState:UIControlStateNormal];
     [infoButton addTarget:self action:@selector(tapInfoButton) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:infoButton];
     infoButtonConstraint = [ConstraintHelper addConstraintsToButton:self.view withButton:infoButton withPoint:CGPointMake(0, 15) fromLeft:YES fromTop:NO];
@@ -167,6 +167,7 @@ const int PEEK_Y_START = 300;
                           {
                               if (bucket.watching) {
                                   [bucket unwatch:^(ResponseModel *response){
+                                      [bucket setWatching:NO];
                                       [view dismissViewControllerAnimated:YES completion:nil];
                                   }
                                         onError:^(NSError *error){
@@ -174,6 +175,7 @@ const int PEEK_Y_START = 300;
                                         }];
                               }else{
                                   [bucket watch:^(ResponseModel *response){
+                                      [bucket setWatching:YES];
                                       [view dismissViewControllerAnimated:YES completion:nil];
                                   }
                                         onError:^(NSError *error){
@@ -232,6 +234,7 @@ const int PEEK_Y_START = 300;
                               //Show Subscribers
                               UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
                               UINavigationController *vc = [mainStoryboard instantiateViewControllerWithIdentifier:@"searchNavigation"];
+                              vc.definesPresentationContext = YES;
                               SearchViewController *tagsView =  [[vc viewControllers] objectAtIndex:0];
                               [tagsView setTagMode:YES];
                               [tagsView setSearchMode:YES];

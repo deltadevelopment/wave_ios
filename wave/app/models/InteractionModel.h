@@ -12,6 +12,7 @@
 #import "TemperatureModel.h"
 #import "SubscribeModel.h"
 #import "UserModel.h"
+#import "TagModel.h"
 @interface InteractionModel : SuperModel
 @property(nonatomic) int Id;
 @property(nonatomic) int topic_id;
@@ -25,6 +26,7 @@
 @property (nonatomic, strong) TemperatureModel *temperature;
 @property (nonatomic, strong) SubscribeModel *subscription;
 @property (nonatomic, strong) UserModel *user;
+@property (nonatomic, strong) TagModel *tag;
 
 //Client vars
 @property(nonatomic, strong) NSString *localizedMessage;

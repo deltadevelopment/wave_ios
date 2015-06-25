@@ -37,7 +37,7 @@
             self.temperature = [[TemperatureModel alloc] init:[self.dictionary objectForKey:@"topic"]];
         }
         else if([self.topic_type  isEqualToString:@"Tag"]){
-            NSLog(@"Not implemented yet");
+            self.tag = [[TagModel alloc] init:[self.dictionary objectForKey:@"topic"]];
         }
     }
     [self translate];
@@ -70,6 +70,9 @@
     
     if (self.subscription != nil) {
         return [self.subscription subscribee];
+    }
+    else if (self.tag != nil){
+        return [self.tag user];
     }
     return nil;
 }

@@ -303,8 +303,25 @@
         [self.temperatureButton setTitle:[NSString stringWithFormat:@"%d °", [ripple.interaction.temperature temperature]] forState:UIControlStateNormal];
     }
     else if([[ripple.interaction topic_type] isEqualToString:@"Tag"]){
-         [self.actionButton removeTarget:self action:@selector(tagAction) forControlEvents:UIControlEventTouchUpInside];
-         [self.actionButton addTarget:self action:@selector(tagAction) forControlEvents:UIControlEventTouchUpInside];
+        [[ripple.interaction.tag.taggable user] requestProfilePic:^(NSData *data){
+            [self.profilePictureImage setImage:[UIImage imageWithData:data]];
+        }];
+        
+        [self showButton:self.actionButton];
+        [self.actionButton removeTarget:self action:@selector(dropAction) forControlEvents:UIControlEventTouchUpInside];
+        [self.actionButton addTarget:self action:@selector(dropAction) forControlEvents:UIControlEventTouchUpInside];
+        [self.actionButton setBackgroundImage:[UIHelper iconImage:[UIImage imageNamed:@"manatee-gray.png"] withSize:80.0f] forState:UIControlStateNormal];
+        
+        if([ripple.interaction.tag.taggable media_type] == 0){
+            [ripple.interaction.tag.taggable requestPhoto:^(NSData *data){
+                [self.actionButton setBackgroundImage:[UIHelper iconImage:[UIImage imageWithData:data]  withSize:80.0f]forState:UIControlStateNormal];
+                
+            } ];
+        }else{
+            [ripple.interaction.tag.taggable requestThumbnail:^(NSData *data){
+                [self.actionButton setBackgroundImage:[UIHelper iconImage:[UIImage imageWithData:data]  withSize:80.0f]forState:UIControlStateNormal];
+            }];
+        }
     }
 }
 
