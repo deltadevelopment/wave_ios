@@ -22,4 +22,5 @@
 -(void)stopVideo;
 -(void)startVideo;
 -(void)bindTemperatureChanges;
+-(void)mute;
 @end

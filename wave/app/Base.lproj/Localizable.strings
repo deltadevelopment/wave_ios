@@ -43,6 +43,7 @@
 
 "subscriptions_button_txt" = "Subscriptions";
 "subscriptions_txt" = "others already do";
+"subscriptions_when_txt" = "others also do";
 "subscribe_txt" = "Subscribe";
 "unsubscribe_txt" = "Subscribing";
 "ripples_title" = "Ripples";

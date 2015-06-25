@@ -97,6 +97,11 @@
     [dropView temperatureAnimation];
 }
 
+-(void)mute{
+    DropView *dropView = (DropView *)self.view;
+    [dropView mute];
+}
+
 
 
 /*

@@ -29,4 +29,6 @@
 -(void)setDropUI:(DropModel *) drop;
 -(void)temperatureAnimation;
 -(void)playPause;
+
+-(void)mute;
 @end

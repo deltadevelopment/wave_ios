@@ -219,6 +219,7 @@
 
 -(void)changeSubscribeUI{
     if(isSubscriber){
+        /*
         [self.subscribeButton setTitle:NSLocalizedString(@"unsubscribe_txt", nil) forState:UIControlStateNormal];
         self.subscribeButton.imageView.frame = CGRectMake(0, 0, 40, 40);
         [self.subscribeButton setImage: [UIHelper iconImage:[UIImage imageNamed:@"tick.png"] withSize:40] forState:UIControlStateNormal];
@@ -228,6 +229,15 @@
         [self.subscribeButton setImageEdgeInsets:UIEdgeInsetsMake(10, 10, 10, 140)];
         [self.subscribeButton setTitleEdgeInsets:UIEdgeInsetsMake(0, -40, 0, 0)];
         [self.subscribeButton sizeToFit];
+        */
+        if ([self.user Id] == [[authHelper getUserId] intValue]) {
+            [self.subscribeButton setTitle:NSLocalizedString(@"subscriptions_button_txt", nil) forState:UIControlStateNormal];
+        }else{
+            [self.subscribeButton setTitle:NSLocalizedString(@"unsubscribe_txt", nil) forState:UIControlStateNormal];
+        }
+        [[self.subscribeButton layer] setBorderColor:[ColorHelper magenta].CGColor];
+        
+        
     }else{
         //[self.subscribeButton setTitle:@"Subscribe" forState:UIControlStateNormal];
         [self.subscribeButton setTitle:NSLocalizedString(@"subscribe_txt", nil) forState:UIControlStateNormal];

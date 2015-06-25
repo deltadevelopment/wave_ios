@@ -122,7 +122,6 @@
             [self.profilePicture setImage:[UIImage imageWithData:data]];
             self.profilePicture.hidden = NO;
         }];
-        
     }else{
         self.dropTemperature.text =[NSString stringWithFormat:@"%d°", drop.temperature];
         self.dropTitle.text = [[drop user] usernameFormatted];
@@ -217,6 +216,10 @@
                                           }];
                      
                      }];
+}
+
+-(void)mute{
+    [mediaPlayer mute];
 }
 
 

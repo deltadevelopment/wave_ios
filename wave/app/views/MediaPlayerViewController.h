@@ -19,4 +19,5 @@
 -(void)playVideoOnce;
 -(UIImage *)getVideoThumbnail;
 @property (nonatomic) BOOL isPlaying;
+-(void)mute;
 @end

@@ -47,8 +47,13 @@
         self.searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
         
         self.searchController.dimsBackgroundDuringPresentation = NO;
-        self.searchController.searchBar.scopeButtonTitles = @[NSLocalizedString(@"@",@"user"),
-                                                              NSLocalizedString(@"#",@"hashtag")];
+        if (self.searchMode && !self.tagMode) {
+            //self.searchController.searchBar.scopeButtonTitles = @[NSLocalizedString(@"@",@"user")];
+        }else{
+            self.searchController.searchBar.scopeButtonTitles = @[NSLocalizedString(@"@",@"user"),
+                                                                  NSLocalizedString(@"#",@"hashtag")];
+        }
+        
         self.searchController.searchBar.delegate = self;//(CarouselController *)[self carouselParent];
         self.searchController.searchResultsUpdater = self;//(CarouselController *)[self carouselParent];
         self.searchController.hidesNavigationBarDuringPresentation = NO;
@@ -127,15 +132,6 @@
         [self.view addSubview:self.discover.view];
         [noUsersLabel setHidden:YES];
     }
-}
-
--(void)hideShowSearch:(float) heigth{
-    CGRect frame = self.tableView.tableHeaderView.frame;
-    frame.size.height = heigth;
-    self.tableView.tableHeaderView.frame = frame;
-    self.tableView.tableHeaderView = self.tableView.tableHeaderView;
-    //self.searchController.searchBar.hidden = YES;
-   
 }
 
 -(void)showSearch{
@@ -222,16 +218,16 @@
 }
 
 -(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
-    [self.searchController setActive:NO];
+    //[self.searchController setActive:NO];
     if (!self.tagMode) {
         self.searhIsShowing = NO;
         self.tableView.tableHeaderView = nil;
     }else{
-     self.isSearching = NO;
+        self.isSearching = NO;
     }
     
     if (self.searchMode && !self.tagMode) {
-        [self.view addSubview:self.discover.view];
+        //[self.view addSubview:self.discover.view];
     }
 }
 
@@ -249,8 +245,6 @@
         [self.view addSubview:self.discover.view];
         self.tableView.hidden = YES;
     }
-
-
 }
 
 
@@ -281,16 +275,17 @@
  
 }
 
-
-
-
-
 -(BOOL)searchBarShouldEndEditing:(UISearchBar *)searchBar{
     if (self.searchController.isActive) {
     }else{
         if (!self.tagMode) {
-            self.searhIsShowing = NO;
-            self.tableView.tableHeaderView = nil;
+            if (self.searchMode && !self.tagMode) {
+                
+            }else{
+                self.searhIsShowing = NO;
+                self.tableView.tableHeaderView = nil;
+            }
+            
         }
     }
 

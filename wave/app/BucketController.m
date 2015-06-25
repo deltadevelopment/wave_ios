@@ -800,6 +800,7 @@ const int PEEK_Y_START = 300;
         
         if(gesture.state == UIGestureRecognizerStateBegan){
             [peekViewController hideSubscribeButton];
+            [peekViewController requestProfilePic];
         }
         if(frame.origin.y <= 0 - translation.y){
             peekViewController.view.frame = CGRectMake(0, peekViewController.view.frame.origin.y + (translation.y*1.4), [UIHelper getScreenWidth], PEEK_Y_START);
@@ -811,7 +812,7 @@ const int PEEK_Y_START = 300;
         {
             if(frame.origin.y + frame.size.height >= (PEEK_Y_START-64) - 64){
                 [self animatePeekViewIn];
-                [peekViewController requestProfilePic];
+                [currentDropPage mute];
             }else{
                 [self animatePeekViewOut];
                 if(!isAboutToleaveBucket){

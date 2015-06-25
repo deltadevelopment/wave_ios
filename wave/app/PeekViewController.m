@@ -117,9 +117,6 @@ AuthHelper *authHelper;
              }];
         }
     }
-    
-    
-    
 }
 
 -(void)removeInsetsFromButton{
@@ -184,9 +181,18 @@ AuthHelper *authHelper;
 
 -(void)updatePeekView:(UserModel *) user{
     self.user = user;
-
+    //subscriptions_when_txt
     
-    self.location.text = [NSString stringWithFormat:@"%d %@", [user subscribers_count],NSLocalizedString(@"subscriptions_txt", nil)];
+    
+    UserModel *deviceUser =[[UserModel alloc] initWithDeviceUser];
+    self.subscribeModel = [[SubscribeModel alloc] initWithSubscriber:deviceUser withSubscribee:self.user];
+    if (self.subscribeModel.isSubscriberLocal) {
+        self.location.text = [NSString stringWithFormat:@"%d %@", [user subscribers_count],NSLocalizedString(@"subscriptions_when_txt", nil)];
+    }else{
+       self.location.text = [NSString stringWithFormat:@"%d %@", [user subscribers_count],NSLocalizedString(@"subscriptions_txt", nil)];
+    }
+    
+    
     self.displayName.text = [user display_name] != nil ? [user display_name] : [user usernameFormatted];
     if(user.Id == [[authHelper getUserId] intValue]){
        // self.subscribeButton.hidden = YES;

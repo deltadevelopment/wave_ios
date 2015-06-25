@@ -17,6 +17,7 @@
     MPMoviePlayerController *player;
     NSString *appFile;
     UIImage *thumbnail;
+    MPVolumeView *volumeView;
 }
 
 - (void)viewDidLoad {
@@ -77,6 +78,19 @@
     
     //[self.view setBackgroundColor:[UIColor colorWithPatternImage:thumbnail]];
     //[self.statusImage ];
+    
+    volumeView = [[MPVolumeView alloc]initWithFrame:CGRectZero];
+    [volumeView setShowsVolumeSlider:YES];
+    [volumeView setShowsRouteButton:NO];
+    
+    // control must be VISIBLE if you want to prevent default OS volume display
+    // from appearing when you change the volume level
+    [volumeView setHidden:NO];
+    volumeView.alpha = 0.1f;
+    volumeView.userInteractionEnabled = NO;
+    
+    // to hide from view just insert behind all other views
+    [self.view insertSubview:volumeView atIndex:0];
 
 }
 
@@ -113,6 +127,24 @@
 
 -(UIImage *)getVideoThumbnail{
     return thumbnail;
+}
+
+-(void)unmute{
+   
+}
+
+-(void)mute{
+    //find the volumeSlider
+    UISlider* volumeViewSlider = nil;
+    for (UIView *view in [volumeView subviews]){
+        if ([view.class.description isEqualToString:@"MPVolumeSlider"]){
+            volumeViewSlider = (UISlider*)view;
+            break;
+        }
+    }
+    
+    [volumeViewSlider setValue:0.0f animated:YES];
+    [volumeViewSlider sendActionsForControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void) moviePlayBackDidFinish:(NSNotification*)notification {
