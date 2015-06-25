@@ -211,37 +211,27 @@
 }
 
 -(void)storeMediaInCache:(NSData *) data{
-    if (self.media_key != nil) {
-        NSData *cacheData = [[NSUserDefaults standardUserDefaults] objectForKey:self.media_key];
-        if (cacheData == nil) {
-            // If the data is not already in the cache, store it
-            [[NSUserDefaults standardUserDefaults] setObject:data forKey:self.media_key];
-            [CacheHelper storeInCashMap:self.media_key];
-            //Update the table
-        }
+    //1 - First store the image or video to documents
+    NSArray * paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString * documentsDirectory = [paths objectAtIndex:0];
+    NSString * dataFileName;
+    if (self.media_type == 0) {
+        dataFileName = [NSString stringWithFormat:@"%@.png",[self media_key]]; // Create unique iD
+    }else{
+        dataFileName = [NSString stringWithFormat:@"%@.mp4",[self media_key]]; // Create unique iD
     }
- 
-    
-}
-
--(void)storeThumbnailInCache:(NSData *) data{
-    if (self.thumbnail_key != nil) {
-        NSData *cacheData = [[NSUserDefaults standardUserDefaults] objectForKey:self.thumbnail_key];
-        if (cacheData == nil) {
-            // If the data is not already in the cache, store it
-            [[NSUserDefaults standardUserDefaults] setObject:data forKey:self.thumbnail_key];
-            [CacheHelper storeInCashMap:self.thumbnail_key];
-            //Update the table
-        }
+    NSString * dataFile = [documentsDirectory stringByAppendingPathComponent:dataFileName];
+    if ([data writeToFile:dataFile atomically:YES])
+    {
+        //2 - If the media was stored successfully, store the filename as a key with the current date stored
+        [CacheHelper storeFilenameWithDate:dataFileName];
+        NSLog(@"Wrote to documents sucessfully");
     }
-    
-    
 }
 
 -(NSData *)mediaFromCache{
     if (self.media_key != nil) {
-        NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:self.media_key];
-        
+        NSData *data = [self dataFromDocumentCache];
         if (data == nil) {
             return nil;
         }else{
@@ -249,14 +239,47 @@
         }
     }
     return nil;
-
 }
 
+-(NSData *)dataFromDocumentCache{
+    NSArray * paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString * documentsDirectory = [paths objectAtIndex:0];
+    NSString * dataFileName;
+    if (self.media_type == 0) {
+        dataFileName = [NSString stringWithFormat:@"%@.png",[self media_key]]; // Create unique iD
+    }else{
+        dataFileName = [NSString stringWithFormat:@"%@.mp4",[self media_key]]; // Create unique iD
+    }
+    NSString * dataFile = [documentsDirectory stringByAppendingPathComponent:dataFileName];
+    
+    NSData *data = [NSData dataWithContentsOfFile:dataFile];
+    return data;
+}
+
+
+-(void)storeThumbnailInCache:(NSData *) data{
+    if (self.thumbnail_key != nil) {
+        NSData *cacheData = [self dataThumbnailFromDocumentCache];
+        if (cacheData == nil) {
+            //1 - First store the image or video to documents
+            NSArray * paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+            NSString * documentsDirectory = [paths objectAtIndex:0];
+            NSString * dataFileName = [NSString stringWithFormat:@"%@.png",self.thumbnail_key]; // Create unique iD
+            
+            NSString * dataFile = [documentsDirectory stringByAppendingPathComponent:dataFileName];
+            if ([data writeToFile:dataFile atomically:YES])
+            {
+                //2 - If the media was stored successfully, store the filename as a key with the current date stored
+                [CacheHelper storeFilenameWithDate:dataFileName];
+                NSLog(@"Wrote to documents sucessfully");
+            }
+        }
+    }
+}
 
 -(NSData *)thumbnailFromCache{
     if (self.thumbnail_key != nil) {
-        NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:self.thumbnail_key];
-        
+        NSData *data = [self dataThumbnailFromDocumentCache];
         if (data == nil) {
             return nil;
         }else{
@@ -264,9 +287,18 @@
         }
     }
     return nil;
-    
 }
 
+-(NSData *)dataThumbnailFromDocumentCache{
+    NSArray * paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString * documentsDirectory = [paths objectAtIndex:0];
+    NSString * dataFileName = [NSString stringWithFormat:@"%@.png",[self thumbnail_key]]; // Create unique iD
+   
+    NSString * dataFile = [documentsDirectory stringByAppendingPathComponent:dataFileName];
+    
+    NSData *data = [NSData dataWithContentsOfFile:dataFile];
+    return data;
+}
 
 
 

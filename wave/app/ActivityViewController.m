@@ -49,9 +49,9 @@ const int EXPAND_SIZE = 400;
     userModel =[[UserModel alloc] initWithDeviceUser:^(UserModel *user){
         userModel = user;
     } onError:^(NSError *error){}];
-    CacheHelper *cache = [[CacheHelper alloc] init];
-    
     [CacheHelper cleanUpCashMap];
+    [CacheHelper printCashMap];
+    
     storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;

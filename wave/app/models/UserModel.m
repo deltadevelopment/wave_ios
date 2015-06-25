@@ -149,22 +149,29 @@
     }
 }
 -(void)storeMediaInCache:(NSData *) data{
+    
     if (self.profile_picture_key != nil) {
-        NSData *cacheData = [[NSUserDefaults standardUserDefaults] objectForKey:self.profile_picture_key];
+        NSData *cacheData = [self dataProfilePicFromDocumentCache];
         if (cacheData == nil) {
-            // If the data is not already in the cache, store it
-            [[NSUserDefaults standardUserDefaults] setObject:data forKey:self.profile_picture_key];
-            [CacheHelper storeInCashMap:self.profile_picture_key];
-            //Update the table
+            //1 - First store the image or video to documents
+            NSArray * paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+            NSString * documentsDirectory = [paths objectAtIndex:0];
+            NSString * dataFileName = [NSString stringWithFormat:@"%@.png",self.profile_picture_key]; // Create unique iD
+            
+            NSString * dataFile = [documentsDirectory stringByAppendingPathComponent:dataFileName];
+            if ([data writeToFile:dataFile atomically:YES])
+            {
+                //2 - If the media was stored successfully, store the filename as a key with the current date stored
+                [CacheHelper storeFilenameWithDate:dataFileName];
+                NSLog(@"Wrote to documents sucessfully");
+            }
         }
     }
 }
 
 -(NSData *)mediaFromCache{
     if (self.profile_picture_key != nil) {
-        NSLog(@"");
-        NSLog(self.profile_picture_key);
-        NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:self.profile_picture_key];
+        NSData *data = [self dataProfilePicFromDocumentCache];
         
         if (data == nil) {
             return nil;
@@ -173,8 +180,20 @@
         }
     }
     return nil;
-    
 }
+
+
+-(NSData *)dataProfilePicFromDocumentCache{
+    NSArray * paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString * documentsDirectory = [paths objectAtIndex:0];
+    NSString * dataFileName = [NSString stringWithFormat:@"%@.png",[self profile_picture_key]]; // Create unique iD
+    
+    NSString * dataFile = [documentsDirectory stringByAppendingPathComponent:dataFileName];
+    
+    NSData *data = [NSData dataWithContentsOfFile:dataFile];
+    return data;
+}
+
 
 
 -(void)saveChanges:(void (^)(ResponseModel *,UserModel *))completionCallback
