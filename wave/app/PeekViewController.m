@@ -77,34 +77,49 @@ AuthHelper *authHelper;
 }
 
 -(void)subscribeAction{
-    if(activityIndicator == nil){
-    [self initActivityIndicator];
-    }
-    activityIndicator.hidden = NO;
-    [activityIndicator startAnimating];
-    [self.subscribeButton setTitle:@"" forState:UIControlStateNormal];
-    //[self removeInsetsFromButton];
-    if(isSubscriber){
-        [self.subscribeModel delete:^(ResponseModel *response){
-            isSubscriber = NO;
-            [self changeSubscribeUI];
-            [activityIndicator stopAnimating];
-            [self.user setSubscribers_count:[self.user subscribers_count]-1];
-            [self updatePeekView:self.user];
-        } onError:^(NSError *error){}];
+    if ([self.user Id] == [[authHelper getUserId] intValue]) {
+        //Show subscribers
+        UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
+        UINavigationController *vc = [mainStoryboard instantiateViewControllerWithIdentifier:@"searchNavigation"];
+        // [vc.navigationBar setti]
+        [vc.navigationBar setTintColor:[ColorHelper purpleColor]];
+        [vc.navigationBar setBackgroundColor:[ColorHelper purpleColor]];
+        [vc.navigationBar setBarTintColor:[ColorHelper purpleColor]];
+        //[[ApplicationHelper getMainNavigationController] pushViewController:vc animated:YES];
+        [[ApplicationHelper getMainNavigationController] presentViewController:vc animated:YES completion:nil];
     }else{
-        [self.subscribeModel saveChanges:^(ResponseModel *response){
-            isSubscriber = YES;
-            [self changeSubscribeUI];
-            [activityIndicator stopAnimating];
-            [self.user setSubscribers_count:[self.user subscribers_count]+1];
-            [self updatePeekView:self.user];
-        } onError:^(NSError *error)
-         {
-             
-             
-         }];
+        if(activityIndicator == nil){
+            [self initActivityIndicator];
+        }
+        activityIndicator.hidden = NO;
+        [activityIndicator startAnimating];
+        [self.subscribeButton setTitle:@"" forState:UIControlStateNormal];
+        //[self removeInsetsFromButton];
+        if(isSubscriber){
+            [self.subscribeModel delete:^(ResponseModel *response){
+                isSubscriber = NO;
+                [self changeSubscribeUI];
+                [activityIndicator stopAnimating];
+                [self.user setSubscribers_count:[self.user subscribers_count]-1];
+                [self updatePeekView:self.user];
+            } onError:^(NSError *error){}];
+        }else{
+            [self.subscribeModel saveChanges:^(ResponseModel *response){
+                isSubscriber = YES;
+                [self changeSubscribeUI];
+                [activityIndicator stopAnimating];
+                [self.user setSubscribers_count:[self.user subscribers_count]+1];
+                [self updatePeekView:self.user];
+            } onError:^(NSError *error)
+             {
+                 
+                 
+             }];
+        }
     }
+    
+    
+    
 }
 
 -(void)removeInsetsFromButton{
@@ -243,7 +258,7 @@ AuthHelper *authHelper;
 
 -(void)changeSubscribeUI{
     if(isSubscriber){
-        [self.subscribeButton setTitle:NSLocalizedString(@"unsubscribe_txt", nil) forState:UIControlStateNormal];
+       
         /*
         self.subscribeButton.imageView.frame = CGRectMake(0, 0, 40, 40);
         [self.subscribeButton setImage: [UIHelper iconImage:[UIImage imageNamed:@"tick.png"] withSize:40] forState:UIControlStateNormal];
@@ -254,7 +269,13 @@ AuthHelper *authHelper;
         [self.subscribeButton sizeToFit];
          */
         //top left bottom right
-       [[self.subscribeButton layer] setBorderColor:[ColorHelper magenta].CGColor];
+       
+        if ([self.user Id] == [[authHelper getUserId] intValue]) {
+            [self.subscribeButton setTitle:NSLocalizedString(@"subscriptions_button_txt", nil) forState:UIControlStateNormal];
+        }else{
+            [self.subscribeButton setTitle:NSLocalizedString(@"unsubscribe_txt", nil) forState:UIControlStateNormal];
+        }
+        [[self.subscribeButton layer] setBorderColor:[ColorHelper magenta].CGColor];
        //[self.subscribeButton setBackgroundColor:[[ColorHelper magenta] colorWithAlphaComponent:1.0f]];
        // [self.subscribeButton setTitleColor:[ColorHelper purpleColor] forState:UIControlStateNormal];
 

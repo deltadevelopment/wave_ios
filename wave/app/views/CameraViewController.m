@@ -792,6 +792,7 @@
 
 -(void)startRecording
 {
+    didCancelTap = NO;
     if(currentTypeIndex == 1 && titleTextField.text.length == 0){
         //Notify user to add a title
         [self notifyUser];

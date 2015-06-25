@@ -874,6 +874,7 @@ const int PEEK_Y_START = 300;
     [lastUploadedDropPage.drop setTemperature:drop.temperature];
     [lastUploadedDropPage bindTemperatureChanges];
     infoButton.hidden = NO;
+    [peekViewController updatePeekView:[lastUploadedDropPage.drop user]];
     [self showSuperButton];
     
 }
