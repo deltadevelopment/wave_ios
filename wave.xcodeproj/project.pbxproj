@@ -33,6 +33,8 @@
 		C55E75AA1B3C0321002C1542 /* dots-hor-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = C55E75A91B3C0321002C1542 /* dots-hor-icon.png */; };
 		C55E75AD1B3C0463002C1542 /* TagModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C55E75AC1B3C0463002C1542 /* TagModel.m */; };
 		C55E75B01B3C0DD9002C1542 /* TagSearchModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C55E75AF1B3C0DD9002C1542 /* TagSearchModel.m */; };
+		C55E75B31B3D70AA002C1542 /* ChatModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C55E75B21B3D70AA002C1542 /* ChatModel.m */; };
+		C55E75B61B3D7184002C1542 /* ChatFeed.m in Sources */ = {isa = PBXBuildFile; fileRef = C55E75B51B3D7184002C1542 /* ChatFeed.m */; };
 		C55FE90A1AD81F45007663FB /* SuperButton.m in Sources */ = {isa = PBXBuildFile; fileRef = C55FE9091AD81F45007663FB /* SuperButton.m */; };
 		C567A1DF1B39AE2300C47237 /* user-icon-gray.png in Resources */ = {isa = PBXBuildFile; fileRef = C567A1DE1B39AE2300C47237 /* user-icon-gray.png */; };
 		C57433071B3AD80900394E15 /* SimpleListController.m in Sources */ = {isa = PBXBuildFile; fileRef = C57433061B3AD80900394E15 /* SimpleListController.m */; };
@@ -223,6 +225,10 @@
 		C55E75AC1B3C0463002C1542 /* TagModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TagModel.m; sourceTree = "<group>"; };
 		C55E75AE1B3C0DD9002C1542 /* TagSearchModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TagSearchModel.h; sourceTree = "<group>"; };
 		C55E75AF1B3C0DD9002C1542 /* TagSearchModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TagSearchModel.m; sourceTree = "<group>"; };
+		C55E75B11B3D70AA002C1542 /* ChatModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatModel.h; sourceTree = "<group>"; };
+		C55E75B21B3D70AA002C1542 /* ChatModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatModel.m; sourceTree = "<group>"; };
+		C55E75B41B3D7184002C1542 /* ChatFeed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatFeed.h; sourceTree = "<group>"; };
+		C55E75B51B3D7184002C1542 /* ChatFeed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatFeed.m; sourceTree = "<group>"; };
 		C55FE9081AD81F45007663FB /* SuperButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SuperButton.h; path = ../../SuperButton.h; sourceTree = "<group>"; };
 		C55FE9091AD81F45007663FB /* SuperButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SuperButton.m; path = ../../SuperButton.m; sourceTree = "<group>"; };
 		C567A1DE1B39AE2300C47237 /* user-icon-gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user-icon-gray.png"; sourceTree = "<group>"; };
@@ -589,6 +595,10 @@
 				C55E75AC1B3C0463002C1542 /* TagModel.m */,
 				C55E75AE1B3C0DD9002C1542 /* TagSearchModel.h */,
 				C55E75AF1B3C0DD9002C1542 /* TagSearchModel.m */,
+				C55E75B11B3D70AA002C1542 /* ChatModel.h */,
+				C55E75B21B3D70AA002C1542 /* ChatModel.m */,
+				C55E75B41B3D7184002C1542 /* ChatFeed.h */,
+				C55E75B51B3D7184002C1542 /* ChatFeed.m */,
 			);
 			path = models;
 			sourceTree = "<group>";
@@ -1171,6 +1181,7 @@
 				F1E2A0CA1B2338EE0092D61F /* ColorPickerView.m in Sources */,
 				C5A27B601ADD019900968033 /* SSKeychainQuery.m in Sources */,
 				C57AD0A71AD7EDB800B6042A /* main.m in Sources */,
+				C55E75B31B3D70AA002C1542 /* ChatModel.m in Sources */,
 				C5A27B691ADD01D000968033 /* NotificationHelper.m in Sources */,
 				F1E127B01AFEE09F000E3F2C /* TagController.m in Sources */,
 				C5C2F49B1B3006D500AF8666 /* RipplesTableViewCell.m in Sources */,
@@ -1187,6 +1198,7 @@
 				C5D473AE1AFA5BB30097E44F /* MediaController.m in Sources */,
 				F18A20F41B227793003294BE /* TemperatureModel.m in Sources */,
 				C5FF1E551B04F1510081BEDD /* InfoView.m in Sources */,
+				C55E75B61B3D7184002C1542 /* ChatFeed.m in Sources */,
 				F1DBB55F1B0FD46F0097F709 /* ServerTableViewController.m in Sources */,
 				C5A27B8B1ADD6DD500968033 /* NavigationControlViewController.m in Sources */,
 				F1E127B81AFFD191000E3F2C /* ProgressView.m in Sources */,

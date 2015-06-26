@@ -69,7 +69,7 @@
     }
     
     if (self.subscription != nil) {
-        return [self.subscription subscribee];
+        return [self.subscription subscriber2];
     }
     else if (self.tag != nil){
         return [self.tag user];

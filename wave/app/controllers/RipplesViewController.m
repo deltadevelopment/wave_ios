@@ -34,7 +34,10 @@
     self.ripplesFeedModel =[[RipplesFeed alloc] init];
        __weak typeof(self) weakSelf = self;
     [ApplicationHelper setBlock:^(){
+        NSLog(@"EXECUTING");
+        [weakSelf setGotNotificationNow:YES];
         [weakSelf refreshFeed];
+        [DataHelper storeRippleCount:0];
     }];
     [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
     [DataHelper storeRippleCount:0];
@@ -134,8 +137,13 @@
     [cell.userButton setTitle:@"simenlie" forState:UIControlStateNormal];
     maxWidth = cell.textView.frame.size.width;
     cell.NotificationTimeLabel.text = [rippleModel created_at] ? [rippleModel created_at] : @"test";
-  //  [cell calculateHeight];
-    
+    //  [cell calculateHeight];
+    if (self.gotNotificationNow && indexPath.row == 0) {
+        [cell setBackgroundColor:[UIColor colorWithRed:0.961 green:0.973 blue:0.98 alpha:1]];
+        self.gotNotificationNow = NO;
+    }else{
+        [cell setBackgroundColor:[UIColor whiteColor]];
+    }
     if(cellFrame.size.height <50){
         [cell updateUiWithHeight:60];
         [cell initActionButton:rippleModel withCellHeight:60];

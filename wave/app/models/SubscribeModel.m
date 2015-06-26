@@ -24,6 +24,7 @@
     self.subscribee_id = [self getIntValueFromString:@"subscribee_id"];
     self.reverse = [self getBoolValueFromString:@"reverse"];
     self.subscribee = [[UserModel alloc] init:[self.dictionary objectForKey:@"subscribee"]];
+    self.subscriber2 = [[UserModel alloc] init:[self.dictionary objectForKey:@"subscriber"]];
     self.subscriber = [[UserModel alloc] initWithDeviceUser];
     
     
@@ -33,14 +34,26 @@
         self.subscribee = [[UserModel alloc] init];
         [self.subscribee setId:self.user_id];
     }
+    if ((NSNull*)[self.dictionary objectForKey: @"subscriber"] != [NSNull null]) {
+       // self.subscribee = self.subscriber2;
+    }
     //[self refresh:dic];
     return self;
 };
 
+
 -(void)saveChanges:(void (^)(ResponseModel *))completionCallback
            onError:(void(^)(NSError *))errorCallback
 {
-    [self.applicationController postHttpRequest:[NSString stringWithFormat:@"user/%d/subscription/%d", [self.subscriber Id], [self.subscribee Id]]
+    NSString *thePath;
+    if (self.reverseIt) {
+        NSLog(@"REVRERSE IT");
+        thePath = [NSString stringWithFormat:@"user/%d/subscription/%d", [self.subscribee Id], [self.subscriber2 Id]];
+    }else{
+        thePath = [NSString stringWithFormat:@"user/%d/subscription/%d", [self.subscriber Id], [self.subscribee Id]];
+    }
+    
+    [self.applicationController postHttpRequest:thePath
                      json:nil
              onCompletion:^(NSURLResponse *response,NSData *data,NSError *error)
      {
@@ -53,7 +66,15 @@
 
 -(void)delete:(void (^)(ResponseModel *))completionCallback
       onError:(void(^)(NSError *))errorCallback{
-    [self.applicationController deleteHttpRequest:[NSString stringWithFormat:@"user/%d/subscription/%d", [self.subscriber Id], [self.subscribee Id]]
+    
+    NSString *thePath;
+    if (self.reverseIt) {
+        thePath = [NSString stringWithFormat:@"user/%d/subscription/%d", [self.subscribee Id], [self.subscriber2 Id]];
+    }else{
+        thePath = [NSString stringWithFormat:@"user/%d/subscription/%d", [self.subscriber Id], [self.subscribee Id]];
+    }
+    
+    [self.applicationController deleteHttpRequest:thePath
                onCompletion:^(NSURLResponse *response,NSData *data,NSError *error){
                    [self removeSubscriberLocal];
                    NSMutableDictionary *dic = [ParserHelper parse:data];

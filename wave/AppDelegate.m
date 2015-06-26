@@ -152,6 +152,7 @@ AuthHelper *authHelper;
 {
     
     if (application.applicationState == UIApplicationStateActive ){
+          NSLog(@"my dic is %@", userInfo);
         [ApplicationHelper executeBlock];
         [DataHelper storeRippleCount:[DataHelper getRippleCount] +1];
         [self playSound];

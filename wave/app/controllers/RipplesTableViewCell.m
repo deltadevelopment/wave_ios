@@ -275,7 +275,7 @@
         }
     }
     else if([[ripple.interaction topic_type] isEqualToString:@"Subscription"]){
-        [ripple.interaction.subscription.subscribee requestProfilePic:^(NSData *data){
+        [ripple.interaction.subscription.subscriber2 requestProfilePic:^(NSData *data){
             [self.profilePictureImage setImage:[UIImage imageWithData:data]];
         }];
         if ([ripple.interaction subscription] != nil) {
@@ -334,6 +334,8 @@
 
 -(void)subscribeAction{
     //Subscribe to user here
+    [self.ripple.interaction.subscription setReverseIt:YES];
+    NSLog(@"SUBSCRIBIG");
     if([self.ripple.interaction.subscription reverse]){
         [self.ripple.interaction.subscription delete:^(ResponseModel *response){
             [self.subscribeButton setImage: [UIHelper iconImage:[UIImage imageNamed:@"plus-icon-simple.png"] withSize:40] forState:UIControlStateNormal];

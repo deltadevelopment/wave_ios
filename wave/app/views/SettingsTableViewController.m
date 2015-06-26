@@ -12,6 +12,7 @@
 #import "StartViewController.h"
 #import "DataHelper.h"
 #import "AppDelegate.h"
+#import "UserFeed.h"
 @interface SettingsTableViewController ()
 
 @end
@@ -164,12 +165,27 @@
         //ikke logg ut
     }else{
         //Logg ut
-        [authHelper resetCredentials];
+        
+        [self removeSubscriptions];
+        
+        
         UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
         StartViewController *navigation =[mainStoryboard instantiateViewControllerWithIdentifier:@"startNav"];      
         AppDelegate *appDelegateTemp = [[UIApplication sharedApplication]delegate];
         appDelegateTemp.window.rootViewController = navigation;
     }
+}
+
+-(void)removeSubscriptions{
+    UserFeed *userFeed = [[UserFeed alloc] init];
+    [userFeed getFeed:^{
+        for (SubscribeModel *subscriber in userFeed.feed) {
+            [subscriber removeSubscriberLocal];
+        }
+        [authHelper resetCredentials];
+    } onError:^(NSError *error){
+        
+    }];
 }
 
 - (IBAction)showErrorsToggle:(id)sender {

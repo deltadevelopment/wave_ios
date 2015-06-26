@@ -218,6 +218,7 @@
 }
 
 -(void)changeSubscribeUI{
+    NSLog(@"user id %d", self.user.Id);
     if(isSubscriber){
         /*
         [self.subscribeButton setTitle:NSLocalizedString(@"unsubscribe_txt", nil) forState:UIControlStateNormal];

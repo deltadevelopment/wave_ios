@@ -47,6 +47,7 @@ const int EXPAND_SIZE = 400;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.readyForExpanding = YES;
     [self initialize];
     userModel =[[UserModel alloc] initWithDeviceUser:^(UserModel *user){
         userModel = user;
@@ -312,7 +313,6 @@ const int EXPAND_SIZE = 400;
     static NSString *CellIdentifier = @"activityCell";
     ActivityTableViewCell *cell = (ActivityTableViewCell  *)[tableView  dequeueReusableCellWithIdentifier:CellIdentifier];
     if(cell == nil){
-        
         cell = [[ActivityTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     if(!cell.isInitialized){
@@ -320,7 +320,15 @@ const int EXPAND_SIZE = 400;
         [cell initializeWithMode:viewMode withSuperController:self];
     }
     //Updating cell from changes in bucket
-    [cell update:[[self.feedModel feed] objectAtIndex:indexPath.row]];
+    BucketModel *bucket = [[self.feedModel feed] objectAtIndex:indexPath.row];
+    if ([[bucket drops] count] == 0) {
+        [cell setHidden:YES];
+    }else {
+        [cell setHidden:NO];
+    }
+    NSLog(@"Bucket drops count %lu", (unsigned long)bucket.drops.count);
+    NSLog(@"bucket id %d", bucket.Id);
+    [cell update:bucket];
     return cell;
 }
 

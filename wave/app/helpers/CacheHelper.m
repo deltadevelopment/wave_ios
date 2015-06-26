@@ -136,7 +136,7 @@ static NSMutableArray *localCacheMap;
     for (NSString *filePath in filePaths) {
         NSDate *date = [userData objectForKey:filePath];
         NSDate *expire = [self expirationDate:[self getTimeWithFormatForDate:date]];
-        NSLog(@"Date expires %@ date now %@", [self dateToString:expire], [self dateToString:[self getCurrentTime]]);
+      //  NSLog(@"Date expires %@ date now %@", [self dateToString:expire], [self dateToString:[self getCurrentTime]]);
         if ([expire compare:[self getCurrentTime]] == NSOrderedAscending) {
             //Remove from the list
             //NSLog(@"Should remove");
@@ -145,7 +145,6 @@ static NSMutableArray *localCacheMap;
             [userData removeObjectForKey:filePath];
             //File is removed
            // NSLog(@"Removed file with key %@", filePath);
-            
         }else{
             [filePathsNew addObject:filePath];
         }

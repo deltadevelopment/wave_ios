@@ -44,7 +44,10 @@
     NSMutableArray *rawFeed = [[response data] objectForKey:@"buckets"];
     for(NSMutableDictionary *rawBucket in rawFeed){
         BucketModel *bucket = [[BucketModel alloc] init:rawBucket];
-        [self.feed addObject:bucket];
+        if ([bucket.drops count] != 0) {
+             [self.feed addObject:bucket];
+        }
+       
         [self investigateBucket:bucket];
     }
 }

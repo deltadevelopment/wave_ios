@@ -109,7 +109,6 @@ NSArray *unAvailableTexts;
     if(observerIsInitalised){
         onNotificationRecieved();
     }
-    
 }
 
 

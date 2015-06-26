@@ -12,6 +12,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) RipplesFeed *ripplesFeedModel;
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
+@property (nonatomic) BOOL gotNotificationNow;
 
 
 @end

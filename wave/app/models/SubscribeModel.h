@@ -11,12 +11,13 @@
 @interface SubscribeModel : SuperModel
 @property (nonatomic) UserModel *subscribee;
 @property (nonatomic, strong) UserModel *subscriber;
-
+@property (nonatomic, strong) UserModel *subscriber2;
 @property (nonatomic) int Id;
 @property (nonatomic) int user_id;
 @property (nonatomic) int subscribee_id;
 @property (nonatomic) BOOL reverse;
-
+@property (nonatomic) BOOL reverseIt;
+-(void)removeSubscriberLocal;
 -(id)init:(NSMutableDictionary *)dic;
 -(void)delete:(void (^)(ResponseModel *))completionCallback
 onError:(void(^)(NSError *))errorCallback;
