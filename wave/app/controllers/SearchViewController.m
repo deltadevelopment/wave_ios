@@ -205,11 +205,16 @@
 
 -(void)showSearch{
     if (self.searhIsShowing) {
+        [self.searchController setActive:NO];
         self.searhIsShowing = NO;
         self.tableView.tableHeaderView = nil;
+        self.tableView.tableHeaderView.hidden = YES;
         blurEffectView.hidden = YES;
+        self.tableView.hidden = YES;
+        NSLog(@"hidign searchbar");
     }else{
         self.searhIsShowing = YES;
+        self.tableView.hidden = NO;
         [self addBlur];
         blurEffectView.hidden = NO;
         self.tableView.tableHeaderView = self.searchController.searchBar;
@@ -221,10 +226,26 @@
         self.searchController.searchBar.barTintColor = [UIColor whiteColor];
         self.tableView.tableHeaderView.tintColor = [ColorHelper purpleColor];
         [self.searchController.searchBar becomeFirstResponder];
-        //self.searchController.searchBar.backgroundImage = [[UIImage alloc] init];
-        //self.searchController.searchBar.backgroundColor = [UIColor clearColor];
-        //[self addBlurToSearch:self.searchController.searchBar];
-        //[self.searchController.searchBar insertSubview:blurEffectViewSearch atIndex:0];
+        self.searchController.searchBar.backgroundImage = [[UIImage alloc] init];
+        self.searchController.searchBar.backgroundColor = [UIColor clearColor];
+        [self addBlurToSearch:self.searchController.searchBar];
+        
+        [self.searchController.searchBar insertSubview:blurEffectViewSearch atIndex:0];
+        [self.tableView layoutIfNeeded];
+        [self.tableView.tableHeaderView layoutIfNeeded];
+        [self.tableView setNeedsDisplay];
+        
+       // [self.searchController.searchBar setSearchFieldBackgroundImage:[[UIImage alloc] init] forState:UIControlStateNormal];
+       
+        for (UIView *subView in self.searchController.searchBar.subviews) {
+            for(id field in subView.subviews){
+                if ([field isKindOfClass:[UITextField class]]) {
+                    UITextField *textField = (UITextField *)field;
+                    [textField setTextColor:[UIColor whiteColor]];
+                    [textField setBackgroundColor:[UIColor clearColor]];
+                }
+            }
+        }
     }
 }
 
@@ -239,7 +260,7 @@
     
 }
 -(void)viewWillDisappear:(BOOL)animated{
-    [self.searchController setActive:NO];
+   // [self.searchController setActive:NO];
     [self.navigationItem setHidesBackButton:YES animated:YES];
     //UIImage* image = [UIHelper iconImage:[UIImage imageNamed:@"wave-logo.png"]];
     UIImage* image = [UIHelper iconImage:[UIImage imageNamed:@"wave-logo.png"] withSize:52];
@@ -305,6 +326,7 @@
 }
 
 -(void)searchBarCancelButtonClicked:(UISearchBar *)searchBar{
+     [(CarouselController *)[self carouselParent] setScrollEnabled:YES forPageViewController:[(CarouselController *)[self carouselParent] pageViewController]];
     if (!self.tagMode) {
         self.searhIsShowing = NO;
         self.tableView.tableHeaderView = nil;
@@ -372,7 +394,7 @@
 -(void)searchBarTextDidEndEditing:(UISearchBar *)searchBar{
     NSLog(@"did end editing");
 
-     [(CarouselController *)[self carouselParent] setScrollEnabled:YES forPageViewController:[(CarouselController *)[self carouselParent] pageViewController]];
+    
     if (self.tagMode) {
         [UIView animateWithDuration:0.25 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^(void){
             CGRect frame = wrapHolder.frame;
@@ -491,11 +513,11 @@
 }
 
 -(void)addBlurToSearch:(UISearchBar *) searchBar{
-    UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+    UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleExtraLight];
     blurEffectViewSearch = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
     blurEffectViewSearch.frame = searchBar.frame;
     // blurEffectView.alpha = 0.9;
-    blurEffectViewSearch.alpha = 1.0;
+    blurEffectViewSearch.alpha = 0.00;
     //[searchBar addSubview:blurEffectView];
     //add auto layout constraints so that the blur fills the screen upon rotating device
     [blurEffectViewSearch setTranslatesAutoresizingMaskIntoConstraints:NO];
