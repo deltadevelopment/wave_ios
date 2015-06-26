@@ -10,6 +10,7 @@
 #import "SearchTableViewCell.h"
 #import "ColorHelper.h"
 #import "CarouselController.h"
+#import "BucketController.h"
 @interface SearchViewController ()
 
 @end
@@ -21,6 +22,10 @@
     UIActivityIndicatorView *spinner;
     UILabel *noUsersLabel;
     UIView *wrapHolder;
+    UIVisualEffectView  *blurEffectView;
+    UIVisualEffectView  *blurEffectViewSearch;
+    NavigationControlViewController *root;
+    NavigationControlViewController *oldRoot;
 }
 
 - (void)viewDidLoad {
@@ -129,17 +134,86 @@
     //self.tableView.contentInset = UIEdgeInsetsMake(160, 0, 0, 0);
     if (self.searchMode && !self.tagMode) {
         self.discover = [self.storyboard instantiateViewControllerWithIdentifier:@"activity"];
+        [self discovercallbacks];
         [self.view addSubview:self.discover.view];
         [noUsersLabel setHidden:YES];
+        [self.searchController.searchBar setPlaceholder:NSLocalizedString(@"search_placeholder_txt", nil)];
     }
+    if (!self.tagMode && self.searchMode) {
+        [self addBlur];
+        blurEffectView.hidden = YES;
+        [self.view setBackgroundColor:[UIColor clearColor]];
+        [self.tableView setBackgroundColor:[UIColor clearColor]];
+        self.tableView.separatorStyle = UITableViewCellSeparatorStyleNone;
+    }
+  
+}
+
+
+-(void)changeToBucket:(BucketModel *) bucket{
+    //[self addBucketAsRoot:@"bucketController2" withBucket:bucket];
+    /*
+     root = (NavigationControlViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"bucketController2"];
+     [root setBucket:bucket];
+     [self.view addSubview:root.view];
+     */
+    root = [[BucketController alloc] init];
+    [root setBucket:bucket];
+    //[((BucketController *)root) setSuperCarousel:self];
+    __weak typeof(self) weakSelf = self;
+    root.onDespand = ^{
+        [weakSelf removeBucketAsRoot];
+    };
+    //[root addViewController:self];
+    
+    //[self.navigationController setViewControllers:@[root] animated:NO];
+    //[self.navigationController.view layoutIfNeeded];
+    [self.navigationController pushViewController:root animated:NO];
+}
+
+-(void)removeBucketAsRoot{
+   // [self.navigationController setViewControllers:@[self] animated:NO];
+    //[self.navigationController.view layoutIfNeeded];
+    [self.navigationController popToRootViewControllerAnimated:NO];
+    [self.discover onFocusGained];
+}
+
+
+-(void)discovercallbacks{
+    __weak typeof(self) weakSelf = self;
+    self.discover.onExpand=^(BucketModel*(bucket)){
+        [weakSelf changeToBucket:bucket];
+    };
+    /*
+    self.discover.onLockScreenToggle = ^{
+        if(scrollView.scrollEnabled){
+            scrollView.scrollEnabled = NO;
+        }else{
+            scrollView.scrollEnabled = YES;
+        }
+    };
+    self.discover.onProgression = ^(int(progression)){
+        [weakSelf increaseProgress:progression];
+    };
+    self.discover.onNetworkError = ^(UIView *(view)){
+        [weakSelf addErrorMessage:view];
+    };
+    
+    self.discover.onNetworkErrorHide=^{
+        [weakSelf hideError];
+    };
+     */
 }
 
 -(void)showSearch{
     if (self.searhIsShowing) {
         self.searhIsShowing = NO;
         self.tableView.tableHeaderView = nil;
+        blurEffectView.hidden = YES;
     }else{
         self.searhIsShowing = YES;
+        [self addBlur];
+        blurEffectView.hidden = NO;
         self.tableView.tableHeaderView = self.searchController.searchBar;
         // [self.searchController.searchBar becomeFirstResponder];
         [self.searchController.searchBar sizeToFit];
@@ -149,6 +223,10 @@
         self.searchController.searchBar.barTintColor = [UIColor whiteColor];
         self.tableView.tableHeaderView.tintColor = [ColorHelper purpleColor];
         [self.searchController.searchBar becomeFirstResponder];
+        //self.searchController.searchBar.backgroundImage = [[UIImage alloc] init];
+        //self.searchController.searchBar.backgroundColor = [UIColor clearColor];
+        //[self addBlurToSearch:self.searchController.searchBar];
+        //[self.searchController.searchBar insertSubview:blurEffectViewSearch atIndex:0];
     }
 }
 
@@ -156,6 +234,7 @@
   
 }
 -(void)viewDidAppear:(BOOL)animated{
+    NSLog(@"didAPPEAR");
     if (!self.tagMode) {
         [self addLeftButton];
     }
@@ -218,17 +297,13 @@
 }
 
 -(void)searchBarSearchButtonClicked:(UISearchBar *)searchBar{
-    //[self.searchController setActive:NO];
-    if (!self.tagMode) {
-        self.searhIsShowing = NO;
-        self.tableView.tableHeaderView = nil;
-    }else{
+    if (self.tagMode) {
         self.isSearching = NO;
     }
-    
     if (self.searchMode && !self.tagMode) {
         //[self.view addSubview:self.discover.view];
     }
+    
 }
 
 -(void)searchBarCancelButtonClicked:(UISearchBar *)searchBar{
@@ -268,14 +343,19 @@
   
     [(CarouselController *)[self carouselParent] setScrollEnabled:NO forPageViewController:[(CarouselController *)[self carouselParent] pageViewController]];
     //[self ShowMySearch];
+    NSLog(@"should Begin editing");
+    
     return YES;
 }
 
 -(void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar{
- 
+    NSLog(@"did Begin editing");
+
 }
 
 -(BOOL)searchBarShouldEndEditing:(UISearchBar *)searchBar{
+    NSLog(@"should end editing");
+
     if (self.searchController.isActive) {
     }else{
         if (!self.tagMode) {
@@ -292,8 +372,9 @@
     return YES;
 }
 -(void)searchBarTextDidEndEditing:(UISearchBar *)searchBar{
+    NSLog(@"did end editing");
+
      [(CarouselController *)[self carouselParent] setScrollEnabled:YES forPageViewController:[(CarouselController *)[self carouselParent] pageViewController]];
-    NSLog(@"SHOULD END");
     if (self.tagMode) {
         [UIView animateWithDuration:0.25 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^(void){
             CGRect frame = wrapHolder.frame;
@@ -341,13 +422,14 @@
         }];
     }else{
         [self.userFeed getFeed:^{
+            NSLog(@"userFEED");
             [weakSelf stopRefreshing];
             if(![weakSelf.userFeed hasUsers]){
                 self.tableView.hidden = YES;
             }else{
                 
             }
-            [self.tableView reloadData];
+            //[self.tableView reloadData];
         } onError:^(NSError *error){
             NSLog(@"%@", [error localizedDescription]);
         }];
@@ -364,7 +446,7 @@
     }else {
         [self.searchFeed setSearchMode:@"hashtag"];
     }
-    
+
     [self.searchFeed search:searchString
              withCompletion:^
      {
@@ -394,6 +476,31 @@
                     onError:^(NSError *error)
      {
      }];
+}
+
+
+-(void)addBlur{
+    
+    UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+    
+    blurEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+    blurEffectView.frame = self.view.frame;
+    // blurEffectView.alpha = 0.9;
+    blurEffectView.alpha = 1.0;
+    [self.view addSubview:blurEffectView];
+    //add auto layout constraints so that the blur fills the screen upon rotating device
+    [blurEffectView setTranslatesAutoresizingMaskIntoConstraints:NO];
+}
+
+-(void)addBlurToSearch:(UISearchBar *) searchBar{
+    UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleLight];
+    blurEffectViewSearch = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+    blurEffectViewSearch.frame = searchBar.frame;
+    // blurEffectView.alpha = 0.9;
+    blurEffectViewSearch.alpha = 1.0;
+    //[searchBar addSubview:blurEffectView];
+    //add auto layout constraints so that the blur fills the screen upon rotating device
+    [blurEffectViewSearch setTranslatesAutoresizingMaskIntoConstraints:NO];
 }
 
 -(void)stopRefreshing{
@@ -472,7 +579,7 @@
     __weak typeof(self) weakSelf = self;
     if(!cell.isInitialized){
         //UI initialization
-        [cell initalizeWithMode:self.searchMode];
+            [cell initalizeWithMode:self.searchMode withTagMode:self.tagMode];
     }
     
     if([self.currentBucket.user Id] != [[[[AuthHelper alloc] init] getUserId] intValue]){
@@ -513,8 +620,11 @@
         UserModel *userModel = [[self.searchFeed searchResults] objectAtIndex:indexPath.row];
         [cell updateUI:userModel withTagmode:NO withBucketId:self.currentBucket.Id];
     }else{
-        SubscribeModel *subscribeModel = [[self.userFeed feed] objectAtIndex:indexPath.row];
-        [cell updateUI:subscribeModel withTagmode:NO withBucketId:self.currentBucket.Id];
+        if ([self.userFeed.feed count]> 0) {
+            SubscribeModel *subscribeModel = [[self.userFeed feed] objectAtIndex:indexPath.row];
+            [cell updateUI:subscribeModel withTagmode:NO withBucketId:self.currentBucket.Id];
+        }
+       
     }
     return cell;
 }
@@ -540,6 +650,24 @@ numberOfRowsInSection:(NSInteger)section
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath*)indexPath
 {
         return 60;
+}
+
+-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // Remove seperator inset
+    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {
+        [cell setSeparatorInset:UIEdgeInsetsZero];
+    }
+    
+    // Prevent the cell from inheriting the Table View's margin settings
+    if ([cell respondsToSelector:@selector(setPreservesSuperviewLayoutMargins:)]) {
+        [cell setPreservesSuperviewLayoutMargins:NO];
+    }
+    
+    // Explictly set your cell's layout margins
+    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {
+        [cell setLayoutMargins:UIEdgeInsetsZero];
+    }
 }
 
 

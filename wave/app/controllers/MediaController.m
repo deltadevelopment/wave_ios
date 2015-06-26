@@ -54,7 +54,9 @@
     isSearching = YES;
     authHelper = [[AuthHelper alloc] init];
     urlPath = [NSString stringWithFormat:@"%@/%@", [[[ConfigHelper alloc] init] baseUrl], urlPath];
-    NSURL *url = [NSURL URLWithString:urlPath];
+    NSString *urlPathWithSpaces = [urlPath stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    NSURL *url = [NSURL URLWithString:urlPathWithSpaces];
+    
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     [request setHTTPMethod:@"POST"];
     [request setValue:@"application/json" forHTTPHeaderField:@"Content-type"];

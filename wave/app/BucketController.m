@@ -636,6 +636,7 @@ const int PEEK_Y_START = 300;
 
 -(void)setBucket:(BucketModel *)inputBucket{
     bucket = inputBucket;
+    NSLog(@"the bucket id is %d", bucket.Id);
     if (peekViewController != nil) {
         [peekViewController updatePeekView:[bucket user]];
     }
@@ -658,6 +659,7 @@ const int PEEK_Y_START = 300;
 
 -(void)setBucket:(BucketModel *)inputBucket withCurrentDropId:(int) dropId{
     bucket = inputBucket;
+    NSLog(@"the bucket id is %d", bucket.Id);
     [bucket find:^{
         NSLog(@"trying to find");
         [self setBucket:bucket];

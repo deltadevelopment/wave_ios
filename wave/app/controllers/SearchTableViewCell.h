@@ -12,7 +12,7 @@
 #import "TagModel.h"
 @interface SearchTableViewCell : UITableViewCell
 @property (nonatomic) bool isInitialized;
--(void)initalizeWithMode:(bool)searchMode;
+-(void)initalizeWithMode:(bool)searchMode withTagMode:(BOOL) tagMode;
 @property (strong, nonatomic)  UILabel *usernameLabel;
 @property (strong, nonatomic)  UIImageView *profilePictureImage;
 @property (strong, nonatomic)  UIButton *actionButton;
@@ -27,6 +27,7 @@
 
 @property (nonatomic)  bool searchMode;
 @property (nonatomic)  bool tagMode;
+@property (nonatomic)  bool tagModeUI;
 @property (nonatomic)  bool isTagged;
 @property (nonatomic) int bucketId;
 -(void)updateUI:(SuperModel *) superModel withTagmode:(BOOL) tagmode withBucketId:(int)bucketId;
