@@ -13,6 +13,6 @@
 @property (nonatomic, strong) NSMutableArray *feed;
 @property (nonatomic) bool hasUsers;
 -(void)getFeed:(void (^)(void))completionCallback onError:(void(^)(NSError *))errorCallback;
-
+-(id)initWithUserId:(int)userId;
 
 @end

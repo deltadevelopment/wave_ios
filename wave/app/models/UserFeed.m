@@ -19,6 +19,13 @@
     return self;
 }
 
+-(id)initWithUserId:(int)userId{
+    self =[super init];
+    authHelper = [[AuthHelper alloc] init];
+    url = [NSString stringWithFormat:@"user/%d/subscriptions", userId];
+    return self;
+}
+
 -(void)getFeed:(void (^)(void))completionCallback onError:(void(^)(NSError *))errorCallback{
     self.feed = [[NSMutableArray alloc] init];
     [self.applicationController getHttpRequest:url

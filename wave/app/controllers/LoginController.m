@@ -29,13 +29,14 @@ onCompletion:(void (^)(UserModel*,ResponseModel*))callback
         int bucketId = [[[responseModel.data objectForKey:@"bucket"] objectForKey:@"id"] intValue];
         [DataHelper storeBucketId:bucketId];
         callback(user, responseModel);
-        [self fetchSubscriptions];
+        
+        int userId =  [[[responseModel.data objectForKey:@"user_session"] objectForKey:@"user_id"] intValue];
+        [self fetchSubscriptionsForId:userId];
     } onError:errorCallback];
-
 }
 
--(void)fetchSubscriptions{
-    UserFeed *userFeed = [[UserFeed alloc] init];
+-(void)fetchSubscriptionsForId:(int) Id{
+    UserFeed *userFeed = [[UserFeed alloc] initWithUserId:Id];
     [userFeed getFeed:^{
         for (SubscribeModel *subscriber in userFeed.feed) {
             [subscriber storeSubscriberLocal];
