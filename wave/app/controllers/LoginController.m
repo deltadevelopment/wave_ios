@@ -16,6 +16,7 @@
 onCompletion:(void (^)(UserModel*,ResponseModel*))callback
  onError:(void(^)(NSError *))errorCallback;
 {
+    self.isLoggingIn = YES;
     NSDictionary *credentials = [self loginBody:username pass:password];
     NSString *jsonData = [ApplicationHelper generateJsonFromDictionary:credentials];
     [self postHttpRequest:@"login" json:jsonData onCompletion:^(NSURLResponse *response,NSData *data,NSError *error){

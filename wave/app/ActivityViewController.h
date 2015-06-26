@@ -14,6 +14,8 @@
 @property (nonatomic, strong) UIRefreshControl *refreshControl;
 @property (nonatomic, strong) FeedModel *feedModel;
 @property (nonatomic) bool shouldHidePeek;
+@property (nonatomic) bool noBucketsInFeed;
+@property (nonatomic) bool readyForExpanding;
 -(void)initialize;
 -(UIView *)getCameraHolder;
 

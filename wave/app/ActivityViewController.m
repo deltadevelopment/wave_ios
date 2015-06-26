@@ -41,6 +41,8 @@ const int EXPAND_SIZE = 400;
     UIStoryboard *storyboard;
     PeekViewController *peekViewController;
     PeekViewModule *peekViewModule;
+    int lastCellRow;
+    BucketModel *lastBucket;
 }
 
 - (void)viewDidLoad {
@@ -176,10 +178,26 @@ const int EXPAND_SIZE = 400;
     __weak typeof(self) weakSelf = self;
     [self.feedModel getFeed:^{
         [weakSelf stopRefreshing];
+        if ([[self.feedModel feed] count] == 0) {
+            self.noBucketsInFeed = YES;
+        }else{
+            self.noBucketsInFeed = NO;
+        }
     } onError:^(NSError *error){
         NSLog(@"%@", [error localizedDescription]);
     }];
 }
+
+-(void)initNoBuckets{
+    if (self.noBucketsInFeed) {
+        NSLog(@"No buckets in feed");
+    }
+    else{
+    
+    }
+}
+
+
 
 -(void)stopRefreshing{
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
@@ -221,7 +239,7 @@ const int EXPAND_SIZE = 400;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if(!cameraMode){
+    if(!cameraMode && self.readyForExpanding){
         NSIndexPath *oldIndex = indexCurrent;
         indexCurrent = indexPath;
         if(indexCurrent == oldIndex){
@@ -375,12 +393,19 @@ const int EXPAND_SIZE = 400;
     [self test];
 }
 
+-(void)createFirstBucket{
+
+}
+
 -(void)test{
     _tableView.scrollEnabled = NO;
     self.onLockScreenToggle();
-    
-    [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
-    cameraMode = YES;
+    [self createFirstBucket];
+    if (!self.noBucketsInFeed) {
+        [_tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] atScrollPosition:UITableViewScrollPositionTop animated:YES];
+        
+    }
+     cameraMode = YES;
     NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:indexValue inSection:0];
     shouldExpand = true;
     indexCurrent = newIndexPath;
@@ -432,10 +457,10 @@ const int EXPAND_SIZE = 400;
 }
 
 -(void)mediaTaken:(UIImage *) image withText:(NSString *) text isMediaVideo:(bool) isVideo{
-    
+    self.readyForExpanding = NO;
     cameraHolder.hidden = YES;
     imgTaken = image;
-    if([text isEqualToString:@""]){
+    if([text isEqualToString:@""] && !self.noBucketsInFeed){
         //personal bucket
         if([self.feedModel isYourBucketInFeed]){
             indexValue = [self.feedModel personalBucketIndex];
@@ -448,6 +473,7 @@ const int EXPAND_SIZE = 400;
         
         
         ActivityTableViewCell *cell = (ActivityTableViewCell  *)[_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:indexValue inSection:0]];
+        lastCellRow = indexValue;
         cell.bucketImage.image = imgTaken;
         cell.displayNameText.text = [text isEqualToString:@""] ? [userModel usernameFormatted] : text;
         [cell startSpinnerForUploadAnimtation];
@@ -494,10 +520,21 @@ const int EXPAND_SIZE = 400;
         bucket.user = userModel;
         bucket.Id = 9999;
         bucket.title = text;
-        bucket.bucket_type = @"shared";
+        if (self.noBucketsInFeed) {
+            if ([text isEqualToString:@""]) {
+                bucket.bucket_type = @"user";
+            }else{
+            bucket.bucket_type = @"shared";
+            }
+            
+        }else{
+            bucket.bucket_type = @"shared";
+        }
+        
         
     
         ActivityTableViewCell *cell = (ActivityTableViewCell  *)[_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:indexValue inSection:0]];
+        lastCellRow = indexValue;
         //cell.bucketImage.image = imgTaken;
         //cell.usernameText.hidden = NO;
         //cell.displayNameText.text = [text isEqualToString:@""] ? [userModel usernameFormatted] : text;
@@ -557,6 +594,7 @@ const int EXPAND_SIZE = 400;
 }
 
 -(void)onMediaPosted:(BucketModel *)bucket{
+    
     bucket.user = userModel;
     [bucket addDrop:[[[self.feedModel feed] objectAtIndex:0] getLastDrop]];
     ActivityTableViewCell *cell = (ActivityTableViewCell  *)[_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
@@ -567,10 +605,13 @@ const int EXPAND_SIZE = 400;
     [cell update:[[self.feedModel feed] objectAtIndex:indexValue]];
         NSLog(@"MEdia was posted");
      */
+    self.readyForExpanding = YES;
 }
 
 -(void)onMediaPostedDrop:(DropModel *)drop{
-    ActivityTableViewCell *cell = (ActivityTableViewCell  *)[_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+    ActivityTableViewCell *cell = (ActivityTableViewCell  *)[_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:lastCellRow inSection:0]];
+    BucketModel *bucket = [[self.feedModel feed] objectAtIndex:indexValue];
+    [bucket setId:drop.bucket_id];
     [cell stopSpinnerForUploadAnimation];
     /*
     ActivityTableViewCell *cell = (ActivityTableViewCell  *)[_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:indexValue inSection:0]];
@@ -581,6 +622,7 @@ const int EXPAND_SIZE = 400;
      [cell update:[[self.feedModel feed] objectAtIndex:indexValue]];
       NSLog(@"MEdia was posted drop");
      */
+      self.readyForExpanding = YES;
 }
 
 -(void)hidePeekFirst{

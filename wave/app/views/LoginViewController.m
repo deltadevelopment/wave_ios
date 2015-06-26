@@ -121,11 +121,15 @@
 */
 
 - (IBAction)loginAction:(id)sender {
+    [self.usernameTextField resignFirstResponder];
+    [self.passwordTextField becomeFirstResponder];
+    [self.view endEditing:YES];
     [self startIndicatorSpinning];
     usernameWrapper.constraint = self.usernameTextFieldViewHeight;
     passwordWrapper.constraint = self.passwordTextFieldViewHeight;
     [loginController login:self.usernameTextField.text pass:self.passwordTextField.text onCompletion:^(UserModel *user, ResponseModel *response){
         [self stopIndicatorSpinning];
+        loginController.isLoggingIn = NO;
         if(response.success){
             //login
             response.success ? [self showMainView] : nil;
@@ -143,7 +147,17 @@
         }
         
     } onError:^(NSError * error){
-    
+        NSLog(@"ERROR");
+        NSLog(@"the dic is %@", [error userInfo]);
+        loginController.isLoggingIn = NO;
+        ResponseModel *responseModel = [[ResponseModel alloc] init:[NSMutableDictionary dictionaryWithDictionary:error.userInfo]];
+        NSLog(@"the dic is %@", responseModel.message);
+        notificationHelper =[[NotificationHelper alloc] initNotification];
+        [notificationHelper setNotificationMessage:responseModel.message];
+        [notificationHelper addNotificationToView:self.navigationController.view];
+        [self stopIndicatorSpinning];
+      self.loginButton.hidden = YES;
+
     }];
     
 }

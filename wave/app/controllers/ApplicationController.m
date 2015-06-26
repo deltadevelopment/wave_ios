@@ -138,12 +138,15 @@
     }
 
     if((error.code == NSURLErrorUserCancelledAuthentication && statuscode == 0) || statuscode == 401){
-        statuscode = 401;
-        [authHelper resetCredentials];
-        UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
-        StartViewController *navigation =[mainStoryboard instantiateViewControllerWithIdentifier:@"startNav"];
-        AppDelegate *appDelegateTemp = [[UIApplication sharedApplication]delegate];
-        appDelegateTemp.window.rootViewController = navigation;
+        if (!self.isLoggingIn) {
+            statuscode = 401;
+            [authHelper resetCredentials];
+            UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
+            StartViewController *navigation =[mainStoryboard instantiateViewControllerWithIdentifier:@"startNav"];
+            AppDelegate *appDelegateTemp = [[UIApplication sharedApplication]delegate];
+            appDelegateTemp.window.rootViewController = navigation;
+        }
+       
     }
     else
     {

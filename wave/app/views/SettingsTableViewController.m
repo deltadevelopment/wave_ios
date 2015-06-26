@@ -185,7 +185,7 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     
-    if(section == 3 && _hideTableSection){
+    if((section == 3 || section == 2) && _hideTableSection){
         return 0.0; //header height for selected section
     } else {
         return [super tableView:tableView heightForHeaderInSection:section]; }  //keeps inalterate all other Header
@@ -193,7 +193,7 @@
 
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section {
     
-    if(section == 3 && _hideTableSection){
+    if((section == 3 || section == 2) && _hideTableSection){
         return 0.1; //header height for selected section
     } else {
         return [super tableView:tableView heightForFooterInSection:section]; } //keeps inalterate all other footer
@@ -201,7 +201,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if(section == 3) //Index number of interested section
+    if(section == 3 || section == 2) //Index number of interested section
     {
         if(_hideTableSection)
             return 0; //number of row in section when you click on hide
@@ -228,10 +228,10 @@
             sectionName = @"ACCOUNT";
             break;
         case 2:
-            sectionName = @"ABOUT";
+            sectionName = _hideTableSection ? @"" :@"ABOUT";
             break;
         case 3:
-            sectionName = @"";
+            sectionName = _hideTableSection ? @"" :@"DEVELOPER";
             break;
         default:
             sectionName = @"";

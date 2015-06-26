@@ -174,7 +174,12 @@
     }else{
         self.displayNameText.text = bucket.title;
         self.usernameText.hidden = NO;
-        self.usernameText.text = [NSString stringWithFormat:@"%@ %@",NSLocalizedString(@"by_txt", nil), [[bucket user] username]];
+        if (bucket.user != nil) {
+             self.usernameText.text = [NSString stringWithFormat:@"%@ %@",NSLocalizedString(@"by_txt", nil), [[bucket user] username]];
+        }else{
+        self.usernameText.text = @"";
+        }
+       
     }
 }
 -(void)updateAfterUpload{

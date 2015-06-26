@@ -24,6 +24,7 @@
     NSObject *mediaUploadSuccessArg;
     NotificationHelper *notificationHelper;
     MediaController *mediaController;
+    
 }
 -(void)getHttpRequest:(NSString *) url
          onCompletion:(void (^)(NSURLResponse*, NSData *, NSError*))callback
@@ -42,5 +43,6 @@
                   json:(NSString *) data
           onCompletion:(void (^)(NSURLResponse*, NSData *, NSError*))callback
                onError:(void(^)(NSError *))errorCallback;
+@property (nonatomic) bool isLoggingIn;
 
 @end
