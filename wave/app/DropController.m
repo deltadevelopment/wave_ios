@@ -102,6 +102,12 @@
     [dropView mute];
 }
 
+-(void)unmute{
+    DropView *dropView = (DropView *)self.view;
+    [dropView unmute];
+}
+
+
 
 
 /*

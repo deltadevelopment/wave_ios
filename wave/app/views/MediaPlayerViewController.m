@@ -18,6 +18,7 @@
     NSString *appFile;
     UIImage *thumbnail;
     MPVolumeView *volumeView;
+    float lastValue;
 }
 
 - (void)viewDidLoad {
@@ -129,10 +130,6 @@
     return thumbnail;
 }
 
--(void)unmute{
-   
-}
-
 -(void)mute{
     //find the volumeSlider
     UISlider* volumeViewSlider = nil;
@@ -142,8 +139,21 @@
             break;
         }
     }
-    
+    lastValue = [volumeViewSlider value];
     [volumeViewSlider setValue:0.0f animated:YES];
+    [volumeViewSlider sendActionsForControlEvents:UIControlEventTouchUpInside];
+}
+
+-(void)unmute{
+    UISlider* volumeViewSlider = nil;
+    for (UIView *view in [volumeView subviews]){
+        if ([view.class.description isEqualToString:@"MPVolumeSlider"]){
+            volumeViewSlider = (UISlider*)view;
+            break;
+        }
+    }
+   // lastValue = [volumeViewSlider value];
+    [volumeViewSlider setValue:lastValue animated:YES];
     [volumeViewSlider sendActionsForControlEvents:UIControlEventTouchUpInside];
 }
 

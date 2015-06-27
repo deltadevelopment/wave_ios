@@ -817,6 +817,7 @@ const int PEEK_Y_START = 300;
                 [currentDropPage mute];
             }else{
                 [self animatePeekViewOut];
+                [currentDropPage unmute];
                 if(!isAboutToleaveBucket){
                    // [currentDropPage startVideo];
                 }

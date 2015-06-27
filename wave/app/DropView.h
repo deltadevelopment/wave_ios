@@ -31,4 +31,5 @@
 -(void)playPause;
 
 -(void)mute;
+-(void)unmute;
 @end

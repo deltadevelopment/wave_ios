@@ -222,6 +222,10 @@
     [mediaPlayer mute];
 }
 
+-(void)unmute{
+    [mediaPlayer unmute];
+}
+
 
 /*
 // Only override drawRect: if you perform custom drawing.

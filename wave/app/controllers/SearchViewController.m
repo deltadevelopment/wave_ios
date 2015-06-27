@@ -212,6 +212,7 @@
         blurEffectView.hidden = YES;
         self.tableView.hidden = YES;
         NSLog(@"hidign searchbar");
+            [(CarouselController *)[self carouselParent] setScrollEnabled:YES forPageViewController:[(CarouselController *)[self carouselParent] pageViewController]];
     }else{
         self.searhIsShowing = YES;
         self.tableView.hidden = NO;
