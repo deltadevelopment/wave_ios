@@ -565,6 +565,13 @@ const int PEEK_Y_START = 300;
     NSLog(@"PEEK view");
 }
 
+-(void)viewWillDisappear:(BOOL)animated{
+    isAboutToleaveBucket = YES;
+    [currentDropPage setIsDisplaying:NO];
+    [currentDropPage setIsStartingView:NO];
+    [currentDropPage stopVideo];
+}
+
 
 -(void)addPeekView{
     [self addBlur];
@@ -814,6 +821,7 @@ const int PEEK_Y_START = 300;
         {
             if(frame.origin.y + frame.size.height >= (PEEK_Y_START-64) - 64){
                 [self animatePeekViewIn];
+                NSLog(@"muting");
                 [currentDropPage mute];
             }else{
                 [self animatePeekViewOut];

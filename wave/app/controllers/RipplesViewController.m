@@ -180,7 +180,14 @@
 -(void)showBucketNormally:(RippleModel *)ripple
                  withCell:(RipplesTableViewCell *) cell
 {
-    currentBucketId = [[ripple.interaction bucket] Id];
+    if ([[ripple.interaction topic_type] isEqualToString:@"Tag"]) {
+        NSLog(@"TAG BUCKET YES");
+        currentBucketId = [[ripple.interaction.tag bucket] Id];
+        NSLog(@"the bucket is id %d", currentBucketId);
+    }else{
+        currentBucketId = [[ripple.interaction bucket] Id];
+    }
+    
     [self tableView:self.tableView didSelectRowAtIndexPath:[self.tableView indexPathForCell:cell]];
 }
 -(void)showDropNormally:(RippleModel *)ripple
@@ -290,7 +297,12 @@
         //Dont do anything
     }
     else if ([ripple.interaction.topic_type isEqualToString:@"Tag"]) {
-        [self expandBucketWithId:[ripple.interaction.tag.taggable bucket_id] withDrop:ripple.interaction.tag.taggable.Id];
+        
+        if ([ripple.interaction.tag.taggable_type isEqualToString:@"Bucket"]) {
+            [self expandBucketWithId:[ripple.interaction.tag.bucket Id] withDrop:0];
+        }else{
+            [self expandBucketWithId:[ripple.interaction.tag.drop bucket_id] withDrop:ripple.interaction.tag.drop.Id];
+        }
     }
 }
 

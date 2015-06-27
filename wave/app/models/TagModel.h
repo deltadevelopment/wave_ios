@@ -20,6 +20,7 @@
 @property(nonatomic, strong) UserModel *taggee;
 @property(nonatomic, strong) DropModel *taggable;
 @property(nonatomic, strong) BucketModel *bucket;
+@property(nonatomic, strong) DropModel *drop;
 @property(nonatomic, strong) UserModel *user;
 
 //Client

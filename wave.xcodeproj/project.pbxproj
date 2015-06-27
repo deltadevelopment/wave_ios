@@ -35,6 +35,7 @@
 		C55E75B01B3C0DD9002C1542 /* TagSearchModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C55E75AF1B3C0DD9002C1542 /* TagSearchModel.m */; };
 		C55E75B31B3D70AA002C1542 /* ChatModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C55E75B21B3D70AA002C1542 /* ChatModel.m */; };
 		C55E75B61B3D7184002C1542 /* ChatFeed.m in Sources */ = {isa = PBXBuildFile; fileRef = C55E75B51B3D7184002C1542 /* ChatFeed.m */; };
+		C55E75B81B3E91C5002C1542 /* start-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = C55E75B71B3E91C5002C1542 /* start-logo.png */; };
 		C55FE90A1AD81F45007663FB /* SuperButton.m in Sources */ = {isa = PBXBuildFile; fileRef = C55FE9091AD81F45007663FB /* SuperButton.m */; };
 		C567A1DF1B39AE2300C47237 /* user-icon-gray.png in Resources */ = {isa = PBXBuildFile; fileRef = C567A1DE1B39AE2300C47237 /* user-icon-gray.png */; };
 		C57433071B3AD80900394E15 /* SimpleListController.m in Sources */ = {isa = PBXBuildFile; fileRef = C57433061B3AD80900394E15 /* SimpleListController.m */; };
@@ -229,6 +230,7 @@
 		C55E75B21B3D70AA002C1542 /* ChatModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatModel.m; sourceTree = "<group>"; };
 		C55E75B41B3D7184002C1542 /* ChatFeed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatFeed.h; sourceTree = "<group>"; };
 		C55E75B51B3D7184002C1542 /* ChatFeed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatFeed.m; sourceTree = "<group>"; };
+		C55E75B71B3E91C5002C1542 /* start-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "start-logo.png"; path = "../../../../Google Drive/wave/Resources/beta/start-logo.png"; sourceTree = "<group>"; };
 		C55FE9081AD81F45007663FB /* SuperButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SuperButton.h; path = ../../SuperButton.h; sourceTree = "<group>"; };
 		C55FE9091AD81F45007663FB /* SuperButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SuperButton.m; path = ../../SuperButton.m; sourceTree = "<group>"; };
 		C567A1DE1B39AE2300C47237 /* user-icon-gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user-icon-gray.png"; sourceTree = "<group>"; };
@@ -610,6 +612,7 @@
 				C5C2F4931B2F24F000AF8666 /* pause-icon.png */,
 				F1DBB56D1B12B6930097F709 /* dots-icon.png */,
 				F1DBB54A1B0E4A080097F709 /* manatee.png */,
+				C55E75B71B3E91C5002C1542 /* start-logo.png */,
 				C55E75A91B3C0321002C1542 /* dots-hor-icon.png */,
 				F1E3BB901B2DFFB900B55F2B /* rect-icon.png */,
 				C55E75A71B3B07B6002C1542 /* text-edit-icon.png */,
@@ -1054,6 +1057,7 @@
 				C5D473781AE69D500097E44F /* the-bar-x-v2.png in Resources */,
 				C5FF1E591B05EB870081BEDD /* search-icon-white.png in Resources */,
 				C567A1DF1B39AE2300C47237 /* user-icon-gray.png in Resources */,
+				C55E75B81B3E91C5002C1542 /* start-logo.png in Resources */,
 				F1E127BF1B0023C0000E3F2C /* media-pause.png in Resources */,
 				C55E75AA1B3C0321002C1542 /* dots-hor-icon.png in Resources */,
 				C5C2F4941B2F24F000AF8666 /* pause-icon.png in Resources */,

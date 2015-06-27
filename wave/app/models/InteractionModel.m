@@ -52,6 +52,12 @@
     if ([self.topic_type isEqualToString:@"Vote"]) {
         self.localizedMessage = [NSString stringWithFormat:@"%@ %d °", self.localizedMessage, self.temperature.temperature];
     }
+    if ([self.topic_type isEqualToString:@"Tag"]) {
+        if ([self.tag.taggable_type isEqualToString:@"Bucket"]) {
+            self.localizedMessage = [NSString stringWithFormat:@"%@ '%@'",
+                                     self.localizedMessage, self.tag.bucket.title];
+        }
+    }
     
     //"create_drop_shared_bucket" = "har lagt til en drop i";
 }

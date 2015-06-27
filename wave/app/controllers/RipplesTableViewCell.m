@@ -228,8 +228,6 @@
 
 -(void)initActionButton:(RippleModel *) ripple withCellHeight:(float) height{
     self.ripple = ripple;
-    
-    
     if([[ripple.interaction topic_type]  isEqualToString:@"Drop"]){
         [ripple.interaction.drop.user requestProfilePic:^(NSData *data){
             [self.profilePictureImage setImage:[UIImage imageWithData:data]];
@@ -251,8 +249,6 @@
                 
             }];
         }
-        
-        
     }
     else if([[ripple.interaction topic_type] isEqualToString:@"Bucket"]){
         [ripple.interaction.bucket.user requestProfilePic:^(NSData *data){
@@ -303,25 +299,43 @@
         [self.temperatureButton setTitle:[NSString stringWithFormat:@"%d °", [ripple.interaction.temperature temperature]] forState:UIControlStateNormal];
     }
     else if([[ripple.interaction topic_type] isEqualToString:@"Tag"]){
-        [[ripple.interaction.tag.taggable user] requestProfilePic:^(NSData *data){
-            [self.profilePictureImage setImage:[UIImage imageWithData:data]];
-        }];
-        
         [self showButton:self.actionButton];
-        [self.actionButton removeTarget:self action:@selector(dropAction) forControlEvents:UIControlEventTouchUpInside];
-        [self.actionButton addTarget:self action:@selector(dropAction) forControlEvents:UIControlEventTouchUpInside];
+
         [self.actionButton setBackgroundImage:[UIHelper iconImage:[UIImage imageNamed:@"manatee-gray.png"] withSize:80.0f] forState:UIControlStateNormal];
-        
-        if([ripple.interaction.tag.taggable media_type] == 0){
-            [ripple.interaction.tag.taggable requestPhoto:^(NSData *data){
-                [self.actionButton setBackgroundImage:[UIHelper iconImage:[UIImage imageWithData:data]  withSize:80.0f]forState:UIControlStateNormal];
-                
-            } ];
-        }else{
-            [ripple.interaction.tag.taggable requestThumbnail:^(NSData *data){
-                [self.actionButton setBackgroundImage:[UIHelper iconImage:[UIImage imageWithData:data]  withSize:80.0f]forState:UIControlStateNormal];
+        if ([ripple.interaction.tag.taggable_type isEqualToString:@"Bucket"]) {
+            [self.actionButton removeTarget:self action:@selector(bucketAction) forControlEvents:UIControlEventTouchUpInside];
+            [self.actionButton addTarget:self action:@selector(bucketAction) forControlEvents:UIControlEventTouchUpInside];
+            [[ripple.interaction.tag.bucket user] requestProfilePic:^(NSData *data){
+                [self.profilePictureImage setImage:[UIImage imageWithData:data]];
             }];
+            DropModel *drop = [[ripple.interaction.tag.bucket drops] objectAtIndex:0];
+           
+            [self getImageFromDrop:drop];
+            
+        }else if([ripple.interaction.tag.taggable_type isEqualToString:@"Drop"]){
+            [self.actionButton removeTarget:self action:@selector(dropAction) forControlEvents:UIControlEventTouchUpInside];
+            [self.actionButton addTarget:self action:@selector(dropAction) forControlEvents:UIControlEventTouchUpInside];
+            [[ripple.interaction.tag.drop user] requestProfilePic:^(NSData *data){
+                [self.profilePictureImage setImage:[UIImage imageWithData:data]];
+            }];
+            
+             [self getImageFromDrop:ripple.interaction.tag.drop];
+        
         }
+       
+    }
+}
+
+-(void)getImageFromDrop:(DropModel *) drop{
+    if([drop media_type] == 0){
+        [drop requestPhoto:^(NSData *data){
+            [self.actionButton setBackgroundImage:[UIHelper iconImage:[UIImage imageWithData:data]  withSize:80.0f]forState:UIControlStateNormal];
+            
+        } ];
+    }else{
+        [drop requestThumbnail:^(NSData *data){
+            [self.actionButton setBackgroundImage:[UIHelper iconImage:[UIImage imageWithData:data]  withSize:80.0f]forState:UIControlStateNormal];
+        }];
     }
 }
 

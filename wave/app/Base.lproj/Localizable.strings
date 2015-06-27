@@ -69,6 +69,7 @@
 "create_redrop" = "has re-dropped your drop";
 "create_subscription" = "is now subscribing to you";
 "create_tag_drop" = "has tagged you in a drop";
+"create_tag_bucket" = "has tagged you in";
 "search_placeholder_txt" = "Search for users";
 
 

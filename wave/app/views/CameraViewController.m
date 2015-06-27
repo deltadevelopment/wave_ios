@@ -819,12 +819,14 @@
     [circleIndicatorView incrementSpin];
     if(circleIndicatorView.percent >100){
         //STOP RECORDING
+        NSLog(@"STOPPER NA");
         [self stopRecording];
     }
 }
 
 -(void)stopRecording
 {
+    NSLog(@"STOPP HER");
     //sjekke her om videoen allerede er stoppet. kan skje hvis tiden går ut å brukeren deretter slipper knappen
     if(isRecording){
         titleTextField.hidden = YES;
