@@ -126,11 +126,16 @@
         self.settingsButton.hidden = YES;
         isDeviceUser = NO;
     }
-   
-    self.subscribersCountLabel.text = [NSString stringWithFormat:@"%d %@", user.subscribers_count, NSLocalizedString(@"subscriptions_txt", nil)];
+    if(user.Id == [[authHelper getUserId] intValue]){
+        self.subscribersCountLabel.text = [NSString stringWithFormat:@"%d %@", user.subscribers_count, NSLocalizedString(@"subscriptions_profile_txt", nil)];
+        
+    }else{
+        self.subscribersCountLabel.text = [NSString stringWithFormat:@"%d %@", user.subscribers_count, NSLocalizedString(@"subscriptions_txt", nil)];
+        
+    }
     self.usernameLabel.text = user.usernameFormatted;
-      [self checkSubscription];
-   
+    [self checkSubscription];
+    
 
 }
 
