@@ -78,7 +78,7 @@
     AvailabilityViewController *viewControllerX = (AvailabilityViewController *)[self createViewControllerWithStoryboardId:@"availability"];
     FilterViewController *viewControllerY = (FilterViewController *)[self createViewControllerWithStoryboardId:@"filterView"];
     
-    [self attachViews:viewControllerY withY:nil];
+    [self attachViews:nil withY:nil];
     self.startY = 64;
     [self getProgressIndicator].frame = CGRectMake(0, self.startY, 0, 4);
      [self getProgressIndicator].hidden = NO;

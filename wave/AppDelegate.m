@@ -16,6 +16,7 @@
 #import "TestBoxViewController.h"
 #import "BucketController.h"
 #import "SearchViewController.h"
+#import "RipplesViewController.h"
 @interface AppDelegate ()
 
 @end
@@ -168,7 +169,11 @@ AuthHelper *authHelper;
         NSLog(@"Ikke Aktiv notif");
         //If the application was not active, we want to navigate/take action on the ripple
         [self handleNotification:userInfo];
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
+        RipplesViewController *ripples =[storyboard instantiateViewControllerWithIdentifier:@"ripplesView"];
+        [[ApplicationHelper getMainNavigationController] pushViewController:ripples animated:YES];
     }
+
 }
 
 -(void)playSound{
