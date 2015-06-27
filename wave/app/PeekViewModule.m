@@ -118,8 +118,9 @@
         self.settingsButton.hidden = NO;
        
         [self.subscribeButton setTitle:NSLocalizedString(@"subscriptions_button_txt", nil) forState:UIControlStateNormal];
+        
         //[self.subscribeButton setBackgroundColor:[ColorHelper purpleColor]];
-        //[[self.subscribeButton layer] setBorderColor:[ColorHelper purpleColor].CGColor];
+        [[self.subscribeButton layer] setBorderColor:[ColorHelper magenta].CGColor];
     }else{
         self.subscribeButton.hidden = NO;
         self.settingsButton.hidden = YES;
@@ -237,9 +238,13 @@
             [self.subscribeButton setTitle:NSLocalizedString(@"unsubscribe_txt", nil) forState:UIControlStateNormal];
         }
         [[self.subscribeButton layer] setBorderColor:[ColorHelper magenta].CGColor];
-        
+           NSLog(@"sub");
         
     }else{
+        NSLog(@"subbb");
+        if ([self.user Id] ==[[authHelper getUserId] intValue]) {
+             [[self.subscribeButton layer] setBorderColor:[ColorHelper magenta].CGColor];
+        }
         //[self.subscribeButton setTitle:@"Subscribe" forState:UIControlStateNormal];
         [self.subscribeButton setTitle:NSLocalizedString(@"subscribe_txt", nil) forState:UIControlStateNormal];
         [self removeInsetsFromButton];
