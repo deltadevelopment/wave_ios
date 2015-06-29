@@ -155,7 +155,7 @@
                                                       delegate:self
                                              cancelButtonTitle:@"Ok"
                                              otherButtonTitles:nil];
-        [alert show];
+       // [alert show];
     }
     
     // NSLog(@"-------------------------");

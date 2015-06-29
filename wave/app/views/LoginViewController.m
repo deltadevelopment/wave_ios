@@ -36,7 +36,8 @@
         self.usernameTextField.text = @"simenlie";
         self.passwordTextField.text = @"simenlie";
     }
-    
+    self.usernameTextField.text = @"";
+    self.passwordTextField.text = @"";
     [UIHelper applyLayoutOnButton:self.loginButton];
     
     verticalSpaceConstraintButton = self.loginButtonVerticalSpace;

@@ -36,6 +36,7 @@
 		C55E75B31B3D70AA002C1542 /* ChatModel.m in Sources */ = {isa = PBXBuildFile; fileRef = C55E75B21B3D70AA002C1542 /* ChatModel.m */; };
 		C55E75B61B3D7184002C1542 /* ChatFeed.m in Sources */ = {isa = PBXBuildFile; fileRef = C55E75B51B3D7184002C1542 /* ChatFeed.m */; };
 		C55E75B81B3E91C5002C1542 /* start-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = C55E75B71B3E91C5002C1542 /* start-logo.png */; };
+		C55E75BA1B3ED146002C1542 /* app-test-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = C55E75B91B3ED146002C1542 /* app-test-icon.png */; };
 		C55FE90A1AD81F45007663FB /* SuperButton.m in Sources */ = {isa = PBXBuildFile; fileRef = C55FE9091AD81F45007663FB /* SuperButton.m */; };
 		C567A1DF1B39AE2300C47237 /* user-icon-gray.png in Resources */ = {isa = PBXBuildFile; fileRef = C567A1DE1B39AE2300C47237 /* user-icon-gray.png */; };
 		C57433071B3AD80900394E15 /* SimpleListController.m in Sources */ = {isa = PBXBuildFile; fileRef = C57433061B3AD80900394E15 /* SimpleListController.m */; };
@@ -231,6 +232,7 @@
 		C55E75B41B3D7184002C1542 /* ChatFeed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatFeed.h; sourceTree = "<group>"; };
 		C55E75B51B3D7184002C1542 /* ChatFeed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatFeed.m; sourceTree = "<group>"; };
 		C55E75B71B3E91C5002C1542 /* start-logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "start-logo.png"; path = "../../../../Google Drive/wave/Resources/beta/start-logo.png"; sourceTree = "<group>"; };
+		C55E75B91B3ED146002C1542 /* app-test-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "app-test-icon.png"; path = "../../../../Downloads/app-test-icon.png"; sourceTree = "<group>"; };
 		C55FE9081AD81F45007663FB /* SuperButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SuperButton.h; path = ../../SuperButton.h; sourceTree = "<group>"; };
 		C55FE9091AD81F45007663FB /* SuperButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = SuperButton.m; path = ../../SuperButton.m; sourceTree = "<group>"; };
 		C567A1DE1B39AE2300C47237 /* user-icon-gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "user-icon-gray.png"; sourceTree = "<group>"; };
@@ -648,6 +650,7 @@
 				C5D473651AE56B540097E44F /* settings-icon.png */,
 				C5D4737F1AE795890097E44F /* bucket-white.png */,
 				C5A27BAB1ADEB5F100968033 /* menu.png */,
+				C55E75B91B3ED146002C1542 /* app-test-icon.png */,
 				C5A27BA31ADE779500968033 /* profile-icon.png */,
 				C5A27BA41ADE779500968033 /* feed-icon.png */,
 				C5D473791AE6C29F0097E44F /* cross-simple.png */,
@@ -1104,6 +1107,7 @@
 				C5A27BA61ADE779500968033 /* profile-icon.png in Resources */,
 				C5D4739F1AF93A660097E44F /* eye.png in Resources */,
 				C5A27B9A1ADE52CC00968033 /* test2.jpg in Resources */,
+				C55E75BA1B3ED146002C1542 /* app-test-icon.png in Resources */,
 				F1D9AB4A1AF5A3E3005BFE2C /* RGB-colors.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

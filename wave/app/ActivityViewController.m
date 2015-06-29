@@ -43,6 +43,7 @@ const int EXPAND_SIZE = 400;
     PeekViewModule *peekViewModule;
     int lastCellRow;
     BucketModel *lastBucket;
+    UILabel *infoLabel;
 }
 
 - (void)viewDidLoad {
@@ -69,11 +70,12 @@ const int EXPAND_SIZE = 400;
     [self.tableView addSubview:self.refreshControl];
     [self startRefreshing];
     
-    self.tableView.backgroundColor = [ColorHelper purpleColor];
+    self.tableView.backgroundColor = [UIColor clearColor];
     if(viewMode == 1){
         [self addPeekView];
         //[self.superButton getButton].hidden = YES;
     }
+    [self addEmptyInfoText];
 }
 
 -(void)setViewMode:(int)mode{
@@ -181,12 +183,31 @@ const int EXPAND_SIZE = 400;
         [weakSelf stopRefreshing];
         if ([[self.feedModel feed] count] == 0) {
             self.noBucketsInFeed = YES;
+           // self.tableView.hidden = YES;
+            infoLabel.hidden = NO;
         }else{
             self.noBucketsInFeed = NO;
+            //self.tableView.hidden = NO;
+            infoLabel.hidden = YES;
         }
     } onError:^(NSError *error){
         NSLog(@"%@", [error localizedDescription]);
     }];
+}
+
+-(void)addEmptyInfoText{
+    infoLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 10, [UIHelper getScreenWidth] - 40, 50)];
+    [infoLabel setTextColor:[UIColor whiteColor]];
+    [infoLabel setFont:[UIFont fontWithName:@"HelveticaNeue-ThinItalic" size:17.0f]];
+    if (viewMode == 1) {
+        [infoLabel setText:NSLocalizedString(@"profile_none_txt", nil)];
+    }else{
+    [infoLabel setText:NSLocalizedString(@"feed_none_txt", nil)];
+    }
+    
+    //infoLabel.hidden = YES;
+    [self.view setBackgroundColor:[ColorHelper purpleColor]];
+    [self.view addSubview:infoLabel];
 }
 
 -(void)initNoBuckets{

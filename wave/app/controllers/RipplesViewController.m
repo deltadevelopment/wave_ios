@@ -61,6 +61,10 @@
     [noNotificationsLabel setText:NSLocalizedString(@"ripples_info_txt", nil)];
     [self.view addSubview:noNotificationsLabel];
 }
+-(void)viewWillDisappear:(BOOL)animated{
+    [DataHelper storeRippleCount:0];
+    [DataHelper getNotificationLabel].hidden = YES;
+}
 
 -(void)startRefreshing{
     [UIView animateWithDuration:0.25 delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^(void){

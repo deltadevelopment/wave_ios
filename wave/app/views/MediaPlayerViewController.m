@@ -49,9 +49,9 @@
     player.movieSourceType = MPMovieSourceTypeFile;
     player.controlStyle = MPMovieControlStyleNone;
     player.repeatMode = MPMovieRepeatModeOne;
-    
+    player.view.userInteractionEnabled = YES;
     AVAsset *asset = [AVAsset assetWithURL:movieUrl];
-    
+    player.view.userInteractionEnabled = NO;
     //  Get thumbnail at the very start of the video
     CMTime thumbnailTime = [asset duration];
     thumbnailTime.value = 0;

@@ -101,7 +101,7 @@
     noUsersLabel = [[UILabel alloc] initWithFrame:CGRectMake(20, 30, [UIHelper getScreenWidth] - 40, 50)];
     [noUsersLabel setTextColor:[UIColor blackColor]];
     [noUsersLabel setFont:[UIFont fontWithName:@"HelveticaNeue-ThinItalic" size:17.0f]];
-    [noUsersLabel setText:@"No Subscribers yet"];
+    [noUsersLabel setText:NSLocalizedString(@"subscribers_none_txt", nil)];
     [self.view addSubview:noUsersLabel];
     
     if (self.searchMode) {
@@ -264,7 +264,7 @@
    // [self.searchController setActive:NO];
     [self.navigationItem setHidesBackButton:YES animated:YES];
     //UIImage* image = [UIHelper iconImage:[UIImage imageNamed:@"wave-logo.png"]];
-    UIImage* image = [UIHelper iconImage:[UIImage imageNamed:@"wave-logo.png"] withSize:52];
+    UIImage* image = [UIHelper iconImage:[UIImage imageNamed:@"wave-logos.png"] withSize:52];
     CGRect frame = CGRectMake(0, 0, 26, 26);
     UIButton* someButton = [[UIButton alloc] initWithFrame:frame];
     [someButton setBackgroundImage:image forState:UIControlStateNormal];

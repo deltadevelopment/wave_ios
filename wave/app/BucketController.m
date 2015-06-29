@@ -528,6 +528,7 @@ const int PEEK_Y_START = 300;
 }
 
 -(void)showChat{
+    NSLog(@"Showing chat");
     if(!infoViewMode && !isPeeking){
         if([self.chat isChatVisible]){
             [self.chat hideChat];

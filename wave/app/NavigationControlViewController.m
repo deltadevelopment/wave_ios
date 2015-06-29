@@ -68,7 +68,7 @@
 }
 -(void)addLeftButton{
     //UIImage* image = [UIHelper iconImage:[UIImage imageNamed:@"wave-logo.png"]];
-    UIImage* image = [UIHelper iconImage:[UIImage imageNamed:@"wave-logo.png"]];
+    UIImage* image = [UIHelper iconImage:[UIImage imageNamed:@"wave-logos.png"]];
     CGRect frame = CGRectMake(0, 0, 26, 26);
     UIButton* someButton = [[UIButton alloc] initWithFrame:frame];
     [someButton setBackgroundImage:image forState:UIControlStateNormal];

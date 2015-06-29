@@ -71,6 +71,9 @@
 "create_tag_drop" = "has tagged you in a drop";
 "create_tag_bucket" = "has tagged you in";
 "search_placeholder_txt" = "Search for users";
+"feed_none_txt" = "No content available";
+"profile_none_txt" = "You don't have any drops yet";
+"subscribers_none_txt" = "You don't have any subscribers yet";
 
 
 
