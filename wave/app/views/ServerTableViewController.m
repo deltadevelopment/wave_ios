@@ -22,9 +22,9 @@
     [super viewDidLoad];
     servers = [[NSMutableDictionary alloc]init];
     authHelper = [[AuthHelper alloc]init];
-    [servers setObject:@"http://ddev-wave-staging.herokuapp.com" forKey:@"Staging"];
-    [servers setObject:@"http://ddev-wave-production.herokuapp.com" forKey:@"Production"];
-    [servers setObject:@"http://ddev-wave-testing.herokuapp.com" forKey:@"Testing"];
+    [servers setObject:@"https://ddev-wave-staging.herokuapp.com" forKey:@"Staging"];
+    [servers setObject:@"https://ddev-wave-production.herokuapp.com" forKey:@"Production"];
+    [servers setObject:@"https://ddev-wave-testing.herokuapp.com" forKey:@"Testing"];
   
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;

@@ -74,6 +74,7 @@
 "feed_none_txt" = "No content available";
 "profile_none_txt" = "You don't have any drops yet";
 "subscribers_none_txt" = "You don't have any subscribers yet";
+"profile_none_other_txt" = " doesn't have any drops yet";
 
 
 

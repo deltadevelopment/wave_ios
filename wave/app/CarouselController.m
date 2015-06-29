@@ -89,6 +89,10 @@
     //[self.view insertSubview:[self getProgressIndicator] aboveSubview:self.pageViewController.view];
 }
 
+-(void)viewDidAppear:(BOOL)animated{
+[UIHelper updateNotificationButton:self.navigationItem withButton:[DataHelper getNotificationButton]];
+}
+
 -(void)addView:(NSInteger) index{
     AbstractFeedViewController *pageContentViewController = [self.storyboard instantiateViewControllerWithIdentifier:[self.carouselObjects objectAtIndex:index]];
     if(index == 0){

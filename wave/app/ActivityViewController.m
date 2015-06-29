@@ -87,7 +87,12 @@ const int EXPAND_SIZE = 400;
     
     if(viewMode == 0){
         self.feedModel = [[FeedModel alloc] init];
-    }else{
+    }
+    else if(viewMode == 2){
+        NSString *url = [NSString stringWithFormat:@"discover"];
+        self.feedModel = [[FeedModel alloc] initWithURL:url];
+    }
+    else{
         if(self.isDeviceUser){
             authHelper = [[AuthHelper alloc] init];
             NSString *url = [NSString stringWithFormat:@"user/%@/buckets", [authHelper getUserId]];
@@ -200,9 +205,16 @@ const int EXPAND_SIZE = 400;
     [infoLabel setTextColor:[UIColor whiteColor]];
     [infoLabel setFont:[UIFont fontWithName:@"HelveticaNeue-ThinItalic" size:17.0f]];
     if (viewMode == 1) {
-        [infoLabel setText:NSLocalizedString(@"profile_none_txt", nil)];
+        if (self.isDeviceUser) {
+            
+            [infoLabel setText:NSLocalizedString(@"profile_none_txt", nil)];
+        }else{
+            
+            [infoLabel setText:[NSString stringWithFormat:@"%@ %@", self.anotherUser.username, NSLocalizedString(@"profile_none_other_txt", nil)]];
+        }
+        
     }else{
-    [infoLabel setText:NSLocalizedString(@"feed_none_txt", nil)];
+        [infoLabel setText:NSLocalizedString(@"feed_none_txt", nil)];
     }
     
     //infoLabel.hidden = YES;

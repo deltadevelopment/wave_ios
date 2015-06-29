@@ -308,6 +308,7 @@ static CGFloat screenHeight;
 
 +(void)updateNotificationButton:(UINavigationItem *) item withButton:(UIButton *) button
 {
+    NSLog(@"UPDATING");
         if ([DataHelper getNotificationLabel] == nil) {
             UILabel *ripplesCount = [[UILabel alloc] initWithFrame:CGRectMake(16, -5, 20, 20)];
             ripplesCount.text = [NSString stringWithFormat:@"%d", [DataHelper getRippleCount]];
@@ -327,7 +328,7 @@ static CGFloat screenHeight;
                 //HDIE HERE
                [DataHelper getNotificationLabel].hidden = YES;
             }else{
-                NSLog(@"here");
+                NSLog(@"here23");
                 [button addSubview:[DataHelper getNotificationLabel]];
                 [DataHelper getNotificationLabel].hidden = NO;
                 [DataHelper getNotificationLabel].text = [NSString stringWithFormat:@"%d", [DataHelper getRippleCount]];

@@ -132,6 +132,7 @@
     //self.tableView.contentInset = UIEdgeInsetsMake(160, 0, 0, 0);
     if (self.searchMode && !self.tagMode) {
         self.discover = [self.storyboard instantiateViewControllerWithIdentifier:@"activity"];
+        [self.discover setViewMode:2];
         [self discovercallbacks];
         [self.view addSubview:self.discover.view];
         [noUsersLabel setHidden:YES];

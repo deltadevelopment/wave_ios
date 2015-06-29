@@ -51,7 +51,7 @@
     self.logoutCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     self.profilePictureCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
    // [self.serverCell setHidden:YES];
-    self.hideTableSection = YES;
+    //self.hideTableSection = YES;
 }
 -(void)userWasReturned{
     [self.privateToggleSwitch setOn:[user private_profile] animated:YES];

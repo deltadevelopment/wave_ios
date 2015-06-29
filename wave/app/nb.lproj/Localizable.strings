@@ -74,6 +74,7 @@
 "search_placeholder_txt" = "Søk etter brukere";
 "feed_none_txt" = "Ingen innhold tilgjengelig";
 "profile_none_txt" = "Du har ingen drops ennå";
+"profile_none_other_txt" = "har ingen drops ennå";
 "subscribers_none_txt" = "Du har ingen abonnenter ennå";
 
 
