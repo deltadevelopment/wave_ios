@@ -34,6 +34,22 @@
     [SSKeychain deletePasswordForService:@"authToken" account:@"AnyUser"];
 }
 
+-(void) storeCredentialsDebug:(NSString *) username withPassword:(NSString *) password{
+    [SSKeychain setPassword:username forService:@"usernameDebug" account:@"AnyUser"];
+    [SSKeychain setPassword:password forService:@"passwordDebug" account:@"AnyUser"];
+};
+
+-(NSString *)getUsernameDebug{
+    NSString *authToken = [SSKeychain passwordForService:@"usernameDebug" account:@"AnyUser"];
+    return authToken;
+}
+
+-(NSString *)getPasswordDebug{
+    NSString *authToken = [SSKeychain passwordForService:@"passwordDebug" account:@"AnyUser"];
+    return authToken;
+}
+
+
 - (NSString*) getAuthToken{
     NSString *authToken = [SSKeychain passwordForService:@"authToken" account:@"AnyUser"];
     return authToken;

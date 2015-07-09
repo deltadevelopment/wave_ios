@@ -14,6 +14,8 @@
 @property (weak, nonatomic) IBOutlet UITextField *passwordTextField;
 
 @property (weak, nonatomic) IBOutlet UITextField *repeatedPasswordField;
+@property (weak, nonatomic) IBOutlet UILabel *newePasswordLabel;
+@property (weak, nonatomic) IBOutlet UILabel *repeatPasswordLabel;
 
 
 @end

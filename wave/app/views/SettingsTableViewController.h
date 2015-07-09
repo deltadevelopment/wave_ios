@@ -26,5 +26,13 @@
 
 @property(nonatomic) BOOL hideTableSection;
 - (IBAction)toggleServerAction:(id)sender;
+@property (weak, nonatomic) IBOutlet UILabel *editProfileLabel;
+@property (weak, nonatomic) IBOutlet UILabel *changeProfilePicLabel;
 
+@property (weak, nonatomic) IBOutlet UILabel *usernameLabel2;
+@property (weak, nonatomic) IBOutlet UILabel *changePasswordLabel;
+@property (weak, nonatomic) IBOutlet UILabel *logoutLabel;
+@property (weak, nonatomic) IBOutlet UILabel *serversLabel;
+@property (weak, nonatomic) IBOutlet UILabel *showErrorsLabel;
+@property (weak, nonatomic) IBOutlet UILabel *changePasswordLabel2;
 @end

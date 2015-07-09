@@ -41,6 +41,14 @@
     [self.navigationController.navigationBar setTintColor:[ColorHelper purpleColor]];
     [self.navigationController.navigationBar setBackgroundColor:[ColorHelper purpleColor]];
     [self.navigationController.navigationBar setBarTintColor:[ColorHelper purpleColor]];
+    [self.emailTextField setPlaceholder:NSLocalizedString(@"email_placeholder", nil)];
+    [self.phoneNumberTextField setPlaceholder:NSLocalizedString(@"phonenumber_placeholder", nil)];
+    [self.emailLabel setText:NSLocalizedString(@"email_placeholder", nil)];
+    [self.phoneNumberLabel setText:NSLocalizedString(@"phonenumber_placeholder", nil)];
+    
+    [self.navigationItem setTitle:NSLocalizedString(@"settings_edit_profile_txt", nil)];
+    
+    
 }
 
 
@@ -177,6 +185,15 @@ NSString *finalString = [NSString stringWithFormat:@"%@ %@ %@", [text substringW
 
 -(void)userWasNotSaved:(NSError *) error{
     
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    NSString *sectionName = NSLocalizedString(@"settings_edit_profile_txt", nil);
+            
+    
+    
+    return sectionName;
 }
 
 

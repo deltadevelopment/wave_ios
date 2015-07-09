@@ -36,6 +36,13 @@
     [self.navigationController.navigationBar setTintColor:[ColorHelper purpleColor]];
     [self.navigationController.navigationBar setBackgroundColor:[ColorHelper purpleColor]];
     [self.navigationController.navigationBar setBarTintColor:[ColorHelper purpleColor]];
+    [self.passwordTextField setPlaceholder:NSLocalizedString(@"new_password_txt", nil)];
+    [self.repeatedPasswordField setPlaceholder:NSLocalizedString(@"repeat_password_txt", nil)];
+    [self.newePasswordLabel setText:NSLocalizedString(@"new_password_txt", nil)];
+    [self.repeatPasswordLabel setText:NSLocalizedString(@"repeat_password_txt", nil)];
+    [self.navigationItem setTitle:NSLocalizedString(@"settings_change_pass_txt", nil)];
+    
+    
 }
 
 

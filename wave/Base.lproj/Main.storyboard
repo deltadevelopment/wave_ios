@@ -3196,6 +3196,9 @@
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
+                                                    <variation key="heightClass=regular-widthClass=compact">
+                                                        <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="17"/>
+                                                    </variation>
                                                 </label>
                                             </subviews>
                                             <constraints>
@@ -3457,11 +3460,14 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Duy-19-Vjx" id="gO6-Hu-Oak">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Klovnen Kalle" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x1c-L7-9jw">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Servers" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x1c-L7-9jw">
                                                     <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
+                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="18" y="11.5" width="95" height="20.5"/>
+                                                    </variation>
                                                 </label>
                                             </subviews>
                                             <constraints>
@@ -3513,7 +3519,7 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="trailingMargin" secondItem="PTK-0k-vjL" secondAttribute="trailing" constant="11" id="ALz-dp-1T9">
-                                                    <variation key="heightClass=regular-widthClass=compact" constant="15"/>
+                                                    <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
                                                 </constraint>
                                                 <constraint firstAttribute="centerY" secondItem="PTK-0k-vjL" secondAttribute="centerY" id="JpJ-au-XDO"/>
                                                 <constraint firstAttribute="centerY" secondItem="b2k-QG-zg0" secondAttribute="centerY" id="Q6Q-G9-VgP"/>
@@ -3558,12 +3564,20 @@
                     <navigationItem key="navigationItem" title="Settings" id="0yt-Jw-JCK"/>
                     <connections>
                         <outlet property="changePasswordCell" destination="l3W-ZZ-9Ag" id="ra5-FD-hsY"/>
+                        <outlet property="changePasswordLabel" destination="Ba6-O9-Uqr" id="r7C-au-Qga"/>
+                        <outlet property="changePasswordLabel2" destination="12X-rA-MMn" id="Ee8-De-iX6"/>
+                        <outlet property="changeProfilePicLabel" destination="w6E-8d-uIS" id="vDg-Fq-0PC"/>
+                        <outlet property="editProfileLabel" destination="Inj-cc-uS7" id="cIE-XB-ZiL"/>
                         <outlet property="logoutCell" destination="K76-AH-u1k" id="Ep1-qf-4CZ"/>
+                        <outlet property="logoutLabel" destination="Ba6-O9-Uqr" id="966-d0-TlS"/>
                         <outlet property="profileCell" destination="1eZ-Hq-F4S" id="tSd-E2-vkf"/>
                         <outlet property="profilePictureCell" destination="P25-dY-4JA" id="VtI-nS-gJS"/>
                         <outlet property="serverCell" destination="Duy-19-Vjx" id="tTh-vy-pjg"/>
+                        <outlet property="serversLabel" destination="x1c-L7-9jw" id="Zuu-1K-nZh"/>
+                        <outlet property="showErrorsLabel" destination="b2k-QG-zg0" id="u5S-eU-bUP"/>
                         <outlet property="showErrorsSwitch" destination="PTK-0k-vjL" id="eRU-S5-ova"/>
                         <outlet property="usernameLabel" destination="ee6-HQ-cah" id="kZ3-TV-Sgi"/>
+                        <outlet property="usernameLabel2" destination="cuo-jX-LTN" id="wRe-3U-sNU"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gm0-EV-xaK" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3737,8 +3751,10 @@
                     </navigationItem>
                     <connections>
                         <outlet property="emailCell" destination="RX4-m2-qUL" id="vTZ-gW-XjX"/>
+                        <outlet property="emailLabel" destination="FTc-B7-FWr" id="Phb-pF-auy"/>
                         <outlet property="emailTextField" destination="cWW-IC-PTV" id="gAh-pU-RFb"/>
                         <outlet property="phoneNumberCell" destination="IEi-uN-NnB" id="bV8-FT-2hU"/>
+                        <outlet property="phoneNumberLabel" destination="Kmj-cm-dkc" id="nIn-lR-NyS"/>
                         <outlet property="phoneNumberTextField" destination="Ys6-9v-LaV" id="CA6-Yh-Dah"/>
                     </connections>
                 </tableViewController>
@@ -4060,7 +4076,9 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="newePasswordLabel" destination="69F-5x-0aV" id="wBi-ae-fKJ"/>
                         <outlet property="passwordTextField" destination="Eqw-af-bIv" id="EIG-MO-4Oa"/>
+                        <outlet property="repeatPasswordLabel" destination="LRB-TL-uq1" id="JhL-cf-VOk"/>
                         <outlet property="repeatedPasswordField" destination="cLC-HC-eIa" id="Rm1-JS-1kj"/>
                     </connections>
                 </tableViewController>
@@ -4072,69 +4090,19 @@
         <scene sceneID="2yE-gw-gbo">
             <objects>
                 <tableViewController id="yc7-kK-M3h" customClass="ServerTableViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="Vum-HV-HDj">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="Vum-HV-HDj">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
-                        <sections>
-                            <tableViewSection headerTitle="Server" id="IN7-LA-njk">
-                                <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="160" id="YMp-nZ-uK3">
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="YMp-nZ-uK3" id="5Mg-KU-pl0">
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8IH-Ud-Dew">
-                                                    <rect key="frame" x="0.0" y="-162" width="320" height="162"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="162" id="9Hu-Vd-OQq">
-                                                            <variation key="heightClass=regular-widthClass=compact" constant="160"/>
-                                                        </constraint>
-                                                    </constraints>
-                                                    <variation key="default">
-                                                        <mask key="constraints">
-                                                            <exclude reference="9Hu-Vd-OQq"/>
-                                                        </mask>
-                                                    </variation>
-                                                    <variation key="heightClass=regular-widthClass=compact">
-                                                        <mask key="constraints">
-                                                            <include reference="9Hu-Vd-OQq"/>
-                                                        </mask>
-                                                    </variation>
-                                                </pickerView>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="8IH-Ud-Dew" firstAttribute="top" secondItem="5Mg-KU-pl0" secondAttribute="topMargin" constant="-67" id="40Q-89-gQr">
-                                                    <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
-                                                </constraint>
-                                                <constraint firstAttribute="trailing" secondItem="8IH-Ud-Dew" secondAttribute="trailing" id="Xgx-iY-aOw"/>
-                                                <constraint firstItem="8IH-Ud-Dew" firstAttribute="leading" secondItem="5Mg-KU-pl0" secondAttribute="leading" id="wQx-XX-r1h"/>
-                                            </constraints>
-                                            <variation key="default">
-                                                <mask key="subviews">
-                                                    <exclude reference="8IH-Ud-Dew"/>
-                                                </mask>
-                                                <mask key="constraints">
-                                                    <exclude reference="40Q-89-gQr"/>
-                                                    <exclude reference="Xgx-iY-aOw"/>
-                                                    <exclude reference="wQx-XX-r1h"/>
-                                                </mask>
-                                            </variation>
-                                            <variation key="heightClass=regular-widthClass=compact">
-                                                <mask key="subviews">
-                                                    <include reference="8IH-Ud-Dew"/>
-                                                </mask>
-                                                <mask key="constraints">
-                                                    <include reference="40Q-89-gQr"/>
-                                                    <include reference="Xgx-iY-aOw"/>
-                                                    <include reference="wQx-XX-r1h"/>
-                                                </mask>
-                                            </variation>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </cells>
-                            </tableViewSection>
-                        </sections>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="serverCell" rowHeight="56" id="YMp-nZ-uK3" customClass="ServerCell">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="YMp-nZ-uK3" id="5Mg-KU-pl0">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <sections/>
                         <connections>
                             <outlet property="dataSource" destination="yc7-kK-M3h" id="x3l-kp-N6P"/>
                             <outlet property="delegate" destination="yc7-kK-M3h" id="4Cb-mZ-UTe"/>
@@ -4154,9 +4122,6 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
-                    <connections>
-                        <outlet property="picker" destination="8IH-Ud-Dew" id="S7y-qm-uIk"/>
-                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YCR-AS-OL1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

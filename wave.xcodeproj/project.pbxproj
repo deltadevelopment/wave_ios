@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C51B21651B4D75D20013E6AE /* ServerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C51B21641B4D75D20013E6AE /* ServerCell.m */; };
 		C52AAFD61B3058A0004332DD /* RipplesFeed.m in Sources */ = {isa = PBXBuildFile; fileRef = C52AAFD51B3058A0004332DD /* RipplesFeed.m */; };
 		C52AAFD81B319B5F004332DD /* manatee-gray.png in Resources */ = {isa = PBXBuildFile; fileRef = C52AAFD71B319B5F004332DD /* manatee-gray.png */; };
 		C52AAFDB1B32D38A004332DD /* PartialTransparentBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = C52AAFDA1B32D38A004332DD /* PartialTransparentBlurView.m */; };
@@ -180,6 +181,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C51B21631B4D75D20013E6AE /* ServerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerCell.h; sourceTree = "<group>"; };
+		C51B21641B4D75D20013E6AE /* ServerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerCell.m; sourceTree = "<group>"; };
 		C52AAFD41B3058A0004332DD /* RipplesFeed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RipplesFeed.h; sourceTree = "<group>"; };
 		C52AAFD51B3058A0004332DD /* RipplesFeed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RipplesFeed.m; sourceTree = "<group>"; };
 		C52AAFD71B319B5F004332DD /* manatee-gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "manatee-gray.png"; sourceTree = "<group>"; };
@@ -864,6 +867,8 @@
 				F1DBB5681B0FED430097F709 /* NavigationViewController.h */,
 				F1DBB5511B0FD46F0097F709 /* ServerTableViewController.h */,
 				F1DBB5521B0FD46F0097F709 /* ServerTableViewController.m */,
+				C51B21631B4D75D20013E6AE /* ServerCell.h */,
+				C51B21641B4D75D20013E6AE /* ServerCell.m */,
 				F1DBB5531B0FD46F0097F709 /* SettingsTableViewCell.h */,
 				F1DBB5541B0FD46F0097F709 /* SettingsTableViewCell.m */,
 				F1DBB5551B0FD46F0097F709 /* SettingsTableViewController.h */,
@@ -1208,6 +1213,7 @@
 				C5FF1E551B04F1510081BEDD /* InfoView.m in Sources */,
 				C55E75B61B3D7184002C1542 /* ChatFeed.m in Sources */,
 				F1DBB55F1B0FD46F0097F709 /* ServerTableViewController.m in Sources */,
+				C51B21651B4D75D20013E6AE /* ServerCell.m in Sources */,
 				C5A27B8B1ADD6DD500968033 /* NavigationControlViewController.m in Sources */,
 				F1E127B81AFFD191000E3F2C /* ProgressView.m in Sources */,
 				C5A27B5A1ADD002A00968033 /* ApplicationController.m in Sources */,

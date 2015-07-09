@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "SuperSettingsTableViewController.h"
-@interface ServerTableViewController : SuperSettingsTableViewController<UIPickerViewDelegate>
+@interface ServerTableViewController : SuperSettingsTableViewController<UIPickerViewDelegate, UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UIPickerView *picker;
 - (IBAction)doneAction:(id)sender;
 - (IBAction)cancelAction:(id)sender;

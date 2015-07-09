@@ -78,3 +78,27 @@
 "subscribers_none_txt" = "Du har ingen abonnenter ennå";
 
 
+"settings_title" = "Innstillinger";
+"settings_profile_txt" = "Profil";
+"settings_edit_profile_txt" = "Rediger profil";
+"settings_change_profile_txt" = "Bytt profilbilde";
+"settings_account_txt" = "Konto";
+"settings_username_txt" = "Brukernavn";
+"settings_change_pass_txt" = "Endre Passord";
+"settings_logout_txt" = "Logg ut";
+"settings_about_txt" = "Om";
+"settings_developer_txt" = "Utvikler";
+"settings_servers_txt" = "Server";
+"settings_servers_all_txt" = "Servere";
+"settings_show_errors_txt" = "Vis feilmeldinger";
+
+"email_placeholder" = "E-post";
+"phonenumber_placeholder" = "Telefon";
+
+"new_password_txt" = "Nytt passord";
+"repeat_password_txt" = "Gjenta passord";
+"logout_message" = "Er du sikker på at du vil logge ut?";
+"server_section_auto_login"="Automatisk innlogging";
+"server_cell_auto_login"="Logg inn automatisk";
+"auto_login_fill_in" = "Fyll ut brukernavn og passord";
+

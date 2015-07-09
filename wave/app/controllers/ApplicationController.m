@@ -155,11 +155,18 @@
                                                       delegate:self
                                              cancelButtonTitle:@"Ok"
                                              otherButtonTitles:nil];
-       // [alert show];
+        if ([self debugMode]) {
+            [alert show];
+        }
+        
     }
-    
-    // NSLog(@"-------------------------");
 }
+
+-(bool)debugMode{
+    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+    return [[defaults objectForKey:@"debugMode"] boolValue];
+}
+
 /*
 -(void)showNotification:(NSObject *) view withData: (NSData *) data{
     notificationHelper =[[NotificationHelper alloc] initNotification];

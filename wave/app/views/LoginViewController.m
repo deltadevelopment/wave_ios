@@ -66,6 +66,20 @@
     [self setPlaceholderFont:self.usernameTextField];
     [self setPlaceholderFont:self.passwordTextField];
     [self showLogin];
+    
+    
+    
+    if([[NSUserDefaults standardUserDefaults] objectForKey:@"debugModeAutoLogin"] != nil) {
+        bool debugMode = [[NSUserDefaults standardUserDefaults] boolForKey:@"debugModeAutoLogin"];
+        if(debugMode){
+            //Login automatically
+            AuthHelper *authHelper = [[AuthHelper alloc] init];
+            self.usernameTextField.text =[authHelper getUsernameDebug];
+            self.passwordTextField.text = [authHelper getPasswordDebug];
+            [self loginAction:nil];
+        }
+    }
+    
 
 }
 -(void)viewDidAppear:(BOOL)animated{

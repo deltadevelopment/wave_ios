@@ -13,15 +13,15 @@
 {
     self = [super init];
     if (self) {
-       // [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"currentServer"];
+       //[[NSUserDefaults standardUserDefaults] removeObjectForKey:@"currentServer"];
         if([[NSUserDefaults standardUserDefaults] objectForKey:@"currentServer"] != nil) {
             NSString *storedBaseUrl = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentServer"];
             _baseUrl = storedBaseUrl;
             
         }else{
             //_baseUrl = @"http://w4ve.herokuapp.com";
-            //_baseUrl = @"https://ddev-wave-staging.herokuapp.com";
-            _baseUrl = @"https://ddev-wave-production.herokuapp.com";
+            _baseUrl = @"https://ddev-wave-staging.herokuapp.com";
+           // _baseUrl = @"https://ddev-wave-production.herokuapp.com";
         }
        // NSLog(@"baseURL: %@", _baseUrl);
     }

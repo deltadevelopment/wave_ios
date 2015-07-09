@@ -15,4 +15,8 @@
 - (NSString *) getUserId;
 - (NSString *)getDeviceId;
 - (void)storeDeviceId:(NSString *) deviceId;
+
+-(void) storeCredentialsDebug:(NSString *) username withPassword:(NSString *) password;
+-(NSString *)getUsernameDebug;
+-(NSString *)getPasswordDebug;
 @end

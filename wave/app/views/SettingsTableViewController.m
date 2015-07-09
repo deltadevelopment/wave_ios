@@ -50,8 +50,28 @@
     self.serverCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     self.logoutCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     self.profilePictureCell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    
+    //[self.serverLabel setText:NSLocalizedString(@"settings_servers_txt", nil)];
+   
+    
+    
    // [self.serverCell setHidden:YES];
     //self.hideTableSection = YES;
+    
+    [self.usernameLabel2 setText:NSLocalizedString(@"settings_username_txt", nil)];
+    [self.changePasswordLabel2 setText:NSLocalizedString(@"settings_change_pass_txt", nil)];
+    [self.editProfileLabel setText:NSLocalizedString(@"settings_edit_profile_txt", nil)];
+    [self.changeProfilePicLabel setText:NSLocalizedString(@"settings_change_profile_txt", nil)];
+    
+    [self.logoutLabel setText:NSLocalizedString(@"settings_logout_txt", nil)];
+    [self.serversLabel setText:NSLocalizedString(@"settings_servers_txt", nil)];
+    [self.showErrorsLabel setText:NSLocalizedString(@"settings_show_errors_txt", nil)];
+
+    [self.navigationItem setTitle:NSLocalizedString(@"settings_title", nil)];
+    
+    
+//    "settings_title" = "Settings";
+
 }
 -(void)userWasReturned{
     [self.privateToggleSwitch setOn:[user private_profile] animated:YES];
@@ -150,10 +170,10 @@
 }
 
 -(void)showLogoutAlert{
-    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Log out"
-                                                   message:@"Are you sure you want to log out?"
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"settings_logout_txt", nil)
+                                                   message:NSLocalizedString(@"logout_message", nil)
                                                   delegate:self
-                                         cancelButtonTitle:@"Cancel"
+                                         cancelButtonTitle:NSLocalizedString(@"cancel_menu_txt", nil)
                                          otherButtonTitles:@"Ok",nil];
     [alert show];
 }
@@ -238,22 +258,23 @@
     switch (section)
     {
         case 0:
-            sectionName = @"PROFILE";
+            sectionName = NSLocalizedString(@"settings_profile_txt", nil);
             break;
         case 1:
-            sectionName = @"ACCOUNT";
+            sectionName = NSLocalizedString(@"settings_account_txt", nil);
             break;
         case 2:
-            sectionName = _hideTableSection ? @"" :@"ABOUT";
+            sectionName = _hideTableSection ? @"" :NSLocalizedString(@"settings_about_txt", nil);
             break;
         case 3:
-            sectionName = _hideTableSection ? @"" :@"DEVELOPER";
+            sectionName = _hideTableSection ? @"" :NSLocalizedString(@"settings_developer_txt", nil);
             break;
         default:
             sectionName = @"";
             break;
     }
     return sectionName;
+    
 }
 
 
