@@ -9,32 +9,36 @@
 #import "ChatViewController.h"
 #import "ChatTableViewCell.h"
 #import "UIHelper.h"
+#import "ChatFeed.h"
+#import "ChatModel.h"
 @interface ChatViewController ()
 
 @end
 
 @implementation ChatViewController{
-    NSMutableArray *messages;
+   // NSMutableArray *messages;
     bool keyBoardShown;
     float replyPosition;
+    ChatFeed *chatFeed;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    /*
     messages = [[NSMutableArray alloc]init];
     [messages addObject:@"Take me to heaven"];
     [messages addObject:@"Ikke mye, skal noen ut idag?"];
     [messages addObject:@"Hei. hvis dere skal gjøre dette er det viktig at all min tekst kommer med? dere skjønner det"];
     [messages addObject:@"Hva skjer da?"];
 
-  
+  */
     UIView *spacerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 10, 10)];
     [self.replyTextFieldSimple setLeftViewMode:UITextFieldViewModeAlways];
     [self.replyTextFieldSimple setLeftView:spacerView];
     self.replyTextFieldSimple.placeholder = @"Say something...";
     self.replyTextFieldSimple.delegate = self;
     self.replyTextFieldSimple.layer.cornerRadius = 2;
-    self.replyTextFieldSimple.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.1f];
+    self.replyTextFieldSimple.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.2f];
     self.replyTextFieldSimple.clipsToBounds = YES;
     
     self.replyTextFieldSimple.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"Say something..." attributes:@{                                                                                                                                 NSForegroundColorAttributeName: [[UIColor whiteColor]colorWithAlphaComponent:0.4]                                                              }];
@@ -78,7 +82,37 @@
     UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
     [self.view addGestureRecognizer:gestureRecognizer];
     gestureRecognizer.cancelsTouchesInView = NO;  // this prevents the gesture recognizers to 'block' touches
+    if (chatFeed == nil) {
+         __weak typeof(self) weakSelf = self;
+        chatFeed = [[ChatFeed alloc] init];
+        chatFeed.onMessageRecieved = ^{
+            [weakSelf.tableView reloadData];
+        };
+        [chatFeed auth];
+    }
+   
   
+}
+
+-(void)joinChat:(int) bucketId{
+    if (chatFeed == nil) {
+        __weak typeof(self) weakSelf = self;
+        chatFeed = [[ChatFeed alloc] init];
+        chatFeed.onMessageRecieved = ^{
+            [weakSelf.tableView reloadData];
+        };
+        [chatFeed auth];
+    }
+    if (!self.hasJoined) {
+        [chatFeed join:bucketId];
+        self.hasJoined = YES;
+    }
+    
+}
+
+-(void)partChat{
+    [chatFeed part];
+    NSLog(@"parting chat on close");
 }
 
 -(void)hideKeyboard{
@@ -202,8 +236,8 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath*)indexPath
 {
-    
-        NSString *text = [messages objectAtIndex:indexPath.row];
+    ChatModel *chatModel = [[chatFeed messages] objectAtIndex:indexPath.row];
+    NSString *text = chatModel.message;
         NSDictionary *attributes = @{NSFontAttributeName: [UIFont fontWithName:@"HelveticaNeue-Thin" size:17]};
         // NSString class method: boundingRectWithSize:options:attributes:context is
         // available only on ios7.0 sdk.
@@ -212,9 +246,10 @@
                                                attributes:attributes
                                                   context:nil];
     if(rect.size.height <45){
-        return 50;
+        return 50 + 15;
     }
-    return rect.size.height - 6;
+   // return rect.size.height - 6;
+     return rect.size.height + 25;
 }
 
 -(float)getHeightFromText:(NSString *) text{
@@ -246,17 +281,21 @@
     if(!cell.isInitialized){
         [cell initalize];
     }
-    cell.message.text = [messages objectAtIndex:indexPath.row];
+    ChatModel *chatModel = [[chatFeed messages] objectAtIndex:indexPath.row];
+    cell.message.text = chatModel.message;
     
     return cell;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return [messages count];
+    return [[chatFeed messages] count];
 }
 
 - (IBAction)sendAction:(id)sender {
-    [messages insertObject:self.replyTextFieldSimple.text atIndex:0];
+    ChatModel *chatModel = [[ChatModel alloc] init];
+    [chatModel setMessage:self.replyTextFieldSimple.text];
+   [[chatFeed messages] insertObject:chatModel atIndex:0];
+    [chatFeed send:self.replyTextFieldSimple.text];
     //[self.replyTextField resignFirstResponder];
     [self.replyTextFieldSimple resignFirstResponder];
     NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];

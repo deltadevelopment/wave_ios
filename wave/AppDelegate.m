@@ -27,7 +27,7 @@ AuthHelper *authHelper;
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     authHelper = [[AuthHelper alloc] init];
     //[authHelper resetCredentials];
-    
+   
     NSDictionary *userInfo = [launchOptions valueForKey:@"UIApplicationLaunchOptionsRemoteNotificationKey"];
     [self handleNotification:userInfo];
     

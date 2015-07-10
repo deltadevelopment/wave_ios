@@ -14,9 +14,15 @@
     self.dictionary = dic;
     self.uuid = [self getStringValueFromString:@"uuid"];
     self.sender = [self getIntValueFromString:@"sender"];
+    self.bucket = [self getIntValueFromString:@"bucket"];
     self.when = [self getStringValueFromString:@"when"];
     self.message = [self getStringValueFromString:@"message"];
-
+    if((NSNull*)[self.dictionary objectForKey:@"message"] == [NSNull null]){
+        self.empty = YES;
+    }
+    else if (self.message == nil){
+     self.empty = YES;
+    }
     return self;
 };
 @end

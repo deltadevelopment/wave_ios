@@ -8,6 +8,18 @@
 
 #import "SuperModel.h"
 
-@interface ChatFeed : SuperModel<NSStreamDelegate>
+@interface ChatFeed : SuperModel<NSStreamDelegate>{
+    NSInputStream *inputStream;
+    NSOutputStream *outputStream;
+}
+@property (nonatomic, copy) void (^onMessageRecieved)(void);
 @property (nonatomic, strong) NSMutableArray *messages;
+@property (nonatomic) int bucketId;
+-(void)auth;
+
+-(void)join:(int) bucketId;
+
+-(void)send:(NSString *) message;
+
+-(void)part;
 @end

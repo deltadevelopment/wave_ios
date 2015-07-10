@@ -33,7 +33,7 @@
         [self.usernameSwitch setOn:NO animated:NO];
         [self.usernameSwitch addTarget:self action:@selector(switchChanged:) forControlEvents:UIControlEventValueChanged];
         [self check];
-    }else{  
+    }else{
         self.isInitialized = YES;
 
         self.selectionStyle = UITableViewCellSelectionStyleNone;

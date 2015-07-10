@@ -359,8 +359,8 @@ const int EXPAND_SIZE = 400;
     }else {
         [cell setHidden:NO];
     }
-    NSLog(@"Bucket drops count %lu", (unsigned long)bucket.drops.count);
-    NSLog(@"bucket id %d", bucket.Id);
+   // NSLog(@"Bucket drops count %lu", (unsigned long)bucket.drops.count);
+    //NSLog(@"bucket id %d", bucket.Id);
     [cell update:bucket];
     return cell;
 }

@@ -45,7 +45,8 @@
     self.usernameLabel.textAlignment = NSTextAlignmentCenter;
    
     self.subscribeButton = [UIButton buttonWithType:UIButtonTypeSystem];
-   // self.subscribeButton.frame = CGRectMake([UIHelper getScreenWidth]/2 - (170/2), [UIHelper getScreenHeight] - 64 - 123, 170, 40);
+    //[self.subscribeButton setBackgroundColor:[UIColor redColor]];
+   self.subscribeButton.frame = CGRectMake([UIHelper getScreenWidth]/2 - (170/2), [UIHelper getScreenHeight] - 64 - 123, 170, 40);
     [UIHelper applyThinLayoutOnButton:self.subscribeButton];
     self.settingsButton = [UIButton buttonWithType:UIButtonTypeCustom];
     self.settingsButton.frame = CGRectMake([UIHelper getScreenWidth] - 50, 10, 40, 40);
@@ -85,7 +86,7 @@
     [parentView insertSubview:self.subscribeButton belowSubview:subview];
     [parentView insertSubview:self.subscribersCountLabel belowSubview:subview];
     [parentView insertSubview:self.settingsButton belowSubview:subview];
-    [ConstraintHelper addConstraintsToButtonWithNoSize:parentView withButton:self.subscribeButton withPoint:CGPointMake(-86, 83) fromLeft:YES fromTop:NO];
+   // [ConstraintHelper addConstraintsToButtonWithNoSize:parentView withButton:self.subscribeButton withPoint:CGPointMake(-86, 83) fromLeft:YES fromTop:NO];
     [self AddSizeConstraintToButton:self.subscribeButton];
   
 }

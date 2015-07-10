@@ -7,47 +7,67 @@
 //
 
 #import "ChatFeed.h"
-
+#import "AuthHelper.h"
+#import "ParserHelper.h"
+#import "ChatModel.h"
 @implementation ChatFeed{
-    NSInputStream *inputStream;
-    NSOutputStream *outputStream;
+
 }
 
 -(id)init{
     self =[super init];
     self.messages = [[NSMutableArray alloc] init];
     [self initNetworkCommunication];
+   // [self testData];
     return self;
+}
+
+-(NSDate *)transformDate{
+    NSTimeInterval unixTimeStamp = 1436471998032 / 1000.0;
+    NSDate *messageDate = [NSDate dateWithTimeIntervalSince1970:unixTimeStamp];
+    NSLog(@"the date is %@", messageDate);
+    NSAssert(messageDate, @"messageDate should not be nil");
+    return messageDate;
+}
+
+-(void)targetMethod{
+    [self send:@"Hei"];
 }
 
 
 -(void)auth{
-    
-
+    //auth
+    NSLog(@"Authorized in chat -----------");
+    NSData *data = [[NSData alloc] initWithData:[[self authData] dataUsingEncoding:NSASCIIStringEncoding]];
+    [outputStream write:[data bytes] maxLength:[data length]];
 }
 
--(void)join{
+-(void)join:(int) bucketId{
     //Join with auth
-    NSString *response  = [NSString stringWithFormat:@"iam:%@", @"simenlie"];
-    NSData *data = [[NSData alloc] initWithData:[response dataUsingEncoding:NSASCIIStringEncoding]];
+     NSLog(@"Joined the in chat -----------");
+    self.bucketId = bucketId;
+    NSData *data = [[NSData alloc] initWithData:[[self joinData] dataUsingEncoding:NSASCIIStringEncoding]];
     [outputStream write:[data bytes] maxLength:[data length]];
 }
 
 -(void)send:(NSString *) message{
+    NSLog(@"send the in chat -----------");
     //send the messages
-    NSString *response  = [NSString stringWithFormat:@"iam:%@", message];
-    NSData *data = [[NSData alloc] initWithData:[response dataUsingEncoding:NSASCIIStringEncoding]];
+    NSData *data = [[NSData alloc] initWithData:[[self sendData:message] dataUsingEncoding:NSASCIIStringEncoding]];
     [outputStream write:[data bytes] maxLength:[data length]];
 }
 
 -(void)part{
 //Disconnect
+    NSData *data = [[NSData alloc] initWithData:[[self partData] dataUsingEncoding:NSASCIIStringEncoding]];
+    [outputStream write:[data bytes] maxLength:[data length]];
+    NSLog(@"parted susces");
 }
 
 - (void)initNetworkCommunication {
     CFReadStreamRef readStream;
     CFWriteStreamRef writeStream;
-    CFStreamCreatePairWithSocketToHost(NULL, (CFStringRef)@"localhost", 80, &readStream, &writeStream);
+    CFStreamCreatePairWithSocketToHost(NULL, (CFStringRef)@"52.18.5.223", 1234, &readStream, &writeStream);
     inputStream = (__bridge NSInputStream *)readStream;
     outputStream = (__bridge NSOutputStream *)writeStream;
     [inputStream setDelegate:self];
@@ -64,6 +84,7 @@
 
 - (void)stream:(NSStream *)theStream handleEvent:(NSStreamEvent)streamEvent {
     NSLog(@"stream event %lu", (unsigned long)streamEvent);
+    NSLog([[theStream streamError] localizedDescription]);
     switch (streamEvent) {
             
         case NSStreamEventOpenCompleted:
@@ -72,7 +93,7 @@
             
         case NSStreamEventHasBytesAvailable:
             if (theStream == inputStream) {
-                
+                NSLog(@"herefkoewfkowekf");
                 uint8_t buffer[1024];
                 int len;
                 
@@ -81,9 +102,16 @@
                     if (len > 0) {
                         
                         NSString *output = [[NSString alloc] initWithBytes:buffer length:len encoding:NSASCIIStringEncoding];
-                        
+                        NSData *oute = [[NSData alloc] initWithBytes:buffer length:len];
                         if (nil != output) {
                             NSLog(@"server said: %@", output);
+                            NSMutableDictionary *dic = [ParserHelper parse:oute];
+                            ChatModel *chatModel = [[ChatModel alloc] init:dic];
+                            if (!chatModel.empty) {
+                                [self.messages insertObject:chatModel atIndex:0];
+                                self.onMessageRecieved();
+                            }
+                            
                         }
                     }
                 }
@@ -102,5 +130,63 @@
     }
 }
 
+
+#pragma data JSON
+-(NSString *)authData{
+    
+    NSDictionary *body = @{
+                           @"command":@"auth",
+                           @"params":@{
+                                   @"userid" : [NSNumber numberWithInt:[[[[AuthHelper alloc] init] getUserId] intValue]],
+                                   @"token" : [[[AuthHelper alloc] init] getAuthToken]
+                                   }
+                           };
+    
+    NSString *jsonData = [ApplicationHelper generateJsonFromDictionary:body];
+    return jsonData;
+}
+-(NSString *)joinData{
+    NSDictionary *body = @{
+                           @"command":@"join",
+                           @"params":@{
+                                   @"bucket" : [NSNumber numberWithInt:self.bucketId]
+                                   }
+                           };
+  
+    NSString *jsonData = [ApplicationHelper generateJsonFromDictionary:body];
+    return jsonData;
+}
+
+-(NSString *)sendData:(NSString *) message{
+    NSDictionary *body = @{
+                           @"command":@"send",
+                           @"params":@{
+                                   @"bucket" : [NSNumber numberWithInt:self.bucketId],
+                                   @"message" : message
+                                   }
+                           };
+    NSString *jsonData = [ApplicationHelper generateJsonFromDictionary:body];
+    return jsonData;
+}
+
+-(NSString *)partData{
+    NSDictionary *body = @{
+                           @"command":@"part",
+                           @"params":@{
+                                   @"bucket" : [NSNumber numberWithInt:self.bucketId],
+                                   }
+                           };
+    NSString *jsonData = [ApplicationHelper generateJsonFromDictionary:body];
+    NSLog(jsonData);
+    return jsonData;
+}
+
+-(void)testData{
+    for (int i = 0; i<5; i++) {
+        ChatModel *chat = [[ChatModel alloc] init];
+        chat.message = @"Hei du, hva gjor du ? Hvis du gjor dette er det viktig at all min tekst kommer med";
+        [self.messages addObject:chat];
+    }
+}
 
 @end

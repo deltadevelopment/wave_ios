@@ -9,6 +9,7 @@
 #import "CarouselController.h"
 #import "BucketController.h"
 #import "DataHelper.h"
+#import "ChatFeed.h"
 @interface CarouselController ()
 
 @end
@@ -20,6 +21,7 @@
     NavigationControlViewController *root;
     NavigationControlViewController *oldRoot;
     NSMutableArray *pages;
+    ChatFeed *chatfeed;
 }
 
 - (void)viewDidLoad {
@@ -83,6 +85,7 @@
     [self getProgressIndicator].frame = CGRectMake(0, self.startY, 0, 4);
      [self getProgressIndicator].hidden = NO;
     [self.view addSubview:[self getProgressIndicator]];
+    
 }
 
 -(void)viewDidLayoutSubviews{

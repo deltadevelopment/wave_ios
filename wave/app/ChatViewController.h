@@ -12,6 +12,7 @@
 CGSize keyboardSize;
 }
 @property (nonatomic, copy) void (^onChatHidden)(void);
+@property (nonatomic, copy) void (^onChatPosted)(void);
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @property (weak, nonatomic) IBOutlet UITextView *replyTextField;
@@ -20,10 +21,12 @@ CGSize keyboardSize;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *replyTextHeight;
 @property (weak, nonatomic) IBOutlet UIButton *sendButton;
 - (IBAction)sendAction:(id)sender;
+@property (nonatomic)bool hasJoined;
 @property (weak, nonatomic) IBOutlet UITextField *replyTextFieldSimple;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *replyFieldConstraintSimple;
 -(void)showChat;
 -(void)hideChat;
 -(BOOL)isChatVisible;
-
+-(void)joinChat:(int) bucketId;
+-(void)partChat;
 @end

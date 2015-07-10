@@ -119,6 +119,8 @@ const int PEEK_Y_START = 300;
     [self getProgressIndicator].frame = CGRectMake(0, self.startY, 0, 4);
     [self getProgressIndicator].hidden = NO;
     [self.view addSubview:[self getProgressIndicator]];
+  
+    
 }
 
 
@@ -456,7 +458,9 @@ const int PEEK_Y_START = 300;
         }
     }
     _chat = (ChatViewController *)[storyboard instantiateViewControllerWithIdentifier:@"chatView"];
-    
+    if (bucket != nil) {
+        [self.chat joinChat:bucket.Id];
+    }
     [scrollView addSubview:self.chat.view];
     [self addConstraintsChat:self.chat.view];
     // _chat.view.frame = CGRectMake(0, 0, [UIHelper getScreenWidth], [UIHelper getScreenHeight]);
@@ -552,7 +556,7 @@ const int PEEK_Y_START = 300;
     [currentDropPage setIsStartingView:NO];
     [currentDropPage stopVideo];
     self.onDespand();
-    
+    [self.chat partChat];
     
     // [self.superCarousel removeBucketAsRoot];
     //[self dismissViewControllerAnimated:NO completion:nil];
@@ -644,7 +648,8 @@ const int PEEK_Y_START = 300;
 
 -(void)setBucket:(BucketModel *)inputBucket{
     bucket = inputBucket;
-    NSLog(@"the bucket id is %d", bucket.Id);
+    [self.chat joinChat:bucket.Id];
+    NSLog(@" ALALALALAL the bucket id is %d", bucket.Id);
     if (peekViewController != nil) {
         [peekViewController updatePeekView:[bucket user]];
     }
