@@ -35,21 +35,23 @@
     UIView *spacerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 10, 10)];
     [self.replyTextFieldSimple setLeftViewMode:UITextFieldViewModeAlways];
     [self.replyTextFieldSimple setLeftView:spacerView];
-    self.replyTextFieldSimple.placeholder = @"Say something...";
+    self.replyTextFieldSimple.placeholder = NSLocalizedString(@"caption_placeholder_txt", nil);
     self.replyTextFieldSimple.delegate = self;
     self.replyTextFieldSimple.layer.cornerRadius = 2;
     self.replyTextFieldSimple.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.2f];
     self.replyTextFieldSimple.clipsToBounds = YES;
+    [self.replyTextFieldSimple setKeyboardType:UIKeyboardTypeEmailAddress];
     
-    self.replyTextFieldSimple.attributedPlaceholder = [[NSAttributedString alloc] initWithString:@"Say something..." attributes:@{                                                                                                                                 NSForegroundColorAttributeName: [[UIColor whiteColor]colorWithAlphaComponent:0.4]                                                              }];
+    self.replyTextFieldSimple.attributedPlaceholder = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"caption_placeholder_txt", nil) attributes:@{                                                                                                                                 NSForegroundColorAttributeName: [[UIColor whiteColor]colorWithAlphaComponent:0.4]                                                              }];
     self.tableView.scrollEnabled = NO;
     self.replyTextField.hidden = YES;
     self.replyTextField.textContainerInset = UIEdgeInsetsMake(10, 10, 10, 10);
-    self.replyTextField.text = @"Say something...";
+    self.replyTextField.text = NSLocalizedString(@"caption_placeholder_txt", nil);
     self.replyTextField.delegate = self;
     self.replyTextField.layer.cornerRadius = 2;
     self.replyTextField.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.2f];
     self.replyTextField.clipsToBounds = YES;
+    [self.replyTextField setKeyboardType:UIKeyboardTypeEmailAddress];
    // self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"169.jpg"]];
     self.view.backgroundColor = [UIColor clearColor];
      //self.view.backgroundColor = [UIColor redColor]
@@ -90,8 +92,6 @@
         };
         [chatFeed auth];
     }
-   
-  
 }
 
 -(void)joinChat:(int) bucketId{
@@ -156,7 +156,7 @@
 
 -(void)textViewDidChange:(UITextView *)textView{
     if(textView.text.length == 0){
-        textView.text = @"Say something...";
+        textView.text = NSLocalizedString(@"caption_placeholder_txt", nil);
         [textView resignFirstResponder];
     }
     
@@ -187,6 +187,8 @@
 -(void)keyboardWillHide {
     self.replyFieldConstraint.constant = replyPosition;
     self.replyFieldConstraintSimple.constant = replyPosition;
+    self.onChatKeyboardChange(-100);
+    self.verticalConstraintChat.constant = 110;
 }
 
 -(void)keyboardWillChange:(NSNotification *)note {
@@ -224,7 +226,9 @@
     NSValue* aValue = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
     keyboardSize = [aValue CGRectValue].size;
     self.replyFieldConstraintSimple.constant = replyPosition + keyboardSize.height;
-    
+    //the size must increase here
+    self.onChatKeyboardChange(0);
+       self.verticalConstraintChat.constant = 40;
 }
 
 
@@ -282,7 +286,7 @@
         [cell initalize];
     }
     ChatModel *chatModel = [[chatFeed messages] objectAtIndex:indexPath.row];
-    cell.message.text = chatModel.message;
+    [cell update:chatModel];
     
     return cell;
 }
@@ -294,6 +298,7 @@
 - (IBAction)sendAction:(id)sender {
     ChatModel *chatModel = [[ChatModel alloc] init];
     [chatModel setMessage:self.replyTextFieldSimple.text];
+    [chatModel setSender:[[[[AuthHelper alloc] init] getUserId] intValue]];
    [[chatFeed messages] insertObject:chatModel atIndex:0];
     [chatFeed send:self.replyTextFieldSimple.text];
     //[self.replyTextField resignFirstResponder];

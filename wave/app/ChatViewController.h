@@ -13,6 +13,9 @@ CGSize keyboardSize;
 }
 @property (nonatomic, copy) void (^onChatHidden)(void);
 @property (nonatomic, copy) void (^onChatPosted)(void);
+@property (nonatomic, copy) void (^onChatKeyboardChange)(int (number));
+@property (nonatomic, copy) void (^onTap)(NSNumber*(mode));
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *verticalConstraintChat;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 
 @property (weak, nonatomic) IBOutlet UITextView *replyTextField;

@@ -87,6 +87,8 @@ const int MIN_WIDTH = 100;
     //[self addSubview:self];
     self.center = CGPointMake([UIHelper getScreenWidth]/2 - (self.frame.size.height/2), [UIHelper getScreenHeight]/2 - (self.frame.size.height/2));
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldDidChange:) name:UITextFieldTextDidChangeNotification object:self];
+    
+    [self setKeyboardType:UIKeyboardTypeEmailAddress];
     return self;
 }
 

@@ -39,7 +39,7 @@
         // Set percentage of scrollview that fades at top & bottom
         gradientLayer.locations = [NSArray arrayWithObjects:
                                    [NSNumber numberWithFloat:0],
-                                   [NSNumber numberWithFloat:0.05],
+                                   [NSNumber numberWithFloat:0.00],
                                    [NSNumber numberWithFloat:1.0 - 0.05],
                                    [NSNumber numberWithFloat:1], nil];
         dispatch_async(dispatch_get_main_queue(), ^{

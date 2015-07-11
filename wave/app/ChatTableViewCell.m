@@ -8,6 +8,8 @@
 
 #import "ChatTableViewCell.h"
 #import "ColorHelper.h"
+#import "ChatModel.h"
+#import "UserModel.h"
 
 @implementation ChatTableViewCell{
     UIVisualEffectView *blurEffectView;
@@ -43,11 +45,26 @@
     self.message.clipsToBounds = YES;
     self.layer.shouldRasterize = YES;
     self.layer.rasterizationScale = [UIScreen mainScreen].scale;
-    UILabel *usernameLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 0, 100, 40)];
-    [usernameLabel setTextColor:[UIColor colorWithRed:0.667 green:0.698 blue:0.741 alpha:1]];
-    [usernameLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:13.0f]];
-    [usernameLabel setText:@"@simenlie"];
-    [self addSubview:usernameLabel];
+    self.usernameLabel = [[UILabel alloc] initWithFrame:CGRectMake(50, 0, 100, 40)];
+    [ self.usernameLabel setTextColor:[UIColor colorWithRed:0.667 green:0.698 blue:0.741 alpha:1]];
+    [ self.usernameLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:13.0f]];
+    [ self.usernameLabel setText:@"@simenlie"];
+    [self addSubview: self.usernameLabel];
+}
+
+-(void)update:(ChatModel *) chatModel{
+    __weak typeof(self) weakSelf = self;
+    self.message.text = chatModel.message;
+    UserModel *userModel = [[UserModel alloc] init];
+    [userModel setId:chatModel.sender];
+    [userModel find:^(UserModel *user){
+        [weakSelf.usernameLabel setText:user.usernameFormatted];
+        [user requestProfilePic:^(NSData *data){
+         [weakSelf.messageImage setImage:[UIImage imageWithData:data]];
+        }];
+    } onError:^(NSError *error){
+        
+    }];
 }
 
 -(void)addBlur{

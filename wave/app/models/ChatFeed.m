@@ -61,13 +61,16 @@
 //Disconnect
     NSData *data = [[NSData alloc] initWithData:[[self partData] dataUsingEncoding:NSASCIIStringEncoding]];
     [outputStream write:[data bytes] maxLength:[data length]];
+    [outputStream close];
+    [inputStream close];
     NSLog(@"parted susces");
 }
 
 - (void)initNetworkCommunication {
     CFReadStreamRef readStream;
     CFWriteStreamRef writeStream;
-    CFStreamCreatePairWithSocketToHost(NULL, (CFStringRef)@"52.18.5.223", 1234, &readStream, &writeStream);
+    ConfigHelper *configHelper = [[ConfigHelper alloc] init];
+    CFStreamCreatePairWithSocketToHost(NULL, (__bridge CFStringRef)[configHelper chatUrl], [configHelper chatPort], &readStream, &writeStream);
     inputStream = (__bridge NSInputStream *)readStream;
     outputStream = (__bridge NSOutputStream *)writeStream;
     [inputStream setDelegate:self];
@@ -105,12 +108,17 @@
                         NSData *oute = [[NSData alloc] initWithBytes:buffer length:len];
                         if (nil != output) {
                             NSLog(@"server said: %@", output);
-                            NSMutableDictionary *dic = [ParserHelper parse:oute];
-                            ChatModel *chatModel = [[ChatModel alloc] init:dic];
-                            if (!chatModel.empty) {
-                                [self.messages insertObject:chatModel atIndex:0];
-                                self.onMessageRecieved();
+                            NSError *error;
+                            NSArray *messages = [NSJSONSerialization JSONObjectWithData:oute options:kNilOptions error:&error];
+                            
+                            for (NSMutableDictionary *dic in messages) {
+                                ChatModel *chatModel = [[ChatModel alloc] init:dic];
+                                if (!chatModel.empty) {
+                                    [self.messages insertObject:chatModel atIndex:0];
+                                    self.onMessageRecieved();
+                                }
                             }
+                           
                             
                         }
                     }

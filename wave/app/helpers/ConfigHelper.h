@@ -10,5 +10,6 @@
 
 @interface ConfigHelper : NSObject
 @property (nonatomic,strong) NSString * baseUrl;
-
+@property (nonatomic,strong) NSString * chatUrl;
+@property (nonatomic) int chatPort;
 @end

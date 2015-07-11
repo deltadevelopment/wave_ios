@@ -47,22 +47,25 @@
     self.user = [[UserModel alloc] init:[dic objectForKey:@"user"]];
     self.bucket_type = [dic objectForKey:@"bucket_type"];
     
-    
-    if((NSNull*)[self.dictionary objectForKey:@"drop"] != [NSNull null]){
+    if ([self.dictionary objectForKey:@"drops"] != nil) {
+        NSLog(@"found drops ------ %@", [self.dictionary objectForKey:@"drops"]);
+        NSMutableArray *rawDrops = [dic objectForKey:@"drops"];
+        for(NSMutableDictionary *rawDrop in rawDrops){
+            DropModel *drop = [[DropModel alloc] init:rawDrop];
+            [self addDropToFirst:drop];
+            // [self addDrop:drop];
+        }
+    }
+    else if((NSNull*)[self.dictionary objectForKey:@"drop"] != [NSNull null]){
+        
         if([dic objectForKey:@"drop"] != nil){
             DropModel *drop = [[DropModel alloc] init:[dic objectForKey:@"drop"]];
             [self addDrop:drop];
         }
     }
+   
     
     
-    
-    NSMutableArray *rawDrops = [dic objectForKey:@"drops"];
-    for(NSMutableDictionary *rawDrop in rawDrops){
-        DropModel *drop = [[DropModel alloc] init:rawDrop];
-        [self addDropToFirst:drop];
-       // [self addDrop:drop];
-    }
 }
 
 -(void)addDrop:(DropModel *) drop{

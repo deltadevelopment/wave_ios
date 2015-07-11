@@ -24,6 +24,17 @@
            // _baseUrl = @"https://ddev-wave-production.herokuapp.com";
         }
        // NSLog(@"baseURL: %@", _baseUrl);
+        //Chat config
+        if([[NSUserDefaults standardUserDefaults] objectForKey:@"currentChatServer"] != nil) {
+            NSString *storedChatUrl = [[NSUserDefaults standardUserDefaults] objectForKey:@"currentChatServer"];
+            int storedChatPort = [[[NSUserDefaults standardUserDefaults] objectForKey:@"currentChatServerPort"] intValue];
+            _chatUrl = storedChatUrl;
+            _chatPort = storedChatPort;
+            
+        }else{
+            _chatUrl = @"52.18.5.223";
+            _chatPort = 1234;
+        }
     }
     
     return self;

@@ -9,11 +9,14 @@
 #import <UIKit/UIKit.h>
 #import "ChatMessageLabel.h"
 #import "UIHelper.h"
+#import "ChatModel.h"
 @interface ChatTableViewCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UITextView *message;
 @property (weak, nonatomic) IBOutlet UIImageView *messageImage;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *cellRightConstraint;
+@property (strong, nonatomic) UILabel *usernameLabel;
 @property (nonatomic) bool isInitialized;
+-(void)update:(ChatModel *) chatModel;
 -(void)initalize;
 @end

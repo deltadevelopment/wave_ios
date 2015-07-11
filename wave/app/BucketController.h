@@ -19,6 +19,7 @@
 //@property (strong, nonatomic) NSArray *pageImages;
 @property (strong, nonatomic) CarouselController *superCarousel;
 @property (nonatomic) bool infoViewMode;
+@property (nonatomic, strong) NSLayoutConstraint *heightFromTopChat;
 -(void)setBucket:(BucketModel *)inputBucket withCurrentDropId:(int) dropId;
 -(void)stopAllVideo;
 @end

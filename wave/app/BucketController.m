@@ -54,6 +54,7 @@ const int PEEK_Y_START = 300;
     bool dropForDeletion;
     int currentDropPosition;
     UIImageView *tickView;
+    
 }
 @synthesize infoViewMode;
 - (void)viewDidLoad {
@@ -458,6 +459,10 @@ const int PEEK_Y_START = 300;
         }
     }
     _chat = (ChatViewController *)[storyboard instantiateViewControllerWithIdentifier:@"chatView"];
+    __weak typeof(self) weakSelf = self;
+    _chat.onChatKeyboardChange=^(int (number)){
+        weakSelf.heightFromTopChat.constant = number;
+    };
     if (bucket != nil) {
         [self.chat joinChat:bucket.Id];
     }
@@ -477,13 +482,14 @@ const int PEEK_Y_START = 300;
                                                           attribute:NSLayoutAttributeTrailing
                                                          multiplier:1.0
                                                            constant:0.0]];
-    [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.view
-                                                          attribute:NSLayoutAttributeTop
-                                                          relatedBy:NSLayoutRelationEqual
-                                                             toItem:view
-                                                          attribute:NSLayoutAttributeTop
-                                                         multiplier:1.0
-                                                           constant:-100.0]];
+    self.heightFromTopChat = [NSLayoutConstraint constraintWithItem:self.view
+                                                     attribute:NSLayoutAttributeTop
+                                                     relatedBy:NSLayoutRelationEqual
+                                                        toItem:view
+                                                     attribute:NSLayoutAttributeTop
+                                                    multiplier:1.0
+                                                      constant:-100.0];
+    [self.view addConstraint:self.heightFromTopChat];
     [self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.view
                                                           attribute:NSLayoutAttributeBottom
                                                           relatedBy:NSLayoutRelationEqual

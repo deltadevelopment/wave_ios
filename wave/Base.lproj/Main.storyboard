@@ -2572,6 +2572,7 @@
                         <outlet property="replyTextFieldSimple" destination="DZV-X0-SKC" id="5OM-wi-C6G"/>
                         <outlet property="replyTextHeight" destination="F1V-zu-99b" id="ih6-St-Z51"/>
                         <outlet property="tableView" destination="l88-Z5-2xR" id="cwy-tH-8uo"/>
+                        <outlet property="verticalConstraintChat" destination="UEE-uf-o8r" id="38i-gX-pak"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7vd-c7-btl" userLabel="First Responder" sceneMemberID="firstResponder"/>
