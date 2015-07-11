@@ -109,16 +109,28 @@
                         if (nil != output) {
                             NSLog(@"server said: %@", output);
                             NSError *error;
-                            NSArray *messages = [NSJSONSerialization JSONObjectWithData:oute options:kNilOptions error:&error];
-                            
-                            for (NSMutableDictionary *dic in messages) {
-                                ChatModel *chatModel = [[ChatModel alloc] init:dic];
-                                if (!chatModel.empty) {
-                                    [self.messages insertObject:chatModel atIndex:0];
-                                    self.onMessageRecieved();
+                            @try {
+                                NSArray *messages = [NSJSONSerialization JSONObjectWithData:oute options:kNilOptions error:&error];
+                                for (NSMutableDictionary *dic in messages) {
+                                    ChatModel *chatModel = [[ChatModel alloc] init:dic];
+                                    if (!chatModel.empty) {
+                                        [self.messages insertObject:chatModel atIndex:0];
+                                        self.onMessageRecieved();
+                                    }
                                 }
+
+                            }
+                            @catch (NSException *exception) {
+                                NSLog(@"got error");
+                                NSMutableDictionary *errorDic = [ParserHelper parse:oute];
+                                //Create a model for the error here and show an alert if the user has turned on debug mode
+                            }
+                            @finally {
+                                //Nothing
                             }
                            
+                            
+                            
                             
                         }
                     }
