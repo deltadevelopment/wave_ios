@@ -12,6 +12,7 @@
 @property (nonatomic, strong) NSString  *uuid;
 @property (nonatomic) int sender;
 @property (nonatomic) int bucket;
+@property (nonatomic) int drop;
 @property (nonatomic, strong) NSString  *when;
 @property (nonatomic, strong) NSString  *message;
 -(id)init:(NSMutableDictionary *)dic;

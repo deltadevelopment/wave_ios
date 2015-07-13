@@ -18,8 +18,6 @@
 -(void)auth;
 
 -(void)join:(int) bucketId;
-
--(void)send:(NSString *) message;
-
+-(void)send:(NSString *) message withDropId:(int) dropId;
 -(void)part;
 @end

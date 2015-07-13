@@ -31,7 +31,7 @@
 }
 
 -(void)targetMethod{
-    [self send:@"Hei"];
+    //[self send:@"Hei"];
 }
 
 
@@ -44,16 +44,16 @@
 
 -(void)join:(int) bucketId{
     //Join with auth
-     NSLog(@"Joined the in chat -----------");
+    NSLog(@"Joined the in chat -----------");
     self.bucketId = bucketId;
     NSData *data = [[NSData alloc] initWithData:[[self joinData] dataUsingEncoding:NSASCIIStringEncoding]];
     [outputStream write:[data bytes] maxLength:[data length]];
 }
 
--(void)send:(NSString *) message{
+-(void)send:(NSString *) message withDropId:(int) dropId{
     NSLog(@"send the in chat -----------");
     //send the messages
-    NSData *data = [[NSData alloc] initWithData:[[self sendData:message] dataUsingEncoding:NSASCIIStringEncoding]];
+    NSData *data = [[NSData alloc] initWithData:[[self sendData:message withDropId:dropId] dataUsingEncoding:NSUTF8StringEncoding]];
     [outputStream write:[data bytes] maxLength:[data length]];
 }
 
@@ -96,14 +96,11 @@
             
         case NSStreamEventHasBytesAvailable:
             if (theStream == inputStream) {
-                NSLog(@"herefkoewfkowekf");
                 uint8_t buffer[1024];
                 int len;
-                
                 while ([inputStream hasBytesAvailable]) {
                     len = [inputStream read:buffer maxLength:sizeof(buffer)];
                     if (len > 0) {
-                        
                         NSString *output = [[NSString alloc] initWithBytes:buffer length:len encoding:NSASCIIStringEncoding];
                         NSData *oute = [[NSData alloc] initWithBytes:buffer length:len];
                         if (nil != output) {
@@ -118,7 +115,6 @@
                                         self.onMessageRecieved();
                                     }
                                 }
-
                             }
                             @catch (NSException *exception) {
                                 NSLog(@"got error");
@@ -128,10 +124,6 @@
                             @finally {
                                 //Nothing
                             }
-                           
-                            
-                            
-                            
                         }
                     }
                 }
@@ -150,10 +142,8 @@
     }
 }
 
-
 #pragma data JSON
 -(NSString *)authData{
-    
     NSDictionary *body = @{
                            @"command":@"auth",
                            @"params":@{
@@ -177,12 +167,13 @@
     return jsonData;
 }
 
--(NSString *)sendData:(NSString *) message{
+-(NSString *)sendData:(NSString *) message withDropId:(int)dropId{
     NSDictionary *body = @{
                            @"command":@"send",
                            @"params":@{
                                    @"bucket" : [NSNumber numberWithInt:self.bucketId],
-                                   @"message" : message
+                                   @"message" : message,
+                                   @"drop" : [NSNumber numberWithInt:dropId]
                                    }
                            };
     NSString *jsonData = [ApplicationHelper generateJsonFromDictionary:body];

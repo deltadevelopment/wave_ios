@@ -31,5 +31,7 @@ CGSize keyboardSize;
 -(void)hideChat;
 -(BOOL)isChatVisible;
 -(void)joinChat:(int) bucketId;
+
+@property(nonatomic) int dropId;
 -(void)partChat;
 @end

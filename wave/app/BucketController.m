@@ -76,8 +76,32 @@ const int PEEK_Y_START = 300;
     [self enableReply];
     }
  
-    TemperatureController *viewControllerX = [[TemperatureController alloc] init];
-    viewControllerX.onAction = ^(NSNumber *temperature){
+    //TemperatureController *viewControllerX = [[TemperatureController alloc] init];
+    AvailabilityViewController *yViewController = (AvailabilityViewController *)[self createViewControllerWithStoryboardId:@"availability"];
+    yViewController.onAction = ^(NSNumber *temperature){
+        TemperatureModel *temperatureModel = [[TemperatureModel alloc] initWithDrop:[[currentDropPage drop] Id]];
+        [temperatureModel setTemperature:[temperature intValue]];
+        [temperatureModel saveChanges:^(ResponseModel *response, TemperatureModel *temperatureModel){
+            if(shouldAnimateTemperatureChanges){
+                [currentDropPage bindTemperatureChanges];
+                shouldAnimateTemperatureChanges = NO;
+            }else{
+                shouldAnimateTemperatureChanges = YES;
+            }
+        } onError:^(NSError *error){}];
+        
+    };
+    yViewController.onAnimationEnded =^{
+        if(shouldAnimateTemperatureChanges){
+            [currentDropPage bindTemperatureChanges];
+            shouldAnimateTemperatureChanges = NO;
+        }else{
+            shouldAnimateTemperatureChanges = YES;
+        }
+    };
+    
+    /*
+    yViewController.onAction = ^(NSNumber *temperature){
         TemperatureModel *temperatureModel = [[TemperatureModel alloc] initWithDrop:[[currentDropPage drop] Id]];
         [temperatureModel setTemperature:[temperature intValue]];
         [temperatureModel saveChanges:^(ResponseModel *response, TemperatureModel *temperatureModel){
@@ -100,11 +124,12 @@ const int PEEK_Y_START = 300;
         
         
     };
+     */
     // FilterViewController *viewControllerY = (FilterViewController *)[self createViewControllerWithStoryboardId:@"filterView"];
     
     cameraHolder = [[UIView alloc]initWithFrame:CGRectMake(0, -64, [UIHelper getScreenWidth],[UIHelper getScreenHeight])];
     cameraHolder.backgroundColor = [UIColor whiteColor];
-    [self attachViews:nil withY:viewControllerX];
+    [self attachViews:nil withY:yViewController];
     [self.view insertSubview:cameraHolder belowSubview:[self.superButton getButton ]];
     cameraHolder.hidden = YES;
     user = [[UserModel alloc] initWithDeviceUser];
@@ -459,6 +484,7 @@ const int PEEK_Y_START = 300;
         }
     }
     _chat = (ChatViewController *)[storyboard instantiateViewControllerWithIdentifier:@"chatView"];
+    [self.chat setDropId:currentDropPage.drop.Id];
     __weak typeof(self) weakSelf = self;
     _chat.onChatKeyboardChange=^(int (number)){
         weakSelf.heightFromTopChat.constant = number;
@@ -629,12 +655,9 @@ const int PEEK_Y_START = 300;
 -(void)loadView{
     //NSLog(@"loading view");
     CGRect applicationFrame = [[UIScreen mainScreen] applicationFrame];
-    
     BucketView *contentView = [[BucketView alloc] initWithFrame:applicationFrame];
     self.view = contentView;
 }
-
-
 
 -(void)initUI{
     // self.uiPageIndicator = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 0, 0)];
@@ -745,7 +768,7 @@ const int PEEK_Y_START = 300;
     currentDropPage = currentPage;
     [self updatePageIndicator:currentDropPage.pageIndex];
     [peekViewController updatePeekView:[[currentDropPage drop] user]];
-    
+    [self.chat setDropId:currentDropPage.drop.Id];
     DropController *previousPage = [previousViewControllers objectAtIndex:0];
     [previousPage setIsDisplaying:NO];
     [previousPage stopVideo];

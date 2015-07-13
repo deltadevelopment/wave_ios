@@ -71,6 +71,7 @@
 "create_subscription" = "abonnerer nå på deg";
 "create_tag_drop" = "har tagget deg i en drop";
 "create_tag_bucket" = "har tagget deg i";
+"create_chat_message" = "har skrevet noe i";
 "search_placeholder_txt" = "Søk etter brukere";
 "feed_none_txt" = "Ingen innhold tilgjengelig";
 "profile_none_txt" = "Du har ingen drops ennå";

@@ -12,6 +12,7 @@
 @property (strong, nonatomic) UIImageView *profilePicture;
 @property (strong, nonatomic) UILabel *dropTitle;
 @property (strong, nonatomic) UILabel *dropTemperature;
+@property (strong, nonatomic) UIButton *voteButton;
 @property (strong, nonatomic) UIView *topBar;
 @property (nonatomic) BOOL hasVideo;
 @property (nonatomic, strong) DropModel *drop;

@@ -11,5 +11,9 @@
 @interface AvailabilityViewController : OverlayViewController
 @property (strong, nonatomic) IBOutlet UIView *view;
 @property (weak, nonatomic) IBOutlet UILabel *availabilityText;
+@property (nonatomic) int vote;
+@property (nonatomic, copy) void (^onAction)(NSNumber*(percentage));
+@property (nonatomic, copy) void (^onAnimationEnded)(void);
+@property (weak, nonatomic) IBOutlet UIImageView *voteImageView;
 
 @end

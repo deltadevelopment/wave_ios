@@ -10,12 +10,14 @@
 #import "UIHelper.h"
 #import "MediaPlayerViewController.h"
 #import "GraphicsHelper.h"
+#import "VoteInfoView.h"
 @implementation DropView
 {
     MediaPlayerViewController *mediaPlayer;
     UIButton *playButton;
     UIView *shadowView;
     bool isPlaying;
+    VoteInfoView *voteInfoView;
     
 }
 
@@ -62,6 +64,17 @@
     [playButton addTarget:self action:@selector(playPause) forControlEvents:UIControlEventTouchUpInside];
     playButton.alpha = 0.5;
     //Loader
+    
+    self.voteButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.voteButton.frame = CGRectMake([UIHelper getScreenWidth] - 95, 8, 35, 35);
+    //[self.voteButton setBackgroundColor:[UIColor redColor]];
+    [self.voteButton setImageEdgeInsets:UIEdgeInsetsMake(8, 8, 8, 8)];
+    [self.voteButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"profile-icon.png"] withSize:40] forState:UIControlStateNormal];
+    
+    self.voteButton.userInteractionEnabled = YES;
+    [self.voteButton addTarget:self action:@selector(showVotes) forControlEvents:UIControlEventTouchUpInside];
+    self.voteButton.alpha = 0.5;
+    
     self.spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     float center = ([UIHelper getScreenHeight])/2;
     self.spinner.center = CGPointMake([UIHelper getScreenWidth]/2, center);
@@ -76,7 +89,8 @@
     
     //Attach elements
     [self.topBar addSubview:self.dropTitle];
-    [self.topBar addSubview:self.dropTemperature];
+    
+    // [self.topBar addSubview:self.dropTemperature];
     [self.topBar addSubview:self.profilePicture];
     
     [self addSubview:shadowView];
@@ -84,6 +98,8 @@
     [self addSubview:self.spinner];
     [self addSubview:playButton];
     [self addSubview:self.redropView];
+    [self addSubview:self.voteButton];
+    
     playButton.hidden = YES;
     __weak typeof(self) weakSelf = self;
     mediaPlayer.onVideoFinishedPlaying = ^{
@@ -91,19 +107,26 @@
     };
     
     return self;
+}
 
+-(void)showVotes{
+    NSLog(@"clicked on show votes");
+    if (voteInfoView == nil) {
+        voteInfoView = [[VoteInfoView alloc] init];
+        [self addSubview:voteInfoView];
+    }
+    [voteInfoView animateInfoIn];
 }
 
 -(void)playPause{
     if(isPlaying){
         isPlaying = NO;
         [playButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"play.png"] withSize:30] forState:UIControlStateNormal];
-  
         [mediaPlayer pauseVideo];
     }
     else{
         isPlaying = YES;
-              [playButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"pause-icon.png"] withSize:30] forState:UIControlStateNormal];
+        [playButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"pause-icon.png"] withSize:30] forState:UIControlStateNormal];
         [mediaPlayer playVideoOnce];
     }
 }
@@ -193,6 +216,8 @@
 }
 
 -(void)temperatureAnimation{
+    
+    /*
     [UIView animateWithDuration:0.3f
                           delay:0.0f
                         options: UIViewAnimationOptionCurveLinear
@@ -216,6 +241,7 @@
                                           }];
                      
                      }];
+     */
 }
 
 -(void)mute{

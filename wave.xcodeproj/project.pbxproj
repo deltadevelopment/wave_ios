@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		C51B21651B4D75D20013E6AE /* ServerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C51B21641B4D75D20013E6AE /* ServerCell.m */; };
+		C51B21681B53ED5D0013E6AE /* VoteInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = C51B21671B53ED5D0013E6AE /* VoteInfoView.m */; };
 		C52AAFD61B3058A0004332DD /* RipplesFeed.m in Sources */ = {isa = PBXBuildFile; fileRef = C52AAFD51B3058A0004332DD /* RipplesFeed.m */; };
 		C52AAFD81B319B5F004332DD /* manatee-gray.png in Resources */ = {isa = PBXBuildFile; fileRef = C52AAFD71B319B5F004332DD /* manatee-gray.png */; };
 		C52AAFDB1B32D38A004332DD /* PartialTransparentBlurView.m in Sources */ = {isa = PBXBuildFile; fileRef = C52AAFDA1B32D38A004332DD /* PartialTransparentBlurView.m */; };
@@ -183,6 +184,8 @@
 /* Begin PBXFileReference section */
 		C51B21631B4D75D20013E6AE /* ServerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerCell.h; sourceTree = "<group>"; };
 		C51B21641B4D75D20013E6AE /* ServerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerCell.m; sourceTree = "<group>"; };
+		C51B21661B53ED5D0013E6AE /* VoteInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VoteInfoView.h; sourceTree = "<group>"; };
+		C51B21671B53ED5D0013E6AE /* VoteInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VoteInfoView.m; sourceTree = "<group>"; };
 		C52AAFD41B3058A0004332DD /* RipplesFeed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RipplesFeed.h; sourceTree = "<group>"; };
 		C52AAFD51B3058A0004332DD /* RipplesFeed.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RipplesFeed.m; sourceTree = "<group>"; };
 		C52AAFD71B319B5F004332DD /* manatee-gray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "manatee-gray.png"; sourceTree = "<group>"; };
@@ -926,6 +929,8 @@
 				C57433061B3AD80900394E15 /* SimpleListController.m */,
 				C57433081B3ADB4600394E15 /* SimpleListCell.h */,
 				C57433091B3ADB4600394E15 /* SimpleListCell.m */,
+				C51B21661B53ED5D0013E6AE /* VoteInfoView.h */,
+				C51B21671B53ED5D0013E6AE /* VoteInfoView.m */,
 			);
 			name = modules;
 			sourceTree = "<group>";
@@ -1221,6 +1226,7 @@
 				C5D473921AF3B5310097E44F /* PinnedViewController.m in Sources */,
 				F18A20EB1B1D33E3003294BE /* TemperatureController.m in Sources */,
 				F1DBB5651B0FD46F0097F709 /* ProfilePictureViewController.m in Sources */,
+				C51B21681B53ED5D0013E6AE /* VoteInfoView.m in Sources */,
 				C5A27B541ADC060000968033 /* TextFieldWrapper.m in Sources */,
 				C5D473C21B010A440097E44F /* DataHelper.m in Sources */,
 				F1BD62301AF057D100BDE1CA /* ChatViewController.m in Sources */,

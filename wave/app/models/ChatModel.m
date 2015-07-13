@@ -15,6 +15,7 @@
     self.uuid = [self getStringValueFromString:@"uuid"];
     self.sender = [self getIntValueFromString:@"sender"];
     self.bucket = [self getIntValueFromString:@"bucket"];
+    self.drop = [self getIntValueFromString:@"drop"];
     self.when = [self getStringValueFromString:@"when"];
     self.message = [self getStringValueFromString:@"message"];
     if((NSNull*)[self.dictionary objectForKey:@"message"] == [NSNull null]){

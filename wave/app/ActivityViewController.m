@@ -164,7 +164,7 @@ const int EXPAND_SIZE = 400;
 
 -(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView{
     if(viewMode == 1){
-    [peekViewModule fadeOut];
+   // [peekViewModule fadeOut];
     }
 }
 
@@ -180,6 +180,15 @@ const int EXPAND_SIZE = 400;
             [peekViewModule fadeIn];
         }
     }
+}
+
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView{
+    if (viewMode == 1) {
+       // self.onTableViewDrag(scrollView);
+        NSLog(@"scrolling %f", scrollView.contentOffset.y);
+
+    }
+    //NSLog(@"scrolling");
 }
 
 -(void)refreshFeed{
@@ -254,11 +263,13 @@ const int EXPAND_SIZE = 400;
     cameraHolder.hidden = YES;
     [self.view insertSubview:self.tableView belowSubview:cameraHolder];
     if(viewMode == 1){
+        
         if(!self.shouldHidePeek){
             [peekViewModule layoutElementsWithSubview:cameraHolder];
         }else{
             [peekViewModule layoutBackgroundWithSubview:cameraHolder];
         }
+        
         
     }
 

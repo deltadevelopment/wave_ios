@@ -18,7 +18,7 @@
     [super viewDidLoad];
     self.view.hidden = YES;
     self.availabilityText.text = @"BUSY BEE";
-    self.view.backgroundColor =[ColorHelper greenColor];
+    self.view.backgroundColor =[ColorHelper magenta];
     self.view.alpha = 0.0;
     
     //[UIHelper initialize];
@@ -42,16 +42,20 @@
 -(void)onDragY:(NSNumber *)yPos{
     float middle = ([UIHelper getScreenHeight]/2) - 25;
     if([yPos floatValue] > middle){
-        self.view.backgroundColor =[ColorHelper redColor];
+        //self.view.backgroundColor =[ColorHelper redColor];
+        self.vote = 0;
+        [self.voteImageView setImage:[UIImage imageNamed:@"profile-icon.png"]];
     }else{
-        self.view.backgroundColor =[ColorHelper greenColor];
+       // self.view.backgroundColor =[ColorHelper greenColor];
+        [self.voteImageView setImage:[UIImage imageNamed:@"eye.png"]];
+        self.vote = 1;
     }
 }
 -(void)dragX:(NSNumber *) xPos{
 
 }
 -(void)onDragStarted{
-      self.view.hidden = NO;
+    self.view.hidden = NO;
     [UIView animateWithDuration:0.3f
                           delay:0.0f
                         options: UIViewAnimationOptionCurveLinear
@@ -63,6 +67,7 @@
 }
 
 -(void)onDragEnded{
+    self.onAction([NSNumber numberWithInt:self.vote]);
     [UIView animateWithDuration:0.2f
                           delay:0.0f
                         options: UIViewAnimationOptionCurveLinear
@@ -79,6 +84,7 @@
                                           }
                                           completion:^(BOOL finished){
                                               self.view.hidden = YES;
+                                              self.onAnimationEnded();
                                           }];
                      }];
 }

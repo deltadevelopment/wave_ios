@@ -300,7 +300,7 @@
     [chatModel setMessage:self.replyTextFieldSimple.text];
     [chatModel setSender:[[[[AuthHelper alloc] init] getUserId] intValue]];
    [[chatFeed messages] insertObject:chatModel atIndex:0];
-    [chatFeed send:self.replyTextFieldSimple.text];
+    [chatFeed send:self.replyTextFieldSimple.text withDropId:self.dropId];
     //[self.replyTextField resignFirstResponder];
     [self.replyTextFieldSimple resignFirstResponder];
     NSIndexPath *newIndexPath = [NSIndexPath indexPathForRow:0 inSection:0];

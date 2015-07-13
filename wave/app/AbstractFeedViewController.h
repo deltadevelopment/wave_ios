@@ -16,6 +16,7 @@
 @property (nonatomic, copy) void (^onProgression)(int(progress));
 @property (nonatomic, copy) void (^onNetworkError)(UIView*(view));
 @property (nonatomic, copy) void (^onNetworkErrorHide)(void);
+@property (nonatomic, copy) void (^onTableViewDrag)(UIScrollView*(view));
 @property (nonatomic, copy) void (^onLockScreenToggle)(void);
 @property (nonatomic, strong) SuperButton* superButton;
 @property (nonatomic) bool isDeviceUser;
