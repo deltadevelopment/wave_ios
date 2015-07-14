@@ -257,12 +257,13 @@
 -(void)viewDidAppear:(BOOL)animated{
     NSLog(@"didAPPEAR");
     if (!self.tagMode) {
-        [self addLeftButton];
+        //[self addLeftButton];
     }
     
 }
 -(void)viewWillDisappear:(BOOL)animated{
    // [self.searchController setActive:NO];
+    /*
     [self.navigationItem setHidesBackButton:YES animated:YES];
     //UIImage* image = [UIHelper iconImage:[UIImage imageNamed:@"wave-logo.png"]];
     UIImage* image = [UIHelper iconImage:[UIImage imageNamed:@"wave-logos.png"] withSize:52];
@@ -274,6 +275,7 @@
     self.menuItem = [[UIBarButtonItem alloc] initWithCustomView:someButton];
     [[[ApplicationHelper getMainNavigationController] navigationItem] setLeftBarButtonItem:self.menuItem];
     [self.carouselParent.navigationItem setLeftBarButtonItem:self.menuItem];
+     */
 }
 
 -(void)addLeftButton{
@@ -339,6 +341,7 @@
     
     if (self.searchMode && !self.tagMode) {
         NSLog(@"canceling");
+        self.onSearchedCanceled();
         [self.view addSubview:self.discover.view];
         self.tableView.hidden = YES;
     }

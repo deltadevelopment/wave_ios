@@ -10,6 +10,7 @@
 #import "BucketController.h"
 #import "DataHelper.h"
 #import "ChatFeed.h"
+#import "SearchViewController.h"
 @interface CarouselController ()
 
 @end
@@ -24,7 +25,52 @@
     ChatFeed *chatfeed;
 }
 
+-(void)addLeftButton{
+    [self.navigationItem setHidesBackButton:YES animated:YES];
+    //UIImage* image = [UIHelper iconImage:[UIImage imageNamed:@"wave-logo.png"]];
+    UIImage* image = [UIHelper iconImage:[UIImage imageNamed:@"search-icon-white.png"] withSize:40];
+    CGRect frame = CGRectMake(0, 0, 20, 20);
+    UIButton* someButton = [[UIButton alloc] initWithFrame:frame];
+    [someButton setBackgroundImage:image forState:UIControlStateNormal];
+    [someButton addTarget:self action:@selector(showSearch) forControlEvents:UIControlEventTouchUpInside];
+    [someButton setShowsTouchWhenHighlighted:YES];
+    self.menuItem = [[UIBarButtonItem alloc] initWithCustomView:someButton];
+    [[[ApplicationHelper getMainNavigationController] navigationItem] setLeftBarButtonItem:self.menuItem];
+    [self.navigationItem setLeftBarButtonItem:self.menuItem];
+}
+
+-(void)showSearch{
+    SearchViewController *page = (SearchViewController *)[self viewControllerAtIndex:1];
+    NSArray *viewControllers = @[page];
+    self.indexValueToReturnTo = (int) self.currentController.pageIndex;
+    if (self.currentController.pageIndex == 0) {
+        //go right
+        [self.carousel forward:1];
+        [self.pageViewController setViewControllers:viewControllers
+                                          direction:UIPageViewControllerNavigationDirectionForward
+                                           animated:YES
+                                         completion:^(BOOL finished){
+                                           [page showSearch];
+                                         }];
+    }
+    else if (self.currentController.pageIndex == 1) {
+        [page showSearch];
+    }
+    else if (self.currentController.pageIndex == 2) {
+        [self.carousel backward:1];
+        [self.pageViewController setViewControllers:viewControllers
+                                          direction:UIPageViewControllerNavigationDirectionReverse
+                                           animated:YES
+                                         completion:^(BOOL finished){
+                                             [page showSearch];
+                                         }];
+    }
+    
+   
+}
+
 - (void)viewDidLoad {
+    [self addLeftButton];
     root = self;
     // Do any additional setup after loading the view.
     pages = [[NSMutableArray alloc] init];
@@ -104,6 +150,10 @@
     else if (index ==1){
         [pageContentViewController setSearchMode:YES];
         [pageContentViewController setCarouselParent:self];
+        __weak typeof(self) weakSelf = self;
+        pageContentViewController.onSearchedCanceled=^{
+            [weakSelf navigateBackFromSearch];
+        };
         //[pageContentViewController initSearchTable:self.searchController];
     }
     else {
@@ -113,6 +163,30 @@
     }
     [pages addObject:pageContentViewController];
   
+}
+
+-(void)navigateBackFromSearch{
+    if (self.indexValueToReturnTo != 1) {
+        AbstractFeedViewController *page = (SearchViewController *)[self viewControllerAtIndex:self.indexValueToReturnTo];
+        NSArray *viewControllers = @[page];
+        if (self.indexValueToReturnTo == 0) {
+            [self.carousel backward:0];
+            [self.pageViewController setViewControllers:viewControllers
+                                              direction:UIPageViewControllerNavigationDirectionReverse
+                                               animated:YES
+                                             completion:^(BOOL finished){
+                                                 
+                                             }];
+        }else {
+            [self.carousel forward:2];
+            [self.pageViewController setViewControllers:viewControllers
+                                              direction:UIPageViewControllerNavigationDirectionForward
+                                               animated:YES
+                                             completion:^(BOOL finished){
+                                             
+                                             }];
+        }
+    }
 }
 
 

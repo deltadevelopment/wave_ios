@@ -11,6 +11,7 @@
 #import "MediaPlayerViewController.h"
 #import "GraphicsHelper.h"
 #import "VoteInfoView.h"
+#import "ProfileViewController.h"
 @implementation DropView
 {
     MediaPlayerViewController *mediaPlayer;
@@ -18,6 +19,7 @@
     UIView *shadowView;
     bool isPlaying;
     VoteInfoView *voteInfoView;
+    ProfileViewController *profileView;
     
 }
 
@@ -35,12 +37,19 @@
     self.profilePicture.layer.cornerRadius = 15;
     self.profilePicture.clipsToBounds = YES;
     self.profilePicture.hidden = YES;
+    [self.profilePicture setUserInteractionEnabled:YES];
+    UITapGestureRecognizer *showProfileGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showProfile)];
+    UITapGestureRecognizer *showProfileGestureLabel = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showProfile)];
+    [self.profilePicture addGestureRecognizer:showProfileGesture];
+    
     //Drop Name Label
     self.dropTitle = [[UILabel alloc] initWithFrame:CGRectMake(50, -2, [UIHelper getScreenWidth] - 52, 50)];
+    [self.dropTitle setUserInteractionEnabled:YES];
     //nameLabel.text = [drop username];
     [UIHelper applyThinLayoutOnLabel:self.dropTitle withSize:19 withColor:[UIColor whiteColor]];
     [self.dropTitle setMinimumScaleFactor:12.0/17.0];
     self.dropTitle.adjustsFontSizeToFitWidth = YES;
+    [self.dropTitle addGestureRecognizer:showProfileGestureLabel];
     
     //Drop Temperature Label
     self.dropTemperature = [[UILabel alloc] initWithFrame:CGRectMake([UIHelper getScreenWidth] - 100, 10, 50, 30)];
@@ -242,6 +251,46 @@
                      
                      }];
      */
+}
+
+-(void)showProfile{
+    //[self.parentController stopAllVideo];
+    //UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
+    profileView = [[ProfileViewController alloc] init];
+    [profileView setViewMode:1];
+    [profileView setIsNotDeviceUser:YES];
+    [profileView setIsDeviceUser:NO];
+    [profileView setAnotherUser:self.drop.user];
+    
+
+    /*
+    [self insertSubview:profileView.view atIndex:0];
+    //[self addChildViewController:profileView];
+    CGRect frame = profileView.view.frame;
+    frame.origin.y = -[UIHelper getScreenHeight];
+    profileView.view.frame = frame;
+    [UIView animateWithDuration:0.5f
+                          delay:0.0f
+                        options: UIViewAnimationOptionCurveLinear
+                     animations:^{
+                         CGRect frame = profileView.view.frame;
+                         frame.origin.y = 0;
+                         profileView.view.frame = frame;
+                         CGRect frame2 = self.frame;
+                         frame2.origin.y = [UIHelper getScreenHeight];
+                         self.frame = frame2;
+                     }
+                     completion:^(BOOL finished){
+                         CGRect frame2 = self.frame;
+                         frame2.origin.y = 0;
+                         self.frame = frame2;
+                         [profileView.view removeFromSuperview];
+                         //[profileController layOutPeek];
+                         
+                     }];
+    */
+    
+    [[ApplicationHelper getMainNavigationController] pushViewController:profileView animated:YES];
 }
 
 -(void)mute{

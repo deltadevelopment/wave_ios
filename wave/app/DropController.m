@@ -31,6 +31,7 @@
 -(void)loadView{
     CGRect applicationFrame = [[UIScreen mainScreen] applicationFrame];
     DropView *contentView = [[DropView alloc] initWithFrame:applicationFrame];
+    [contentView setStoryBoard:self.storyboard];
     contentView.backgroundColor = [UIColor whiteColor];
     self.view = contentView;
 }

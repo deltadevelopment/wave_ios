@@ -21,6 +21,7 @@
 @property (nonatomic) bool isPlaceholderView;
 @property (nonatomic, strong) UIButton *playButton;
 @property (nonatomic, strong) UIImageView *redropView;
+@property (nonatomic, strong) UIStoryboard *storyBoard;
 -(void)setMedia:(NSObject *) media withIndexId:(int) indexId;
 -(void)dropWillHide;
 -(void)playVideo;

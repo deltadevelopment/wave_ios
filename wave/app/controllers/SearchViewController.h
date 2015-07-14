@@ -29,4 +29,5 @@
 @property (nonatomic) bool isSearching;
 @property (nonatomic, strong) BucketModel *currentBucket;
 @property (nonatomic, strong) ActivityViewController *discover;
+-(void)showSearch;
 @end

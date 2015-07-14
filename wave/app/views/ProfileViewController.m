@@ -10,6 +10,10 @@
 #import "AuthHelper.h"
 #import "PeekViewController.h"
 #import "SettingsTableViewController.h"
+#import "ConstraintHelper.h"
+#define IS_IPAD (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+#define IS_IPHONE (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+#define IS_RETINA ([[UIScreen mainScreen] scale] >= 2.0)
 @interface ProfileViewController ()
 
 @end
@@ -29,12 +33,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+   
+    NSLog(@"the scale is %f", [[UIScreen mainScreen] scale]);
     authHelper = [[AuthHelper alloc] init];
-  
-    
-    self.profileBackgroundImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, [UIHelper getScreenWidth], [UIHelper getScreenWidth])];
+    self.profileBackgroundImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, [UIHelper getScreenWidth], [UIHelper getScreenHeight])];
+    self.profileBackgroundImage.clipsToBounds = YES;
+    [self.profileBackgroundImage setContentMode:UIViewContentModeScaleAspectFill];
     [self.view addSubview:self.profileBackgroundImage];
-     [self addBlur];
+    [self addBlur];
     self.profilePicture = [[UIImageView alloc] initWithFrame:CGRectMake([UIHelper getScreenWidth]/2 - (100/2), 30, 100, 100)];
     self.profilePicture.image = [UIImage imageNamed:@"user-icon-gray.png"];
     self.profilePicture.layer.cornerRadius = 50;
@@ -71,7 +77,7 @@
     self.subscribeButton.clipsToBounds = YES;
     [self.subscribeButton addTarget:self action:@selector(subscribeAction) forControlEvents:UIControlEventTouchUpInside];
     self.subscribersCountLabel =[[UILabel alloc] initWithFrame:
-                                 CGRectMake([UIHelper getScreenWidth]/2 - (labelWidth/2), [UIHelper getScreenHeight] - 64 - 69, labelWidth, 30)];
+                                 CGRectMake([UIHelper getScreenWidth]/2 - (labelWidth/2), ([UIHelper getScreenHeight]/2) - 80, labelWidth, 30)];
     [UIHelper applyThinLayoutOnLabel:self.subscribersCountLabel withSize:17];
     //self.subscribersCountLabel.text = @"550 others already do";
     self.subscribersCountLabel.textAlignment = NSTextAlignmentCenter;
@@ -83,9 +89,14 @@
     [self.view addSubview:self.settingsButton];
     
     // [ConstraintHelper addConstraintsToButtonWithNoSize:parentView withButton:self.subscribeButton withPoint:CGPointMake(-86, 83) fromLeft:YES fromTop:NO];
-    [self AddSizeConstraintToButton:self.subscribeButton];
+    float yPosForButton = ([UIHelper getScreenHeight]/2) - 32 - 90;
+  //  [ConstraintHelper addConstraintsToButtonWithNoSize:self.view withButton:self.subscribeButton withPoint:CGPointMake(-86, 143.5 +yPosForButton) fromLeft:YES fromTop:NO];
     
-    self.profileBuckets = [self.storyboard instantiateViewControllerWithIdentifier:@"activity"];
+    [self AddSizeConstraintToButton:self.subscribeButton];
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
+    self.profileBuckets = [mainStoryboard instantiateViewControllerWithIdentifier:@"activity"];
+    
+    NSLog(@"profileBuckets");
     __weak typeof(self) weakSelf = self;
     self.profileBuckets.onTableViewDrag = ^(UIScrollView*(scrollView)){
         //NSLog(@"content offset %f ", scrollView.contentOffset.y);
@@ -94,10 +105,15 @@
             [scrollView setContentOffset:CGPointMake(0, 0)];
         }
     };
-
-    [self.profileBuckets setSuperButton:self.superButton];
     [self.profileBuckets setViewMode:1];
-    [self.profileBuckets setIsDeviceUser:YES];
+    [self.profileBuckets setSuperButton:self.superButton];
+    if (!self.isNotDeviceUser) {
+        [self.profileBuckets setIsDeviceUser:YES];
+    }
+    else{
+        [self.profileBuckets setAnotherUser:self.anotherUser];
+    }
+
     [self discovercallbacks];
     
     //Sets the tableview to start at the middle of the screen
@@ -108,7 +124,19 @@
     profileWrapperScrollView = [[UIView alloc] initWithFrame:CGRectMake(0, ([UIHelper getScreenHeight]/2) - 32, [UIHelper getScreenWidth], [UIHelper getScreenHeight])];
     [profileWrapperScrollView setUserInteractionEnabled:YES];
     [profileWrapperScrollView addSubview:self.profileBuckets.view];
+    [profileWrapperScrollView setBackgroundColor:[UIColor clearColor]];
     [self.view addSubview:profileWrapperScrollView];
+    
+    /*
+    self.profileBuckets.view.layer.masksToBounds = NO;
+   // self.profileBuckets.view.layer.cornerRadius = 8;
+    self.profileBuckets.view.layer.shadowOffset = CGSizeMake(0, -5);
+    self.profileBuckets.view.layer.shadowRadius = 5;
+    self.profileBuckets.view.layer.shadowOpacity = 0.5;
+    self.profileBuckets.view.layer.shadowPath = [UIBezierPath bezierPathWithRect:self.profileBuckets.view.bounds].CGPath;
+    
+    */
+ 
     
     //Drag gesture for profile and table view feed
     UIPanGestureRecognizer *profileDragGesture = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(dragProfileVertical:)];
@@ -120,9 +148,13 @@
             [self updateText:user];
         } onError:^(NSError *error){}];
     }else{
-        [self updateText:[self.profileBuckets anotherUser]];
+        [self updateText:[self anotherUser]];
     }
+     [self checkScreen];
     
+    
+   [self.profileBuckets.view setBackgroundColor:[UIColor clearColor]];
+    self.profileBuckets.refreshControl.backgroundColor = [UIColor clearColor];
 }
 -(void)addBlur{
     UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
@@ -479,6 +511,32 @@
         [vc.navigationBar setBarTintColor:[ColorHelper purpleColor]];
         //[[ApplicationHelper getMainNavigationController] pushViewController:vc animated:YES];
         [[ApplicationHelper getMainNavigationController] presentViewController:vc animated:YES completion:nil];
+    }
+}
+
+
+-(void)checkScreen{
+    CGSize screenSize = [[UIScreen mainScreen] bounds].size;
+    
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+        NSLog(@"screensize is %f", screenSize.height);
+        if (screenSize.height > 667.0f) {
+            //iphone 6 plus
+        }
+        else if (screenSize.height > 568.0f) {
+            //iphone 6
+        }
+        else if (screenSize.height > 480.0f) {
+            /*iPhone 5 stuff here.*/
+            float labelWidth = [UIHelper getScreenWidth] - 40;
+            self.profilePicture.frame = CGRectMake([UIHelper getScreenWidth]/2 - (80/2), 30, 80, 80);
+            self.usernameLabel.frame = CGRectMake([UIHelper getScreenWidth]/2 - (labelWidth/2), 120, labelWidth, 30);
+            self.profilePicture.layer.cornerRadius = 40;
+        } else {
+            /*iPhone Classic stuff here.*/
+        }
+    } else {
+        /*Do iPad stuff here.*/
     }
 }
 

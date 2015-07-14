@@ -20,6 +20,7 @@
 @property (strong, nonatomic) UIPageViewController *pageViewController;
 @property (strong, nonatomic)  Carousel *carousel;
 -(void)removeBucketAsRoot;
+@property (nonatomic) int indexValueToReturnTo;
 -(void)setScrollEnabled:(BOOL)enabled forPageViewController:(UIPageViewController*)pageViewController;
 
 @end

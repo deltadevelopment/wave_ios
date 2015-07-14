@@ -18,6 +18,7 @@
 @property (nonatomic, copy) void (^onNetworkErrorHide)(void);
 @property (nonatomic, copy) void (^onTableViewDrag)(UIScrollView*(view));
 @property (nonatomic, copy) void (^onLockScreenToggle)(void);
+@property (nonatomic, copy) void (^onSearchedCanceled)(void);
 @property (nonatomic, strong) SuperButton* superButton;
 @property (nonatomic) bool isDeviceUser;
 @property (nonatomic, strong) UserModel *anotherUser;

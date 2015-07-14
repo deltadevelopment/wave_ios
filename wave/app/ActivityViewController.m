@@ -55,7 +55,7 @@ const int EXPAND_SIZE = 400;
     } onError:^(NSError *error){}];
     [CacheHelper cleanUpCashMap];
     [CacheHelper printCashMap];
-    
+    NSLog(@"DID LOAD HERE NWO");
     storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;

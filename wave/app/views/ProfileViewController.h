@@ -21,4 +21,5 @@
 @property (strong, nonatomic) SubscribeModel *subscribeModel;
 @property (strong, nonatomic) UserModel *user;
 @property (strong, nonatomic) UIImageView *profileBackgroundImage;
+@property (nonatomic) BOOL isNotDeviceUser;
 @end
