@@ -146,7 +146,7 @@ const int PEEK_Y_START = 300;
     [self getProgressIndicator].hidden = NO;
     [self.view addSubview:[self getProgressIndicator]];
   
-    
+    [self addBackButton];
 }
 
 
@@ -664,9 +664,31 @@ const int PEEK_Y_START = 300;
     //MER HER
 }
 
+-(void)addBackButton{
+    UIImage* image = [UIHelper iconImage:[UIImage imageNamed:@"arrow-back-icon2.png"]];
+    CGRect frame = CGRectMake(0, 0, 26, 26);
+    UIButton* someButton = [[UIButton alloc] initWithFrame:frame];
+   // [someButton setBackgroundColor:[UIColor redColor]];
+    [someButton setBackgroundImage:image forState:UIControlStateNormal];
+    [someButton addTarget:self action:@selector(navigateBack) forControlEvents:UIControlEventTouchUpInside];
+    [someButton setShowsTouchWhenHighlighted:YES];
+    
+    
+    
+    UIBarButtonItem *back = [[UIBarButtonItem alloc] initWithCustomView:someButton];
+    UIBarButtonItem *negativeSpacer = [[UIBarButtonItem alloc]
+                                       initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
+                                       target:nil action:nil];
+    negativeSpacer.width = -6;// it was -6 in iOS 6
+    [self.navigationItem setLeftBarButtonItems:[NSArray arrayWithObjects:negativeSpacer, back/*this will be the button which u actually need*/, nil] animated:NO];
+}
+
+-(void)navigateBack{
+    [self despandBucket:nil];
+}
+
 
 -(void)animateElementsIn{
-    
     [UIView animateWithDuration:0.3f
                           delay:0.0f
                         options: UIViewAnimationOptionCurveLinear

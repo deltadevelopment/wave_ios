@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C5022E2B1B5531D300A3456B /* arrow-back-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = C5022E2A1B5531D300A3456B /* arrow-back-icon.png */; };
+		C5022E2D1B55340100A3456B /* arrow-back-icon2.png in Resources */ = {isa = PBXBuildFile; fileRef = C5022E2C1B55340100A3456B /* arrow-back-icon2.png */; };
 		C51B21651B4D75D20013E6AE /* ServerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C51B21641B4D75D20013E6AE /* ServerCell.m */; };
 		C51B21681B53ED5D0013E6AE /* VoteInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = C51B21671B53ED5D0013E6AE /* VoteInfoView.m */; };
 		C52AAFD61B3058A0004332DD /* RipplesFeed.m in Sources */ = {isa = PBXBuildFile; fileRef = C52AAFD51B3058A0004332DD /* RipplesFeed.m */; };
@@ -182,6 +184,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		C5022E2A1B5531D300A3456B /* arrow-back-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow-back-icon.png"; sourceTree = "<group>"; };
+		C5022E2C1B55340100A3456B /* arrow-back-icon2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow-back-icon2.png"; sourceTree = "<group>"; };
 		C51B21631B4D75D20013E6AE /* ServerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerCell.h; sourceTree = "<group>"; };
 		C51B21641B4D75D20013E6AE /* ServerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerCell.m; sourceTree = "<group>"; };
 		C51B21661B53ED5D0013E6AE /* VoteInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VoteInfoView.h; sourceTree = "<group>"; };
@@ -655,6 +659,7 @@
 				C5A27BA21ADE779500968033 /* events-icon.png */,
 				C5D473651AE56B540097E44F /* settings-icon.png */,
 				C5D4737F1AE795890097E44F /* bucket-white.png */,
+				C5022E2A1B5531D300A3456B /* arrow-back-icon.png */,
 				C5A27BAB1ADEB5F100968033 /* menu.png */,
 				C55E75B91B3ED146002C1542 /* app-test-icon.png */,
 				C5A27BA31ADE779500968033 /* profile-icon.png */,
@@ -665,6 +670,7 @@
 				C5D473751AE699DE0097E44F /* the-bar.png */,
 				C5D473811AE7992E0097E44F /* people-icon.png */,
 				C5D473831AE799610097E44F /* people-icon-white.png */,
+				C5022E2C1B55340100A3456B /* arrow-back-icon2.png */,
 				C5D4737D1AE6C6890097E44F /* slider-cross.png */,
 				C5A27B981ADE52CC00968033 /* miranda-kerr.jpg */,
 				C5576B4F1ADBE0DB009C1D5E /* wz-monkey-bg.jpg */,
@@ -1069,9 +1075,11 @@
 				F1DBB56E1B12B6930097F709 /* dots-icon.png in Resources */,
 				C5D473781AE69D500097E44F /* the-bar-x-v2.png in Resources */,
 				C5FF1E591B05EB870081BEDD /* search-icon-white.png in Resources */,
+				C5022E2D1B55340100A3456B /* arrow-back-icon2.png in Resources */,
 				C567A1DF1B39AE2300C47237 /* user-icon-gray.png in Resources */,
 				C55E75B81B3E91C5002C1542 /* start-logo.png in Resources */,
 				F1E127BF1B0023C0000E3F2C /* media-pause.png in Resources */,
+				C5022E2B1B5531D300A3456B /* arrow-back-icon.png in Resources */,
 				C55E75AA1B3C0321002C1542 /* dots-hor-icon.png in Resources */,
 				C5C2F4941B2F24F000AF8666 /* pause-icon.png in Resources */,
 				C5D473B01AFB67D80097E44F /* tick.png in Resources */,
