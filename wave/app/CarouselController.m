@@ -34,7 +34,7 @@
     
     NSArray  *storyboardIds = @[@"activity",
                                 @"searchController",
-                                @"activity"];
+                                @"profileView"];
     self.carouselObjects = [[NSMutableArray alloc] initWithArray:storyboardIds];
     [self addView:0];
     [self addView:1];

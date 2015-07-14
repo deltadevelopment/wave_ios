@@ -71,8 +71,9 @@ const int EXPAND_SIZE = 400;
     [self startRefreshing];
     
     self.tableView.backgroundColor = [UIColor clearColor];
+    [self.tableView setScrollEnabled:YES];
     if(viewMode == 1){
-        [self addPeekView];
+       // [self addPeekView];
         //[self.superButton getButton].hidden = YES;
     }
     [self addEmptyInfoText];
@@ -170,22 +171,22 @@ const int EXPAND_SIZE = 400;
 
 -(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
     if(viewMode == 1){
-        [peekViewModule fadeIn];
+       // [peekViewModule fadeIn];
     }
 }
 
 -(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate{
     if(!decelerate){
         if(viewMode == 1){
-            [peekViewModule fadeIn];
+            //[peekViewModule fadeIn];
         }
     }
 }
 
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView{
     if (viewMode == 1) {
-       // self.onTableViewDrag(scrollView);
-        NSLog(@"scrolling %f", scrollView.contentOffset.y);
+        self.onTableViewDrag(scrollView);
+       // NSLog(@"scrolling %f", scrollView.contentOffset.y);
 
     }
     //NSLog(@"scrolling");
@@ -240,8 +241,6 @@ const int EXPAND_SIZE = 400;
     }
 }
 
-
-
 -(void)stopRefreshing{
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"MMM d, h:mm a"];
@@ -263,13 +262,13 @@ const int EXPAND_SIZE = 400;
     cameraHolder.hidden = YES;
     [self.view insertSubview:self.tableView belowSubview:cameraHolder];
     if(viewMode == 1){
-        
+        /*
         if(!self.shouldHidePeek){
             [peekViewModule layoutElementsWithSubview:cameraHolder];
         }else{
             [peekViewModule layoutBackgroundWithSubview:cameraHolder];
         }
-        
+         */
         
     }
 

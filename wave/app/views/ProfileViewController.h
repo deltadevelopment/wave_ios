@@ -8,7 +8,7 @@
 
 #import "ActivityViewController.h"
 
-@interface ProfileViewController : AbstractFeedViewController<UIGestureRecognizerDelegate>
+@interface ProfileViewController : AbstractFeedViewController<UIGestureRecognizerDelegate, UIScrollViewDelegate>
 @property (nonatomic, strong) ActivityViewController *profileBuckets;
 @property (nonatomic, assign) CGFloat lastContentOffset;
 @end
