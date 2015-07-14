@@ -72,6 +72,8 @@ const int EXPAND_SIZE = 400;
     
     self.tableView.backgroundColor = [UIColor clearColor];
     [self.tableView setScrollEnabled:YES];
+    [self.tableView setShowsHorizontalScrollIndicator:NO];
+    [self.tableView setShowsVerticalScrollIndicator:NO];
     if(viewMode == 1){
        // [self addPeekView];
         //[self.superButton getButton].hidden = YES;

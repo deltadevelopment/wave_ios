@@ -7,8 +7,18 @@
 //
 
 #import "ActivityViewController.h"
-
+#import "SubscribeModel.h"
 @interface ProfileViewController : AbstractFeedViewController<UIGestureRecognizerDelegate, UIScrollViewDelegate>
 @property (nonatomic, strong) ActivityViewController *profileBuckets;
 @property (nonatomic, assign) CGFloat lastContentOffset;
+@property (nonatomic) BOOL canDragTable;
+
+@property (nonatomic, strong) UIImageView *profilePicture;
+@property (nonatomic, strong) UILabel *usernameLabel;
+@property (nonatomic, strong) UIButton *subscribeButton;
+@property (nonatomic, strong) UIButton *settingsButton;
+@property (nonatomic, strong) UILabel *subscribersCountLabel;
+@property (strong, nonatomic) SubscribeModel *subscribeModel;
+@property (strong, nonatomic) UserModel *user;
+@property (strong, nonatomic) UIImageView *profileBackgroundImage;
 @end

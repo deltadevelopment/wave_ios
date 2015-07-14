@@ -119,6 +119,7 @@ AuthHelper *authHelper;
     }
 }
 
+
 -(void)removeInsetsFromButton{
     [self.subscribeButton setImage: nil forState:UIControlStateNormal];
     [self.subscribeButton setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 0)];

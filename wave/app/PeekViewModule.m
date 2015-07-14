@@ -43,10 +43,10 @@
     [UIHelper applyThinLayoutOnLabel:self.usernameLabel withSize:20];
     self.usernameLabel.text = @"simenlie";
     self.usernameLabel.textAlignment = NSTextAlignmentCenter;
-   
+    
     self.subscribeButton = [UIButton buttonWithType:UIButtonTypeSystem];
     //[self.subscribeButton setBackgroundColor:[UIColor redColor]];
-   self.subscribeButton.frame = CGRectMake([UIHelper getScreenWidth]/2 - (170/2), [UIHelper getScreenHeight] - 64 - 123, 170, 40);
+    self.subscribeButton.frame = CGRectMake([UIHelper getScreenWidth]/2 - (170/2), [UIHelper getScreenHeight] - 64 - 123, 170, 40);
     [UIHelper applyThinLayoutOnButton:self.subscribeButton];
     self.settingsButton = [UIButton buttonWithType:UIButtonTypeCustom];
     self.settingsButton.frame = CGRectMake([UIHelper getScreenWidth] - 50, 10, 40, 40);
@@ -58,23 +58,18 @@
     [[self.subscribeButton layer] setBorderColor:[UIColor whiteColor].CGColor];
     //[self.subscribeButton.titleLabel setTextAlignment:NSTextAlignmentCenter];
     [self.subscribeButton setTitleEdgeInsets:UIEdgeInsetsMake(10, 10, 10, 10)];
-  [self.subscribeButton setContentVerticalAlignment:UIControlContentVerticalAlignmentCenter];
+    [self.subscribeButton setContentVerticalAlignment:UIControlContentVerticalAlignmentCenter];
     [self.subscribeButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentCenter];
-   // [self.subscribeButton setTitle:@"Subscribe" forState:UIControlStateNormal];
+    // [self.subscribeButton setTitle:@"Subscribe" forState:UIControlStateNormal];
     [self.subscribeButton setTitle:NSLocalizedString(@"subscribe_txt", nil) forState:UIControlStateNormal];
     self.subscribeButton.layer.cornerRadius = 10;
     self.subscribeButton.clipsToBounds = YES;
     [self.subscribeButton addTarget:self action:@selector(subscribeAction) forControlEvents:UIControlEventTouchUpInside];
-    
-
-    
-    
     self.subscribersCountLabel =[[UILabel alloc] initWithFrame:
                                  CGRectMake([UIHelper getScreenWidth]/2 - (labelWidth/2), [UIHelper getScreenHeight] - 64 - 69, labelWidth, 30)];
     [UIHelper applyThinLayoutOnLabel:self.subscribersCountLabel withSize:17];
     //self.subscribersCountLabel.text = @"550 others already do";
     self.subscribersCountLabel.textAlignment = NSTextAlignmentCenter;
-    
     
     return self;
 }

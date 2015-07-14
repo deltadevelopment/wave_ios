@@ -9,6 +9,7 @@
 #import "ProfileViewController.h"
 #import "AuthHelper.h"
 #import "PeekViewController.h"
+#import "SettingsTableViewController.h"
 @interface ProfileViewController ()
 
 @end
@@ -17,128 +18,178 @@
     AuthHelper *authHelper;
     PeekViewController *peekViewController;
     ActivityViewController *activityController;
-    float yPos;
-    BOOL scrollDirection;
-    UIScrollView *scrollView;
-    int maxTop;
-    int maxBottom;
-    UIView *viewe;
-    BOOL canDragTable;
+    UIView *profileWrapperScrollView;
+    UIActivityIndicatorView *activityIndicator;
+    bool isDeviceUser;
+    bool isSubscriber;
+    BOOL upWard;
+    float scrollY;
+    UIVisualEffectView *blurEffectView;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(50, 50, 100, 100)];
-    [label setText:@"hey"];
-    [label setTextColor:[UIColor redColor]];
-    [self.view addSubview:label];
+    authHelper = [[AuthHelper alloc] init];
+  
+    
+    self.profileBackgroundImage = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, [UIHelper getScreenWidth], [UIHelper getScreenWidth])];
+    [self.view addSubview:self.profileBackgroundImage];
+     [self addBlur];
+    self.profilePicture = [[UIImageView alloc] initWithFrame:CGRectMake([UIHelper getScreenWidth]/2 - (100/2), 30, 100, 100)];
+    self.profilePicture.image = [UIImage imageNamed:@"user-icon-gray.png"];
+    self.profilePicture.layer.cornerRadius = 50;
+    self.profilePicture.clipsToBounds = YES;
+    self.profilePicture.contentMode = UIViewContentModeScaleAspectFill;
+    [self.view setUserInteractionEnabled:YES];
+    [self.view setBackgroundColor:[ColorHelper purpleColor]];
+    
+    float labelWidth = [UIHelper getScreenWidth] - 40;
+    self.usernameLabel =[[UILabel alloc] initWithFrame:CGRectMake([UIHelper getScreenWidth]/2 - (labelWidth/2), 146, labelWidth, 30)];
+    [UIHelper applyThinLayoutOnLabel:self.usernameLabel withSize:20];
+    self.usernameLabel.text = @"simenlie";
+    self.usernameLabel.textAlignment = NSTextAlignmentCenter;
+    
+    self.subscribeButton = [UIButton buttonWithType:UIButtonTypeSystem];
+    //[self.subscribeButton setBackgroundColor:[UIColor redColor]];
+    self.subscribeButton.frame = CGRectMake([UIHelper getScreenWidth]/2 - (170/2), ([UIHelper getScreenHeight]/2) - 32 - 90, 170, 40);
+    [UIHelper applyThinLayoutOnButton:self.subscribeButton];
+    self.settingsButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.settingsButton.frame = CGRectMake([UIHelper getScreenWidth] - 50, 10, 40, 40);
+    [self.settingsButton setImageEdgeInsets:UIEdgeInsetsMake(10, 10, 10, 10)];
+    [self.settingsButton addTarget:self action:@selector(showSettings) forControlEvents:UIControlEventTouchUpInside];
+    [self.settingsButton setImage:[UIImage imageNamed:@"settings-icon-white.png"] forState:UIControlStateNormal];
+    [self.settingsButton showsTouchWhenHighlighted];
+    [[self.subscribeButton layer] setBorderWidth:1.0f];
+    [[self.subscribeButton layer] setBorderColor:[UIColor whiteColor].CGColor];
+    //[self.subscribeButton.titleLabel setTextAlignment:NSTextAlignmentCenter];
+    [self.subscribeButton setTitleEdgeInsets:UIEdgeInsetsMake(10, 10, 10, 10)];
+    [self.subscribeButton setContentVerticalAlignment:UIControlContentVerticalAlignmentCenter];
+    [self.subscribeButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentCenter];
+    // [self.subscribeButton setTitle:@"Subscribe" forState:UIControlStateNormal];
+    [self.subscribeButton setTitle:NSLocalizedString(@"subscribe_txt", nil) forState:UIControlStateNormal];
+    self.subscribeButton.layer.cornerRadius = 10;
+    self.subscribeButton.clipsToBounds = YES;
+    [self.subscribeButton addTarget:self action:@selector(subscribeAction) forControlEvents:UIControlEventTouchUpInside];
+    self.subscribersCountLabel =[[UILabel alloc] initWithFrame:
+                                 CGRectMake([UIHelper getScreenWidth]/2 - (labelWidth/2), [UIHelper getScreenHeight] - 64 - 69, labelWidth, 30)];
+    [UIHelper applyThinLayoutOnLabel:self.subscribersCountLabel withSize:17];
+    //self.subscribersCountLabel.text = @"550 others already do";
+    self.subscribersCountLabel.textAlignment = NSTextAlignmentCenter;
+    
+    [self.view addSubview:self.profilePicture];
+    [self.view addSubview:self.usernameLabel];
+    [self.view addSubview:self.subscribeButton];
+    [self.view addSubview:self.subscribersCountLabel];
+    [self.view addSubview:self.settingsButton];
+    
+    // [ConstraintHelper addConstraintsToButtonWithNoSize:parentView withButton:self.subscribeButton withPoint:CGPointMake(-86, 83) fromLeft:YES fromTop:NO];
+    [self AddSizeConstraintToButton:self.subscribeButton];
+    
     self.profileBuckets = [self.storyboard instantiateViewControllerWithIdentifier:@"activity"];
     __weak typeof(self) weakSelf = self;
-    self.profileBuckets.onTableViewDrag = ^(UIScrollView*(scrollView2)){
-       // NSLog(@"scrollview %f", scrollView2.contentOffset.y);
-        if (!canDragTable) {
-            [scrollView2 setContentOffset:CGPointMake(0, 0)];
+    self.profileBuckets.onTableViewDrag = ^(UIScrollView*(scrollView)){
+        //NSLog(@"content offset %f ", scrollView.contentOffset.y);
+        scrollY = scrollView.contentOffset.y;
+        if (!weakSelf.canDragTable) {
+            [scrollView setContentOffset:CGPointMake(0, 0)];
         }
-       
-        
-        /*
-        if (scrollView2.contentOffset.y < 0) {
-            if (scrollView.contentOffset.y > 0) {
-                [scrollView setScrollEnabled:YES];
-            }
-        }else{
-            
-        }
-         */
-        //NSLog(@"%f", scrollView.contentOffset.y);
-        //[weakSelf trans:scrollView];
-        /*
-        NSLog(@"%f %f %f", scrollView.frame.origin.y, scrollView.frame.size.height, scrollView.contentOffset.y);
-        
-        static CGFloat previousOffset;
-        CGRect frame = weakSelf.profileBuckets.view.frame;
-        float decrementValue = previousOffset - scrollView.contentOffset.y;
-        frame.origin.y -= -decrementValue;
-        NSLog(@"DECREMENT value %f", decrementValue);
-        previousOffset = scrollView.contentOffset.y;
-        // [self.profileBuckets.tableView ]
-        // self.view.frame = rect;
-        
-        //frame.origin.y = frame.origin.y - number;
-        weakSelf.profileBuckets.view.frame = frame;
-        */
-        
     };
 
     [self.profileBuckets setSuperButton:self.superButton];
     [self.profileBuckets setViewMode:1];
     [self.profileBuckets setIsDeviceUser:YES];
     [self discovercallbacks];
+    
+    //Sets the tableview to start at the middle of the screen
     CGRect frame = self.profileBuckets.view.frame;
-    frame.origin.y = ([UIHelper getScreenHeight]/2) - 32;
-    
+    frame.size.height -= 64;
     self.profileBuckets.view.frame = frame;
-    yPos = self.profileBuckets.view.frame.origin.y;
-   // [self.profileBuckets.tableView setScrollEnabled:NO];
-    //[self.view addSubview:self.profileBuckets.view];
- //   [self.profileBuckets.tableView setScrollEnabled:NO];
-    
-    //[self.profileBuckets.view addGestureRecognizer:peekDragGesture];
-    
-    // self.tableView = [[UITableView alloc] initWithFrame:CGRECtma]
-    // Do any additional setup after loading the view.
- /*
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
-    peekViewController = (PeekViewController *)[storyboard instantiateViewControllerWithIdentifier:@"peekView"];
-    activityController = [self.storyboard instantiateViewControllerWithIdentifier:@"activity"];
-    [activityController setViewMode:1];
-    [activityController setIsDeviceUser:YES];
-    peekViewController.view.frame = CGRectMake(0, 0, [UIHelper getScreenWidth], [UIHelper getScreenHeight]);
 
-    [peekViewController setActivityViewController:activityController]
-        [peekViewController addBackgroundView];
-    //[self.view addSubview:peekViewController.view];
-    //[self.view insertSubview:peekViewController.view aboveSubview:blurEffectView];
-    // peekViewController.view.backgroundColor = [UIColor clearColor];
-    //[peekViewController updatePeekView:[bucket user]];
+    profileWrapperScrollView = [[UIView alloc] initWithFrame:CGRectMake(0, ([UIHelper getScreenHeight]/2) - 32, [UIHelper getScreenWidth], [UIHelper getScreenHeight])];
+    [profileWrapperScrollView setUserInteractionEnabled:YES];
+    [profileWrapperScrollView addSubview:self.profileBuckets.view];
+    [self.view addSubview:profileWrapperScrollView];
     
+    //Drag gesture for profile and table view feed
+    UIPanGestureRecognizer *profileDragGesture = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(dragProfileVertical:)];
+    profileDragGesture.delegate = self;
+    [profileWrapperScrollView addGestureRecognizer:profileDragGesture];
     
-    //contentView.backgroundColor = [UIColor whiteColor];
-    [self.view addSubview:peekViewController.view];
-  */
-    /*
-     UIView *view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [UIHelper getScreenWidth], 200)];
-    [view setBackgroundColor:[UIColor redColor]];
-    //[self.profileBuckets.tableView setBackgroundView:view];
+    if(self.isDeviceUser){
+       UserModel *userModel =[[UserModel alloc] initWithDeviceUser:^(UserModel *user){
+            [self updateText:user];
+        } onError:^(NSError *error){}];
+    }else{
+        [self updateText:[self.profileBuckets anotherUser]];
+    }
     
-    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, [UIHelper getScreenWidth], [UIHelper getScreenHeight])];
-    scrollView.contentSize = CGSizeMake(self.view.frame.size.width, self.view.frame.size.height + ([UIHelper getScreenHeight]/2) - 32);
-    scrollView.bounces = NO;
-    [self.view addSubview:scrollView];
-    [scrollView addSubview:view];
-    [scrollView addSubview:self.profileBuckets.view];
-     */
-    
-    [self.view addSubview:self.profileBuckets.view];
-    
-    scrollView = [[UIScrollView alloc] initWithFrame:CGRectMake(0, 0, [UIHelper getScreenWidth], [UIHelper getScreenHeight])];
-    [scrollView setContentSize:CGSizeMake([UIHelper getScreenWidth], [UIHelper getScreenHeight] + ([UIHelper getScreenHeight]/2) - 32)];
-    //[scrollView addSubview:self.profileBuckets.view];
-    [scrollView setShowsHorizontalScrollIndicator:NO];
-    [scrollView setShowsVerticalScrollIndicator:NO];
-    [scrollView setBounces:NO];
-    scrollView.delegate = self;
-   
-    
-    //[self.view addSubview:scrollView];
+}
+-(void)addBlur{
+    UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+    blurEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+    blurEffectView.frame = CGRectMake(0, 0, [UIHelper getScreenWidth], [UIHelper getScreenHeight]);
+    //blurEffectView.alpha = 0.9;
+    blurEffectView.alpha = 1.0;
+    [self.view addSubview:blurEffectView];
+    //add auto layout constraints so that the blur fills the screen upon rotating device
+    [blurEffectView setTranslatesAutoresizingMaskIntoConstraints:NO];
+}
 
-    viewe = [[UIView alloc] initWithFrame:CGRectMake(0, 0, [UIHelper getScreenWidth], [UIHelper getScreenHeight] + ([UIHelper getScreenHeight]/2) - 32)];
-    [viewe addSubview:self.profileBuckets.view];
-    [self.view addSubview:viewe];
-    UIPanGestureRecognizer *peekDragGesture = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(peekViewVerticalMove:)];
-    peekDragGesture.delegate = self;
+-(void)updateText:(UserModel *) user
+{
+    self.user = user;
+    [self.user requestProfilePic:^(NSData *data){
+        [self.profilePicture setImage:[UIImage imageWithData:data]];
+        [self.profileBackgroundImage setImage:[UIImage imageWithData:data]];
+        
+    }];
+    if(user.Id == [[authHelper getUserId] intValue]){
+        isDeviceUser = YES;
+        //self.subscribeButton.hidden = YES;
+        self.settingsButton.hidden = NO;
+        
+        [self.subscribeButton setTitle:NSLocalizedString(@"subscriptions_button_txt", nil) forState:UIControlStateNormal];
+        
+        //[self.subscribeButton setBackgroundColor:[ColorHelper purpleColor]];
+        [[self.subscribeButton layer] setBorderColor:[ColorHelper magenta].CGColor];
+    }else{
+        self.subscribeButton.hidden = NO;
+        self.settingsButton.hidden = YES;
+        isDeviceUser = NO;
+    }
+    if(user.Id == [[authHelper getUserId] intValue]){
+        self.subscribersCountLabel.text = [NSString stringWithFormat:@"%d %@", user.subscribers_count, NSLocalizedString(@"subscriptions_profile_txt", nil)];
+        
+    }else{
+        self.subscribersCountLabel.text = [NSString stringWithFormat:@"%d %@", user.subscribers_count, NSLocalizedString(@"subscriptions_txt", nil)];
+        
+    }
+    self.usernameLabel.text = user.usernameFormatted;
+    [self checkSubscription];
     
-    [viewe addGestureRecognizer:peekDragGesture];
+    
+}
+
+-(void)showSettings{
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
+    SettingsTableViewController *vc = [mainStoryboard instantiateViewControllerWithIdentifier:@"settings"];
+    //[superController.navigationController presentViewController:vc animated:YES completion:nil];
+    //[superController.navigationController pushViewController:vc animated:YES];
+    
+    [[ApplicationHelper getMainNavigationController] pushViewController:vc animated:YES];
+    // [self.view.window.rootViewController presentViewController:viewController animated:YES completion:nil];
+    
+}
+
+-(void)AddSizeConstraintToButton:(UIButton *) button{
+    [button addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"H:[button(==170)]"
+                                                                   options:0
+                                                                   metrics:nil
+                                                                     views:NSDictionaryOfVariableBindings(button)]];
+    [button addConstraints:[NSLayoutConstraint constraintsWithVisualFormat:@"V:[button(==40)]"
+                                                                   options:0
+                                                                   metrics:nil
+                                                                     views:NSDictionaryOfVariableBindings(button)]];
     
 }
 
@@ -146,101 +197,83 @@
     return YES;
 }
 
-- (void)peekViewVerticalMove:(UIPanGestureRecognizer *)gesture
+- (void)dragProfileVertical:(UIPanGestureRecognizer *)gesture
 {
     UILabel *label = (UILabel *)gesture.view;
     CGPoint translation = [gesture translationInView:label];
-    CGRect frame = viewe.frame;
+    CGRect frame = profileWrapperScrollView.frame;
     
     if(gesture.state == UIGestureRecognizerStateBegan){
         
     }
-    
     if (translation.y > 0) {
-        //drar nedover
-        NSLog(@"drar nedover %f", viewe.frame.origin.y);
-        if (viewe.frame.origin.y < 0) {
-            viewe.frame = CGRectMake(0, viewe.frame.origin.y + translation.y, [UIHelper getScreenWidth], viewe.frame.size.height);
-             canDragTable = NO;
+        //dragging downwards
+        //upWard = NO;
+        NSLog(@"frame %f", frame.origin.y);
+        if (frame.origin.y < ([UIHelper getScreenHeight]/2) - 32) {
+           // NSLog(@"%f", frame.origin.y);
+            
+            if (scrollY > 0){
+                
+            }else{
+                frame = CGRectMake(0, frame.origin.y + translation.y, [UIHelper getScreenWidth], frame.size.height);
+                self.canDragTable = NO;
+            }
+            
         }else{
-            viewe.frame = CGRectMake(0, 0, [UIHelper getScreenWidth], viewe.frame.size.height);
-             canDragTable = YES;
+            frame = CGRectMake(0, ([UIHelper getScreenHeight]/2) - 32, [UIHelper getScreenWidth], frame.size.height);
+            self.canDragTable = YES;
         }
         
     }else if (translation.y < 0){
-        //drar oppover
-        NSLog(@"drar oppover");
-        if (viewe.frame.origin.y > -302) {
-            viewe.frame = CGRectMake(0, viewe.frame.origin.y + translation.y, [UIHelper getScreenWidth], viewe.frame.size.height);
-             canDragTable = NO;
-        }else{
-            viewe.frame = CGRectMake(0, -302, [UIHelper getScreenWidth], viewe.frame.size.height);
-            canDragTable = YES;
-        }
-       
+        //dragging upwards
         
+        NSLog(@"frame %f", frame.origin.y);
+        if (frame.origin.y > 0) {
+            if (scrollY < 0) {
+                NSLog(@"less than zero");
+            }else{
+                frame = CGRectMake(0, frame.origin.y + translation.y, [UIHelper getScreenWidth], frame.size.height);
+                self.canDragTable = NO;
+            }
+        }else{
+            frame = CGRectMake(0, 0, [UIHelper getScreenWidth], frame.size.height);
+            self.canDragTable = YES;
+        }
     }
     else if (translation.y == 0){
         
     }
     
-    /*
-    float val = 0 - translation.y;
-    NSLog(@"frame %f val %f", frame.origin.y, val);
-    if (frame.origin.y < 0 - translation.y) {
-        if (translation.y == 0) {
-            
-        }else if(frame.origin.y <= -300.0f - translation.y){
-            NSLog(@"1");
-            canDragTable = YES;
-        }else{
-            NSLog(@"2");
-            
-            viewe.frame = CGRectMake(0, viewe.frame.origin.y + translation.y, [UIHelper getScreenWidth], viewe.frame.size.height);
-            canDragTable = NO;
-        }
-    }else{
-         NSLog(@"3");
-        canDragTable = YES;
-    }*/
     if(gesture.state == UIGestureRecognizerStateEnded || gesture.state == UIGestureRecognizerStateFailed || gesture.state == UIGestureRecognizerStateCancelled)
     {
         
     }
+    
+    profileWrapperScrollView.frame = frame;
     [gesture setTranslation:CGPointZero inView:label];
 }
 
--(void)scrollViewDidScroll:(UIScrollView *)scrollView{
-    if (scrollView.contentOffset.y == 0.0f) {
-       // [scrollView setScrollEnabled:NO];
-    }
-    if (scrollView.contentOffset.y == 301.5f) {
-        [scrollView setScrollEnabled:NO];
-    }
-   // NSLog(@"croll %f", scrollView.contentOffset.y);
-}
--(void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset{
-    //NSLog(@"did end");
-}
-
-
--(void)trans:(UIScrollView *) scrollView{
-    float offset = scrollView.contentOffset.y;
-    if (offset > 0) {
-        static CGFloat previousOffset;
-        CGRect frame = self.profileBuckets.view.frame;
-        float decrementValue = previousOffset - scrollView.contentOffset.y;
-        //NSLog(@"decrementvalue %f", decrementValue);
-        frame.origin.y -= -decrementValue;
-        previousOffset = scrollView.contentOffset.y;
-        self.profileBuckets.view.frame = frame;
-    }
+-(void)animateWrapperToZero:(BucketModel *) bucket{
+    [UIView animateWithDuration:0.2f
+                          delay:0.0f
+                        options: UIViewAnimationOptionCurveLinear
+                     animations:^{
+                         CGRect frame =  profileWrapperScrollView.frame;
+                         frame.origin.y = 0;
+                         profileWrapperScrollView.frame = frame;
+                         [self.view layoutIfNeeded];
+                     }
+                     completion:^(BOOL finished){
+                         [self changeToBucket:bucket];
+                     }];
 }
 
 -(void)discovercallbacks{
     __weak typeof(self) weakSelf = self;
     self.profileBuckets.onExpand=^(BucketModel*(bucket)){
-       // [weakSelf changeToBucket:bucket];
+        [weakSelf animateWrapperToZero:bucket];
+      //  [weakSelf changeToBucket:bucket];
     };
     /*
      self.discover.onLockScreenToggle = ^{
@@ -261,6 +294,32 @@
      [weakSelf hideError];
      };
      */
+}
+
+-(void)changeToBucket:(BucketModel *) bucket{
+    //Same as onExpand in activity
+    BucketController *bucketController = [[BucketController alloc] init];
+    
+    [bucketController setBucket:bucket];
+    
+    //[((BucketController *)root) setSuperCarousel:self];
+    __weak typeof(self) weakSelf = self;
+    bucketController.onDespand = ^{
+        [weakSelf removeBucketAsRoot];
+    };
+    //[root addViewController:self];
+    
+    //[self.navigationController setViewControllers:@[root] animated:NO];
+    //[self.navigationController.view layoutIfNeeded];
+    [self.navigationController pushViewController:bucketController animated:NO];
+}
+
+-(void)removeBucketAsRoot{
+    //root = oldRoot;
+    [self.navigationController popViewControllerAnimated:NO];
+    [self.navigationController.view layoutIfNeeded];
+    //[self didGainFocus];
+    [self.profileBuckets onFocusGained];
 }
 /*
 - (void)peekViewVerticalMove:(UIPanGestureRecognizer *)gesture
@@ -297,6 +356,132 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+-(void)checkSubscription{
+    if(self.user.Id != [[authHelper getUserId] intValue]){
+        UserModel *deviceUser =[[UserModel alloc] initWithDeviceUser];
+        self.subscribeModel = [[SubscribeModel alloc] initWithSubscriber:deviceUser withSubscribee:self.user];
+        if (self.subscribeModel.isSubscriberLocal) {
+            isSubscriber = YES;
+            [self changeSubscribeUI];
+        }
+        else{
+            isSubscriber = NO;
+            [self changeSubscribeUI];
+        }
+    }
+}
+
+-(void)changeSubscribeUI{
+    NSLog(@"user id %d", self.user.Id);
+    if(isSubscriber){
+        /*
+         [self.subscribeButton setTitle:NSLocalizedString(@"unsubscribe_txt", nil) forState:UIControlStateNormal];
+         self.subscribeButton.imageView.frame = CGRectMake(0, 0, 40, 40);
+         [self.subscribeButton setImage: [UIHelper iconImage:[UIImage imageNamed:@"tick.png"] withSize:40] forState:UIControlStateNormal];
+         [[self.subscribeButton imageView] setTintColor:[UIColor whiteColor]];
+         [self.subscribeButton setTintColor:[UIColor whiteColor]];
+         //top left bottom right
+         [self.subscribeButton setImageEdgeInsets:UIEdgeInsetsMake(10, 10, 10, 140)];
+         [self.subscribeButton setTitleEdgeInsets:UIEdgeInsetsMake(0, -40, 0, 0)];
+         [self.subscribeButton sizeToFit];
+         */
+        NSLog(@"User id %d auth helper %d", self.user.Id, [[authHelper getUserId] intValue]);
+        if ([self.user Id] == [[authHelper getUserId] intValue]) {
+            [self.subscribeButton setTitle:NSLocalizedString(@"subscriptions_button_txt", nil) forState:UIControlStateNormal];
+        }else{
+            [self.subscribeButton setTitle:NSLocalizedString(@"unsubscribe_txt", nil) forState:UIControlStateNormal];
+        }
+        [[self.subscribeButton layer] setBorderColor:[ColorHelper magenta].CGColor];
+        NSLog(@"sub");
+        
+    }else{
+        NSLog(@"subbb");
+        if ([self.user Id] ==[[authHelper getUserId] intValue]) {
+            [[self.subscribeButton layer] setBorderColor:[ColorHelper magenta].CGColor];
+        }
+        //[self.subscribeButton setTitle:@"Subscribe" forState:UIControlStateNormal];
+        [self.subscribeButton setTitle:NSLocalizedString(@"subscribe_txt", nil) forState:UIControlStateNormal];
+        [self removeInsetsFromButton];
+    }
+    
+}
+
+-(void)removeInsetsFromButton{
+    [self.subscribeButton setImage: nil forState:UIControlStateNormal];
+    [self.subscribeButton setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
+    [self.subscribeButton setTitleEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
+    [self.subscribeButton sizeToFit];
+}
+
+-(void)updatePeekView:(UserModel *) user{
+    self.user = user;
+    NSLog(@"HERE");
+    self.subscribersCountLabel.text = [NSString stringWithFormat:@"%d %@", user.subscribers_count, NSLocalizedString(@"subscriptions_txt", nil)];
+    self.usernameLabel.text = [user display_name] != nil ? [user display_name] : [user usernameFormatted];
+    if(user.Id == [[authHelper getUserId] intValue]){
+        //self.subscribeButton.hidden = YES;
+        self.subscribersCountLabel.hidden = YES;
+    }else{
+        self.subscribersCountLabel.hidden = NO;
+    }
+}
+
+-(void)initActivityIndicator{
+    activityIndicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+    [self.subscribeButton addSubview:activityIndicator];
+    
+    activityIndicator.center = CGPointMake(self.subscribeButton.frame.size.width / 2, self.subscribeButton.frame.size.height / 2);
+    activityIndicator.hidden = NO;
+    activityIndicator.hidesWhenStopped = YES;
+}
+
+-(void)subscribeAction{
+    if (self.user.Id != [[authHelper getUserId] intValue]) {
+        if(activityIndicator == nil){
+            [self initActivityIndicator];
+        }
+        activityIndicator.hidden = NO;
+        [activityIndicator startAnimating];
+        [self.subscribeButton setTitle:@"" forState:UIControlStateNormal];
+        [self removeInsetsFromButton];
+        if(isSubscriber){
+            [self.subscribeModel delete:^(ResponseModel *response){
+                isSubscriber = NO;
+                [self changeSubscribeUI];
+                [activityIndicator stopAnimating];
+                [self.user setSubscribers_count:[self.user subscribers_count]-1];
+                [self updatePeekView:self.user];
+            } onError:^(NSError *error){}];
+        }else{
+            [self.subscribeModel saveChanges:^(ResponseModel *response){
+                isSubscriber = YES;
+                [self changeSubscribeUI];
+                [activityIndicator stopAnimating];
+                [self.user setSubscribers_count:[self.user subscribers_count]+1];
+                [self updatePeekView:self.user];
+            } onError:^(NSError *error)
+             {
+                 
+                 
+             }];
+        }
+    }
+    else {
+        //Show Subscribers
+        UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
+        UINavigationController *vc = [mainStoryboard instantiateViewControllerWithIdentifier:@"searchNavigation"];
+        // [vc.navigationBar setti]
+        //Sea[[vc viewControllers] objectAtIndex:0];
+        
+        [vc.navigationBar setTintColor:[ColorHelper purpleColor]];
+        [vc.navigationBar setBackgroundColor:[ColorHelper purpleColor]];
+        [vc.navigationBar setBarTintColor:[ColorHelper purpleColor]];
+        //[[ApplicationHelper getMainNavigationController] pushViewController:vc animated:YES];
+        [[ApplicationHelper getMainNavigationController] presentViewController:vc animated:YES completion:nil];
+    }
+}
+
 
 /*
 #pragma mark - Navigation

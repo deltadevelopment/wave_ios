@@ -664,6 +664,7 @@ const int PEEK_Y_START = 300;
     //MER HER
 }
 
+
 -(void)animateElementsIn{
     
     [UIView animateWithDuration:0.3f
