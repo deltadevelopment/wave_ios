@@ -28,5 +28,8 @@
 -(void)calculateHeight;
 -(void)updateUiWithHeight:(float) height;
 -(void)initActionButton:(RippleModel *) ripple withCellHeight:(float) height;
--(CGRect)makeTextClickableAndLayout:(NSString *) username withRestOfText:(NSString *) restofText withRippleId:(int)rippleId;
+-(CGRect)makeTextClickableAndLayout:(NSString *) username
+                     withRestOfText:(NSString *) restofText
+                       withRippleId:(int)rippleId
+                         withRipple:(RippleModel *) ripple;
 @end

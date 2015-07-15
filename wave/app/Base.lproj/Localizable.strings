@@ -65,7 +65,7 @@
 "create_bucket" = "has created a new shared bucket";
 "create_drop_user_bucket" = "has added a drop to his bucket";
 "create_drop_shared_bucket" = "has added a drop to";
-"create_vote" = "has set the temperature of your drop to";
+"create_vote" = "has thinks your drop is";
 "create_redrop" = "has re-dropped your drop";
 "create_subscription" = "is now subscribing to you";
 "create_tag_drop" = "has tagged you in a drop";
@@ -107,3 +107,16 @@
 
 "no_votes_yet" = "There are no votes yet";
 
+"vote_cool" = "Cool";
+"vote_funny" = "Funny";
+"personal_bucket" = "'s bucket";
+
+"second_time" = "second ago";
+"minute_time" = "minute ago";
+"hour_time" = "hour ago";
+"day_time" = "day ago";
+
+"seconds_time" = "seconds ago";
+"minutes_time" = "minutes ago";
+"hours_time" = "hours ago";
+"days_time" = "days ago";

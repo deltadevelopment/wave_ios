@@ -39,4 +39,5 @@
 +(void)initAndApplyLayoutOnProfilePictureSmall:(UIImageView *) imageview;
 +(void)updateNotificationButton:(UINavigationItem *) item withButton:(UIButton *) button;
 +(void)applyCaptionLayoutOnTextField:(UITextField *) label withSize:(float) size;
++ (UIImage *)imageWithColor:(UIColor *)color;
 @end

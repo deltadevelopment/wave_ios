@@ -19,6 +19,7 @@
     self.topic_type = [self getStringValueFromString:@"topic_type"];
     self.user_id = [self getIntValueFromString:@"user_id"];
     self.action = [self getStringValueFromString:@"action"];
+    self.user = [[UserModel alloc] init:[self.dictionary objectForKey:@"user"]];
     
     if((NSNull*)[self.dictionary objectForKey:@"topic"] != [NSNull null]){
         if([self.topic_type isEqualToString:@"Drop"]){
@@ -49,8 +50,22 @@
    
     self.localizedMessage = NSLocalizedString(self.action, nil);
     
+    if ([self.action isEqualToString:@"create_chat_message"]) {
+        if ([self.bucket.bucket_type isEqualToString:@"user"]) {
+            self.localizedMessage = [NSString stringWithFormat:@"%@ %@ %@",
+                                     self.localizedMessage, self.bucket.user.username, NSLocalizedString(@"personal_bucket", nil)];
+        }else{
+            self.localizedMessage = [NSString stringWithFormat:@"%@ '%@'",
+                                     self.localizedMessage, self.bucket.title];
+        }
+    }
+    
     if ([self.topic_type isEqualToString:@"Vote"]) {
-        self.localizedMessage = [NSString stringWithFormat:@"%@ %d °", self.localizedMessage, self.temperature.temperature];
+        if (self.temperature.temperature == 1) {
+            self.localizedMessage = [NSString stringWithFormat:@"%@ '%@'", self.localizedMessage, NSLocalizedString(@"vote_cool", nil)];
+        }else{
+            self.localizedMessage = [NSString stringWithFormat:@"%@ '%@'", self.localizedMessage, NSLocalizedString(@"vote_funny", nil)];
+        }
     }
     if ([self.topic_type isEqualToString:@"Tag"]) {
         if ([self.tag.taggable_type isEqualToString:@"Bucket"]) {
@@ -58,7 +73,6 @@
                                      self.localizedMessage, self.tag.bucket.title];
         }
     }
-    
     //"create_drop_shared_bucket" = "har lagt til en drop i";
 }
 
@@ -69,11 +83,12 @@
     else if (self.temperature != nil) {
         return [self.temperature user];
     }
-    
     if (self.bucket != nil) {
+        if ([self.action isEqualToString:@"create_chat_message"]) {
+            return self.user;
+        }
         return [self.bucket user];
     }
-    
     if (self.subscription != nil) {
         return [self.subscription subscriber2];
     }
@@ -82,8 +97,5 @@
     }
     return nil;
 }
-
-
-
 
 @end

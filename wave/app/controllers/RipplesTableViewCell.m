@@ -79,6 +79,7 @@
     self.temperatureButton =[UIButton buttonWithType:UIButtonTypeSystem];
     self.temperatureButton.frame = CGRectMake((self.frame.size.width) -50, (self.frame.size.height /2) -20, 40, 40);
      [self.temperatureButton setTintColor:[ColorHelper purpleColor]];
+    [self.temperatureButton.titleLabel setFont:[UIFont fontWithName:@"HelveticaNeue" size:20.0f]];
     //self.actionButton.backgroundColor =[UIColor redColor];
     [self.userButton setTitle:@"simenle" forState:UIControlStateNormal];
     
@@ -145,22 +146,27 @@
     frame2.origin.y = (height /2) -(frame2.size.height/2);
     button.frame = frame2;
 }
--(CGRect)makeTextClickableAndLayout:(NSString *) username withRestOfText:(NSString *) restofText withRippleId:(int)rippleId{
-    NSLog(username);
+-(CGRect)makeTextClickableAndLayout:(NSString *) username
+                     withRestOfText:(NSString *) restofText
+                       withRippleId:(int)rippleId
+                         withRipple:(RippleModel *) ripple
+{
     displayContent = [[NSMutableAttributedString alloc] init];
     NSString *tag = [NSString stringWithFormat:@"myCustomTag%d", rippleId];
     NSAttributedString* attributedString = [[NSAttributedString alloc] initWithString:username attributes:@{ tag : @(YES) }];
     [displayContent appendAttributedString:attributedString];
     [displayContent appendAttributedString:[[NSAttributedString alloc] initWithString:restofText attributes:@{ @"myCustomTag1" : @(YES) }]];
-    
+    NSAttributedString *date = [[NSAttributedString alloc] initWithString:[ripple getDate] attributes:@{ @"myCustomTag2" : @(YES) }];
+    [displayContent appendAttributedString:date];
     
     UITapGestureRecognizer *rec = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(textTapped:)];
     [self.textView addGestureRecognizer:rec];
     
     
     [displayContent addAttribute:NSForegroundColorAttributeName value:[ColorHelper purpleColor] range:NSMakeRange(0,attributedString.length)];
-    
-    
+    [displayContent addAttribute:NSForegroundColorAttributeName value:[ColorHelper purpleColor]
+                           range:NSMakeRange(displayContent.length -date.length, date.length)];
+    //
     UIFont *font_regular=[UIFont fontWithName:@"HelveticaNeue-Thin" size:15.0f];
     UIFont *font_bold=[UIFont fontWithName:@"HelveticaNeue-Bold" size:15.0f];
     
@@ -203,7 +209,7 @@
     if (characterIndex < textView.textStorage.length) {
         if(location.y > 0 && location.x > 0){
             NSRange range;
-            
+          
             NSString *tag = [NSString stringWithFormat:@"myCustomTag%d", self.ripple.Id];
             id value = [textView.attributedText attribute:tag atIndex:characterIndex effectiveRange:&range];
             if(value){
@@ -228,6 +234,7 @@
 
 -(void)initActionButton:(RippleModel *) ripple withCellHeight:(float) height{
     self.ripple = ripple;
+      [self.ripple getDate];
     if([[ripple.interaction topic_type]  isEqualToString:@"Drop"]){
         [ripple.interaction.drop.user requestProfilePic:^(NSData *data){
             [self.profilePictureImage setImage:[UIImage imageWithData:data]];
@@ -251,9 +258,15 @@
         }
     }
     else if([[ripple.interaction topic_type] isEqualToString:@"Bucket"]){
-        [ripple.interaction.bucket.user requestProfilePic:^(NSData *data){
-            [self.profilePictureImage setImage:[UIImage imageWithData:data]];
-        }];
+        if ([ripple.interaction.action isEqualToString:@"create_chat_message"]) {
+            [ripple.interaction.user requestProfilePic:^(NSData *data){
+                [self.profilePictureImage setImage:[UIImage imageWithData:data]];
+            }];
+        }else{
+            [ripple.interaction.bucket.user requestProfilePic:^(NSData *data){
+                [self.profilePictureImage setImage:[UIImage imageWithData:data]];
+            }];
+        }
         [self showButton:self.actionButton];
          [self.actionButton removeTarget:self action:@selector(bucketAction) forControlEvents:UIControlEventTouchUpInside];
          [self.actionButton addTarget:self action:@selector(bucketAction) forControlEvents:UIControlEventTouchUpInside];
@@ -296,7 +309,9 @@
             [self.profilePictureImage setImage:[UIImage imageWithData:data]];
         }];
         [self showButton:self.temperatureButton];
-        [self.temperatureButton setTitle:[NSString stringWithFormat:@"%d °", [ripple.interaction.temperature temperature]] forState:UIControlStateNormal];
+        //[self.temperatureButton setTitle:[NSString stringWithFormat:@"%d °", [ripple.interaction.temperature temperature]] forState:UIControlStateNormal];
+        [self.temperatureButton setTitle:[NSString stringWithFormat:@"+%d", 1] forState:UIControlStateNormal];
+       // [self.temperatureButton setBackgroundImage:[UIImage imageNamed:@"refresh.png"] forState:UIControlStateNormal];
     }
     else if([[ripple.interaction topic_type] isEqualToString:@"Tag"]){
         [self showButton:self.actionButton];

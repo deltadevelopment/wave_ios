@@ -137,7 +137,7 @@
     //cell.notificationLabel.text = [rippleModel message];
     NSString *username = [rippleModel.interaction GetCurrentUser] != nil ? [[rippleModel.interaction GetCurrentUser] username] :@"N/A";
     cellFrame = [cell makeTextClickableAndLayout:username
-                                  withRestOfText: [rippleModel addSpaceToString:[rippleModel.interaction localizedMessage]] withRippleId:rippleModel.Id];
+                                  withRestOfText: [rippleModel addSpaceToString:[rippleModel.interaction localizedMessage]] withRippleId:rippleModel.Id withRipple:rippleModel];
     [cell.userButton setTitle:@"simenlie" forState:UIControlStateNormal];
     maxWidth = cell.textView.frame.size.width;
     cell.NotificationTimeLabel.text = [rippleModel created_at] ? [rippleModel created_at] : @"test";

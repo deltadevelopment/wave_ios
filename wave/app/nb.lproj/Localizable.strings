@@ -66,7 +66,7 @@
 "create_bucket" = "har laget en ny bucket";
 "create_drop_user_bucket" = "har lagt til en drop i sin bucket";
 "create_drop_shared_bucket" = "har lagt til en drop i";
-"create_vote" = "har satt temperaturen på din drop til";
+"create_vote" = "synes at din drop er";
 "create_redrop" = "har re-droppet din drop";
 "create_subscription" = "abonnerer nå på deg";
 "create_tag_drop" = "har tagget deg i en drop";
@@ -103,4 +103,21 @@
 "server_cell_auto_login"="Logg inn automatisk";
 "auto_login_fill_in" = "Fyll ut brukernavn og passord";
 "no_votes_yet" = "Det er ingen votes enda";
+
+
+"vote_cool" = "Kul";
+"vote_funny" = "Morsom";
+"personal_bucket" = "sin bucket";
+
+
+
+"second_time" = "sekund siden";
+"minute_time" = "minutt siden";
+"hour_time" = "time siden";
+"day_time" = "dag siden";
+
+"seconds_time" = "sekunder siden";
+"minutes_time" = "minutter siden";
+"hours_time" = "timer siden";
+"days_time" = "dager siden";
 
