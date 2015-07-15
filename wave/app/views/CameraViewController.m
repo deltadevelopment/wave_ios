@@ -63,6 +63,7 @@
     bool didCancelTap;
     bool canUpload;
     SimpleListController *controller;
+    UIView *shadowView;
 
 }
 
@@ -135,10 +136,10 @@
 
 #pragma UI methods
 
--(void)addShadow{
-    UIView *shadowView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, [UIHelper getScreenWidth], [UIHelper getScreenHeight]/4)];
+-(void)addShadowOver:(UIView *)view{
+    shadowView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, [UIHelper getScreenWidth], [UIHelper getScreenHeight]/4)];
     [UIHelper addShadowToView:shadowView];
-    [self.view addSubview:shadowView];
+    [self.view insertSubview:shadowView aboveSubview:view];
 }
 
 #pragma Initialisation methods
@@ -164,7 +165,7 @@
 -(void)initTextField{
 
     float width = [UIHelper getScreenWidth] -100;
-    titleTextField = [[UITextField alloc] initWithFrame:CGRectMake(20, 64, width, 60)];
+    titleTextField = [[UITextField alloc] initWithFrame:CGRectMake(20, 64, width, 50)];
     titleTextField.font = [UIFont fontWithName:@"HelveticaNeue-Thin" size:19.0f];
     [titleTextField setTextColor:[UIColor whiteColor]];
     titleTextField.attributedPlaceholder = [[NSAttributedString alloc]
@@ -243,7 +244,7 @@
     [UIHelper applyUIOnButton:captionButton];
     [captionButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"text-edit-icon.png"] withSize:150] forState:UIControlStateNormal];
     [captionButton addTarget:self action:@selector(tapCaptionButton) forControlEvents:UIControlEventTouchUpInside];
-    [self addConstraintsToButton:self.view withButton:captionButton withPoint:CGPointMake(5, -64) fromLeft:YES fromTop:YES];
+    [self addConstraintsToButton:self.view withButton:captionButton withPoint:CGPointMake(0, -64) fromLeft:NO fromTop:YES];
     captionButton.hidden = YES;
     captionButton.alpha = 0.0;
 }
@@ -393,6 +394,7 @@
 -(void)onTap:(NSNumber *) mode{
     
     intMode = [mode intValue];
+    NSLog(@"the mode is %d", intMode);
     if(intMode == 1){
         cameraMode = YES;
         currentTypeIndex = 0;
@@ -406,32 +408,38 @@
         didCancelTap = NO;
         canUpload = NO;
         [self preventDoubleTap];
-        if(currentTypeIndex == 1 && titleTextField.text.length == 0){
+        /*if(currentTypeIndex == 1 && titleTextField.text.length == 0){
             [self notifyUser];
         }else{
+         */
             [self takePicture];
-            titleTextField.hidden = YES;
-        }
+            //titleTextField.hidden = YES;
+        //}
         
     }
     else if(intMode == 0){
-        if(imageReadyForUpload && canUpload){
-            if(mediaIsVideo){
-                if(hasCaption){
-                    [self renderVideoWithCaption];
+        if (currentTypeIndex == 1 && titleTextField.text.length == 0) {
+            [self notifyUser];
+            NSLog(@"heres");
+        }else{
+            if(imageReadyForUpload && canUpload){
+                if(mediaIsVideo){
+                    if(hasCaption){
+                        [self renderVideoWithCaption];
+                    }else{
+                        [self prepareForUpload];
+                    }
+                    
                 }else{
-                  [self prepareForUpload];
+                    [self prepareForUpload];
                 }
-            
             }else{
-              [self prepareForUpload];
+                //camera is not ready
+                
             }
             
-          
-        }else{
-            //camera is not ready
-            
         }
+        
     }
 }
 
@@ -449,12 +457,19 @@
 
 
 -(void)tapCancelButton{
+    NSLog(@"tapped caancel");
     didCancelTap = YES;
     imgTaken = nil;
+    titleTextField.hidden = YES;
+    if (shadowView != nil) {
+        [shadowView removeFromSuperview];
+    }
     if(imageView != nil){
        imageView.hidden = YES;
     }
-    
+    if (intMode == 0) {
+        intMode = 2;
+    }
     if(intMode == 1){
         imageView.hidden = YES;
         self.onCameraCancel();
@@ -493,7 +508,7 @@
         titleTextField.hidden = YES;
         self.onCameraModeChanged(YES);
     }else{
-        titleTextField.hidden = NO;
+        //titleTextField.hidden = NO;
         self.onCameraModeChanged(NO);
     }
     BucketTypeModel *bucketModel = [bucketTypes objectAtIndex:currentTypeIndex];
@@ -514,7 +529,7 @@
     //[self.cameraHelper setView:self.view withRect:CGRectMake(0, 0, [UIHelper getScreenWidth], [UIHelper getScreenHeight])];
     if(!cameraIsInitialized){
         cameraIsInitialized = YES;
-        [self addShadow];
+       // [self addShadow];
         [self.view addSubview:selfieButton];
       
         [self.view addSubview:saveMediaButton];
@@ -552,7 +567,7 @@
     [self showButton:typeButton];
     [self showLabel:toolTip];
     if(currentTypeIndex == 1){
-        titleTextField.hidden = NO;
+       // titleTextField.hidden = NO;
         self.onCameraModeChanged(NO);
     }
     [self showButton:selfieButton];
@@ -566,7 +581,7 @@
 # pragma Notifications methods
 
 -(void)notifyUser{
-    self.onNotificatonShow(@"Add a title to your bucket");
+    self.onNotificatonShow(NSLocalizedString(@"title_to_bucket", nil));
 }
 
 #pragma Upload medthods
@@ -760,6 +775,11 @@
 }
 
 -(void)pictureWasTaken:(UIImage *)image{
+    if (currentTypeIndex == 1) {
+        //Animate title in
+        titleTextField.hidden = NO;
+    }
+
     imgTaken = image;
     //[cameraHelper stopCameraSession];
 
@@ -771,12 +791,15 @@
     if(imageView == nil){
         imageView = [[UIImageView alloc] initWithFrame:self.view.frame];
         imageView.userInteractionEnabled = YES;
+        
     }
     else{
         imageView.hidden = NO;
     }
     imageView.image = imgTaken;
     [self.view insertSubview:imageView belowSubview:saveMediaButton];
+    [self addShadowOver:imageView];
+    
     //[self.view insertSubview:captionsView aboveSubview:imageView];
     imageReadyForUpload = YES;
    
@@ -793,24 +816,20 @@
 -(void)startRecording
 {
     didCancelTap = NO;
-    if(currentTypeIndex == 1 && titleTextField.text.length == 0){
-        //Notify user to add a title
-        [self notifyUser];
-        
-    }else {
-        [cameraHelper startPreviewLayer];
-        [cameraHelper startRecording];
-        isRecording = YES;
-        circleIndicatorView = [[CircleIndicatorView alloc] initWithFrame:CGRectMake(0, 0, 80, 80)];
-        [recordingProgressView addSubview:circleIndicatorView];
-        
-        [circleIndicatorView setIndicatorWithMaxTime:10];
-        [self hideAllTools];
-        [self hideButton:selfieButton];
-        //Start recording
-        
-        recordTimer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(decrementSpin) userInfo:nil repeats:YES];
-    }
+    
+    [cameraHelper startPreviewLayer];
+    [cameraHelper startRecording];
+    isRecording = YES;
+    circleIndicatorView = [[CircleIndicatorView alloc] initWithFrame:CGRectMake(0, 0, 80, 80)];
+    [recordingProgressView addSubview:circleIndicatorView];
+    
+    [circleIndicatorView setIndicatorWithMaxTime:10];
+    [self hideAllTools];
+    [self hideButton:selfieButton];
+    //Start recording
+    
+    recordTimer = [NSTimer scheduledTimerWithTimeInterval:0.01 target:self selector:@selector(decrementSpin) userInfo:nil repeats:YES];
+    
     
     
 }
@@ -843,6 +862,10 @@
 }
 
 -(void)onVideorecorded:(NSData *) video{
+    if (currentTypeIndex == 1) {
+        //Animate title in
+        titleTextField.hidden = NO;
+    }
     [loadVideoProgressView stopProgress];
     //mediaPlayer = [[MediaPlayerViewController alloc] init];
     lastRecordedVideo = video;

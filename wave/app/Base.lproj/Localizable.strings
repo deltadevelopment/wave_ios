@@ -120,3 +120,5 @@
 "minutes_time" = "minutes ago";
 "hours_time" = "hours ago";
 "days_time" = "days ago";
+
+"title_to_bucket" = "Add a title to your bucket";

@@ -162,12 +162,20 @@
             self.profilePicture.hidden = NO;
         }];
     }else{
-        if (drop.most_votes == 1) {
-            [self.voteButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"eye.png"] withSize:40] forState:UIControlStateNormal];
+        if (drop.total_votes_count == 0) {
+            self.voteButton.hidden = YES;
+            self.dropTemperature.hidden = YES;
         }else{
-            [self.voteButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"profile-icon.png"] withSize:40] forState:UIControlStateNormal];
-            
+            self.voteButton.hidden = NO;
+            self.dropTemperature.hidden = NO;
+            if (drop.most_votes == 1) {
+                [self.voteButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"eye.png"] withSize:40] forState:UIControlStateNormal];
+            }else{
+                [self.voteButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"profile-icon.png"] withSize:40] forState:UIControlStateNormal];
+                
+            }
         }
+        
         self.dropTemperature.text =[NSString stringWithFormat:@"%d", drop.total_votes_count];
         self.dropTitle.text = [[drop user] usernameFormatted];
         [self placeCounter];
@@ -257,7 +265,8 @@
 }
 
 -(void)temperatureAnimation{
-    
+    self.voteButton.hidden = NO;
+    self.dropTemperature.hidden = NO;
     
     [UIView animateWithDuration:0.3f
                           delay:0.0f
