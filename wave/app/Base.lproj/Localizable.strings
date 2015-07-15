@@ -105,3 +105,5 @@
 "server_cell_auto_login"="Login automatically";
 "auto_login_fill_in" = "Fill out username and password";
 
+"no_votes_yet" = "There are no votes yet";
+

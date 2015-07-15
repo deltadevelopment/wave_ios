@@ -168,7 +168,7 @@
             [self.voteButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"profile-icon.png"] withSize:40] forState:UIControlStateNormal];
             
         }
-        self.dropTemperature.text =[NSString stringWithFormat:@"%d", drop.most_votes_count];
+        self.dropTemperature.text =[NSString stringWithFormat:@"%d", drop.total_votes_count];
         self.dropTitle.text = [[drop user] usernameFormatted];
         [self placeCounter];
         [drop.user requestProfilePic:^(NSData *data){
@@ -180,7 +180,7 @@
 }
 
 -(void)placeCounter{
-    float vote = self.drop.most_votes_count;
+    float vote = self.drop.total_votes_count;
     self.dropTemperature.text =[NSString stringWithFormat:@"%d", (int)vote];
     if(vote > 999999){
         self.dropTemperature.frame = CGRectMake([UIHelper getScreenWidth] - 140, 10, 50, 30);
@@ -273,9 +273,9 @@
                              NSLog(@"has voted");
                          }else {
                              [self.drop cacheVote];
-                             self.drop.most_votes_count += 1;
+                             self.drop.total_votes_count += 1;
                          }
-                         self.dropTemperature.text =[NSString stringWithFormat:@"%d", self.drop.most_votes_count];
+                         self.dropTemperature.text =[NSString stringWithFormat:@"%d", self.drop.total_votes_count];
                          [UIView animateWithDuration:0.3f
                                                delay:0.1f
                                              options: UIViewAnimationOptionCurveLinear

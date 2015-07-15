@@ -35,7 +35,7 @@
 @property (nonatomic, strong) NSString *thumbnail_key;
 @property (nonatomic, strong) NSString *thumbnail_url;
 @property (nonatomic) int most_votes;
-@property (nonatomic) int most_votes_count;
+@property (nonatomic) int total_votes_count;
 
 -(void)redrop:(void (^)(ResponseModel *))completionCallback
       onError:(void (^)(NSError *))errorCallback;
@@ -61,7 +61,8 @@
 @property (nonatomic, strong) MediaController *mediaController;
 
 
-@property (nonatomic, strong) NSMutableArray *votes;
+@property (nonatomic, strong) NSMutableArray *funnyVotes;
+@property (nonatomic, strong) NSMutableArray *coolVotes;
 -(BOOL)hasVotedAlready;
 -(void)cacheVote;
 

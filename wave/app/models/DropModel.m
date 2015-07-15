@@ -18,7 +18,6 @@
 
 -(id)init:(NSMutableDictionary *)dic{
     self.cacheHelper = [[CacheHelper alloc] init];
-    self.votes = [[NSMutableArray alloc] init];
     if((NSNull*)dic != [NSNull null]){
         self =[super init];
         self.dictionary = dic;
@@ -40,7 +39,7 @@
         self.thumbnail_key = [self getStringValueFromString:@"thumbnail_key"];
         self.user = [[UserModel alloc]init:[dic objectForKey:@"user"]];
         self.most_votes = [self getIntValueFromString:@"most_votes"];
-        self.most_votes_count = [self getIntValueFromString:@"most_votes_count"];
+        self.total_votes_count = [self getIntValueFromString:@"total_votes_count"];
         if((NSNull*)[self.dictionary objectForKey:@"originator"] != [NSNull null]){
             self.originator = [[UserModel alloc]init:[dic objectForKey:@"originator"]];
         }
@@ -303,7 +302,8 @@
 }
 
 -(void)fetchVotes:(void (^)(void))completionCallback onError:(void(^)(NSError *))errorCallback{
-    self.votes = [[NSMutableArray alloc] init];
+    self.funnyVotes = [[NSMutableArray alloc] init];
+    self.coolVotes = [[NSMutableArray alloc] init];
     [self.applicationController getHttpRequest:[NSString stringWithFormat:@"drop/%d/votes", self.Id]
                                   onCompletion:^(NSURLResponse *response,NSData *data,NSError *error){
                                       NSMutableDictionary *dic = [ParserHelper parse:data];
@@ -318,7 +318,12 @@
     NSMutableArray *rawVotes = [[response data] objectForKey:@"votes"];
     for(NSMutableDictionary *rawVote in rawVotes){
         TemperatureModel *temperatureModel = [[TemperatureModel alloc] init:rawVote];
-        [self.votes addObject:temperatureModel];
+        if (temperatureModel.temperature ==0) {
+            //Funny
+            [self.funnyVotes addObject:temperatureModel];
+        }else{
+            [self.coolVotes addObject:temperatureModel];
+        }
     }
 }
 

@@ -102,4 +102,5 @@
 "server_section_auto_login"="Automatisk innlogging";
 "server_cell_auto_login"="Logg inn automatisk";
 "auto_login_fill_in" = "Fyll ut brukernavn og passord";
+"no_votes_yet" = "Det er ingen votes enda";
 

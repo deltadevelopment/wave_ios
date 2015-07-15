@@ -129,14 +129,11 @@
                 }
             }
             break;
-            
         case NSStreamEventErrorOccurred:
             NSLog(@"Can not connect to the host!");
             break;
-            
         case NSStreamEventEndEncountered:
             break;
-            
         default:
             NSLog(@"Unknown event");
     }

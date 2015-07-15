@@ -859,11 +859,11 @@ const int PEEK_Y_START = 300;
 
 -(void)showVotes:(DropModel *) drop{
     NSLog(@"clicked on show votes");
-    if (voteInfoView == nil) {
-        voteInfoView = [[VoteInfoView alloc] initWithDrop:drop];
-       // [voteInfoView setDrop:drop];
-        [self.view addSubview:voteInfoView];
+    if (voteInfoView != nil) {
+        [voteInfoView removeFromSuperview];
     }
+    voteInfoView = [[VoteInfoView alloc] initWithDrop:drop];
+    [self.view addSubview:voteInfoView];
     [voteInfoView animateInfoIn];
 }
 
@@ -956,7 +956,7 @@ const int PEEK_Y_START = 300;
 -(void)onMediaPostedDrop:(DropModel *)drop{
     [lastUploadedDropPage.drop setId:drop.Id];
     [lastUploadedDropPage.drop setTemperature:drop.temperature];
-    [lastUploadedDropPage bindTemperatureChanges];
+   // [lastUploadedDropPage bindTemperatureChanges];
     infoButton.hidden = NO;
     [peekViewController updatePeekView:[lastUploadedDropPage.drop user]];
     [self showSuperButton];
