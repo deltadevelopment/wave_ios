@@ -391,19 +391,21 @@ const int PEEK_Y_START = 300;
             //Do some thing here
             
             [currentDropPage.drop delete:^(ResponseModel *response){
-                DropModel *oldDrop = currentDropPage.drop;
-                currentDropPage = [self viewControllerAtIndex:[currentDropPage pageIndex] -1 replacingObject:nil];
-                NSArray *viewControllers = @[currentDropPage];
-                [self.pageViewController setViewControllers:viewControllers
-                                                  direction:UIPageViewControllerNavigationDirectionReverse
-                                                   animated:YES
-                                                 completion:^(BOOL finished){
-                                                     [bucket removeDrop:oldDrop];
-                                                     [self updatePageIndicator:currentDropPage.pageIndex];
-                                                 }];
-                
-                
-                
+                if ([[bucket drops] count] == 1) {
+                    [DataHelper addToDeletionQueue:bucket];
+                    [self despandBucket:nil];
+                }else{
+                    DropModel *oldDrop = currentDropPage.drop;
+                    currentDropPage = [self viewControllerAtIndex:[currentDropPage pageIndex] -1 replacingObject:nil];
+                    NSArray *viewControllers = @[currentDropPage];
+                    [self.pageViewController setViewControllers:viewControllers
+                                                      direction:UIPageViewControllerNavigationDirectionReverse
+                                                       animated:YES
+                                                     completion:^(BOOL finished){
+                                                         [bucket removeDrop:oldDrop];
+                                                         [self updatePageIndicator:currentDropPage.pageIndex];
+                                                     }];
+                }
                 //[view dismissViewControllerAnimated:YES completion:nil];
             } onError:^(NSError *error){}];
         }else{

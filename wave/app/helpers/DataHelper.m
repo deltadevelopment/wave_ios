@@ -43,7 +43,7 @@ static NSMutableArray *deletionQueue;
 }
 
 +(void)resetDeletionQueue{
-deletionQueue = [[NSMutableArray alloc] init];
+    deletionQueue = [[NSMutableArray alloc] init];
 }
 
 
