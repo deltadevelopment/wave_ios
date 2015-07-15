@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "DropModel.h"
+#import "BucketController.h"
 @interface DropController : UIViewController
 @property NSUInteger pageIndex;
 @property NSString *titleText;
@@ -18,6 +19,8 @@
 @property (nonatomic) bool isDisplaying;
 @property (nonatomic) bool isOutOfFocus;
 @property (nonatomic) bool isLoaded;
+@property (nonatomic, copy) void (^onVotesTapped)(DropModel* (drop));
+
 -(void)bindToModel;
 -(void)stopVideo;
 -(void)startVideo;

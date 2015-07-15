@@ -22,7 +22,7 @@
     self.user_id = [self getIntValueFromString:@"user_id"];
     self.drop_id = [self getIntValueFromString:@"drop_id"];
     self.bucket_id = [self getIntValueFromString:@"bucket_id"];
-    self.temperature = [self getIntValueFromString:@"temperature"];
+    self.temperature = [self getIntValueFromString:@"vote"];
     self.created_at = [self getStringValueFromString:@"created_at"];
     self.updated_at = [self getStringValueFromString:@"updated_at"];
     self.user = [[UserModel alloc] init:[self.dictionary objectForKey:@"user"]];
@@ -32,7 +32,7 @@
 -(NSDictionary *)asDictionary{
     NSDictionary *dictionary = @{
                                  @"vote": @{
-                                         @"temperature": [NSNumber numberWithInt:self.temperature]
+                                         @"vote": [NSNumber numberWithInt:self.temperature]
                                          }
                                  };
     return dictionary;
@@ -50,5 +50,6 @@
          completionCallback(responseModel, temperatureModel);
      }
                                         onError:errorCallback];
+    NSLog(@"post body %@", self.asDictionary);
 }
 @end

@@ -11,6 +11,7 @@
 #import "SuperViewController.h"
 #import "ChatViewController.h"
 #import "CarouselController.h"
+#import "VoteInfoView.h"
 @interface BucketController : SuperViewController<UIPageViewControllerDataSource, UIGestureRecognizerDelegate, UIPageViewControllerDelegate>
 @property (strong, nonatomic) UIPageViewController *pageViewController;
 @property (strong, nonatomic) NSMutableArray *drops;

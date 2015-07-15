@@ -18,6 +18,7 @@
 
 -(id)init:(NSMutableDictionary *)dic{
     self.cacheHelper = [[CacheHelper alloc] init];
+    self.votes = [[NSMutableArray alloc] init];
     if((NSNull*)dic != [NSNull null]){
         self =[super init];
         self.dictionary = dic;
@@ -38,6 +39,8 @@
         self.thumbnail_url = [self getStringValueFromString:@"thumbnail_url"];
         self.thumbnail_key = [self getStringValueFromString:@"thumbnail_key"];
         self.user = [[UserModel alloc]init:[dic objectForKey:@"user"]];
+        self.most_votes = [self getIntValueFromString:@"most_votes"];
+        self.most_votes_count = [self getIntValueFromString:@"most_votes_count"];
         if((NSNull*)[self.dictionary objectForKey:@"originator"] != [NSNull null]){
             self.originator = [[UserModel alloc]init:[dic objectForKey:@"originator"]];
         }
@@ -60,7 +63,6 @@
         CGSize size = CGSizeMake([UIHelper getScreenWidth], [UIHelper getScreenHeight]);
         NSData *thumbnailData = UIImagePNGRepresentation([GraphicsHelper imageByScalingAndCroppingForSize:size img:thumbnail]);
         MediaModel *thumbnailModel = [[MediaModel alloc] init:thumbnailData];
-        
         [thumbnailModel uploadMedia:^(NSNumber *number){}
                        onCompletion:^(MediaModel *thumbnailModel){
                            [self.mediaModel uploadMedia:progression
@@ -72,8 +74,6 @@
                                                 onError:errorCallback];
                        }
                             onError:errorCallback];
-        
-        
     }else{
         [self.mediaModel uploadMedia:progression
                         onCompletion:^(MediaModel *mediaModel){
@@ -289,6 +289,8 @@
     return nil;
 }
 
+
+
 -(NSData *)dataThumbnailFromDocumentCache{
     NSArray * paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString * documentsDirectory = [paths objectAtIndex:0];
@@ -298,6 +300,35 @@
     
     NSData *data = [NSData dataWithContentsOfFile:dataFile];
     return data;
+}
+
+-(void)fetchVotes:(void (^)(void))completionCallback onError:(void(^)(NSError *))errorCallback{
+    self.votes = [[NSMutableArray alloc] init];
+    [self.applicationController getHttpRequest:[NSString stringWithFormat:@"drop/%d/votes", self.Id]
+                                  onCompletion:^(NSURLResponse *response,NSData *data,NSError *error){
+                                      NSMutableDictionary *dic = [ParserHelper parse:data];
+                                      ResponseModel *responseModel = [[ResponseModel alloc] init:dic];
+                                      [self feedFromResponseModel:responseModel];
+                                      completionCallback();
+                                      
+                                  } onError:errorCallback];
+}
+
+-(void)feedFromResponseModel:(ResponseModel *) response{
+    NSMutableArray *rawVotes = [[response data] objectForKey:@"votes"];
+    for(NSMutableDictionary *rawVote in rawVotes){
+        TemperatureModel *temperatureModel = [[TemperatureModel alloc] init:rawVote];
+        [self.votes addObject:temperatureModel];
+    }
+}
+
+-(void)cacheVote{
+     [[NSUserDefaults standardUserDefaults] setBool:YES forKey:[NSString stringWithFormat:@"vote-%d", self.Id]];
+}
+
+-(BOOL)hasVotedAlready{
+  BOOL hasVoted = [[NSUserDefaults standardUserDefaults] boolForKey:[NSString stringWithFormat:@"vote-%d", self.Id]];
+    return hasVoted;
 }
 
 

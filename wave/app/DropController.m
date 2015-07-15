@@ -33,6 +33,10 @@
     DropView *contentView = [[DropView alloc] initWithFrame:applicationFrame];
     [contentView setStoryBoard:self.storyboard];
     contentView.backgroundColor = [UIColor whiteColor];
+    contentView.onVotesTapped = ^{
+        //Clicked on votestapped
+        self.onVotesTapped(self.drop);
+    };
     self.view = contentView;
 }
 

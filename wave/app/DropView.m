@@ -18,7 +18,7 @@
     UIButton *playButton;
     UIView *shadowView;
     bool isPlaying;
-    VoteInfoView *voteInfoView;
+    
     ProfileViewController *profileView;
     
 }
@@ -51,9 +51,12 @@
     self.dropTitle.adjustsFontSizeToFitWidth = YES;
     [self.dropTitle addGestureRecognizer:showProfileGestureLabel];
     
+    
     //Drop Temperature Label
-    self.dropTemperature = [[UILabel alloc] initWithFrame:CGRectMake([UIHelper getScreenWidth] - 100, 10, 50, 30)];
+    self.dropTemperature = [[UILabel alloc] initWithFrame:CGRectMake([UIHelper getScreenWidth] - 120, 10, 50, 30)];
+   
     //nameLabel.text = [drop username];
+    //[self.dropTemperature setBackgroundColor:[UIColor redColor]];
     [UIHelper applyThinLayoutOnLabel:self.dropTemperature withSize:15 withColor:[UIColor whiteColor]];
     [self.dropTemperature setMinimumScaleFactor:12.0/17.0];
     self.dropTemperature.textAlignment = NSTextAlignmentCenter;
@@ -82,7 +85,7 @@
     
     self.voteButton.userInteractionEnabled = YES;
     [self.voteButton addTarget:self action:@selector(showVotes) forControlEvents:UIControlEventTouchUpInside];
-    self.voteButton.alpha = 0.5;
+    self.voteButton.alpha = 1.0;
     
     self.spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     float center = ([UIHelper getScreenHeight])/2;
@@ -108,6 +111,7 @@
     [self addSubview:playButton];
     [self addSubview:self.redropView];
     [self addSubview:self.voteButton];
+    [self addSubview:self.dropTemperature];
     
     playButton.hidden = YES;
     __weak typeof(self) weakSelf = self;
@@ -119,12 +123,15 @@
 }
 
 -(void)showVotes{
-    NSLog(@"clicked on show votes");
-    if (voteInfoView == nil) {
-        voteInfoView = [[VoteInfoView alloc] init];
-        [self addSubview:voteInfoView];
-    }
-    [voteInfoView animateInfoIn];
+    self.onVotesTapped();
+    /*
+     NSLog(@"clicked on show votes");
+     if (voteInfoView == nil) {
+     voteInfoView = [[VoteInfoView alloc] init];
+     [self addSubview:voteInfoView];
+     }
+     [voteInfoView animateInfoIn];
+     */
 }
 
 -(void)playPause{
@@ -155,14 +162,39 @@
             self.profilePicture.hidden = NO;
         }];
     }else{
-        self.dropTemperature.text =[NSString stringWithFormat:@"%d°", drop.temperature];
+        if (drop.most_votes == 1) {
+            [self.voteButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"eye.png"] withSize:40] forState:UIControlStateNormal];
+        }else{
+            [self.voteButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"profile-icon.png"] withSize:40] forState:UIControlStateNormal];
+            
+        }
+        self.dropTemperature.text =[NSString stringWithFormat:@"%d", drop.most_votes_count];
         self.dropTitle.text = [[drop user] usernameFormatted];
+        [self placeCounter];
         [drop.user requestProfilePic:^(NSData *data){
             [self.profilePicture setImage:[UIImage imageWithData:data]];
             self.profilePicture.hidden = NO;
         }];
     }
     //self.dropTitle.text = [NSString stringWithFormat:@"Drop #%d",drop.Id];
+}
+
+-(void)placeCounter{
+    float vote = self.drop.most_votes_count;
+    self.dropTemperature.text =[NSString stringWithFormat:@"%d", (int)vote];
+    if(vote > 999999){
+        self.dropTemperature.frame = CGRectMake([UIHelper getScreenWidth] - 140, 10, 50, 30);
+        self.dropTemperature.text = [NSString stringWithFormat:@"%.01f mill", ((vote/1000)/1000)];
+    }else if(vote >999){
+        self.dropTemperature.frame = CGRectMake([UIHelper getScreenWidth] - 140, 10, 50, 30);
+        self.dropTemperature.text = [NSString stringWithFormat:@"%.01f k", (vote/1000)];
+    }
+    else if(vote >99){
+        self.dropTemperature.frame = CGRectMake([UIHelper getScreenWidth] - 130, 10, 50, 30);
+    }
+    else if(vote > 9){
+        self.dropTemperature.frame = CGRectMake([UIHelper getScreenWidth] - 130, 10, 50, 30);
+    }
 }
 
 -(void)updateUI{
@@ -226,7 +258,7 @@
 
 -(void)temperatureAnimation{
     
-    /*
+    
     [UIView animateWithDuration:0.3f
                           delay:0.0f
                         options: UIViewAnimationOptionCurveLinear
@@ -237,7 +269,13 @@
                      }
                      completion:^(BOOL finished){
                          //Temporary hard coded to show that temperature changes when voting
-                         self.dropTemperature.text =[NSString stringWithFormat:@"%d°", self.drop.temperature + 1];
+                         if (self.drop.hasVotedAlready) {
+                             NSLog(@"has voted");
+                         }else {
+                             [self.drop cacheVote];
+                             self.drop.most_votes_count += 1;
+                         }
+                         self.dropTemperature.text =[NSString stringWithFormat:@"%d", self.drop.most_votes_count];
                          [UIView animateWithDuration:0.3f
                                                delay:0.1f
                                              options: UIViewAnimationOptionCurveLinear
@@ -250,7 +288,7 @@
                                           }];
                      
                      }];
-     */
+    
 }
 
 -(void)showProfile{

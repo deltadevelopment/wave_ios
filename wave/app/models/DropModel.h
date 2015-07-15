@@ -12,6 +12,7 @@
 #import "SuperModel.h"
 #import "MediaModel.h"
 #import "CacheHelper.h"
+#import "TemperatureModel.h"
 @interface DropModel : SuperModel
 
 
@@ -33,6 +34,8 @@
 @property (nonatomic,strong) NSDate * updated_at;
 @property (nonatomic, strong) NSString *thumbnail_key;
 @property (nonatomic, strong) NSString *thumbnail_url;
+@property (nonatomic) int most_votes;
+@property (nonatomic) int most_votes_count;
 
 -(void)redrop:(void (^)(ResponseModel *))completionCallback
       onError:(void (^)(NSError *))errorCallback;
@@ -57,6 +60,11 @@
 -(void)cancelDownload;
 @property (nonatomic, strong) MediaController *mediaController;
 
+
+@property (nonatomic, strong) NSMutableArray *votes;
+-(BOOL)hasVotedAlready;
+-(void)cacheVote;
+
 //Methods
 //-(id)initWithTestData:(NSString *) media withName:(NSString *) username;
 -(id)init:(NSMutableDictionary *)dic;
@@ -71,5 +79,7 @@
 
 -(void)delete:(void (^)(ResponseModel*))completionCallback onError:(void(^)(NSError *))errorCallback;
 -(NSDictionary *)asDictionary;
+
+-(void)fetchVotes:(void (^)(void))completionCallback onError:(void(^)(NSError *))errorCallback;
 
 @end

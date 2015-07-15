@@ -23,6 +23,7 @@
 @property (nonatomic, strong) UIImageView *redropView;
 @property (nonatomic, strong) UIStoryboard *storyBoard;
 -(void)setMedia:(NSObject *) media withIndexId:(int) indexId;
+@property (nonatomic, copy) void (^onVotesTapped)(void);
 -(void)dropWillHide;
 -(void)playVideo;
 -(void)stopVideo;

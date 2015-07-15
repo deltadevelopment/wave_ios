@@ -7,8 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "DropModel.h"
 @interface VoteInfoView : UITableViewCell
 @property (strong, nonatomic) UIButton *exitButton;
+@property (strong, nonatomic) DropModel *drop;
 -(void)animateInfoIn;
+-(id)initWithDrop:(DropModel *) drop;
 @end

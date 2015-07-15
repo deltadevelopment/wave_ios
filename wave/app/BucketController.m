@@ -54,7 +54,7 @@ const int PEEK_Y_START = 300;
     bool dropForDeletion;
     int currentDropPosition;
     UIImageView *tickView;
-    
+    VoteInfoView *voteInfoView;
 }
 @synthesize infoViewMode;
 - (void)viewDidLoad {
@@ -550,7 +550,7 @@ const int PEEK_Y_START = 300;
 
 
 -(void)setUpGestures{
-    UIPanGestureRecognizer *peekDragGesture = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(peekViewVerticalMove:)];
+   // UIPanGestureRecognizer *peekDragGesture = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(peekViewVerticalMove:)];
     UITapGestureRecognizer *showChatGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(showChat)];
     UISwipeGestureRecognizer *despandBucketGesture = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(despandBucket:)];
     despandBucketGesture.delegate = self;
@@ -558,7 +558,7 @@ const int PEEK_Y_START = 300;
     despandBucketGesture.numberOfTouchesRequired = 1;
     despandBucketGesture.cancelsTouchesInView = NO;
     
-    [self.view addGestureRecognizer:peekDragGesture];
+   //[self.view addGestureRecognizer:peekDragGesture];
     [self.view addGestureRecognizer:showChatGesture];
     [self.pageViewController.view addGestureRecognizer:despandBucketGesture];
 }
@@ -596,9 +596,6 @@ const int PEEK_Y_START = 300;
 }
 
 -(void)viewDidAppear:(BOOL)animated{
-
-   
-   
     NSLog(@"PEEK view");
 }
 
@@ -607,6 +604,7 @@ const int PEEK_Y_START = 300;
     [currentDropPage setIsDisplaying:NO];
     [currentDropPage setIsStartingView:NO];
     [currentDropPage stopVideo];
+    [self.chat partChat];
 }
 
 
@@ -830,6 +828,9 @@ const int PEEK_Y_START = 300;
     }
     
     DropController *pageContentViewController = [[DropController alloc] init];
+    pageContentViewController.onVotesTapped = ^(DropModel *(drop)){
+        [self showVotes:drop];
+    };
     DropModel *dropModel = [[bucket drops] objectAtIndex:index];
     if(pageToReplace != nil){
         //Uses the prefetched thumbnail or image from the feed, instead of downloading it again
@@ -854,6 +855,16 @@ const int PEEK_Y_START = 300;
     pageContentViewController.pageIndex = index;
     
     return pageContentViewController;
+}
+
+-(void)showVotes:(DropModel *) drop{
+    NSLog(@"clicked on show votes");
+    if (voteInfoView == nil) {
+        voteInfoView = [[VoteInfoView alloc] initWithDrop:drop];
+       // [voteInfoView setDrop:drop];
+        [self.view addSubview:voteInfoView];
+    }
+    [voteInfoView animateInfoIn];
 }
 
 - (void)peekViewVerticalMove:(UIPanGestureRecognizer *)gesture
