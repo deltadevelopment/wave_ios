@@ -42,6 +42,7 @@
         self.total_votes_count = [self getIntValueFromString:@"total_votes_count"];
         if((NSNull*)[self.dictionary objectForKey:@"originator"] != [NSNull null]){
             self.originator = [[UserModel alloc]init:[dic objectForKey:@"originator"]];
+            self.drop_id = [self getIntValueFromString:@"drop_id"];
         }
         
     }
@@ -301,10 +302,20 @@
     return data;
 }
 
--(void)fetchVotes:(void (^)(void))completionCallback onError:(void(^)(NSError *))errorCallback{
+-(void)fetchVotes:(void (^)(void))completionCallback
+          onError:(void(^)(NSError *))errorCallback
+{
     self.funnyVotes = [[NSMutableArray alloc] init];
     self.coolVotes = [[NSMutableArray alloc] init];
-    [self.applicationController getHttpRequest:[NSString stringWithFormat:@"drop/%d/votes", self.Id]
+    
+    int dropId;
+    if (self.originator != nil) {
+        dropId = self.drop_id;
+    }else{
+        dropId = self.Id;
+    }
+    
+    [self.applicationController getHttpRequest:[NSString stringWithFormat:@"drop/%d/votes", dropId]
                                   onCompletion:^(NSURLResponse *response,NSData *data,NSError *error){
                                       NSMutableDictionary *dic = [ParserHelper parse:data];
                                       ResponseModel *responseModel = [[ResponseModel alloc] init:dic];
@@ -335,10 +346,5 @@
   BOOL hasVoted = [[NSUserDefaults standardUserDefaults] boolForKey:[NSString stringWithFormat:@"vote-%d", self.Id]];
     return hasVoted;
 }
-
-
-
-
-
 
 @end

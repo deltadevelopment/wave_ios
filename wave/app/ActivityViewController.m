@@ -44,6 +44,7 @@ const int EXPAND_SIZE = 400;
     int lastCellRow;
     BucketModel *lastBucket;
     UILabel *infoLabel;
+    int expandedPath;
 }
 
 - (void)viewDidLoad {
@@ -296,6 +297,7 @@ const int EXPAND_SIZE = 400;
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    ActivityTableViewCell *cell = (ActivityTableViewCell *)[_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:indexPath.row inSection:0]];
     if(!cameraMode && self.readyForExpanding){
         NSIndexPath *oldIndex = indexCurrent;
         indexCurrent = indexPath;
@@ -313,24 +315,33 @@ const int EXPAND_SIZE = 400;
         
         [CATransaction setCompletionBlock:^{
             if(shouldExpand){
+                ActivityTableViewCell *cell = (ActivityTableViewCell *)[_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:indexPath.row inSection:0]];
+                [cell.usernameText setHidden:YES];
                 [self expandBucketWithId:(int)indexPath.row];
             }
-            
         }];
-        
+        if (shouldExpand) {
+            [cell.usernameText setHidden:YES];
+        }
         [tableView beginUpdates];
         [tableView endUpdates];
         [_tableView scrollToRowAtIndexPath:indexPath atScrollPosition:UITableViewScrollPositionTop animated:YES];
         [CATransaction commit];
-        
     }
 }
 
 -(void)onFocusGained{
     shouldExpand = NO;
     indexCurrent = nil;
+    ActivityTableViewCell *cell = (ActivityTableViewCell *)[_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:expandedPath
+                                                                                                                inSection:0]];
+      BucketModel *bucket = [[self.feedModel feed] objectAtIndex:expandedPath];
+    
     [self.tableView beginUpdates];
     [self.tableView endUpdates];
+    if (![bucket.bucket_type isEqualToString:@"user"]) {
+        [cell.usernameText setHidden:NO];
+    }
     NSMutableArray *deletionQueue = [DataHelper getDeletionQueue];
     if (deletionQueue != nil) {
         if ([deletionQueue count] > 0) {
@@ -342,6 +353,7 @@ const int EXPAND_SIZE = 400;
 }
 
 -(void)expandBucketWithId:(int) Id{
+    expandedPath = Id;
    // ActivityTableViewCell *cell = (ActivityTableViewCell *)[_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:Id inSection:0]];
     BucketModel *bucket = [[self.feedModel feed] objectAtIndex:Id];
     self.onExpand(bucket);

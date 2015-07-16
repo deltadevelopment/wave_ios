@@ -329,13 +329,13 @@
             NSLog(@"less than zero");
             finalPoint = CGPointMake(finalPoint.x, profileWrapperScrollView.frame.size.height/2);
         }
-        else if(top > ([UIHelper getScreenHeight]/2) - 32){
-            NSLog(@"bigger");
-        }
-        NSLog(@"velocity is %f", velocity.y);
+            if (top == 269.500000) {
+               finalPoint = CGPointMake(finalPoint.x, [UIHelper getScreenHeight] - 32);
+            }
         
-        
-        [UIView animateWithDuration:slideFactor*2 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+        NSLog(@"the top is %f and the other is %f", top, ([UIHelper getScreenHeight]/2) - 32);
+       // NSLog(@"velocity is %f", velocity.y);
+        [UIView animateWithDuration:0.5 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
             NSLog(@"anm");
             gesture.view.center = finalPoint;
         } completion:nil];

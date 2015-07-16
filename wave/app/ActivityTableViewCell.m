@@ -65,7 +65,7 @@
     [self.bucketImage setUserInteractionEnabled:YES];
     [self setUserInteractionEnabled:YES];
     [UIHelper applyThinLayoutOnLabel:self.displayNameText withSize:19 withColor:[UIColor whiteColor]];
-        [UIHelper applyThinLayoutOnLabel:self.usernameText withSize:15 withColor:[UIColor whiteColor]];
+    [UIHelper applyThinLayoutOnLabel:self.usernameText withSize:19 withColor:[UIColor whiteColor]];
     [UIHelper roundedCorners:self.profilePictureIcon withRadius:15];
     [UIHelper roundedCorners:self.availabilityIcon withRadius:7.5];
     self.availabilityIcon.hidden = YES;
@@ -143,17 +143,19 @@
     self.profilePictureIcon.hidden = YES;
    [self.bucketImage setImage:nil];
     
+    [[bucket user] requestProfilePic:^(NSData *data){
+        [self.profilePictureIcon setImage:[UIImage imageWithData:data]];
+        self.profilePictureIcon.hidden = NO;
+    }];
+    /*
     if([bucket.bucket_type isEqualToString:@"user"]){
-        [[bucket user] requestProfilePic:^(NSData *data){
-            [self.profilePictureIcon setImage:[UIImage imageWithData:data]];
-            self.profilePictureIcon.hidden = NO;
-        }];
+       
     }else{
         [self.profilePictureIcon setBackgroundColor:[ColorHelper purpleColor]];
         self.profilePictureIcon.hidden = NO;
         [self.profilePictureIcon setImage:nil];
     }
-    
+    */
     
     DropModel *drop = [bucket getLastDrop];
     if([bucket Id] >0){
@@ -173,7 +175,6 @@
         
     }
     if([bucket.bucket_type isEqualToString:@"user"]){
-        self.bucketTitleHoriConstraint.constant = 50;
         if(viewMode == 1){
             self.displayNameText.text = @"My drops";
             self.profilePictureIcon.hidden = YES;
@@ -185,15 +186,17 @@
         self.usernameText.hidden = YES;
         self.profilePictureTopConstraint.constant = 8;
     }else{
-        self.displayNameText.text = bucket.title;
+        self.usernameText.text = bucket.title;
         self.usernameText.hidden = NO;
-      self.profilePictureTopConstraint.constant = 20;
-        //self.bucketTitleHoriConstraint.constant = 50;
-        //self.bucketUsernameHoriConstraint.constant = 50;
-        
-       
+        self.usernameVerticalConstraint.constant = 260;
+        self.bucketUsernameHoriConstraint.constant = 10;
+        self.usernameWidthConstraint.constant = [UIHelper getScreenWidth] - 20;
+        [self.usernameText setTextAlignment:NSTextAlignmentRight]; //<-- THIS IS THE LINE TO COMMENT OUT
+        //[self.usernameText setTextAlignment:NSTextAlignmentLeft]; // <--- THIS IS THE LINE TO UNCOMMENT
+        [UIHelper applyThinLayoutOnLabel:self.usernameText withSize:21 withColor:[UIColor whiteColor]];
         if (bucket.user != nil) {
-            self.usernameText.text = [NSString stringWithFormat:@"%@ %@",NSLocalizedString(@"by_txt", nil), [[bucket user] username]];
+            //self.displayNameText.text = [NSString stringWithFormat:@"%@ %@",NSLocalizedString(@"by_txt", nil), [[bucket user] username]];
+            self.displayNameText.text = [[bucket user] usernameFormatted];
         }else{
             self.usernameText.text = @"";
         }

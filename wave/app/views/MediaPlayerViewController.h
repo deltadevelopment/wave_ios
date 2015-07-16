@@ -21,4 +21,5 @@
 @property (nonatomic) BOOL isPlaying;
 -(void)mute;
 -(void)unmute;
+-(void)setVideoFromURL:(NSString *) url withId:(int) Id;
 @end

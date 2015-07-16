@@ -36,6 +36,9 @@
 @property (nonatomic, strong) NSString *thumbnail_url;
 @property (nonatomic) int most_votes;
 @property (nonatomic) int total_votes_count;
+@property (nonatomic) int drop_id;
+
+
 
 -(void)redrop:(void (^)(ResponseModel *))completionCallback
       onError:(void (^)(NSError *))errorCallback;

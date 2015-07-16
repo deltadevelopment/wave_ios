@@ -16,4 +16,7 @@
 @property (nonatomic, copy) void (^onAnimationEnded)(void);
 @property (weak, nonatomic) IBOutlet UIImageView *voteImageView;
 
+@property (strong, nonatomic)  UILabel *labelEmoji;
+@property (strong, nonatomic)  UILabel *labelEmojiTextLabel;
+
 @end

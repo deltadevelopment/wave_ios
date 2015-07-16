@@ -62,7 +62,7 @@
     self.dropTemperature.textAlignment = NSTextAlignmentCenter;
     self.dropTemperature.adjustsFontSizeToFitWidth = YES;
     
-    self.redropView = [[UIImageView alloc] initWithFrame:CGRectMake([UIHelper getScreenWidth] - 86, 15, 20, 20)];
+    self.redropView = [[UIImageView alloc] initWithFrame:CGRectMake([UIHelper getScreenWidth] - 65, 15, 20, 20)];
     [self.redropView setImage:[UIHelper iconImage:[UIImage imageNamed:@"drop.png"] withSize:40.0f]];
     self.redropView.hidden = YES;
     [self.redropView setAlpha:0.5f];
@@ -81,7 +81,7 @@
     self.voteButton.frame = CGRectMake([UIHelper getScreenWidth] - 95, 8, 35, 35);
     //[self.voteButton setBackgroundColor:[UIColor redColor]];
     [self.voteButton setImageEdgeInsets:UIEdgeInsetsMake(8, 8, 8, 8)];
-    [self.voteButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"profile-icon.png"] withSize:40] forState:UIControlStateNormal];
+    //[self.voteButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"profile-icon.png"] withSize:40] forState:UIControlStateNormal];
     
     self.voteButton.userInteractionEnabled = YES;
     [self.voteButton addTarget:self action:@selector(showVotes) forControlEvents:UIControlEventTouchUpInside];
@@ -161,17 +161,37 @@
             [self.profilePicture setImage:[UIImage imageWithData:data]];
             self.profilePicture.hidden = NO;
         }];
+        if (drop.total_votes_count == 0) {
+            self.voteButton.hidden = YES;
+            self.dropTemperature.hidden = YES;
+        }
+        else{
+            self.voteButton.hidden = NO;
+            self.dropTemperature.hidden = NO;
+            if (drop.most_votes == 1) {
+                [self.voteButton setTitle:@"\xF0\x9F\x91\x8D" forState:UIControlStateNormal];
+              //  [self.voteButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"eye.png"] withSize:40] forState:UIControlStateNormal];
+                [self.voteButton setImage:nil forState:UIControlStateNormal];
+            }else{
+                //[self.voteButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"profile-icon.png"] withSize:40] forState:UIControlStateNormal];
+                [self.voteButton setTitle:@"\xF0\x9F\x98\x82" forState:UIControlStateNormal];
+            }
+        }
+          self.dropTemperature.text =[NSString stringWithFormat:@"%d", drop.total_votes_count];
     }else{
         if (drop.total_votes_count == 0) {
+            NSLog(@"total votes is 0");
             self.voteButton.hidden = YES;
             self.dropTemperature.hidden = YES;
         }else{
             self.voteButton.hidden = NO;
             self.dropTemperature.hidden = NO;
             if (drop.most_votes == 1) {
-                [self.voteButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"eye.png"] withSize:40] forState:UIControlStateNormal];
+               // [self.voteButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"eye.png"] withSize:40] forState:UIControlStateNormal];
+                [self.voteButton setTitle:@"\xF0\x9F\x91\x8D" forState:UIControlStateNormal];
             }else{
-                [self.voteButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"profile-icon.png"] withSize:40] forState:UIControlStateNormal];
+               // [self.voteButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"profile-icon.png"] withSize:40] forState:UIControlStateNormal];
+                [self.voteButton setTitle:@"\xF0\x9F\x98\x82" forState:UIControlStateNormal];
                 
             }
         }
@@ -233,6 +253,17 @@
         [mediaPlayer setVideo:video withId:indexId];
       //  [mediaPlayer playVideo];
     }
+}
+
+-(void)setVideoFromURL:(NSString *) url{
+    self.hasVideo = YES;
+  //  NSData *video =(NSData *)media;
+    mediaPlayer.view.frame = CGRectMake(0, 0, [UIHelper getScreenWidth], [UIHelper getScreenHeight]);
+    //[self addSubview:mediaPlayer.view];
+    [self insertSubview:mediaPlayer.view belowSubview:shadowView];
+   // [mediaPlayer setVideo:video withId:indexId];
+    [mediaPlayer setVideoFromURL:url withId:0];
+    //  [mediaPlayer playVideo];
 }
 
 -(void)dropWillHide{

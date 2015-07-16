@@ -193,4 +193,72 @@
 }
 */
 
+
+-(void)setVideoFromURL:(NSString *) url withId:(int) Id{
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(moviePlayBackDidFinish:)
+                                                 name:MPMoviePlayerPlaybackDidFinishNotification
+                                               object:player];
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    appFile = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"MyFile%d.mov", Id]];
+    //[video writeToFile:appFile atomically:YES];
+    NSLog(@"the url is %@", url);
+    NSString *urlWithExt = [NSString stringWithFormat:@"%@.mov", url];
+    NSLog(@"the url is %@", urlWithExt);
+    NSURL *movieUrl = [NSURL URLWithString:urlWithExt];
+
+    //NSString *dataString = [[NSString alloc] initWithData:[status getMedia] encoding:NSUTF8StringEncoding];
+    //NSURL *url = [NSURL URLWithString:dataString];
+    player = [[MPMoviePlayerController alloc] initWithContentURL:movieUrl];
+    player.view.frame = CGRectMake(0, 0, [UIHelper getScreenWidth], [UIHelper getScreenHeight]);
+    player.movieSourceType = MPMovieSourceTypeStreaming;
+    player.controlStyle = MPMovieControlStyleNone;
+    player.repeatMode = MPMovieRepeatModeOne;
+    player.view.userInteractionEnabled = YES;
+    AVAsset *asset = [AVAsset assetWithURL:movieUrl];
+    player.view.userInteractionEnabled = NO;
+    //  Get thumbnail at the very start of the video
+    CMTime thumbnailTime = [asset duration];
+    thumbnailTime.value = 0;
+    
+    //  Get image from the video at the given time
+    AVAssetImageGenerator *imageGenerator = [[AVAssetImageGenerator alloc] initWithAsset:asset];
+    imageGenerator.appliesPreferredTrackTransform = YES;
+    
+    CGImageRef imageRef = [imageGenerator copyCGImageAtTime:thumbnailTime actualTime:NULL error:NULL];
+    thumbnail = [UIImage imageWithCGImage:imageRef];
+    CGImageRelease(imageRef);
+    UIImageView *thumbnailView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, [UIHelper getScreenWidth], [UIHelper getScreenHeight])];
+    
+    CGSize size = CGSizeMake([UIHelper getScreenWidth], [UIHelper getScreenHeight]);
+    thumbnailView.image = [GraphicsHelper imageByScalingAndCroppingForSize:size img:thumbnail];
+    [self.view addSubview:thumbnailView];
+    /*
+     UIButton *playButton = [UIButton buttonWithType:UIButtonTypeCustom];
+     playButton.frame = CGRectMake([UIHelper getScreenWidth]/2 - 50, [UIHelper getScreenHeight]/2 - 50, 100, 100);
+     playButton.alpha = 0.7;
+     [playButton addTarget:self action:@selector(startStopVideo:) forControlEvents:UIControlEventTouchUpInside];
+     [playButton setImage:[UIHelper iconImage:[UIImage imageNamed:@"play.png"] withSize:150] forState:UIControlStateNormal];
+     [self.view addSubview:playButton];
+     */
+    
+    //[self.view setBackgroundColor:[UIColor colorWithPatternImage:thumbnail]];
+    //[self.statusImage ];
+    
+    volumeView = [[MPVolumeView alloc]initWithFrame:CGRectZero];
+    [volumeView setShowsVolumeSlider:YES];
+    [volumeView setShowsRouteButton:NO];
+    
+    // control must be VISIBLE if you want to prevent default OS volume display
+    // from appearing when you change the volume level
+    [volumeView setHidden:NO];
+    volumeView.alpha = 0.1f;
+    volumeView.userInteractionEnabled = NO;
+    
+    // to hide from view just insert behind all other views
+    [self.view insertSubview:volumeView atIndex:0];
+    
+}
+
 @end

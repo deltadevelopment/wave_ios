@@ -31,6 +31,7 @@
 -(void)updateUI;
 -(void)setDropUI:(DropModel *) drop;
 -(void)temperatureAnimation;
+-(void)setVideoFromURL:(NSString *) url;
 -(void)playPause;
 
 -(void)mute;

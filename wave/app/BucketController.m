@@ -389,9 +389,10 @@ const int PEEK_Y_START = 300;
         //Logg ut
         if (dropForDeletion) {
             //Do some thing here
-            
+            NSLog(@"drop for deleteion");
             [currentDropPage.drop delete:^(ResponseModel *response){
                 if ([[bucket drops] count] == 1) {
+                    NSLog(@"adding to deleteion queue");
                     [DataHelper addToDeletionQueue:bucket];
                     [self despandBucket:nil];
                 }else{

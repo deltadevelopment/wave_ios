@@ -54,6 +54,33 @@
               [dropView setMedia:[UIImage imageWithData:[self.drop thumbnail_tmp]] withIndexId:[self.drop Id]];
             }
         }
+        /*
+        if (self.drop.media_type == 0) {
+            [self.drop requestPhoto:^(NSData *media){
+                [dropView setMedia:[UIImage imageWithData:media] withIndexId:[self.drop Id]];
+                [[dropView spinner] stopAnimating];
+                self.isLoaded = YES;
+            }];
+        }else{
+            //Stream the video
+            //VIDEO
+            
+            [dropView setVideoFromURL:self.drop.media_url];
+           // [dropView setMedia:media withIndexId:[self.drop Id]];
+            [[dropView spinner] stopAnimating];
+            if([self isStartingView]){
+                [dropView playVideo];
+            }else if(self.isDisplaying){
+                [dropView playVideo];
+            }
+            //[self startStopVideo:nil];
+            // playButton.hidden = NO;
+            //  [dropView playMediaWithButton:playButton];
+        }
+    
+        
+        */
+        
         [self.drop requestPhoto:^(NSData *media){
             
             if([self.drop media_type] == 0){

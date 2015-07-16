@@ -34,5 +34,10 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *profilePictureTopConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bucketTitleHoriConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bucketUsernameHoriConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bucketTitleVerticalConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *usernameConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *usernameVerticalConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *displayNameWidth;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *usernameWidthConstraint;
 
 @end

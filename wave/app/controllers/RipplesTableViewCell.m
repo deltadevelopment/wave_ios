@@ -271,17 +271,20 @@
          [self.actionButton removeTarget:self action:@selector(bucketAction) forControlEvents:UIControlEventTouchUpInside];
          [self.actionButton addTarget:self action:@selector(bucketAction) forControlEvents:UIControlEventTouchUpInside];
     [self.actionButton setBackgroundImage:[UIHelper iconImage:[UIImage imageNamed:@"manatee-gray.png"] withSize:80.0f] forState:UIControlStateNormal];
-        DropModel *drop = [[ripple.interaction.bucket drops] objectAtIndex:0];
-        self.actionButton.imageView.contentMode = UIViewContentModeScaleAspectFill;
-        if([drop media_type] == 0){
-            [drop requestPhoto:^(NSData *data){
-                [self.actionButton setBackgroundImage:[UIImage imageWithData:data] forState:UIControlStateNormal];
-            } ];
-        }else{
-            [drop requestThumbnail:^(NSData *data){
-                [self.actionButton setBackgroundImage:[UIImage imageWithData:data] forState:UIControlStateNormal];
-            }];
+        if ([[ripple.interaction.bucket drops] count] > 0) {
+            DropModel *drop = [[ripple.interaction.bucket drops] objectAtIndex:0];
+            self.actionButton.imageView.contentMode = UIViewContentModeScaleAspectFill;
+            if([drop media_type] == 0){
+                [drop requestPhoto:^(NSData *data){
+                    [self.actionButton setBackgroundImage:[UIImage imageWithData:data] forState:UIControlStateNormal];
+                } ];
+            }else{
+                [drop requestThumbnail:^(NSData *data){
+                    [self.actionButton setBackgroundImage:[UIImage imageWithData:data] forState:UIControlStateNormal];
+                }];
+            }
         }
+       
     }
     else if([[ripple.interaction topic_type] isEqualToString:@"Subscription"]){
         [ripple.interaction.subscription.subscriber2 requestProfilePic:^(NSData *data){
@@ -310,7 +313,13 @@
         }];
         [self showButton:self.temperatureButton];
         //[self.temperatureButton setTitle:[NSString stringWithFormat:@"%d °", [ripple.interaction.temperature temperature]] forState:UIControlStateNormal];
-        [self.temperatureButton setTitle:[NSString stringWithFormat:@"+%d", 1] forState:UIControlStateNormal];
+        if ([ripple.interaction.temperature temperature] == 1) {
+            //KUL
+            [self.temperatureButton setTitle:@"\xF0\x9F\x91\x8D" forState:UIControlStateNormal];
+        }else{
+            [self.temperatureButton setTitle:@"\xF0\x9F\x98\x82" forState:UIControlStateNormal];
+        }
+        
        // [self.temperatureButton setBackgroundImage:[UIImage imageNamed:@"refresh.png"] forState:UIControlStateNormal];
     }
     else if([[ripple.interaction topic_type] isEqualToString:@"Tag"]){

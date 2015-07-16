@@ -182,9 +182,16 @@
     
     float imageSize = radius/2;
     NSLog(@"the sise is %f", radius - (imageSize/2));
+    UILabel *emojiView = [[UILabel alloc] initWithFrame:CGRectMake(imageSize/2,imageSize/2,imageSize,imageSize)];
+    [emojiView setTextAlignment:NSTextAlignmentCenter];
+    [emojiView setText:@"\xF0\x9F\x91\x8D"];
+    [emojiView setFont:[UIFont fontWithName:@"HelveticaNeue" size:50]];
+    //[emojiView sizeToFit];
+   // [emojiView setBackgroundColor:[UIColor redColor]];
+    
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(imageSize/2,imageSize/2,imageSize,imageSize)];
     [imageView setImage:[UIImage imageNamed:@"eye.png"]];
-    [coolView addSubview:imageView];
+    [coolView addSubview:emojiView];
     
     for (int i = 0; i<10; i++) {
         [self addSmallCircles:CGPointMake(coolView.frame.origin.x + (coolView.frame.size.width/2) - 3, (coolView.frame.origin.y + coolView.frame.size.height + 6) + (12*i))];
@@ -218,7 +225,13 @@
     float imageSize = radius/2;
     UIImageView *imageView = [[UIImageView alloc] initWithFrame:CGRectMake(imageSize/2,imageSize/2,imageSize,imageSize)];
     [imageView setImage:[UIImage imageNamed:@"profile-icon.png"]];
-    [funnyView addSubview:imageView];
+   // [funnyView addSubview:imageView];
+    UILabel *emojiView = [[UILabel alloc] initWithFrame:CGRectMake(imageSize/2,imageSize/2,imageSize,imageSize)];
+    [emojiView setTextAlignment:NSTextAlignmentCenter];
+    [emojiView setFont:[UIFont fontWithName:@"HelveticaNeue" size:50]];
+    [emojiView setText:@"\xF0\x9F\x98\x82"];
+    
+    [funnyView addSubview:emojiView];
     
     for (int i = 0; i<10; i++) {
         [self addSmallCircles:CGPointMake(funnyView.frame.origin.x + (funnyView.frame.size.width/2) - 3, (funnyView.frame.origin.y + funnyView.frame.size.height + 6) + (12*i))];
