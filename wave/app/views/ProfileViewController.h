@@ -22,4 +22,5 @@
 @property (strong, nonatomic) UserModel *user;
 @property (strong, nonatomic) UIImageView *profileBackgroundImage;
 @property (nonatomic) BOOL isNotDeviceUser;
+@property (nonatomic, strong) UIVisualEffectView *vibrancyEffectView;
 @end

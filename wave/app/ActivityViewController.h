@@ -16,8 +16,10 @@
 @property (nonatomic) bool shouldHidePeek;
 @property (nonatomic) bool noBucketsInFeed;
 @property (nonatomic) bool readyForExpanding;
+@property (nonatomic, copy) void (^onFeedRefreshed)(BOOL(hasElementsInFeed));
 -(void)initialize;
 -(UIView *)getCameraHolder;
+
 
 
 @end

@@ -20,6 +20,7 @@
 
 @implementation ProfileViewController{
     AuthHelper *authHelper;
+    UIBlurEffect *blurEffect;
     PeekViewController *peekViewController;
     ActivityViewController *activityController;
     UIView *profileWrapperScrollView;
@@ -29,6 +30,7 @@
     BOOL upWard;
     float scrollY;
     UIVisualEffectView *blurEffectView;
+
 }
 
 - (void)viewDidLoad {
@@ -155,9 +157,39 @@
     
    [self.profileBuckets.view setBackgroundColor:[UIColor clearColor]];
     self.profileBuckets.refreshControl.backgroundColor = [UIColor clearColor];
+    [self vibrancy];
 }
+
+-(void)vibrancy{
+    UIVibrancyEffect *vibrancyEffect = [UIVibrancyEffect effectForBlurEffect:blurEffect];
+    self.vibrancyEffectView = [[UIVisualEffectView alloc] initWithEffect:vibrancyEffect];
+    [self.vibrancyEffectView setFrame:self.view.bounds];
+    
+    // Label for vibrant text
+    UILabel *vibrantLabel = [[UILabel alloc] init];
+    if (self.profileBuckets.isDeviceUser) {
+        
+        [vibrantLabel setText:NSLocalizedString(@"profile_none_txt", nil)];
+    }else{
+        
+        [vibrantLabel setText:[NSString stringWithFormat:@"%@ %@", self.anotherUser.username, NSLocalizedString(@"profile_none_other_txt", nil)]];
+    }
+    // [vibrantLabel setMinimumScaleFactor:12.0/17.0];
+    [vibrantLabel setFont:[UIFont systemFontOfSize:17.0f]];
+    [vibrantLabel sizeToFit];
+    //[vibrantLabel setCenter: self.center];
+    [vibrantLabel setCenter:CGPointMake(self.view.center.x, self.view.center.y)];
+    
+    // Add label to the vibrancy view
+    [[self.vibrancyEffectView contentView] addSubview:vibrantLabel];
+    
+    // Add the vibrancy view to the blur view
+    [[blurEffectView contentView] addSubview:self.vibrancyEffectView];
+}
+
+
 -(void)addBlur{
-    UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+    blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
     blurEffectView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
     blurEffectView.frame = CGRectMake(0, 0, [UIHelper getScreenWidth], [UIHelper getScreenHeight]);
     //blurEffectView.alpha = 0.9;
@@ -234,7 +266,7 @@
     UILabel *label = (UILabel *)gesture.view;
     CGPoint translation = [gesture translationInView:label];
     CGRect frame = profileWrapperScrollView.frame;
-    
+    CGPoint velocity = [gesture velocityInView:label];
     if(gesture.state == UIGestureRecognizerStateBegan){
         
     }
@@ -276,14 +308,39 @@
     else if (translation.y == 0){
         
     }
+    profileWrapperScrollView.frame = frame;
+    [gesture setTranslation:CGPointZero inView:label];
     
     if(gesture.state == UIGestureRecognizerStateEnded || gesture.state == UIGestureRecognizerStateFailed || gesture.state == UIGestureRecognizerStateCancelled)
     {
+        CGPoint velocity = [gesture velocityInView:self.view];
+        CGFloat magnitude = sqrtf((velocity.x * velocity.x) + (velocity.y * velocity.y));
+        CGFloat slideMult = magnitude / 200;
+        NSLog(@"magnitude: %f, slideMult: %f", magnitude, slideMult);
+        
+        float slideFactor = 0.05 * slideMult; // Increase for more slide
+        CGPoint finalPoint = CGPointMake(gesture.view.center.x,
+                                         gesture.view.center.y + (velocity.y * slideFactor));
+        //finalPoint.x = MIN(MAX(finalPoint.x, 0), self.view.bounds.size.width);
+        finalPoint.y = MIN(MAX(finalPoint.y, 0), self.view.bounds.size.height);
+        
+        float top = finalPoint.y - (profileWrapperScrollView.frame.size.height/2);
+        if (top < 0) {
+            NSLog(@"less than zero");
+            finalPoint = CGPointMake(finalPoint.x, profileWrapperScrollView.frame.size.height/2);
+        }
+        else if(top > ([UIHelper getScreenHeight]/2) - 32){
+            NSLog(@"bigger");
+        }
+        NSLog(@"velocity is %f", velocity.y);
+        
+        
+        [UIView animateWithDuration:slideFactor*2 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+            NSLog(@"anm");
+            gesture.view.center = finalPoint;
+        } completion:nil];
         
     }
-    
-    profileWrapperScrollView.frame = frame;
-    [gesture setTranslation:CGPointZero inView:label];
 }
 
 -(void)animateWrapperToZero:(BucketModel *) bucket{
@@ -305,8 +362,16 @@
     __weak typeof(self) weakSelf = self;
     self.profileBuckets.onExpand=^(BucketModel*(bucket)){
         [weakSelf animateWrapperToZero:bucket];
-      //  [weakSelf changeToBucket:bucket];
+        //  [weakSelf changeToBucket:bucket];
     };
+    self.profileBuckets.onFeedRefreshed = ^(bool (hasElements)){
+        if (hasElements) {
+            NSLog(@"hiding");
+        };
+        
+        weakSelf.vibrancyEffectView.hidden = hasElements;
+    };
+    
     /*
      self.discover.onLockScreenToggle = ^{
      if(scrollView.scrollEnabled){

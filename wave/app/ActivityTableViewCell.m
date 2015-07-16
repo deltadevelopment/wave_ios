@@ -139,12 +139,22 @@
 }
 
 -(void)update:(BucketModel *) bucket{
+    self.bucket = bucket;
     self.profilePictureIcon.hidden = YES;
    [self.bucketImage setImage:nil];
-    [[bucket user] requestProfilePic:^(NSData *data){
-        [self.profilePictureIcon setImage:[UIImage imageWithData:data]];
+    
+    if([bucket.bucket_type isEqualToString:@"user"]){
+        [[bucket user] requestProfilePic:^(NSData *data){
+            [self.profilePictureIcon setImage:[UIImage imageWithData:data]];
+            self.profilePictureIcon.hidden = NO;
+        }];
+    }else{
+        [self.profilePictureIcon setBackgroundColor:[ColorHelper purpleColor]];
         self.profilePictureIcon.hidden = NO;
-    }];
+        [self.profilePictureIcon setImage:nil];
+    }
+    
+    
     DropModel *drop = [bucket getLastDrop];
     if([bucket Id] >0){
         [spinner startAnimating];
@@ -163,25 +173,33 @@
         
     }
     if([bucket.bucket_type isEqualToString:@"user"]){
+        self.bucketTitleHoriConstraint.constant = 50;
         if(viewMode == 1){
             self.displayNameText.text = @"My drops";
             self.profilePictureIcon.hidden = YES;
+            self.bucketTitleHoriConstraint.constant = 10;
         }else{
             self.displayNameText.text = [NSString stringWithFormat:@"@%@", [[bucket user] username]];
             self.profilePictureIcon.hidden = NO;
         }
         self.usernameText.hidden = YES;
+        self.profilePictureTopConstraint.constant = 8;
     }else{
         self.displayNameText.text = bucket.title;
         self.usernameText.hidden = NO;
-        if (bucket.user != nil) {
-             self.usernameText.text = [NSString stringWithFormat:@"%@ %@",NSLocalizedString(@"by_txt", nil), [[bucket user] username]];
-        }else{
-        self.usernameText.text = @"";
-        }
+      self.profilePictureTopConstraint.constant = 20;
+        //self.bucketTitleHoriConstraint.constant = 50;
+        //self.bucketUsernameHoriConstraint.constant = 50;
+        
        
+        if (bucket.user != nil) {
+            self.usernameText.text = [NSString stringWithFormat:@"%@ %@",NSLocalizedString(@"by_txt", nil), [[bucket user] username]];
+        }else{
+            self.usernameText.text = @"";
+        }
     }
 }
+
 -(void)updateAfterUpload{
     self.usernameText.hidden = NO;
     

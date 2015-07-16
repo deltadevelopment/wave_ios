@@ -90,7 +90,7 @@
     }
     else{
     //is seconds ago
-        returningDate = [NSString stringWithFormat:@" %f %@", distanceBetweenDates,
+        returningDate = [NSString stringWithFormat:@" %ld %@",(long) distanceBetweenDates,
                          distanceBetweenDates == 1? NSLocalizedString(@"second_time", nil) :NSLocalizedString(@"seconds_time", nil)];
     }
     NSLog(@"time %@", returningDate);

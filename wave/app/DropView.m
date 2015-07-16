@@ -274,7 +274,6 @@
                      animations:^{
                          //[self.dropTemperature setFont:[UIFont fontWithName:@"HelveticaNeue-Thin" size:20]];
                          self.dropTemperature.transform = CGAffineTransformMakeScale(1.5,1.5);
-                       
                      }
                      completion:^(BOOL finished){
                          //Temporary hard coded to show that temperature changes when voting

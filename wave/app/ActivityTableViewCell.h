@@ -25,8 +25,14 @@
 -(void)stopSpinnerAnimation;
 -(void)startSpinnerForUploadAnimtation;
 -(void)stopSpinnerForUploadAnimation;
+@property (nonatomic, strong) BucketModel *bucket;
 -(void)update:(BucketModel *) bucket;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bucketNameConstraintLeft;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bucketConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *profilePictureWidthConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *profilePictureHeightConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *profilePictureTopConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bucketTitleHoriConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bucketUsernameHoriConstraint;
 
 @end

@@ -201,8 +201,18 @@ const int EXPAND_SIZE = 400;
         if ([[self.feedModel feed] count] == 0) {
             self.noBucketsInFeed = YES;
            // self.tableView.hidden = YES;
-            infoLabel.hidden = NO;
+            if (viewMode == 1) {
+                infoLabel.hidden = YES;
+                self.onFeedRefreshed(NO);
+            }else{
+                infoLabel.hidden = NO;
+            }
+            
         }else{
+            if (viewMode == 1) {
+                infoLabel.hidden = YES;
+                self.onFeedRefreshed(YES);
+            }
             self.noBucketsInFeed = NO;
             //self.tableView.hidden = NO;
             infoLabel.hidden = YES;
@@ -228,11 +238,12 @@ const int EXPAND_SIZE = 400;
     }else{
         [infoLabel setText:NSLocalizedString(@"feed_none_txt", nil)];
     }
-    
-    //infoLabel.hidden = YES;
     [self.view setBackgroundColor:[ColorHelper purpleColor]];
     [self.view addSubview:infoLabel];
+    infoLabel.hidden = YES;
 }
+
+
 
 -(void)initNoBuckets{
     if (self.noBucketsInFeed) {
