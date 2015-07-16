@@ -105,8 +105,8 @@
 "no_votes_yet" = "Det er ingen votes enda";
 
 
-"vote_cool" = "Kul";
-"vote_funny" = "Morsom";
+"vote_cool" = "kul";
+"vote_funny" = "morsom";
 "personal_bucket" = "sin bucket";
 
 
@@ -122,4 +122,7 @@
 "days_time" = "dager siden";
 
 "title_to_bucket" = "Legg til en tittel på bucketen";
+
+"vote_cool_cap" = "KULT";
+"vote_funny_cap" = "MORSOM";
 

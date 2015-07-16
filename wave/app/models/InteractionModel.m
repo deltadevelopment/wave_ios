@@ -62,9 +62,9 @@
     
     else if ([self.topic_type isEqualToString:@"Vote"]) {
         if (self.temperature.temperature == 1) {
-            self.localizedMessage = [NSString stringWithFormat:@"%@ '%@'.", self.localizedMessage, NSLocalizedString(@"vote_cool", nil)];
+            self.localizedMessage = [NSString stringWithFormat:@"%@ %@.", self.localizedMessage, NSLocalizedString(@"vote_cool", nil)];
         }else{
-            self.localizedMessage = [NSString stringWithFormat:@"%@ '%@'.", self.localizedMessage, NSLocalizedString(@"vote_funny", nil)];
+            self.localizedMessage = [NSString stringWithFormat:@"%@ %@.", self.localizedMessage, NSLocalizedString(@"vote_funny", nil)];
         }
     }
     else if ([self.topic_type isEqualToString:@"Tag"]) {

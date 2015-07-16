@@ -69,11 +69,13 @@
       //  [self.voteImageView setImage:[UIImage imageNamed:@"profile-icon.png"]];
         [self.labelEmoji setText:@"\xF0\x9F\x98\x82"];
         [self.labelEmojiTextLabel setText:@"FUNNY!"];
+        [self.labelEmojiTextLabel setText:[NSString stringWithFormat:@"%@!", NSLocalizedString(@"vote_funny_cap", nil)]];
     }else{
        // self.view.backgroundColor =[ColorHelper greenColor];
        // [self.voteImageView setImage:[UIImage imageNamed:@"eye.png"]];
         //SET cool here
         [self.labelEmojiTextLabel setText:@"COOL!"];
+           [self.labelEmojiTextLabel setText:[NSString stringWithFormat:@"%@!", NSLocalizedString(@"vote_cool_cap", nil)]];
         [self.labelEmoji setText:@"\xF0\x9F\x91\x8D"];
         //[self]
         self.vote = 1;
