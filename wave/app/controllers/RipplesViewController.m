@@ -13,6 +13,7 @@
 #import "BucketController.h"
 #import "RipplesFeed.h"
 #import "DataHelper.h"
+#import "ProfileViewController.h"
 //static int TABLE_CELLS_ON_SCREEN = 6;
 @interface RipplesViewController ()
 
@@ -26,6 +27,7 @@
     CGRect cellFrame;
     int currentBucketId;
     int currentDropId;
+    ProfileViewController *profileView;
 }
 
 - (void)viewDidLoad {
@@ -158,7 +160,7 @@
     }
     return cell;
 }
-
+/*
 -(void)showProfile:(RippleModel *) ripple{
     AbstractFeedViewController *profileController = [self.storyboard instantiateViewControllerWithIdentifier:@"activity"];
     [profileController setViewMode:1];
@@ -179,6 +181,51 @@
                                      action:nil];
     
     [[ApplicationHelper getMainNavigationController] pushViewController:profileController animated:YES];
+}
+*/
+-(void)showProfile:(RippleModel *) ripple{
+    //[self.parentController stopAllVideo];
+    //UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
+    profileView = [[ProfileViewController alloc] init];
+    [profileView setViewMode:1];
+    [profileView setIsNotDeviceUser:YES];
+    [profileView setIsDeviceUser:NO];
+    [profileView setAnotherUser:[ripple.interaction GetCurrentUser]];
+    [profileView.navigationItem setTitle:[ripple.interaction GetCurrentUser].username];
+    
+    /*
+     [self insertSubview:profileView.view atIndex:0];
+     //[self addChildViewController:profileView];
+     CGRect frame = profileView.view.frame;
+     frame.origin.y = -[UIHelper getScreenHeight];
+     profileView.view.frame = frame;
+     [UIView animateWithDuration:0.5f
+     delay:0.0f
+     options: UIViewAnimationOptionCurveLinear
+     animations:^{
+     CGRect frame = profileView.view.frame;
+     frame.origin.y = 0;
+     profileView.view.frame = frame;
+     CGRect frame2 = self.frame;
+     frame2.origin.y = [UIHelper getScreenHeight];
+     self.frame = frame2;
+     }
+     completion:^(BOOL finished){
+     CGRect frame2 = self.frame;
+     frame2.origin.y = 0;
+     self.frame = frame2;
+     [profileView.view removeFromSuperview];
+     //[profileController layOutPeek];
+     
+     }];
+     */
+    self.navigationItem.backBarButtonItem =
+    [[UIBarButtonItem alloc] initWithTitle:@""
+                                     style:UIBarButtonItemStylePlain
+                                    target:nil
+                                    action:nil];
+    
+    [[ApplicationHelper getMainNavigationController] pushViewController:profileView animated:YES];
 }
 
 -(void)showBucketNormally:(RippleModel *)ripple

@@ -40,7 +40,7 @@
     self.replyTextFieldSimple.layer.cornerRadius = 2;
     self.replyTextFieldSimple.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.2f];
     self.replyTextFieldSimple.clipsToBounds = YES;
-    [self.replyTextFieldSimple setKeyboardType:UIKeyboardTypeEmailAddress];
+    [self.replyTextFieldSimple setKeyboardType:UIKeyboardTypeDefault];
     
     self.replyTextFieldSimple.attributedPlaceholder = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"caption_placeholder_txt", nil) attributes:@{                                                                                                                                 NSForegroundColorAttributeName: [[UIColor whiteColor]colorWithAlphaComponent:0.4]                                                              }];
     self.tableView.scrollEnabled = NO;
@@ -51,7 +51,7 @@
     self.replyTextField.layer.cornerRadius = 2;
     self.replyTextField.backgroundColor = [[UIColor whiteColor] colorWithAlphaComponent:0.2f];
     self.replyTextField.clipsToBounds = YES;
-    [self.replyTextField setKeyboardType:UIKeyboardTypeEmailAddress];
+    [self.replyTextField setKeyboardType:UIKeyboardTypeDefault];
    // self.view.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"169.jpg"]];
     self.view.backgroundColor = [UIColor clearColor];
      //self.view.backgroundColor = [UIColor redColor]

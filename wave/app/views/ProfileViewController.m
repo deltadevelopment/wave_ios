@@ -483,6 +483,7 @@
          [self.subscribeButton setTitleEdgeInsets:UIEdgeInsetsMake(0, -40, 0, 0)];
          [self.subscribeButton sizeToFit];
          */
+        [self.subscribeButton setTintColor:[UIColor whiteColor]];
         NSLog(@"User id %d auth helper %d", self.user.Id, [[authHelper getUserId] intValue]);
         if ([self.user Id] == [[authHelper getUserId] intValue]) {
             [self.subscribeButton setTitle:NSLocalizedString(@"subscriptions_button_txt", nil) forState:UIControlStateNormal];
@@ -496,6 +497,8 @@
         NSLog(@"subbb");
         if ([self.user Id] ==[[authHelper getUserId] intValue]) {
             [[self.subscribeButton layer] setBorderColor:[ColorHelper magenta].CGColor];
+        }else{
+            [[self.subscribeButton layer] setBorderColor:[ColorHelper whiteColor].CGColor];
         }
         //[self.subscribeButton setTitle:@"Subscribe" forState:UIControlStateNormal];
         [self.subscribeButton setTitle:NSLocalizedString(@"subscribe_txt", nil) forState:UIControlStateNormal];
@@ -508,7 +511,7 @@
     [self.subscribeButton setImage: nil forState:UIControlStateNormal];
     [self.subscribeButton setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
     [self.subscribeButton setTitleEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
-    [self.subscribeButton sizeToFit];
+   // [self.subscribeButton sizeToFit];
 }
 
 -(void)updatePeekView:(UserModel *) user{

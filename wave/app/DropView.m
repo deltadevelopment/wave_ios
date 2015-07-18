@@ -338,7 +338,7 @@
     [profileView setIsNotDeviceUser:YES];
     [profileView setIsDeviceUser:NO];
     [profileView setAnotherUser:self.drop.user];
-    
+     [profileView.navigationItem setTitle:self.drop.user.username];
 
     /*
     [self insertSubview:profileView.view atIndex:0];

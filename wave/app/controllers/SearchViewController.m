@@ -11,6 +11,7 @@
 #import "ColorHelper.h"
 #import "CarouselController.h"
 #import "BucketController.h"
+#import "ProfileViewController.h"
 @interface SearchViewController ()
 
 @end
@@ -26,6 +27,7 @@
     UIVisualEffectView  *blurEffectViewSearch;
     NavigationControlViewController *root;
     NavigationControlViewController *oldRoot;
+    ProfileViewController *profileView;
 }
 
 - (void)viewDidLoad {
@@ -556,7 +558,7 @@
     
     [self showProfile:user];
 }
-
+/*
 -(void)showProfile:(UserModel *) user{
     AbstractFeedViewController *profileController = [self.storyboard instantiateViewControllerWithIdentifier:@"activity"];
     [profileController setViewMode:1];
@@ -584,6 +586,26 @@
     }
     
     [[ApplicationHelper getMainNavigationController] pushViewController:profileController animated:YES];
+}
+*/
+-(void)showProfile:(UserModel *) user{
+    //[self.parentController stopAllVideo];
+    //UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
+    profileView = [[ProfileViewController alloc] init];
+    [profileView setViewMode:1];
+    [profileView setIsNotDeviceUser:YES];
+    [profileView setIsDeviceUser:NO];
+    [profileView setAnotherUser:user];
+    [profileView.navigationItem setTitle:user.username];
+    
+   
+    self.navigationItem.backBarButtonItem =
+    [[UIBarButtonItem alloc] initWithTitle:@""
+                                     style:UIBarButtonItemStylePlain
+                                    target:nil
+                                    action:nil];
+    
+    [[ApplicationHelper getMainNavigationController] pushViewController:profileView animated:YES];
 }
 
 -(void)viewDidLayoutSubviews{
