@@ -120,13 +120,6 @@
     
     }
     [self updateCarousel:3 withCurrentPage:currentPageNumber];
-    
-    
-
-    
-    
-  
-   
 }
 
 -(void)slideNavTitle:(float)value withTitleLabel:(UILabel *) label withDefaultFloat:(float)fval
@@ -180,10 +173,12 @@
 }
 
 -(void)addNavigationTitle:(NSString *) title withPageCount:(int)pageCount{
-    UILabel *navTitle = [[UILabel alloc] initWithFrame:CGRectMake(([UIHelper getScreenWidth] * pageCount) -375, 0, 250, 34)];
+   // NSLog(@"the size %f", [UIHelper getScreenWidth]);
+    UILabel *navTitle = [[UILabel alloc] initWithFrame:CGRectMake(([UIHelper getScreenWidth] * pageCount) -[UIHelper getScreenWidth], 0, 250, 34)];
     [navTitle  setTextAlignment:NSTextAlignmentCenter];
     [UIHelper applyThinLayoutOnLabel:navTitle];
     navTitle.text = title;
+    //[navTitle setBackgroundColor:[UIColor redColor]];
     
     [carouselTitles addObject:navTitle];
     [carouselTitles2 addObject:navTitle];

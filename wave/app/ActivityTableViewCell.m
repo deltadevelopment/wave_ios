@@ -228,7 +228,7 @@
     }else{
         self.usernameText.text = bucket.title;
         self.usernameText.hidden = NO;
-        self.usernameVerticalConstraint.constant = 260;
+        self.usernameVerticalConstraint.constant = [UIHelper getScreenHeight]/2 - 70;//260;
         self.bucketUsernameHoriConstraint.constant = 10;
         self.usernameWidthConstraint.constant = [UIHelper getScreenWidth] - 20;
         [self.usernameText setTextAlignment:NSTextAlignmentRight]; //<-- THIS IS THE LINE TO COMMENT OUT
