@@ -146,16 +146,16 @@
     [profileWrapperScrollView addGestureRecognizer:profileDragGesture];
     
     if(self.isDeviceUser){
-       UserModel *userModel =[[UserModel alloc] initWithDeviceUser:^(UserModel *user){
+        UserModel *userModel =[[UserModel alloc] initWithDeviceUser:^(UserModel *user){
             [self updateText:user];
         } onError:^(NSError *error){}];
     }else{
         [self updateText:[self anotherUser]];
     }
-     [self checkScreen];
+    [self checkScreen];
     
     
-   [self.profileBuckets.view setBackgroundColor:[UIColor clearColor]];
+    [self.profileBuckets.view setBackgroundColor:[UIColor clearColor]];
     self.profileBuckets.refreshControl.backgroundColor = [UIColor clearColor];
     [self vibrancy];
 }
@@ -207,30 +207,7 @@
         [self.profileBackgroundImage setImage:[UIImage imageWithData:data]];
         
     }];
-    if(user.Id == [[authHelper getUserId] intValue]){
-        isDeviceUser = YES;
-        //self.subscribeButton.hidden = YES;
-        self.settingsButton.hidden = NO;
-        
-        [self.subscribeButton setTitle:NSLocalizedString(@"subscriptions_button_txt", nil) forState:UIControlStateNormal];
-        
-        //[self.subscribeButton setBackgroundColor:[ColorHelper purpleColor]];
-        [[self.subscribeButton layer] setBorderColor:[ColorHelper magenta].CGColor];
-    }else{
-        self.subscribeButton.hidden = NO;
-        self.settingsButton.hidden = YES;
-        isDeviceUser = NO;
-    }
-    if(user.Id == [[authHelper getUserId] intValue]){
-        self.subscribersCountLabel.text = [NSString stringWithFormat:@"%d %@", user.subscribers_count, NSLocalizedString(@"subscriptions_profile_txt", nil)];
-        
-    }else{
-        self.subscribersCountLabel.text = [NSString stringWithFormat:@"%d %@", user.subscribers_count, NSLocalizedString(@"subscriptions_txt", nil)];
-        
-    }
-    self.usernameLabel.text = user.usernameFormatted;
-    [self checkSubscription];
-    
+    [self updatePeekView:user];
     
 }
 
@@ -516,15 +493,63 @@
 
 -(void)updatePeekView:(UserModel *) user{
     self.user = user;
-    NSLog(@"HERE");
-    self.subscribersCountLabel.text = [NSString stringWithFormat:@"%d %@", user.subscribers_count, NSLocalizedString(@"subscriptions_txt", nil)];
-    self.usernameLabel.text = [user display_name] != nil ? [user display_name] : [user usernameFormatted];
+    UserModel *deviceUser =[[UserModel alloc] initWithDeviceUser];
+    self.subscribeModel = [[SubscribeModel alloc] initWithSubscriber:deviceUser withSubscribee:self.user];
     if(user.Id == [[authHelper getUserId] intValue]){
+        isDeviceUser = YES;
         //self.subscribeButton.hidden = YES;
+        self.settingsButton.hidden = NO;
         self.subscribersCountLabel.hidden = YES;
+        [self.subscribeButton setTitle:NSLocalizedString(@"subscriptions_button_txt", nil) forState:UIControlStateNormal];
+        
+        //[self.subscribeButton setBackgroundColor:[ColorHelper purpleColor]];
+        [[self.subscribeButton layer] setBorderColor:[ColorHelper magenta].CGColor];
     }else{
         self.subscribersCountLabel.hidden = NO;
+        self.subscribeButton.hidden = NO;
+        self.settingsButton.hidden = YES;
+        isDeviceUser = NO;
     }
+    if(user.Id == [[authHelper getUserId] intValue]){
+        self.subscribersCountLabel.text = [NSString stringWithFormat:@"%d %@", user.subscribers_count, NSLocalizedString(@"subscriptions_profile_txt", nil)];
+        
+    }else{
+        if (user.subscribers_count == 0) {
+            [self.subscribersCountLabel setHidden:YES];
+        }else{
+            if (user.subscribers_count == 1) {
+                if (self.subscribeModel.isSubscriberLocal) {
+                    //Du subscriber, det vil si at det skal sta du gjor det
+                    //self.subscribersCountLabel.text = [NSString stringWithFormat:@"%d %@", user.subscribers_count, NSLocalizedString(@"subscriptions_when_single_you_txt", nil)];
+                    self.subscribersCountLabel.text = [NSString stringWithFormat:@"%@", NSLocalizedString(@"subscriptions_when_single_you_txt", nil)];
+                }else{
+                    self.subscribersCountLabel.text = [NSString stringWithFormat:@"%d %@", user.subscribers_count, NSLocalizedString(@"subscriptions_single_txt", nil)];
+                }
+                
+            }
+            else{
+                if (self.subscribeModel.isSubscriberLocal) {
+                    if (user.subscribers_count == 2) {
+                        self.subscribersCountLabel.text = [NSString stringWithFormat:@"%d %@", user.subscribers_count - 1, NSLocalizedString(@"subscriptions_when_single_txt", nil)];
+                    }else{
+                        self.subscribersCountLabel.text = [NSString stringWithFormat:@"%d %@", user.subscribers_count - 1, NSLocalizedString(@"subscriptions_when_txt", nil)];
+                    }
+                    
+                }else{
+                 self.subscribersCountLabel.text = [NSString stringWithFormat:@"%d %@", user.subscribers_count, NSLocalizedString(@"subscriptions_txt", nil)];
+                }
+               
+            }
+            [self.subscribersCountLabel setHidden:NO];
+        }
+    }
+    self.usernameLabel.text = user.usernameFormatted;
+    [self checkSubscription];
+
+    
+    
+    //self.subscribersCountLabel.text = [NSString stringWithFormat:@"%d %@", user.subscribers_count, NSLocalizedString(@"subscriptions_txt", nil)];
+    self.usernameLabel.text = [user display_name] != nil ? [user display_name] : [user usernameFormatted];
 }
 
 -(void)initActivityIndicator{
@@ -607,7 +632,15 @@
         /*Do iPad stuff here.*/
     }
 }
-
+-(void)viewDidAppear:(BOOL)animated{
+    if(self.isDeviceUser){
+        UserModel *userModel =[[UserModel alloc] initWithDeviceUser:^(UserModel *user){
+            [self updateText:user];
+        } onError:^(NSError *error){}];
+    }else{
+        [self updateText:[self anotherUser]];
+    }
+}
 
 /*
 #pragma mark - Navigation

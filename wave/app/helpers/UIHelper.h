@@ -40,4 +40,5 @@
 +(void)updateNotificationButton:(UINavigationItem *) item withButton:(UIButton *) button;
 +(void)applyCaptionLayoutOnTextField:(UITextField *) label withSize:(float) size;
 + (UIImage *)imageWithColor:(UIColor *)color;
++(void)addShadowToViewBottom:(UIView *) view;
 @end

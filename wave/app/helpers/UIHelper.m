@@ -115,7 +115,8 @@ static CGFloat screenHeight;
     view.clipsToBounds = YES;
 }
 
-+(void)addShadowToView:(UIView *) view{
++(void)addShadowToView:(UIView *) view
+{
     view.backgroundColor = [UIColor blackColor];
     view.alpha = 0.38;
     CAGradientLayer *gradientLayer = [CAGradientLayer layer];
@@ -124,6 +125,20 @@ static CGFloat screenHeight;
     gradientLayer.colors = [NSArray arrayWithObjects:(id)[UIColor whiteColor].CGColor, (id)[UIColor clearColor].CGColor, nil];
     gradientLayer.startPoint = CGPointMake(1.0f, 0.1f);
     gradientLayer.endPoint = CGPointMake(1.0f, 1.0f);
+    
+    view.layer.mask = gradientLayer;
+}
+
++(void)addShadowToViewBottom:(UIView *) view
+{
+    view.backgroundColor = [UIColor blackColor];
+    view.alpha = 0.38;
+    CAGradientLayer *gradientLayer = [CAGradientLayer layer];
+    gradientLayer.frame = view.bounds;
+    gradientLayer.shadowPath = [UIBezierPath bezierPathWithRect:gradientLayer.bounds].CGPath;
+    gradientLayer.colors = [NSArray arrayWithObjects:(id)[UIColor whiteColor].CGColor, (id)[UIColor clearColor].CGColor, nil];
+    gradientLayer.startPoint = CGPointMake(1.0f, 1.0f);
+    gradientLayer.endPoint = CGPointMake(1.0f, 0.1f);
     
     view.layer.mask = gradientLayer;
 }

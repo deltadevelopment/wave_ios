@@ -12,6 +12,7 @@
 #import "DropModel.h"
 @implementation ActivityTableViewCell{
     UIView *shadowView;
+    UIView *shadowViewBottom;
     UIActivityIndicatorView *spinner;
     UIActivityIndicatorView *spinnerForUpload;
     int viewMode;
@@ -73,14 +74,25 @@
     self.topBar.backgroundColor = [UIColor clearColor];
     self.bottomBar.alpha = 1.0;
     self.bottomBar.hidden = YES;
+    
     shadowView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, [UIHelper getScreenWidth], [UIHelper getScreenHeight]/4)];
     [UIHelper addShadowToView:shadowView];
     self.bucketImage.frame = CGRectOffset(self.frame, 50, 50);
     [self.bucketImage addSubview:shadowView];
+    
+    float vi = ([UIHelper getScreenHeight])/2 - [UIHelper getScreenHeight]/4 - 30;
+    shadowViewBottom = [[UIView alloc]initWithFrame:CGRectMake(0,vi, [UIHelper getScreenWidth], [UIHelper getScreenHeight]/4)];
+    [UIHelper addShadowToViewBottom:shadowViewBottom];
+    [self.bucketImage addSubview:shadowViewBottom];
+    
     self.layer.shouldRasterize = YES;
     self.layer.rasterizationScale = [UIScreen mainScreen].scale;
     [self addSubview:spinner];
     [self addSubview:spinnerForUpload];
+}
+
+-(void)hideShowShadow{
+    shadowViewBottom.hidden = !shadowViewBottom.hidden;
 }
 
 -(void)showActions{
@@ -120,6 +132,34 @@
     
     [view addAction:cancel];
     [superController presentViewController:view animated:YES completion:nil];
+}
+
+
+-(void)animateBucketTitleIn{
+    [UIView animateWithDuration:0.2f
+                          delay:0.0f
+                        options: UIViewAnimationOptionCurveLinear
+                     animations:^{
+                         [self.usernameText setAlpha:1.0f];
+                         [shadowViewBottom setAlpha:0.38f];
+                    
+                     }
+                     completion:nil];
+
+}
+
+-(void)animateBucketTitleOut{
+    [self.usernameText setAlpha:0.0f];
+    [shadowViewBottom setAlpha:0.0f];
+    [UIView animateWithDuration:0.3f
+                          delay:0.0f
+                        options: UIViewAnimationOptionCurveLinear
+                     animations:^{
+                         
+                         
+                     }
+                     completion:nil];
+    
 }
 
 -(void)startSpinnerAnimtation{

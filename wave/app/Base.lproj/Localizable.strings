@@ -43,7 +43,11 @@
 
 "subscriptions_button_txt" = "Subscriptions";
 "subscriptions_txt" = "others already do";
+"subscriptions_single_txt" = "other already do";
 "subscriptions_when_txt" = "others also do";
+"subscriptions_when_single_txt" = "other also do";
+"subscriptions_when_single_you_txt" = "Only you subscribing";
+
 "subscriptions_profile_txt" = "subscribers";
 "subscribe_txt" = "Subscribe";
 "unsubscribe_txt" = "Subscribing";

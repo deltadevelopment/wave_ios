@@ -605,6 +605,13 @@
                                     target:nil
                                     action:nil];
     
+    if (!self.searchMode) {
+        [self dismiss];
+    }
+    if (self.tagMode) {
+        [self dismiss];
+    }
+    
     [[ApplicationHelper getMainNavigationController] pushViewController:profileView animated:YES];
 }
 

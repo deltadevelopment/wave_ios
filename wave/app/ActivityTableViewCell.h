@@ -39,5 +39,8 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *usernameVerticalConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *displayNameWidth;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *usernameWidthConstraint;
+-(void)hideShowShadow;
+-(void)animateBucketTitleIn;
+-(void)animateBucketTitleOut;
 
 @end

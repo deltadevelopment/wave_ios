@@ -42,10 +42,13 @@
 "cancel_menu_txt" = "Avbryt";
 "redrop_action_txt" = "Redrop";
 
-"subscriptions_button_txt" = "Abonnenter";
+"subscriptions_button_txt" = "Abonnementer";
 "subscriptions_txt" = "andre gjør det allerede";
+"subscriptions_single_txt" = "annen gjør det allerede";
 "subscriptions_when_txt" = "andre gjør det også";
-"subscriptions_profile_txt" = "abonnenter";
+"subscriptions_when_single_txt" = "annen gjør det også";
+"subscriptions_when_single_you_txt" = "Ingen andre abonnerer enda";
+"subscriptions_profile_txt" = "abonnementer";
 "subscribe_txt" = "Abonner";
 "unsubscribe_txt" = "Abonnerer";
 "ripples_title" = "Ripples";
@@ -75,7 +78,7 @@
 "search_placeholder_txt" = "Søk etter brukere";
 "feed_none_txt" = "Ingen innhold tilgjengelig";
 "profile_none_txt" = "Du har ingen drops ennå";
-"profile_none_other_txt" = "har ingen drops ennå";
+"profile_none_other_txt" = "har ingen drops";
 "subscribers_none_txt" = "Du har ingen abonnenter ennå";
 
 

@@ -110,7 +110,6 @@ const int EXPAND_SIZE = 400;
             NSString *url = [NSString stringWithFormat:@"user/%d/buckets", self.anotherUser.Id];
             self.feedModel = [[FeedModel alloc] initWithURL:url];
         }
-       
     }
 }
 
@@ -162,7 +161,8 @@ const int EXPAND_SIZE = 400;
        
         
     }];
-     [self.refreshControl beginRefreshing];
+    [self.refreshControl beginRefreshing];
+    NSLog(@"starting refreshing");
     [self refreshFeed];
 }
 
@@ -197,6 +197,8 @@ const int EXPAND_SIZE = 400;
 
 -(void)refreshFeed{
     __weak typeof(self) weakSelf = self;
+    NSLog(@"the feed gets refreshed");
+    infoLabel.hidden = YES;
     [self.feedModel getFeed:^{
         [weakSelf stopRefreshing];
         if ([[self.feedModel feed] count] == 0) {
@@ -208,7 +210,6 @@ const int EXPAND_SIZE = 400;
             }else{
                 infoLabel.hidden = NO;
             }
-            
         }else{
             if (viewMode == 1) {
                 infoLabel.hidden = YES;
@@ -316,12 +317,14 @@ const int EXPAND_SIZE = 400;
         [CATransaction setCompletionBlock:^{
             if(shouldExpand){
                 ActivityTableViewCell *cell = (ActivityTableViewCell *)[_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:indexPath.row inSection:0]];
-                [cell.usernameText setHidden:YES];
+                //[cell.usernameText setHidden:YES];
                 [self expandBucketWithId:(int)indexPath.row];
             }
         }];
         if (shouldExpand) {
-            [cell.usernameText setHidden:YES];
+            [cell animateBucketTitleOut];
+            //[cell.usernameText setHidden:YES];
+            //[cell hideShowShadow];
         }
         [tableView beginUpdates];
         [tableView endUpdates];
@@ -335,13 +338,24 @@ const int EXPAND_SIZE = 400;
     indexCurrent = nil;
     ActivityTableViewCell *cell = (ActivityTableViewCell *)[_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:expandedPath
                                                                                                                 inSection:0]];
-      BucketModel *bucket = [[self.feedModel feed] objectAtIndex:expandedPath];
+    BucketModel *bucket = [[self.feedModel feed] objectAtIndex:expandedPath];
+    
+    
+    
+    [CATransaction begin];
+    
+    [CATransaction setCompletionBlock:^{
+        if (![bucket.bucket_type isEqualToString:@"user"]) {
+            //[cell.usernameText setHidden:NO];
+            //[cell hideShowShadow];
+            [cell animateBucketTitleIn];
+        }
+    }];
     
     [self.tableView beginUpdates];
     [self.tableView endUpdates];
-    if (![bucket.bucket_type isEqualToString:@"user"]) {
-        [cell.usernameText setHidden:NO];
-    }
+    [CATransaction commit];
+    
     NSMutableArray *deletionQueue = [DataHelper getDeletionQueue];
     if (deletionQueue != nil) {
         if ([deletionQueue count] > 0) {
