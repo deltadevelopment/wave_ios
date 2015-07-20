@@ -102,10 +102,12 @@ const int EXPAND_SIZE = 400;
             NSString *url = [NSString stringWithFormat:@"user/%@/buckets", [authHelper getUserId]];
             self.feedModel = [[FeedModel alloc] initWithURL:url];
         }else{
+            /*
              __weak typeof(self) weakSelf = self;
             self.onExpand=^(BucketModel*(bucket)){
                 [weakSelf changeToBucket:bucket];
             };
+             */
             [self.navigationItem setTitle:self.anotherUser.username];
             NSString *url = [NSString stringWithFormat:@"user/%d/buckets", self.anotherUser.Id];
             self.feedModel = [[FeedModel alloc] initWithURL:url];
@@ -318,6 +320,7 @@ const int EXPAND_SIZE = 400;
             if(shouldExpand){
                 ActivityTableViewCell *cell = (ActivityTableViewCell *)[_tableView cellForRowAtIndexPath:[NSIndexPath indexPathForRow:indexPath.row inSection:0]];
                 //[cell.usernameText setHidden:YES];
+                NSLog(@"EXPANDING NOW");
                 [self expandBucketWithId:(int)indexPath.row];
             }
         }];

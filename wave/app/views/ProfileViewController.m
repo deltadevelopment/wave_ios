@@ -113,6 +113,7 @@
         [self.profileBuckets setIsDeviceUser:YES];
     }
     else{
+         [self.profileBuckets setIsDeviceUser:NO];
         [self.profileBuckets setAnotherUser:self.anotherUser];
     }
 
@@ -337,7 +338,9 @@
 
 -(void)discovercallbacks{
     __weak typeof(self) weakSelf = self;
+    NSLog(@"DETTE ER HER");
     self.profileBuckets.onExpand=^(BucketModel*(bucket)){
+        NSLog(@"zerocal");
         [weakSelf animateWrapperToZero:bucket];
         //  [weakSelf changeToBucket:bucket];
     };

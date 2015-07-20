@@ -23,4 +23,5 @@
 @property (strong, nonatomic) UIImageView *profileBackgroundImage;
 @property (nonatomic) BOOL isNotDeviceUser;
 @property (nonatomic, strong) UIVisualEffectView *vibrancyEffectView;
+-(void)discovercallbacks;
 @end

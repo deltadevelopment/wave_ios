@@ -12,6 +12,7 @@
 #import "GraphicsHelper.h"
 #import "VoteInfoView.h"
 #import "ProfileViewController.h"
+#import "AbstractFeedViewController.h"
 @implementation DropView
 {
     MediaPlayerViewController *mediaPlayer;
@@ -19,7 +20,7 @@
     UIView *shadowView;
     bool isPlaying;
     
-    ProfileViewController *profileView;
+    AbstractFeedViewController *profileView;
     
 }
 
@@ -332,13 +333,16 @@
 
 -(void)showProfile{
     //[self.parentController stopAllVideo];
-    //UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
-    profileView = [[ProfileViewController alloc] init];
+    UIStoryboard *mainStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle: nil];
+    
+  //  profileView = [[ProfileViewController alloc] init];
+     profileView = [mainStoryboard instantiateViewControllerWithIdentifier:@"profileView"];
     [profileView setViewMode:1];
-    [profileView setIsNotDeviceUser:YES];
+   [(ProfileViewController *)profileView setIsNotDeviceUser:YES];
     [profileView setIsDeviceUser:NO];
     [profileView setAnotherUser:self.drop.user];
-     [profileView.navigationItem setTitle:self.drop.user.username];
+    [profileView.navigationItem setTitle:self.drop.user.username];
+    //[profileView discovercallbacks];
 
     /*
     [self insertSubview:profileView.view atIndex:0];
