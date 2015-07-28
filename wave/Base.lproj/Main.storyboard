@@ -1446,7 +1446,7 @@
                                                                 </mask>
                                                             </variation>
                                                             <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                                <rect key="frame" x="290" y="15" width="15" height="15"/>
+                                                                <rect key="frame" x="290" y="16" width="15" height="15"/>
                                                                 <mask key="constraints">
                                                                     <include reference="RfD-Pw-bdO"/>
                                                                     <include reference="cVq-sg-5dH"/>
@@ -1533,20 +1533,20 @@
                                                         </mask>
                                                         <mask key="constraints">
                                                             <exclude reference="OwZ-Js-AZS"/>
-                                                            <exclude reference="h5N-zw-OCu"/>
-                                                            <exclude reference="rAy-k2-W1D"/>
-                                                            <exclude reference="4NF-BP-dDk"/>
-                                                            <exclude reference="Pyj-yK-r2q"/>
-                                                            <exclude reference="UPV-9n-nYA"/>
-                                                            <exclude reference="cTU-rT-W4z"/>
                                                             <exclude reference="95T-Ax-hsi"/>
                                                             <exclude reference="E9G-6k-fuK"/>
                                                             <exclude reference="uMI-Bu-rI6"/>
                                                             <exclude reference="zUD-UM-I15"/>
                                                             <exclude reference="zXh-Mr-4D8"/>
+                                                            <exclude reference="4NF-BP-dDk"/>
+                                                            <exclude reference="Pyj-yK-r2q"/>
+                                                            <exclude reference="UPV-9n-nYA"/>
+                                                            <exclude reference="cTU-rT-W4z"/>
                                                             <exclude reference="M2M-qh-KsW"/>
                                                             <exclude reference="ncE-xx-ycV"/>
                                                             <exclude reference="pkB-ge-m23"/>
+                                                            <exclude reference="h5N-zw-OCu"/>
+                                                            <exclude reference="rAy-k2-W1D"/>
                                                         </mask>
                                                     </variation>
                                                     <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
@@ -1559,20 +1559,20 @@
                                                         </mask>
                                                         <mask key="constraints">
                                                             <include reference="OwZ-Js-AZS"/>
-                                                            <include reference="h5N-zw-OCu"/>
-                                                            <include reference="rAy-k2-W1D"/>
-                                                            <include reference="4NF-BP-dDk"/>
-                                                            <include reference="Pyj-yK-r2q"/>
-                                                            <exclude reference="UPV-9n-nYA"/>
-                                                            <exclude reference="cTU-rT-W4z"/>
                                                             <include reference="95T-Ax-hsi"/>
                                                             <exclude reference="E9G-6k-fuK"/>
                                                             <exclude reference="uMI-Bu-rI6"/>
                                                             <include reference="zUD-UM-I15"/>
                                                             <exclude reference="zXh-Mr-4D8"/>
+                                                            <include reference="4NF-BP-dDk"/>
+                                                            <include reference="Pyj-yK-r2q"/>
+                                                            <exclude reference="UPV-9n-nYA"/>
+                                                            <exclude reference="cTU-rT-W4z"/>
                                                             <include reference="M2M-qh-KsW"/>
                                                             <exclude reference="ncE-xx-ycV"/>
                                                             <include reference="pkB-ge-m23"/>
+                                                            <include reference="h5N-zw-OCu"/>
+                                                            <include reference="rAy-k2-W1D"/>
                                                         </mask>
                                                     </variation>
                                                 </view>
@@ -4209,9 +4209,6 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Eal-13-HT7">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <color key="backgroundColor" red="0.18039215689999999" green="0.80000000000000004" blue="0.4431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="49" y="49" width="480" height="240"/>
-                                </variation>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>

@@ -24,6 +24,7 @@
 @property (nonatomic, strong) UIStoryboard *storyBoard;
 -(void)setMedia:(NSObject *) media withIndexId:(int) indexId;
 @property (nonatomic, copy) void (^onVotesTapped)(void);
+-(void)loadDropMedia:(NSNumber *) percentage;
 -(void)dropWillHide;
 -(void)playVideo;
 -(void)stopVideo;
@@ -33,6 +34,7 @@
 -(void)temperatureAnimation;
 -(void)setVideoFromURL:(NSString *) url;
 -(void)playPause;
+-(void)hideBlur;
 
 -(void)mute;
 -(void)unmute;

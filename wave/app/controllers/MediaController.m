@@ -18,6 +18,8 @@
     bool isUploading;
     bool isSearching;
     AuthHelper *authHelper;
+    NSInteger statusCode;
+    long expectedContentSize;
 }
 
 -(void)downloadMedia:(NSString *) urlPath
@@ -36,13 +38,13 @@
     
     
     self.theConnection = [[NSURLConnection alloc]
-                                    initWithRequest:request
-                                    delegate:self startImmediately:NO];
+                          initWithRequest:request
+                          delegate:self startImmediately:NO];
     
     
-        [self.theConnection scheduleInRunLoop:[NSRunLoop mainRunLoop]
-                                      forMode:NSDefaultRunLoopMode];
-        [self.theConnection start];
+    [self.theConnection scheduleInRunLoop:[NSRunLoop mainRunLoop]
+                                  forMode:NSDefaultRunLoopMode];
+    [self.theConnection start];
 }
 
 
@@ -118,8 +120,10 @@ totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite
 {
     long percentageDownloaded = (totalBytesWritten * 100)/totalBytesExpectedToWrite;
     mediaProgression([NSNumber numberWithInt:(int)percentageDownloaded]);
+    
     if(percentageDownloaded == 100){
         if (isUploading) {
+            NSLog(@"dd");
             mediaUploadComplete();
         }else{
             
@@ -128,13 +132,15 @@ totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite
     }
 }
 
-
-
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
     NSHTTPURLResponse* httpResponse = (NSHTTPURLResponse*)response;
     NSLog(@"response %ld", (long)[httpResponse statusCode]);
     _data = [[NSMutableData alloc] init];
+    statusCode = [httpResponse statusCode];
+    if (statusCode == 200) {
+        expectedContentSize = [response expectedContentLength];
+    }
 }
 
 -(void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data{
@@ -142,8 +148,10 @@ totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite
         _data = [[NSMutableData alloc]init];
     }
     [_data appendData:data];
-    //NSLog(@"Appending data");
-    //[_data appendData:data];
+    long percentageDownloaded = ([_data length] * 100)/expectedContentSize;
+    if (mediaProgression != nil) {
+        mediaProgression([NSNumber numberWithInt:(int)percentageDownloaded]);
+    }
 }
 
 -(void)stopConnection{

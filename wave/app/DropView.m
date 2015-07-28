@@ -13,14 +13,17 @@
 #import "VoteInfoView.h"
 #import "ProfileViewController.h"
 #import "AbstractFeedViewController.h"
+#import "CircleIndicatorView.h"
 @implementation DropView
 {
     MediaPlayerViewController *mediaPlayer;
     UIButton *playButton;
     UIView *shadowView;
     bool isPlaying;
+    CircleIndicatorView *circleIndicatorView;
     
     AbstractFeedViewController *profileView;
+    UIVisualEffectView *blurView;
     
 }
 
@@ -94,7 +97,9 @@
     
     self.spinner.hidesWhenStopped = YES;
     [self.spinner startAnimating];
-    self.spinner.hidden = NO;
+    self.spinner.hidden = YES;
+    
+      [self addBlur];
     
     //Shadow View
     shadowView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, [UIHelper getScreenWidth], [UIHelper getScreenHeight]/4)];
@@ -108,7 +113,7 @@
     
     [self addSubview:shadowView];
     [self addSubview:self.topBar];
-    [self addSubview:self.spinner];
+    //[self addSubview:self.spinner];
     [self addSubview:playButton];
     [self addSubview:self.redropView];
     [self addSubview:self.voteButton];
@@ -120,7 +125,16 @@
         [weakSelf onVideoFinished];
     };
     
+    circleIndicatorView = [[CircleIndicatorView alloc] initWithFrame:CGRectMake(([UIHelper getScreenWidth]/2) -20, ([UIHelper getScreenHeight]/2)-20 - 32, 40, 40)];
+    [self addSubview:circleIndicatorView];
+    [circleIndicatorView setRadius:15];
+  
+    
     return self;
+}
+
+-(void)hideBlur{
+    [blurView setHidden:YES];
 }
 
 -(void)showVotes{
@@ -208,6 +222,24 @@
     //self.dropTitle.text = [NSString stringWithFormat:@"Drop #%d",drop.Id];
 }
 
+
+-(void)loadDropMedia:(NSNumber *) percentage{
+    NSLog(@"percentg %d", [percentage intValue]);
+    [circleIndicatorView setPercent:[percentage intValue]];
+    if ([percentage intValue] == 100) {
+        [UIView animateWithDuration:0.3f
+                              delay:0.0f
+                            options: UIViewAnimationOptionCurveLinear
+                         animations:^{
+                             [circleIndicatorView setAlpha:0.0f];
+                         }
+                         completion:^(BOOL finished){
+                             [circleIndicatorView setHidden:YES];
+                         }];
+    }
+    [circleIndicatorView setNeedsDisplay];
+}
+
 -(void)placeCounter{
     float vote = self.drop.total_votes_count;
     self.dropTemperature.text =[NSString stringWithFormat:@"%d", (int)vote];
@@ -254,6 +286,19 @@
         [mediaPlayer setVideo:video withId:indexId];
       //  [mediaPlayer playVideo];
     }
+}
+
+-(void)addBlur{
+    
+    UIBlurEffect *blurEffect = [UIBlurEffect effectWithStyle:UIBlurEffectStyleDark];
+    
+    blurView = [[UIVisualEffectView alloc] initWithEffect:blurEffect];
+    blurView.frame = CGRectMake(0, 0, [UIHelper getScreenWidth], [UIHelper getScreenHeight]);
+    // blurEffectView.alpha = 0.9;
+    blurView.alpha = 1.0f;
+    [self addSubview:blurView];
+    //add auto layout constraints so that the blur fills the screen upon rotating device
+    [blurView setTranslatesAutoresizingMaskIntoConstraints:NO];
 }
 
 -(void)setVideoFromURL:(NSString *) url{

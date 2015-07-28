@@ -19,6 +19,7 @@
 #import "CaptionTextField.h"
 #import "ColorPickerView.h"
 #import "SimpleListController.h"
+#import "CameraFocusSquare.h"
 @interface CameraViewController ()
 
 @end
@@ -64,6 +65,7 @@
     bool canUpload;
     SimpleListController *controller;
     UIView *shadowView;
+    CameraFocusSquare *camFocus;
 
 }
 
@@ -1246,4 +1248,76 @@
     }
 }
 
+
+- (void) touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    UITouch *touch = [[event allTouches] anyObject];
+    CGPoint touchPoint = [touch locationInView:touch.view];
+    [self focus:touchPoint];
+    NSLog(@"touches");
+    if (camFocus)
+    {
+        [camFocus removeFromSuperview];
+    }
+
+        camFocus = [[CameraFocusSquare alloc]initWithFrame:CGRectMake(touchPoint.x-45, touchPoint.y-45, 90, 90)];
+        [camFocus setBackgroundColor:[UIColor clearColor]];
+        [self.view addSubview:camFocus];
+        [camFocus setNeedsDisplay];
+        
+        [UIView beginAnimations:nil context:NULL];
+        [UIView setAnimationDuration:1.5];
+        [camFocus setAlpha:0.0];
+        [UIView commitAnimations];
+    
+}
+
+
+- (void) focus:(CGPoint) aPoint;
+{
+    Class captureDeviceClass = NSClassFromString(@"AVCaptureDevice");
+    if (captureDeviceClass != nil) {
+        AVCaptureDevice *device = [self.cameraHelper.VideoInputDevice device];
+        //AVCaptureDevice *device = [captureDeviceClass defaultDeviceWithMediaType:AVMediaTypeVideo];
+        if([device isFocusPointOfInterestSupported] &&
+           [device isFocusModeSupported:AVCaptureFocusModeAutoFocus]) {
+            
+            CGPoint focusPoint = [self.cameraHelper.PreviewLayer captureDevicePointOfInterestForPoint:aPoint];
+            if([device lockForConfiguration:nil]) {
+                [device setFocusPointOfInterest:CGPointMake(focusPoint.x,focusPoint.y)];
+                [device setFocusMode:AVCaptureFocusModeAutoFocus];
+                if ([device isExposureModeSupported:AVCaptureExposureModeAutoExpose]){
+                    [device setExposureMode:AVCaptureExposureModeAutoExpose];
+                }
+                [device unlockForConfiguration];
+            }
+        }
+    }
+}
+/*
+- (void) focus:(CGPoint) aPoint;
+{
+    Class captureDeviceClass = NSClassFromString(@"AVCaptureDevice");
+    if (captureDeviceClass != nil) {
+        AVCaptureDevice *device = [captureDeviceClass defaultDeviceWithMediaType:AVMediaTypeVideo];
+        if([device isFocusPointOfInterestSupported] &&
+           [device isFocusModeSupported:AVCaptureFocusModeAutoFocus]) {
+            CGRect screenRect = [[UIScreen mainScreen] bounds];
+            double screenWidth = screenRect.size.width;
+            double screenHeight = screenRect.size.height;
+            double focus_x = aPoint.x/screenWidth;
+            double focus_y = aPoint.y/screenHeight;
+            if([device lockForConfiguration:nil]) {
+                [device setFocusPointOfInterest:CGPointMake(focus_x,focus_y)];
+                [device setFocusMode:AVCaptureFocusModeAutoFocus];
+                if ([device isExposureModeSupported:AVCaptureExposureModeAutoExpose]){
+                    [device setExposureMode:AVCaptureExposureModeAutoExpose];
+                }
+                [device unlockForConfiguration];
+            }
+        }
+    }
+}
+
+*/
 @end

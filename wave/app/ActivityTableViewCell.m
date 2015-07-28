@@ -31,6 +31,8 @@
 
 -(void)initializeWithMode:(int) mode withSuperController:(UIViewController *) controller{
     self.isInitialized = YES;
+    self.displayNameText.text = @"";
+    [self setBackgroundColor:[UIColor whiteColor]];
     superController = controller;
     viewMode = mode;
     spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
@@ -216,7 +218,7 @@
     }
     if([bucket.bucket_type isEqualToString:@"user"]){
         if(viewMode == 1){
-            self.displayNameText.text = @"My drops";
+            self.displayNameText.text = NSLocalizedString(@"my_drops_txt", nil);
             self.profilePictureIcon.hidden = YES;
             self.bucketTitleHoriConstraint.constant = 10;
         }else{

@@ -12,11 +12,13 @@
 #import <AVFoundation/AVFoundation.h>
 #import <ImageIO/ImageIO.h>
 #import "CaptionTextField.h"
+#import "CameraFocusSquare.h"
 //#import "VideoController.h"
 @implementation CameraHelper{
     NSString *videoURL;
     NSURL *VideoURLWithCaption;
     bool savingtoDisk;
+    CameraFocusSquare *camFocus;
 }
 @synthesize PreviewLayer;
 @synthesize stillImageOutput;
@@ -980,6 +982,7 @@ didFinishRecordingToOutputFileAtURL:(NSURL *)outputFileURL
         [CaptureSession startRunning];
     });
 }
+
 
 
 @end

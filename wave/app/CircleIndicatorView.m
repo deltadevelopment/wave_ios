@@ -14,6 +14,8 @@ float updateValue;
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
+    self.radius = 35;
+    self.lineWidth = 5;
     if (self) {
         // Initialization code
         self.backgroundColor = [UIColor whiteColor];
@@ -32,13 +34,13 @@ float updateValue;
     UIBezierPath* bezierPath = [UIBezierPath bezierPath];
     // sirkel
     [bezierPath addArcWithCenter:CGPointMake(rect.size.width / 2, rect.size.height / 2)
-                          radius:35
+                          radius:self.radius
                       startAngle:startAngle
                         endAngle:(endAngle - startAngle) * (_percent / 100.0) + startAngle
                        clockwise:YES];
     
     // runding rundt
-    bezierPath.lineWidth = 5;
+    bezierPath.lineWidth = self.lineWidth;
     [[UIColor colorWithRed:0.608 green:0.349 blue:0.714 alpha:1] setStroke];
     [bezierPath stroke];
 }

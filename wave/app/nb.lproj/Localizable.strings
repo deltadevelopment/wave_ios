@@ -77,7 +77,7 @@
 "create_chat_message" = "har skrevet noe i";
 "search_placeholder_txt" = "Søk etter brukere";
 "feed_none_txt" = "Ingen innhold tilgjengelig";
-"profile_none_txt" = "Du har ingen drops ennå";
+"profile_none_txt" = "Du har ingen drops akkurat nå";
 "profile_none_other_txt" = "har ingen drops";
 "subscribers_none_txt" = "Du har ingen abonnenter ennå";
 
@@ -128,4 +128,5 @@
 
 "vote_cool_cap" = "KULT";
 "vote_funny_cap" = "MORSOM";
+"my_drops_txt" = "Mine drops";
 

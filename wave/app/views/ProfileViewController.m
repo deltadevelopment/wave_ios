@@ -502,7 +502,7 @@
         isDeviceUser = YES;
         //self.subscribeButton.hidden = YES;
         self.settingsButton.hidden = NO;
-        self.subscribersCountLabel.hidden = YES;
+        //self.subscribersCountLabel.hidden = YES;
         [self.subscribeButton setTitle:NSLocalizedString(@"subscriptions_button_txt", nil) forState:UIControlStateNormal];
         
         //[self.subscribeButton setBackgroundColor:[ColorHelper purpleColor]];

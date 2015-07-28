@@ -113,6 +113,7 @@
         self.isDownloading = YES;
         [self.mediaController downloadMedia:self.media_url
                                onCompletion:^(NSData *data){
+                                   NSLog(@"downloadingThis");
                                    self.media_tmp = data;
                                    self.isDownloading = NO;
                                    [self storeMediaInCache:data];
@@ -122,11 +123,33 @@
                                         
                                     }
                                  onProgress:^(NSNumber *progress){
+                                    // NSLog(@"the progress %d", [progress intValue]);
                                      
                                  }];
     }
 }
 
+-(void)downloadImage:(void (^)(NSData*))completionCallback onProgress:(void (^)(NSNumber*))progression
+{
+    if (!self.isDownloading) {
+        self.isDownloading = YES;
+        [self.mediaController downloadMedia:self.media_url
+                               onCompletion:^(NSData *data){
+                                   NSLog(@"downloadingThis");
+                                   self.media_tmp = data;
+                                   self.isDownloading = NO;
+                                   [self storeMediaInCache:data];
+                                   completionCallback(data);
+                               }
+                                    onError:^(NSError *error){
+                                        
+                                    }
+                                 onProgress:^(NSNumber *progress){
+                                     //NSLog(@"the progress %d", [progress intValue]);
+                                     progression(progress);
+                                 }];
+    }
+}
 -(void)cancelDownload{
     [self.mediaController stopConnection];
 }
@@ -173,6 +196,15 @@
     self.media_tmp = self.media_tmp == nil ? [self mediaFromCache] : self.media_tmp;
     if(self.media_tmp == nil){
         [self downloadImage:completionCallback];
+    }else{
+        completionCallback(self.media_tmp);
+    }
+}
+
+-(void)requestMedia:(void (^)(NSData*))completionCallback onProgress:(void (^)(NSNumber*))progression{
+    self.media_tmp = self.media_tmp == nil ? [self mediaFromCache] : self.media_tmp;
+    if(self.media_tmp == nil){
+        [self downloadImage:completionCallback onProgress:progression];
     }else{
         completionCallback(self.media_tmp);
     }

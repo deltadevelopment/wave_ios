@@ -414,6 +414,9 @@ const int EXPAND_SIZE = 400;
    // NSLog(@"Bucket drops count %lu", (unsigned long)bucket.drops.count);
     //NSLog(@"bucket id %d", bucket.Id);
     [cell update:bucket];
+    if (shouldExpand) {
+         [cell animateBucketTitleOut];
+    }
     return cell;
 }
 
@@ -504,10 +507,11 @@ const int EXPAND_SIZE = 400;
     indexCurrent = newIndexPath;
 
     BucketModel *bucket = [[BucketModel alloc] init];
+    bucket.bucket_type = @"user";
     DropModel *drop = [[DropModel alloc] init];
     //drop.media = @"169.jpg";
     [bucket addDrop:drop];
-    bucket.title = [userModel usernameFormatted];
+    bucket.user = userModel;
     
     [[self.feedModel feed] insertObject:bucket atIndex:0];
     [CATransaction begin];

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		C5022E2B1B5531D300A3456B /* arrow-back-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = C5022E2A1B5531D300A3456B /* arrow-back-icon.png */; };
 		C5022E2D1B55340100A3456B /* arrow-back-icon2.png in Resources */ = {isa = PBXBuildFile; fileRef = C5022E2C1B55340100A3456B /* arrow-back-icon2.png */; };
+		C5022E651B63EDAB00A3456B /* CameraFocusSquare.m in Sources */ = {isa = PBXBuildFile; fileRef = C5022E641B63EDAB00A3456B /* CameraFocusSquare.m */; };
 		C51B21651B4D75D20013E6AE /* ServerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C51B21641B4D75D20013E6AE /* ServerCell.m */; };
 		C51B21681B53ED5D0013E6AE /* VoteInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = C51B21671B53ED5D0013E6AE /* VoteInfoView.m */; };
 		C52AAFD61B3058A0004332DD /* RipplesFeed.m in Sources */ = {isa = PBXBuildFile; fileRef = C52AAFD51B3058A0004332DD /* RipplesFeed.m */; };
@@ -186,6 +187,8 @@
 /* Begin PBXFileReference section */
 		C5022E2A1B5531D300A3456B /* arrow-back-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow-back-icon.png"; sourceTree = "<group>"; };
 		C5022E2C1B55340100A3456B /* arrow-back-icon2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrow-back-icon2.png"; sourceTree = "<group>"; };
+		C5022E631B63EDAB00A3456B /* CameraFocusSquare.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CameraFocusSquare.h; sourceTree = "<group>"; };
+		C5022E641B63EDAB00A3456B /* CameraFocusSquare.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CameraFocusSquare.m; sourceTree = "<group>"; };
 		C51B21631B4D75D20013E6AE /* ServerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerCell.h; sourceTree = "<group>"; };
 		C51B21641B4D75D20013E6AE /* ServerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerCell.m; sourceTree = "<group>"; };
 		C51B21661B53ED5D0013E6AE /* VoteInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VoteInfoView.h; sourceTree = "<group>"; };
@@ -937,6 +940,8 @@
 				C57433091B3ADB4600394E15 /* SimpleListCell.m */,
 				C51B21661B53ED5D0013E6AE /* VoteInfoView.h */,
 				C51B21671B53ED5D0013E6AE /* VoteInfoView.m */,
+				C5022E631B63EDAB00A3456B /* CameraFocusSquare.h */,
+				C5022E641B63EDAB00A3456B /* CameraFocusSquare.m */,
 			);
 			name = modules;
 			sourceTree = "<group>";
@@ -1144,6 +1149,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C5022E651B63EDAB00A3456B /* CameraFocusSquare.m in Sources */,
 				C5C2F4971B2F429400AF8666 /* RipplesViewController.m in Sources */,
 				C5576B391ADBC195009C1D5E /* UIHelper.m in Sources */,
 				F1D4364D1B1A2E350024205B /* CarouselController.m in Sources */,

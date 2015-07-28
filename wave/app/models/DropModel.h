@@ -73,6 +73,7 @@
 //-(id)initWithTestData:(NSString *) media withName:(NSString *) username;
 -(id)init:(NSMutableDictionary *)dic;
 -(void)requestPhoto:(void (^)(NSData*))completionCallback;
+-(void)requestMedia:(void (^)(NSData*))completionCallback onProgress:(void (^)(NSNumber*))progression;
 -(void)requestThumbnail:(void (^)(NSData*))completionCallback;
 -(void)saveChanges:(void (^)(void))completionCallback
         onProgress:(void (^)(NSNumber*))progression

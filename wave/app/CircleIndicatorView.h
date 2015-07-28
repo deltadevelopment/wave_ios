@@ -15,5 +15,7 @@
 @property (nonatomic) float percent;
 -(void)setIndicatorWithMaxTime:(float) time;
 -(void)incrementSpin;
+@property (nonatomic) int radius;
+@property (nonatomic) int lineWidth;
 
 @end

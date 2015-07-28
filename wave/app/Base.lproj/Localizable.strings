@@ -97,6 +97,7 @@
 "settings_servers_all_txt" = "Servers";
 "settings_show_errors_txt" = "Show error messages";
 
+
 "email_placeholder" = "Email";
 "phonenumber_placeholder" = "Phone number";
 
@@ -129,4 +130,5 @@
 
 "vote_cool_cap" = "COOL";
 "vote_funny_cap" = "FUNNY";
+"my_drops_txt" = "My drops";
 

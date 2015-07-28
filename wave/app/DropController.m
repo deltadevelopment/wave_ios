@@ -45,47 +45,46 @@
     [dropView setDropUI:self.drop];
     if([self.drop media_type] == 1 && self.isPlaceholderView){
         [self.drop requestThumbnail:^(NSData *media){
-         [dropView setMedia:[UIImage imageWithData:media] withIndexId:[self.drop Id]];
+            [dropView setMedia:[UIImage imageWithData:media] withIndexId:[self.drop Id]];
         }];
         
     }else{
         if([self.drop media_type] == 1){
             if([self.drop thumbnail_tmp] != nil){
-              [dropView setMedia:[UIImage imageWithData:[self.drop thumbnail_tmp]] withIndexId:[self.drop Id]];
+                [dropView setMedia:[UIImage imageWithData:[self.drop thumbnail_tmp]] withIndexId:[self.drop Id]];
             }
         }
         /*
-        if (self.drop.media_type == 0) {
-            [self.drop requestPhoto:^(NSData *media){
-                [dropView setMedia:[UIImage imageWithData:media] withIndexId:[self.drop Id]];
-                [[dropView spinner] stopAnimating];
-                self.isLoaded = YES;
-            }];
-        }else{
-            //Stream the video
-            //VIDEO
-            
-            [dropView setVideoFromURL:self.drop.media_url];
-           // [dropView setMedia:media withIndexId:[self.drop Id]];
-            [[dropView spinner] stopAnimating];
-            if([self isStartingView]){
-                [dropView playVideo];
-            }else if(self.isDisplaying){
-                [dropView playVideo];
-            }
-            //[self startStopVideo:nil];
-            // playButton.hidden = NO;
-            //  [dropView playMediaWithButton:playButton];
-        }
-    
+         if (self.drop.media_type == 0) {
+         [self.drop requestPhoto:^(NSData *media){
+         [dropView setMedia:[UIImage imageWithData:media] withIndexId:[self.drop Id]];
+         [[dropView spinner] stopAnimating];
+         self.isLoaded = YES;
+         }];
+         }else{
+         //Stream the video
+         //VIDEO
+         
+         [dropView setVideoFromURL:self.drop.media_url];
+         // [dropView setMedia:media withIndexId:[self.drop Id]];
+         [[dropView spinner] stopAnimating];
+         if([self isStartingView]){
+         [dropView playVideo];
+         }else if(self.isDisplaying){
+         [dropView playVideo];
+         }
+         //[self startStopVideo:nil];
+         // playButton.hidden = NO;
+         //  [dropView playMediaWithButton:playButton];
+         }
+         
+         
+         */
         
-        */
-        
-        [self.drop requestPhoto:^(NSData *media){
-            
+        [self.drop requestMedia:^(NSData *media){
             if([self.drop media_type] == 0){
                 //IMAGE
-                // [dropView setImage:[UIImage imageWithData:media]];
+                //[dropView setImage:[UIImage imageWithData:media]];
                 [dropView setMedia:[UIImage imageWithData:media] withIndexId:[self.drop Id]];
                 [[dropView spinner] stopAnimating];
             }else{
@@ -98,11 +97,20 @@
                     [dropView playVideo];
                 }
                 //[self startStopVideo:nil];
-                // playButton.hidden = NO;
-                //  [dropView playMediaWithButton:playButton];
+                //playButton.hidden = NO;
+                //[dropView playMediaWithButton:playButton];
             }
             self.isLoaded = YES;
-        }];
+            [dropView hideBlur];
+        }
+                     onProgress:^(NSNumber *number){
+                         [dropView loadDropMedia:number];
+                         //NSLog(@"perc %d", [number intValue]);
+                     }];
+        /*
+         [self.drop requestPhoto:^(NSData *media){
+         }];
+         */
     }
 }
 -(void)viewDidDisappear:(BOOL)animated{
